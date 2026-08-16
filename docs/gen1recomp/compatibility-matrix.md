@@ -30,7 +30,7 @@ Versions below are contract starting points, not claims of completed artifacts.
 | Scripting host | 0.0.1-spike | 1.0.0 | pending connected-app `.d.ts` |
 | iOS/Scripting platform adapter | 0.0.1-spike | 1.0.0 | interface only; pending device probes |
 | Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
-| Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | closed functional-evidence parser/gate and outside-browser profile implemented; no LuaJIT/FFI; Scripting profile hard-blocked pending declarations/device capture |
+| Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | functional-evidence gate plus host-neutral runtime/persistence lifecycle port implemented; no concrete Scripting WebView surface, LuaJIT or FFI; Scripting profile hard-blocked pending declarations/device capture |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
 | LÖVE host compatibility | 0.1.0-spike | 1.0.0 | BitOp parity-tested; unusable worker capability normalized before core; Fetch/Update/Mod Job/Import/ChipAudio fallbacks characterized; explicit Emscripten flush adapter implemented |
 | LÖVE distribution | candidate 11.5 web | 11.5.0 | pinned outside-browser smoke/launcher passed; worker creation unavailable despite symbol/COOP/COEP; Scripting/device not validated |

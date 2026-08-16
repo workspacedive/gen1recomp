@@ -37,6 +37,16 @@ function isJsonValueInner(value: unknown, ancestors: Set<object>): value is Json
   return result
 }
 
+export function cloneJsonValue(value: JsonValue): JsonValue {
+  if (value === null || typeof value !== "object") return value
+  if (Array.isArray(value)) return value.map((candidate) => cloneJsonValue(candidate))
+  const output = Object.create(null) as Record<string, JsonValue>
+  for (const [key, candidate] of Object.entries(value)) {
+    output[key] = cloneJsonValue(candidate)
+  }
+  return output
+}
+
 export function isRecord(value: unknown): value is Record<string, unknown> {
   try {
     if (typeof value !== "object" || value === null || Array.isArray(value)) return false

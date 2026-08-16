@@ -1,11 +1,11 @@
-import type {
-  LuaRuntimePort,
-  RuntimeBootRequest,
-  RuntimeDescriptor,
-  RuntimeError,
-  RuntimeState,
+import {
+  parseRuntimeBootRequest,
+  type LuaRuntimePort,
+  type RuntimeBootRequest,
+  type RuntimeDescriptor,
+  type RuntimeError,
+  type RuntimeState,
 } from "../../components/contracts/src/runtime.js"
-import { isJsonValue, isRecord } from "../../components/contracts/src/json.js"
 import { err, ok, type Result } from "../../components/contracts/src/result.js"
 
 export type RuntimeEvidenceVerifier<Evidence> = (
@@ -19,33 +19,6 @@ function runtimeError(
   retryable: boolean,
 ): Result<never, RuntimeError> {
   return err({ code, message, retryable })
-}
-
-function validateBootRequest(request: RuntimeBootRequest): Result<void, RuntimeError> {
-  if (!/^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/.test(request.sessionId)) {
-    return runtimeError("invalid_payload", "sessionId is not canonical", false)
-  }
-  const pathSegments = request.payloadVirtualPath.split("/")
-  if (
-    pathSegments.length === 0 ||
-    pathSegments.some((segment) =>
-      segment === "." ||
-      segment === ".." ||
-      !/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(segment)
-    )
-  ) {
-    return runtimeError("invalid_payload", "payloadVirtualPath is not a canonical relative path", false)
-  }
-  if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/.test(request.storageNamespace)) {
-    return runtimeError("invalid_payload", "storageNamespace is not canonical", false)
-  }
-  if (
-    !isRecord(request.query) ||
-    !Object.values(request.query).every((value) => isJsonValue(value))
-  ) {
-    return runtimeError("invalid_payload", "query must contain only JSON values", false)
-  }
-  return ok(undefined)
 }
 
 function descriptorsMatch(
@@ -107,8 +80,11 @@ export class RuntimeManager<Evidence> {
     evidence: Evidence,
   ): Promise<Result<void, RuntimeError>> {
     if (this.#busy) return runtimeError("busy", "a runtime operation is in progress", true)
-    const validRequest = validateBootRequest(request)
-    if (!validRequest.ok) return validRequest
+    const parsedRequest = parseRuntimeBootRequest(request)
+    if (!parsedRequest.ok) {
+      return runtimeError("invalid_payload", parsedRequest.error, false)
+    }
+    const validatedRequest = parsedRequest.value
     if (!["idle", "stopped", "failed"].includes(this.#state.status)) {
       return runtimeError("invalid_state", `cannot boot from ${this.#state.status}`, false)
     }
@@ -122,7 +98,7 @@ export class RuntimeManager<Evidence> {
     this.#busy = true
     this.#state = { status: "resolving", componentId: this.#componentId }
     try {
-      const expected = this.#verifyEvidence(evidence, request)
+      const expected = this.#verifyEvidence(evidence, validatedRequest)
       if (!expected.ok) return this.#failed(expected.error)
       if (expected.value.id !== this.#componentId) {
         return this.#failed({
@@ -151,10 +127,10 @@ export class RuntimeManager<Evidence> {
       this.#state = { status: "preparing", componentId: actual.id }
       this.#state = { status: "starting", componentId: actual.id }
       this.#backendMayBeActive = true
-      this.#sessionId = request.sessionId
+      this.#sessionId = validatedRequest.sessionId
       let started: Result<void, RuntimeError>
       try {
-        started = await this.#runtime.boot(request)
+        started = await this.#runtime.boot(validatedRequest)
       } catch (cause: unknown) {
         return await this.#failedStart({
           code: "startup",
@@ -163,7 +139,7 @@ export class RuntimeManager<Evidence> {
         })
       }
       if (!started.ok) return await this.#failedStart(started.error)
-      this.#state = { status: "running", sessionId: request.sessionId }
+      this.#state = { status: "running", sessionId: validatedRequest.sessionId }
       return ok(undefined)
     } catch (cause: unknown) {
       const error: RuntimeError = {

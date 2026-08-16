@@ -1,5 +1,11 @@
-import type { JsonValue } from "./json.js"
-import type { Result } from "./result.js"
+import {
+  cloneJsonValue,
+  hasOnlyKeys,
+  isJsonValue,
+  isRecord,
+  type JsonValue,
+} from "./json.js"
+import { err, ok, type Result } from "./result.js"
 
 export type RuntimeCapability =
   | "lua51"
@@ -55,6 +61,72 @@ export type RuntimeBootRequest = {
   readonly payloadVirtualPath: string
   readonly storageNamespace: string
   readonly query: Readonly<Record<string, JsonValue>>
+}
+
+const RUNTIME_IDENTIFIER = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/
+const RUNTIME_NAMESPACE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/
+const VIRTUAL_PATH_SEGMENT = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/
+const MAXIMUM_QUERY_ENTRIES = 64
+const MAXIMUM_VIRTUAL_PATH_LENGTH = 1024
+
+function parseRuntimeBootRequestInner(value: unknown): Result<RuntimeBootRequest, string> {
+  if (!isRecord(value)) return err("runtime boot request must be an object")
+  if (!hasOnlyKeys(value, new Set([
+    "sessionId",
+    "payloadVirtualPath",
+    "storageNamespace",
+    "query",
+  ]))) {
+    return err("runtime boot request has unknown fields")
+  }
+  if (typeof value["sessionId"] !== "string" || !RUNTIME_IDENTIFIER.test(value["sessionId"])) {
+    return err("sessionId is not canonical")
+  }
+  if (
+    typeof value["payloadVirtualPath"] !== "string" ||
+    value["payloadVirtualPath"].length === 0 ||
+    value["payloadVirtualPath"].length > MAXIMUM_VIRTUAL_PATH_LENGTH
+  ) {
+    return err("payloadVirtualPath must be a bounded relative path")
+  }
+  const segments = value["payloadVirtualPath"].split("/")
+  if (segments.some((segment) =>
+    segment === "." || segment === ".." || !VIRTUAL_PATH_SEGMENT.test(segment)
+  )) {
+    return err("payloadVirtualPath is not a canonical relative path")
+  }
+  if (
+    typeof value["storageNamespace"] !== "string" ||
+    !RUNTIME_NAMESPACE.test(value["storageNamespace"])
+  ) {
+    return err("storageNamespace is not canonical")
+  }
+  const query = value["query"]
+  if (!isRecord(query)) return err("query must be an object")
+  const entries = Object.entries(query)
+  if (entries.length > MAXIMUM_QUERY_ENTRIES) {
+    return err(`query exceeds ${MAXIMUM_QUERY_ENTRIES} entries`)
+  }
+  const parsedQuery = Object.create(null) as Record<string, JsonValue>
+  for (const [key, candidate] of entries) {
+    if (!RUNTIME_NAMESPACE.test(key)) return err(`query key is not canonical: ${key}`)
+    if (!isJsonValue(candidate)) return err(`query value is not JSON: ${key}`)
+    parsedQuery[key] = cloneJsonValue(candidate)
+  }
+  return ok({
+    sessionId: value["sessionId"],
+    payloadVirtualPath: value["payloadVirtualPath"],
+    storageNamespace: value["storageNamespace"],
+    query: parsedQuery,
+  })
+}
+
+export function parseRuntimeBootRequest(value: unknown): Result<RuntimeBootRequest, string> {
+  try {
+    return parseRuntimeBootRequestInner(value)
+  } catch {
+    return err("runtime boot request could not be inspected safely")
+  }
 }
 
 export type RuntimeError = {

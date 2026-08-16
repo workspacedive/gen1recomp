@@ -5,6 +5,7 @@ import {
   isJsonValue,
   parseComponentManifest,
   parseHostMessage,
+  parseRuntimeBootRequest,
   pixelPerfectViewport,
 } from "../../components/contracts/src/index.js"
 
@@ -94,6 +95,32 @@ test("runtime parsers reject unknown fields and non-JSON object instances", () =
   const cycle: { self?: unknown } = {}
   cycle.self = cycle
   assert.equal(isJsonValue(cycle), false)
+})
+
+test("runtime boot parser closes paths, query data, and unknown fields", () => {
+  const valid = {
+    sessionId: "runtime-session-1",
+    payloadVirtualPath: "components/core/0.1.96/game.love",
+    storageNamespace: "red-save",
+    query: { variant: "red", options: ["sound", true] },
+  }
+  const parsed = parseRuntimeBootRequest(valid)
+  assert.equal(parsed.ok, true)
+  valid.query.options[0] = "mutated"
+  if (parsed.ok) assert.deepEqual(parsed.value.query["options"], ["sound", true])
+  assert.equal(parseRuntimeBootRequest({
+    ...valid,
+    payloadVirtualPath: "../game.love",
+  }).ok, false)
+  assert.equal(parseRuntimeBootRequest({
+    ...valid,
+    query: { unsafe: new Date() },
+  }).ok, false)
+  assert.equal(parseRuntimeBootRequest({ ...valid, undocumented: true }).ok, false)
+  const hostile = new Proxy({}, {
+    get() { throw new Error("hostile getter") },
+  })
+  assert.equal(parseRuntimeBootRequest(hostile).ok, false)
 })
 
 test("pixel-perfect viewport uses centered integer scaling", () => {

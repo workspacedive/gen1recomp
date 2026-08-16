@@ -40,7 +40,7 @@ export class LoveJsPersistenceAdapter {
   }
 
   public state(): PersistenceState {
-    return this.#state
+    return { ...this.#state }
   }
 
   public populate(reason = "runtime-start"): Promise<Result<void, PersistenceError>> {

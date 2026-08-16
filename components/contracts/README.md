@@ -8,7 +8,7 @@ Host-independent strict TypeScript contracts for the Gen1Recomp Scripting feasib
 |---|---|---|
 | `host-protocol.ts` | versioned JSON envelope, closed method/event/error sets, fail-closed parser | a Scripting/WebView transport or method-specific broker implementation |
 | `platform.ts` | abstract storage/import/digest/haptic/capability port | proof that Scripting exposes every optional capability |
-| `runtime.ts` | runtime descriptor, state machine union and Lua runtime lifecycle port | Lua, LuaJIT, WASM or LÖVE implementation |
+| `runtime.ts` | runtime descriptor, closed boot-request parser, state machine union and Lua runtime lifecycle port | Lua, LuaJIT, WASM or LÖVE implementation |
 | `renderer.ts` | renderer resources/passes/stats and pixel-perfect viewport calculation | WebGL, TimelineCanvas, Metal or CPU backend |
 | `input.ts` | normalized buttons, deterministic edge samples and serialization | raw touch/controller/keyboard adapter |
 | `mod-capabilities.ts` | upstream permission parsing, scoped capability mapping and least-privilege decisions | OS/process sandboxing or a Lua mod loader |

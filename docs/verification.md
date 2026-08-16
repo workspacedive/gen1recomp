@@ -1,6 +1,6 @@
 # Verifikationsprotokoll und Evidenzregeln
 
-**Letzter Lauf:** 2026-08-16T18:03:47Z
+**Letzter Lauf:** 2026-08-16T18:14:16Z
 **Maschinenlesbarer Bericht:** [`reference-audit.json`](reference-audit.json)
 
 ## Ausgeführte Checks
@@ -52,7 +52,7 @@ Zusätzlich wurde `tools/analyze_gen1recomp.py` erneut gegen den gepinnten v0.1.
 Ergebnis:
 
 - TypeScript 7.0.2 `strict`/`noEmit`: bestanden;
-- 55 Node-Unit-Tests: bestanden (Verträge, JSON Schema 2020-12, Viewport, funktionale Runtime-Evidenz, Lifecycle-/Concurrency-Manager, Archivregeln, SemVer-Resolver, Aktivierungsjournal und Recovery);
+- 63 Node-Unit-Tests: bestanden (Verträge einschließlich geschlossenem Runtime-Boot-Parser, JSON Schema 2020-12, Viewport, funktionale Runtime-Evidenz, love.js-Persistenz-/Lifecycle-Port, Lifecycle-/Concurrency-Manager, Archivregeln, SemVer-Resolver, Aktivierungsjournal und Recovery);
 - 20 Python-Unit-Tests: bestanden (Acquisition-Größen/Hashes/Partials, deterministisches LÖVE-Probe-Archiv, HTTP-Header/Report-Endpunkt und LuaJIT-BitOp-Shim-Parität);
 - npm-Audit: 0 bekannte Schwachstellen auf der eingestellten Audit-Stufe;
 - Python-Syntax aller Tools: bestanden;
@@ -70,6 +70,7 @@ Ergebnis:
 - Persistenz-Charakterisierung: ein sofortiger Reload verlor den Marker in einem Chrome-92-Lauf, stellte ihn im isolierten Chromium-149-Lauf aber wieder her; explizites `FS.syncfs(false)` stellte ihn konsistent wieder her. Der neue serialisierte Persistence-Adapter macht diesen Flush deshalb zu einer expliziten Lifecycle-Barriere;
 - Capability-Gate: das geschlossene Schema und der strikte Parser akzeptieren nur kanonische JSON-Berichte, binden Live-Evidenz an Host, exakte love.js-Revision und aktuelle Session und leiten Fähigkeiten nur aus bestandenen Funktionschecks ab. Der archivierte Chromium-Bericht ist ausdrücklich nicht aktivierbar; das Scripting-Profil bleibt auch bei synthetischen Pass-Werten hart auf `evidence-pending`;
 - Runtime-Manager: gültige Lifecycle-Übergänge, idempotentes Suspend/Resume, parallele `busy`-Ablehnung, Descriptor-Abgleich, ungültige Bootpfade, Verifier-Ausnahmen, Teilstart-Cleanup und Cleanup-Pflicht nach Lifecycle-Fehlern sind host-unabhängig getestet;
+- love.js-Runtime-Port: Populate vor Surface-Start, Quiesce vor Flush, Flush vor Dispose, Teilstart-Cleanup, sichere Flush-Wiederholung nach Fehlern, konkurrierende `busy`-Ablehnung und Descriptor-Snapshots sind über injizierte Fakes getestet; ein konkreter Scripting-WebView-Surface-Adapter bleibt unimplementiert und ungeprüft;
 - Browserbericht: [`gen1recomp/lovejs-smoke-report.json`](gen1recomp/lovejs-smoke-report.json). Der aktuelle Browser-Build ist gepinnt, aber SwiftShader liefert keinen Hardware-/Performancewert und der Lauf ist kein Scripting-/iOS-Beleg;
 - ROM-freier v0.1.96-Launcher-Boot: deterministischer, bootstrap-wrapped Overlay-Payload mit 486 ZIP-Einträgen, sichtbarer 1024x768-Canvas, 10 Sekunden Beobachtung, keine Page-/Runtime-/Request-Fehler; Screenshot zeigte Launcher/Tabs/„ROM REQUIRED“, aber keinerlei ROM-Inhalt. Browser-Mausklicks auf Red/Blue/Yellow/Gold erzeugten vier unterschiedliche Canvas-Zustände mit zugeordneten Screenshot-Hashes und Pixel-Diff-Bereichen. Bericht: [`gen1recomp/lovejs-launcher-report.json`](gen1recomp/lovejs-launcher-report.json);
 - Upstream-ROM-freie Quick-Suite erneut bestanden: 172 Engine-Suites, 23/23 Modkit-Suites und Cold Restart. Der erste Aufruf hatte zwar `LUA` absolut gesetzt, aber den von Modkit verschachtelt gestarteten Namen `luajit` nicht auf `PATH`; 22/23 war daher ein dokumentierter Umgebungsfehler. Mit dem gepinnten LuaJIT-Verzeichnis auf `PATH` bestand der unveränderte zweite Lauf vollständig;

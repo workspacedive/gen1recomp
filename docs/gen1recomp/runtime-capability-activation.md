@@ -27,7 +27,7 @@ The session identifier is correlation, not cryptographic attestation. The eventu
 
 `runtime/manager/runtime-manager.ts` owns lifecycle and concurrency only. It receives the selected component ID, an already-created `LuaRuntimePort`, and an injected verifier. Before backend boot it compares the verifier's descriptor with `LuaRuntimePort.describe()` for component/runtime identity, all version fields, and every evidenced capability. Extra backend claims do not expand the evidenced descriptor.
 
-The manager serializes operations, makes suspend/resume idempotent only in their destination states, rejects invalid transitions, and attempts stop after any failed/throwing boot. Component download, dependency resolution, integrity, staged activation, known-good rollback, persistence flushes, and structured telemetry remain separate control-plane responsibilities.
+The manager serializes operations, makes suspend/resume idempotent only in their destination states, rejects invalid transitions, and attempts stop after any failed/throwing boot. The injected love.js `LuaRuntimePort` separately coordinates its game-surface quiescence with populate/flush barriers; this keeps IDBFS mechanics out of the generic manager. Component download, dependency resolution, integrity, staged activation, known-good rollback, and structured telemetry remain separate control-plane responsibilities.
 
 ## Scripting activation exit criteria
 

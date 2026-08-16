@@ -29,12 +29,17 @@ class LauncherPreparationTests(unittest.TestCase):
                 archive.writestr("src/core.lua", b"return {}")
             report = launcher.add_compatibility_overlay(source, output)
             with zipfile.ZipFile(output) as archive:
-                self.assertEqual(archive.read("main.lua"), b"return true")
+                self.assertEqual(archive.read("gen1recomp-main.lua"), b"return true")
+                self.assertIn(b"love-web-bootstrap", archive.read("main.lua"))
                 self.assertEqual(
                     archive.read("bit.lua"),
                     (ROOT / "compatibility" / "love-web" / "bit.lua").read_bytes(),
                 )
-            self.assertEqual(report["entries"], 3)
+                self.assertEqual(
+                    archive.read("love-web-bootstrap.lua"),
+                    (ROOT / "compatibility" / "love-web" / "bootstrap.lua").read_bytes(),
+                )
+            self.assertEqual(report["entries"], 5)
 
     def test_overlay_rejects_traversal_and_existing_bit_module(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -48,7 +53,7 @@ class LauncherPreparationTests(unittest.TestCase):
             with zipfile.ZipFile(source, "w") as archive:
                 archive.writestr("main.lua", b"")
                 archive.writestr("bit.lua", b"untrusted")
-            with self.assertRaisesRegex(RuntimeError, "already contains bit.lua"):
+            with self.assertRaisesRegex(RuntimeError, "reserved overlay paths"):
                 launcher.add_compatibility_overlay(source, output)
 
     def test_overlay_rejects_symbolic_links(self) -> None:

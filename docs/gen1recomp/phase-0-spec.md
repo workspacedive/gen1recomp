@@ -42,7 +42,7 @@ Determine a technically honest path that can run the original hand-written Gen1R
 
 - `love.js` uses PUC Lua 5.1, not LuaJIT;
 - FFI is unavailable;
-- `love.thread.newThread` creation is unavailable in the outside-browser run despite the symbol existing, so upstream no-thread fallbacks are mandatory; SharedArrayBuffer/cross-origin isolation, local `.love` loading, audible audio, file persistence and mobile memory still need real-device proof;
+- `love.thread.newThread` creation is unavailable despite the symbol existing; a host bootstrap now hides that false capability and the upstream no-thread fallback selections are characterized, but their physical-device cost is unknown; SharedArrayBuffer/cross-origin isolation, local `.love` loading, audible audio, file persistence and mobile memory still need real-device proof;
 - `love.js` is third-party and reports known compatibility/performance limits;
 - Gen1Recomp has conditional fallbacks for some FFI/thread features, but not a proven browser target.
 
@@ -72,7 +72,8 @@ Determine a technically honest path that can run the original hand-written Gen1R
 - [ ] Run TimelineCanvas/input/file-I/O probes on the same device.
 - [x] Build and execute a ROM-free minimal LÖVE 11.5 `.love` outside Scripting; record the unmodified missing-`bit` failure and adapter-only passing rerun.
 - [ ] Repeat the pinned minimal LÖVE 11.5 bundle inside a physical Scripting WebView.
-- [x] Boot the source-built ROM-free Gen1Recomp launcher outside Scripting and capture a structured report/non-ROM screenshot.
+- [x] Build a byte-reproducible ROM-free v0.1.96 payload and boot its bootstrap-wrapped launcher outside Scripting.
+- [x] Normalize the false-positive worker symbol and characterize Fetch, Update, Mod Job, ROM-import coroutine and synchronous ChipAudio fallback selection.
 - [ ] Run a minimal synthetic import fixture/title path inside the selected physical Scripting runtime before any broad port work.
 
 ## Go/no-go criteria

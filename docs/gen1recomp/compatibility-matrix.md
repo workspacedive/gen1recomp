@@ -32,8 +32,8 @@ Versions below are contract starting points, not claims of completed artifacts.
 | Runtime manager | 0.0.1-spike | 1.0.0 | state/interface only; backend manager pending |
 | Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | outside-browser smoke passed; no LuaJIT/FFI; Scripting pending |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
-| LÖVE host compatibility | 0.1.0-spike | 1.0.0 | pure-Lua BitOp overlay parity-tested; explicit serialized Emscripten flush adapter implemented; broader compatibility pending |
-| LÖVE distribution | candidate 11.5 web | 11.5.0 | pinned outside-browser smoke/launcher passed; worker-thread creation unavailable; Scripting/device not validated |
+| LÖVE host compatibility | 0.1.0-spike | 1.0.0 | BitOp parity-tested; unusable worker capability normalized before core; Fetch/Update/Mod Job/Import/ChipAudio fallbacks characterized; explicit Emscripten flush adapter implemented |
+| LÖVE distribution | candidate 11.5 web | 11.5.0 | pinned outside-browser smoke/launcher passed; worker creation unavailable despite symbol/COOP/COEP; Scripting/device not validated |
 | Kernel façade | 0.1.0 | 1.0.0 | façade/characterization work pending |
 | Gen1Recomp core payload | 0.1.96 | upstream internal contract | pinned ROM-free source-built payload; outside-browser launcher boot passed |
 | Mod API adapter | 0.1.0 | 2.0.0 | scoped permission/capability policy implemented; Lua façade and v1 behavior integration pending |

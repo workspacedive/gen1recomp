@@ -1,6 +1,6 @@
 # ROM-free Gen1Recomp launcher boot probe
 
-This harness packages the local v0.1.96 source-built `game.love` with the separately tested root-level BitOp compatibility overlay. It does not include a ROM, generated cache or save and does not modify Gen1Recomp/LÖVE source.
+This harness first builds a deterministic v0.1.96 `game.love` from the pinned source, then adds the separately tested BitOp overlay and a generated pre-core host wrapper. The wrapper hides the measured-unusable love.js worker constructor so upstream no-thread paths are selected. It does not include a ROM, generated cache or save and does not modify Gen1Recomp/LÖVE source.
 
 Prepare:
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-16T11:24:51Z",
+  "observedAt": "2026-08-16T17:44:02Z",
   "upstream": {
     "repository": "https://github.com/bryanthaboi/gen1recomp.git",
     "devRevision": "9469e399262e4e989902b61b449dd353c1fded3b",
@@ -56,6 +56,12 @@
           "sha256": "07f3ba40f298bb776e06fb514718bbc82a93cec7b977c8b42fd5e5b002ce3348",
           "luaJitBitOpComparisons": 9492,
           "parityStatus": "passed"
+        },
+        "threadCapabilityBootstrap": {
+          "path": "compatibility/love-web/bootstrap.lua",
+          "sha256": "6dc66d27447fdde6739d0c47f6320baa631bf1813229083d9fb8daed383ace6b",
+          "behavior": "hide measured-unusable love.thread.newThread while preserving Channels",
+          "fallbackCharacterization": "passed"
         }
       },
       "outsideBrowserSmoke": {
@@ -68,8 +74,8 @@
       },
       "outsideLauncherBoot": {
         "report": "docs/gen1recomp/lovejs-launcher-report.json",
-        "preparedPayloadSha256": "620147588cf8cffcd45e7c44a20fe1054854926cc23fdf93472e239f400cc943",
-        "status": "passed: visible ROM-free 1024x768 launcher for 10 seconds with no page/runtime/request errors",
+        "preparedPayloadSha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a",
+        "status": "passed: deterministic/bootstrap-wrapped ROM-free 1024x768 launcher visible for 10 seconds with no page/runtime/request errors",
         "evidenceScope": "outside Scripting launcher shell only"
       },
       "status": "Pinned candidate passed the isolated outside-browser smoke test and ROM-free Gen1Recomp launcher-shell boot with a separately parity-tested BitOp overlay. Scripting WKWebView, physical iOS behavior, performance, audible audio, simultaneous input, lifecycle persistence and game/title/mod compatibility remain unverified."
@@ -99,6 +105,16 @@
   "androidAnalysis": {
     "officialApkDownloaded": false,
     "downloadBlocker": "The sandbox established TLS to GitHub but every redirected release-assets.githubusercontent.com transfer terminated before payload bytes. GitHub API metadata and digest were retrieved successfully. The same release was independently listed by the SourceForge mirror, but direct binary transfer was blocked by the same sandbox network policy.",
+    "deterministicPayload": {
+      "basedOnRevision": "73fbaaa25093338585923b8b9809f2fea7fc59dc",
+      "command": "python3 tools/package_gen1recomp_payload.py --version 0.1.96",
+      "sha256": "a415960eb07f937e616287f40cc84bbe545c8a5fa677d3efd6ca846b3749e33d",
+      "size": 5936613,
+      "fileEntries": 483,
+      "uncompressedBytes": 15936729,
+      "timestampPolicy": "all entries 1980-01-01T00:00:00",
+      "note": "Reproducible ROM-free research payload generated from pinned source; not an official release artifact."
+    },
     "sourceBuiltPayload": {
       "basedOnRevision": "73fbaaa25093338585923b8b9809f2fea7fc59dc",
       "command": "scripts/build_android.sh --version 0.1.96 --package-only",

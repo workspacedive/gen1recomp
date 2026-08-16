@@ -61,6 +61,18 @@ Result:
 
 This is a source-built orientation artifact, **not** the official APK and not proof of byte identity with the official `.love`; ZIP timestamps/order can alter archive hashes. It did verify that the release packaging path is complete, stamps engine `0.1.96`, includes the save editor/UI kit/manifests, and excludes ROM-derived/generated content.
 
+For reproducible web research, `tools/package_gen1recomp_payload.py` now applies the same payload inclusion/exclusion policy with sorted file order, fixed `1980-01-01` ZIP timestamps and deterministic release stamping. Two independent invocations were byte-identical:
+
+| Deterministic property | Value |
+|---|---:|
+| SHA-256 | `a415960eb07f937e616287f40cc84bbe545c8a5fa677d3efd6ca846b3749e33d` |
+| archive bytes | 5,936,613 |
+| files | 483 |
+| uncompressed bytes | 15,936,729 |
+| embedded ROM/cache matches | 0 |
+
+It is still a local ROM-free research package, not the official release `.love`.
+
 ## 4. Android host architecture (source-derived)
 
 ```text

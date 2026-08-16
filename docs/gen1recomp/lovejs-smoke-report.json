@@ -131,8 +131,8 @@
     "audio queue scheduling and interruption recovery",
     "simultaneous touch, controller support or cancellation recovery",
     "durable persistence under Scripting suspend/termination; only browser reload with an explicit/settled sync was demonstrated",
-    "complete parity of every upstream no-thread fallback; love.thread.newThread was present but unusable in the tested runtime",
-    "Gen1Recomp launcher, fixture or full payload boot",
-    "ROM import, saves, mods, visual parity or sustained memory"
+    "physical performance of the characterized no-thread fallback paths; love.thread.newThread remains unusable",
+    "Gen1Recomp imported-title or in-game payload boot (the ROM-free launcher shell passed separately)",
+    "ROM import, saves, mods, in-game visual parity or sustained memory"
   ]
 }

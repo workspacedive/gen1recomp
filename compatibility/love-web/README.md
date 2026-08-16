@@ -16,3 +16,17 @@ lshift, rshift, arshift, rol, ror, bswap
 `tests/compatibility/bit_shim_test.lua` performs 9,492 differential comparisons against the pinned vendored LuaJIT 2.1 implementation, including boundary values, modulo-32 shift counts, variadic operations, deterministic random triples, fractional tie-to-even conversion, non-finite values and error behavior. The test passes in the current research environment.
 
 The shim prioritizes correctness/replaceability. Its performance has not been measured in a physical Scripting WebView. Optimize only after profiling import and chip-audio paths, and preserve differential parity for every change.
+
+## `bootstrap.lua`
+
+The measured love.js runtime exposes `love.thread.newThread` as a function, but constructing a worker fails. A symbol-presence check therefore produces a false capability result. The deterministic launcher packager preserves upstream `main.lua` as `gen1recomp-main.lua` and inserts a tiny host wrapper that calls `bootstrap.install` first. For this pinned runtime component the bootstrap hides only `love.thread.newThread`; Channels remain available.
+
+That normalization causes existing upstream checks to select their intended soft paths:
+
+- network fetches fail immediately instead of remaining pending;
+- updater state reports background threads unavailable;
+- mod background jobs report unavailable;
+- ROM extraction selects its coroutine path;
+- chip music selects synchronous amortized queue fill.
+
+The overlay changes no Gen1Recomp or LÖVE source file and can be removed when a replacement runtime passes a real worker roundtrip probe.

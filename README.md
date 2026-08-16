@@ -74,6 +74,7 @@ Die Laufzeitentscheidung ist noch durch reale Scripting-Gerätetests blockiert. 
 - [`docs/gen1recomp/android-analysis.md`](docs/gen1recomp/android-analysis.md) — getrennte Android-Referenzanalyse
 - [`docs/gen1recomp/technology-evaluation.md`](docs/gen1recomp/technology-evaluation.md) — Runtime-/Grafik-/Audio-/Input-Entscheidungsmatrix
 - [`docs/gen1recomp/web-runtime-analysis.md`](docs/gen1recomp/web-runtime-analysis.md) / [`web-runtime-surface.json`](docs/gen1recomp/web-runtime-surface.json) / [`lovejs-smoke-report.json`](docs/gen1recomp/lovejs-smoke-report.json) / [`lovejs-launcher-report.json`](docs/gen1recomp/lovejs-launcher-report.json) — reproduzierbarer LÖVE-/Lua-Web-Kompatibilitätsumfang, ausgeführter Smoke-Test und ROM-freier Launcher-Boot
+- [`docs/gen1recomp/thread-fallback-analysis.md`](docs/gen1recomp/thread-fallback-analysis.md) — gemessene Worker-Unverfügbarkeit, Bootstrap-Normalisierung und alle No-Thread-Pfade
 - [`docs/gen1recomp/target-architecture.md`](docs/gen1recomp/target-architecture.md) — Komponenten, Ports, Protokolle und Rollback
 - [`docs/gen1recomp/compatibility-matrix.md`](docs/gen1recomp/compatibility-matrix.md) — unabhängige Versionen und Aktivierungsregeln
 - [`docs/gen1recomp/ui-ux.md`](docs/gen1recomp/ui-ux.md) — native Plattform-UI versus originale Game-UI
@@ -91,15 +92,18 @@ Der erste host-unabhängige Schnitt ist implementiert; ein spielbarer Scripting-
 - `components/updates/src/`: sichere Archiv-Vorprüfung, SemVer-Abhängigkeitsauflösung sowie journalisierte Aktivierung/Recovery;
 - `runtime/adapters/lovejs/persistence.ts`: serialisierte explizite Emscripten-Persistenzbarriere mit Timeout/Fehlerzuordnung;
 - `tests/`: Vertrags-, Schema-, Archiv-, Resolver-, Journal-/Recovery-, BitOp-, Persistenz- und Acquisition-Tests;
-- `compatibility/love-web/bit.lua`: vollständiger reiner-Lua-BitOp-Hostshim, gegen vendored LuaJIT 2.1 differenziell geprüft;
+- `compatibility/love-web/`: vollständiger BitOp-Hostshim plus Bootstrap, der den gemessen unbrauchbaren Worker-Konstruktor ausblendet und bestehende Upstream-Fallbacks aktiviert;
+- `tools/package_gen1recomp_payload.py`: byte-reproduzierbarer ROM-freier v0.1.96-Payload mit festen ZIP-Zeitstempeln;
 - `probes/lovejs-smoke/`: ROM-freier, außerhalb Scripting bestandener LÖVE-11.5-Web-Smoke-Test;
-- `probes/lovejs-launcher/` und `tools/prepare_lovejs_launcher.py`: reproduzierbarer ROM-freier v0.1.96-Launcher-Boot mit Overlay, weiterhin kein Scripting-Runtime-Pass.
+- `probes/lovejs-launcher/` und `tools/prepare_lovejs_launcher.py`: deterministischer ROM-freier v0.1.96-Launcher-Boot mit Wrapper/Overlays, weiterhin kein Scripting-Runtime-Pass.
 
 Gepinnte Gen1Recomp-/Wiki-/Runtime-Quellen reproduzieren und den ROM-freien Web-Probe vorbereiten:
 
 ```bash
 python3 tools/acquire_gen1recomp.py --source-only
+python3 tools/package_gen1recomp_payload.py --version 0.1.96
 python3 tools/prepare_lovejs_smoke.py
+python3 tools/prepare_lovejs_launcher.py
 ```
 
 Prüfen:

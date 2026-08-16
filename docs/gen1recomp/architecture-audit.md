@@ -57,7 +57,8 @@ Both were still their respective `main` tips at `2026-08-16T09:47:14Z`. The lock
 | `technology-evaluation.md` | General iOS/WebKit capability is not promoted to Scripting support; the conditional WebView direction remains accurate. |
 | `web-runtime-analysis.md` / `web-runtime-surface.json` | Reproducibly inventories the broad LÖVE/Lua surface while labelling lexical false positives and refusing support/performance conclusions. |
 | `lovejs-smoke-report.json` | Records the initial missing-`bit` failure, adapter-only remediation, 9,492 BitOp differential checks, final 23/23 outside-browser pass and persistence-race characterization with strict environment limitations. |
-| `lovejs-launcher-report.json` | Records a visible 1024x768 ROM-free v0.1.96 launcher boot through the overlay, with no page/runtime/request errors and no claim of game/ROM/Scripting parity. |
+| `lovejs-launcher-report.json` | Records a visible 1024x768 deterministic/bootstrap-wrapped ROM-free v0.1.96 launcher boot, with no page/runtime/request errors and no claim of game/ROM/Scripting parity. |
+| `thread-fallback-analysis.md` | Connects the measured false-positive worker symbol to a pre-core host normalization and attributed soft paths for Fetch, Update, Mod Job, ROM import and ChipAudio. |
 | `target-architecture.md` | Host envelopes now use JSON values rather than unconstrained `unknown`; manifest integrity and journal records now match implemented contracts. |
 | `compatibility-matrix.md` | Implemented host-independent contracts are distinguished from interfaces and unavailable backends; iOS reconstruction status is explicit. |
 | `ui-ux.md` | Original Game UI and native Platform UI remain separate; no inaccessible overlay or guessed active version is required. |
@@ -77,6 +78,8 @@ Implemented definitions:
 - named API compatibility evaluation that attributes missing, malformed and unsatisfied ranges;
 - upstream mod-permission mapping and least-privilege capability decisions without raw filesystem grants or sandbox claims;
 - LuaJIT-BitOp-compatible pure Lua web overlay with 9,492 differential comparisons;
+- functional thread capability normalization plus direct soft-failure/synchronous fallback characterization;
+- deterministic ROM-free source packager with fixed ZIP order/timestamps and reproducible digest;
 - serialized Emscripten persistence populate/flush barrier with timeout and attributed failure handling;
 - recoverable activation journal with conservative rollback for every phase that may have changed the active pointer.
 
@@ -84,7 +87,7 @@ The archive module validates an adapter-provided entry inventory; it is not itse
 
 ## 6. Verification boundary
 
-Current local verification covers TypeScript compilation, pure unit tests, JSON Schema compilation/validation, Python acquisition behavior, npm dependency audit, LuaJIT-vs-shim BitOp differential testing and a ROM-free love.js execution in Headless Chromium 149/SwiftShader. It does **not** cover:
+Current local verification covers TypeScript compilation, pure unit tests, JSON Schema compilation/validation, Python acquisition behavior, npm dependency audit, deterministic payload packaging, LuaJIT-vs-shim BitOp differential testing, thread-fallback characterization and ROM-free love.js/launcher execution in isolated Headless Chromium 149/SwiftShader. It does **not** cover:
 
 - Scripting-synchronized declarations;
 - Scripting runtime execution;

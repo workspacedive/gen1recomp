@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import copy
+import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import shutil
@@ -12,29 +14,28 @@ import zipfile
 
 from prepare_lovejs_smoke import (
     DEFAULT_LOCK,
-    DEFAULT_SOURCE,
+    DEFAULT_SOURCE as DEFAULT_RUNTIME,
     EXTERNAL_FILES,
     REPO_ROOT,
     sha256,
     source_revision,
     verify_file,
 )
-
-DEFAULT_PAYLOAD = (
-    REPO_ROOT
-    / "research"
-    / "downloads"
-    / "gen1recomp"
-    / "android-v0.1.96"
-    / "source-built"
-    / "game.love"
+from package_gen1recomp_payload import (
+    DEFAULT_SOURCE as DEFAULT_GAME_SOURCE,
+    package as package_payload,
 )
+
 DEFAULT_OUTPUT = (
     REPO_ROOT / "research" / "downloads" / "gen1recomp" / "lovejs-launcher"
 )
 PROBE_SOURCE = REPO_ROOT / "probes" / "lovejs-launcher"
-SHIM = REPO_ROOT / "compatibility" / "love-web" / "bit.lua"
+COMPATIBILITY_ROOT = REPO_ROOT / "compatibility" / "love-web"
+BIT_SHIM = COMPATIBILITY_ROOT / "bit.lua"
+BOOTSTRAP = COMPATIBILITY_ROOT / "bootstrap.lua"
 PROBE_FILES = ("index.html", "launcher-probe.js", "launcher-probe.css")
+ORIGINAL_MAIN = "gen1recomp-main.lua"
+MAIN_WRAPPER = b'''-- Generated host wrapper; original upstream main.lua is gen1recomp-main.lua.\nlocal Bootstrap = require("love-web-bootstrap")\nBootstrap.install(love, {\n  disableThreadWorkers = true,\n  threadReason = "love.js 11.5 worker construction probe failed",\n})\nlocal main, loadError = love.filesystem.load("gen1recomp-main.lua")\nassert(main, loadError)\nreturn main()\n'''
 
 
 def safe_archive_path(name: str) -> bool:
@@ -63,15 +64,29 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             raise RuntimeError(f"source payload contains unsafe paths: {unsafe[:3]}")
         if symlinks:
             raise RuntimeError(f"source payload contains symbolic links: {symlinks[:3]}")
-        if "bit.lua" in names:
-            raise RuntimeError("source payload already contains bit.lua; overlay decision is ambiguous")
+        reserved = {"bit.lua", "love-web-bootstrap.lua", ORIGINAL_MAIN}
+        conflicts = sorted(reserved.intersection(names))
+        if conflicts:
+            raise RuntimeError(
+                f"source payload already contains reserved overlay paths: {conflicts}"
+            )
         with zipfile.ZipFile(destination, "w") as output:
             for info in original.infolist():
-                output.writestr(info, original.read(info.filename))
-            shim_info = zipfile.ZipInfo("bit.lua", (1980, 1, 1, 0, 0, 0))
-            shim_info.compress_type = zipfile.ZIP_DEFLATED
-            shim_info.external_attr = 0o100644 << 16
-            output.writestr(shim_info, SHIM.read_bytes())
+                target_info = info
+                if info.filename == "main.lua":
+                    target_info = copy.copy(info)
+                    target_info.filename = ORIGINAL_MAIN
+                output.writestr(target_info, original.read(info.filename))
+
+            def overlay(path: str, data: bytes) -> None:
+                overlay_info = zipfile.ZipInfo(path, (1980, 1, 1, 0, 0, 0))
+                overlay_info.compress_type = zipfile.ZIP_DEFLATED
+                overlay_info.external_attr = 0o100644 << 16
+                output.writestr(overlay_info, data)
+
+            overlay("main.lua", MAIN_WRAPPER)
+            overlay("bit.lua", BIT_SHIM.read_bytes())
+            overlay("love-web-bootstrap.lua", BOOTSTRAP.read_bytes())
 
     with zipfile.ZipFile(destination) as result:
         if result.testzip() is not None:
@@ -80,15 +95,35 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             "entries": len(result.infolist()),
             "size": destination.stat().st_size,
             "sha256": sha256(destination),
-            "overlay": {
-                "path": "bit.lua",
-                "source": SHIM.relative_to(REPO_ROOT).as_posix(),
-                "sha256": sha256(SHIM),
-            },
+            "overlays": [
+                {
+                    "path": "bit.lua",
+                    "source": BIT_SHIM.relative_to(REPO_ROOT).as_posix(),
+                    "sha256": sha256(BIT_SHIM),
+                },
+                {
+                    "path": "love-web-bootstrap.lua",
+                    "source": BOOTSTRAP.relative_to(REPO_ROOT).as_posix(),
+                    "sha256": sha256(BOOTSTRAP),
+                },
+                {
+                    "path": "main.lua",
+                    "source": "generated host wrapper",
+                    "upstreamMain": ORIGINAL_MAIN,
+                    "sha256": hashlib.sha256(MAIN_WRAPPER).hexdigest(),
+                },
+            ],
         }
 
 
-def prepare(lock_path: Path, runtime: Path, payload: Path, output: Path) -> dict[str, object]:
+def prepare(
+    lock_path: Path,
+    runtime: Path,
+    game_source: Path,
+    payload: Path | None,
+    output: Path,
+    version: str,
+) -> dict[str, object]:
     lock = json.loads(lock_path.read_text(encoding="utf-8"))
     candidate = lock["runtimeCandidates"]["lovejs11_5"]
     revision = source_revision(runtime)
@@ -96,18 +131,39 @@ def prepare(lock_path: Path, runtime: Path, payload: Path, output: Path) -> dict
         raise RuntimeError(f"love.js revision mismatch: {revision}/{candidate['revision']}")
     for relative in EXTERNAL_FILES:
         verify_file(runtime / relative, candidate["files"][relative])
-
-    expected_payload = lock["androidAnalysis"]["sourceBuiltPayload"]
-    verify_file(payload, {
-        "name": payload.name,
-        "size": expected_payload["size"],
-        "sha256": expected_payload["sha256"],
-        "githubAssetId": 1,
-    })
+    game_revision = source_revision(game_source)
+    expected_revision = lock["upstream"]["releaseRevision"]
+    if game_revision != expected_revision:
+        raise RuntimeError(
+            f"Gen1Recomp source revision mismatch: {game_revision}/{expected_revision}"
+        )
 
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="lovejs-launcher.", dir=output.parent) as temporary:
-        staging = Path(temporary) / "web"
+        temporary_root = Path(temporary)
+        if payload is None:
+            base_payload = temporary_root / "deterministic-game.love"
+            source_payload_report = package_payload(game_source, base_payload, version)
+            source_payload_report.pop("path", None)
+            source_payload_report["provenance"] = (
+                "deterministic ROM-free package from pinned v0.1.96 source"
+            )
+        else:
+            expected_payload = lock["androidAnalysis"]["sourceBuiltPayload"]
+            verify_file(payload, {
+                "size": expected_payload["size"],
+                "sha256": expected_payload["sha256"],
+            })
+            base_payload = payload
+            source_payload_report = {
+                "path": payload.as_posix(),
+                "size": payload.stat().st_size,
+                "sha256": sha256(payload),
+                "sourceRevision": game_revision,
+                "provenance": "historical local v0.1.96 source build; not official",
+            }
+
+        staging = temporary_root / "web"
         staging.mkdir()
         for relative in EXTERNAL_FILES:
             target = staging / relative
@@ -115,16 +171,13 @@ def prepare(lock_path: Path, runtime: Path, payload: Path, output: Path) -> dict
             shutil.copyfile(runtime / relative, target)
         for relative in PROBE_FILES:
             shutil.copyfile(PROBE_SOURCE / relative, staging / relative)
-        payload_report = add_compatibility_overlay(payload, staging / "gen1recomp.love")
+        payload_report = add_compatibility_overlay(
+            base_payload, staging / "gen1recomp.love"
+        )
         report: dict[str, object] = {
             "schemaVersion": 1,
             "runtimeRevision": revision,
-            "sourcePayload": {
-                "path": payload.as_posix(),
-                "size": payload.stat().st_size,
-                "sha256": sha256(payload),
-                "provenance": "local v0.1.96 source build; not official release artifact",
-            },
+            "sourcePayload": source_payload_report,
             "preparedPayload": payload_report,
             "scope": "ROM-free launcher boot only; no ROM/cache/save included",
         }
@@ -141,15 +194,23 @@ def prepare(lock_path: Path, runtime: Path, payload: Path, output: Path) -> dict
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--lock", type=Path, default=DEFAULT_LOCK)
-    parser.add_argument("--runtime", type=Path, default=DEFAULT_SOURCE)
-    parser.add_argument("--payload", type=Path, default=DEFAULT_PAYLOAD)
+    parser.add_argument("--runtime", type=Path, default=DEFAULT_RUNTIME)
+    parser.add_argument("--source", type=Path, default=DEFAULT_GAME_SOURCE)
+    parser.add_argument(
+        "--payload",
+        type=Path,
+        help="Use the exact historical locked local payload instead of repackaging source",
+    )
+    parser.add_argument("--version", default="0.1.96")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
     report = prepare(
         args.lock.resolve(),
         args.runtime.resolve(),
-        args.payload.resolve(),
+        args.source.resolve(),
+        args.payload.resolve() if args.payload else None,
         args.output.resolve(),
+        args.version,
     )
     prepared = report["preparedPayload"]
     print(

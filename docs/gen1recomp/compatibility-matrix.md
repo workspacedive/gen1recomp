@@ -27,8 +27,8 @@ Versions below are contract starting points, not claims of completed artifacts.
 |---|---:|---:|---|
 | Host protocol | 0.1.0 | 1.0.0 | strict types, parser and JSON Schema implemented; no host transport yet |
 | Component/update contracts | 0.2.0 | manifest/catalog schema 1 | strict catalog trust, archive preflight, dependency/API planner, manual orchestrator, activation journal and recovery implemented host-independently |
-| Scripting host | 0.2.0-native | 1.0.0 | native Home/Games/Updates/Settings shell and deterministic ROM-free package; native TSX device run pending. Preview 0.1.4 separately passed physical runtime startup |
-| iOS/Scripting platform adapter | 0.2.0-spike | 1.0.0 | physical local-file WebView path passed; App Group update storage/materialization and native page behavior pending |
+| Scripting host | 0.3.0-native | 1.0.0 | native Home/Games/Updates/Mods/Settings shell with deterministic ROM-free package; Native 0.2.0 Settings→runtime physically passed, 0.3.0 file/GitHub paths pending |
+| iOS/Scripting platform adapter | 0.3.0-spike | 1.0.0 | physical local-file WebView path passed; DocumentPicker/App Group/Archive/Crypto/GitHub redirect behavior pending |
 | Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
 | Lua runtime adapter | love.js PUC Lua 5.1 | 1.0.0 | physical Scripting startup passed; no LuaJIT/FFI; complete touch/audio/persistence live-activation profile remains blocked |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
@@ -36,8 +36,8 @@ Versions below are contract starting points, not claims of completed artifacts.
 | LÖVE distribution | selected pinned 11.5 web | 11.5.0 | physical Scripting launcher startup passed; no-worker mode required; real-title/audio/input/save/performance pending |
 | Kernel façade | 0.1.0 | 1.0.0 | façade/characterization work pending |
 | Gen1Recomp core payload | 0.1.96 | upstream internal contract | pinned ROM-free source-built payload; outside-browser launcher boot passed |
-| Mod API adapter | 0.1.0 | 2.0.0 | scoped permission/capability policy implemented; Lua façade and v1 behavior integration pending |
-| Platform UI | 0.2.0-native | 1.0.0 | native bottom navigation/update states implemented; ROM library and physical TSX validation pending |
+| Mod API adapter | 0.2.0 | 2.0.0 | strict API-1/2 manifest/GitHub/archive package management and scoped capability policy implemented; native consent/profile/runtime injection and Lua façade validation pending |
+| Platform UI | 0.3.0-native | 1.0.0 | five-tab navigation, manual component packages and inactive file/GitHub mod management implemented; ROM library and physical 0.3.0 validation pending |
 | Individual mods | own semver | manifest API 1/2 | install only after runtime parity |
 
 Component/API versions use canonical `X.Y.Z` semantic versions in target manifests. This is separate from compact upstream integers (shell/Mod API/link) and the HostProtocol envelope discriminator `protocol: 1`.
@@ -102,9 +102,9 @@ No component is independently updateable merely because it has a directory. It b
 
 1. No connected Scripting app/version-specific declarations or reported Scripting app build.
 2. Runtime startup is verified, but audible audio, simultaneous input, save persistence and pre-dismiss flush are not.
-3. Native 0.2.0 TSX, App Group durability, Archive/Crypto package installation and updated-generation boot are not physically validated.
+3. Native 0.3.0 DocumentPicker, App Group durability, Archive/Crypto package installation, GitHub signed-asset redirects and updated-generation boot are not physically validated.
 4. No controller API in reviewed Scripting docs.
 5. No direct Metal API in reviewed Scripting docs.
 6. Heavy upstream cross-component/direct-LÖVE coupling.
 7. Existing native iOS build still fetches mutable LÖVE/Apple dependency `main` branches; the v0.1.96 build-time tips were reconstructed, but the build does not itself pin or attest them.
-8. The future mod store needs its separate catalog, capability consent, profile activation and rollback implementation before its reserved tab is enabled.
+8. The Mods package tab is enabled but every install remains inactive; discovery freshness, dependency auto-install, capability consent, profile/load order, payload injection and runtime rollback remain blockers for game activation.

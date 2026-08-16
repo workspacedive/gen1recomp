@@ -1,43 +1,60 @@
-# Gen1Recomp Native 020
+# Gen1Recomp Native 030
 
-First native Scripting product-shell slice. This project is intentionally separate from the physically validated `Gen1Recomp Preview 014` fallback.
+Native Scripting product-shell iteration built on the physically validated Preview 0.1.4 runtime and Native 0.2.0 diagnostic path.
 
 ## Native control plane
 
-- adaptive bottom navigation for Home, Games, Updates, and Settings;
-- a disabled-by-policy `mods` destination in the tab registry, ready to become a peer tab when discovery/install is functional;
+- adaptive bottom navigation for Home, Games, Updates, Mods, and Settings;
 - centralized German/English strings;
-- explicit update loading/content/checking/installing/success/error states;
-- manually initiated system-catalog checks only;
-- independent LÖVE/Lua runtime and Gen1Recomp core rows;
-- per-component and aggregate update actions;
-- private App Group component storage, interruption journal, previous/known-good generations, and runtime rollback after a failed first boot.
+- explicit loading/content/working/success/error states;
+- manual-only system and mod network checks;
+- private App Group component and mod registries;
+- ROM-free runtime diagnostic with rollback to known-good component generation.
 
-The Games screen is deliberately honest: it provides the native empty state, but the ROM picker/import transaction is not activated in this build. No web launcher is presented as native ROM management.
+The Games screen remains deliberately honest: the native persistent ROM transaction is not activated in this build. No web launcher is presented as native ROM management.
 
-## Update path
+## System components
 
-The device adapter pins:
+The system screen supports:
 
-- catalog ID `org.gen1recomp.system`;
-- `stable` system domain;
-- exact HTTPS catalog and artifact roots on `main`;
-- monotonic catalog sequence;
-- supported component IDs/kinds and archive file allowlists.
+- separately versioned LÖVE/Lua runtime and Gen1Recomp core;
+- manual catalog checks;
+- individual or aggregate updates;
+- manually selected package ZIPs whose exact size and SHA-256 already exist in the trusted catalog;
+- catalog identity/domain/channel/source/sequence policy;
+- dependency and API compatibility checks;
+- archive allowlists, immutable version directories, activation journal, health check and rollback.
 
-A manual install resolves the supported component dependency subset, checks host API compatibility, downloads all component generations required for a complete runtime, verifies exact size and SHA-256, rejects unsafe/unexpected archive entries and expansion ratios, stages immutable component files, materializes a private runtime, writes the activation pointer under a recovery journal, checks runtime completeness, and commits or restores the previous state.
+LÖVE and Lua are currently one physical love.js/WASM distribution and cannot truthfully be replaced independently without a new runtime ABI/package split. The UI therefore labels the replaceable unit `LÖVE / Lua Runtime` rather than pretending Lua is a standalone file.
 
-The generic, fully tested update semantics remain in `components/updates/`; this file adapter is the narrow Scripting implementation. The catalog currently contains only the versions shipped by this package, so the initial expected result is “Up to Date.” New versions must be published under new immutable artifact names and a higher catalog sequence.
+## Mods
+
+The Mods tab supports:
+
+- manual `.zip` import through `DocumentPicker`;
+- install from a public GitHub `owner/repo`;
+- manual GitHub update checks;
+- individual or aggregate update actions;
+- deletion and previous-version metadata;
+- private immutable package versions and recoverable registry generation;
+- visible permissions, conflicts, source and inactive status.
+
+GitHub installation accepts only a stable release with an unambiguous ZIP, positive bounded size, `uploaded` asset state and GitHub-provided SHA-256 digest. The selected release asset is then downloaded and its ZIP plus packaged `manifest.json` are independently validated. Repository, tag version, manifest version and manifest `github` source must agree.
+
+Archive policy rejects traversal, invalid Unicode/path shape, case-insensitive and parent-file collisions, symlinks, expansion bombs, excessive entry/byte limits, ROMs, ROM patches, `baseroms`, native libraries and Lua bytecode. Installation always commits **inactive**: it grants no `network`, `engine_internals`, `steps`, `background` or legacy `filesystem` capability. Game-profile activation and explicit permission consent are separate future gates.
+
+The community index remains a discovery source only. It is not installation evidence; the exact GitHub Release and packaged manifest are re-read because index metadata can be stale.
 
 ## Runtime boundary
 
-`runtime-v020/` is the packaged ROM-free diagnostic fallback. `runtime-shell-v020/` is a host-owned scaffold used to materialize updated private component sets. The native Settings action starts the diagnostic explicitly. It does not execute ROM data and is not an emulator.
+`runtime-v030/` is the packaged ROM-free diagnostic fallback. `runtime-shell-v030/` materializes updated system component sets. Installed mods are not injected or enabled in the game plane yet; claiming installation as runtime compatibility would be incorrect.
 
-The Preview 0.1.4 post-dismiss JavaScript call is not repeated: Scripting resolves `WebViewController.present()` after the view is gone on the affected physical path. A production game session still needs a pre-dismiss close/flush handshake before save-bearing gameplay is enabled.
+The Preview 0.1.4 post-dismiss JavaScript call is not repeated. Save-bearing gameplay still needs a physically validated pre-dismiss close/flush handshake.
 
 ## Evidence status
 
-- official APIs cross-checked: `Navigation`, `NavigationStack`, legacy-compatible `TabView`, hooks, `FileManager`, `Archive`, `Crypto`, native `fetch`, `Data`, `Dialog`, and `WebViewController`;
-- strict local declaration-subset typecheck: automated;
-- deterministic package/integrity tests: automated;
-- exact native Scripting compilation, rendering, network behavior, private-store durability, interruption recovery, and updated-runtime launch: physical device verification pending.
+- Native 0.2.0 physically reached ready frame 21 from its native Settings action on iPhone/iOS 18.7;
+- Native 0.3.0 official APIs cross-checked: `Navigation`, legacy-compatible `TabView`, hooks, `DocumentPicker`, `FileManager`, `Archive`, `Crypto`, native `fetch`, `Data`, `Dialog`, and `WebViewController`;
+- strict local declaration-subset typecheck and host-independent catalog/manifest/release/archive tests automated;
+- deterministic package/runtime browser characterization automated;
+- Native 0.3.0 Mods UI, GitHub API/redirect path, manual file access, App Group registry recovery and component import still require physical-device validation.

@@ -39,7 +39,36 @@ declare const console: {
 
 declare const Device: { readonly systemLanguageCode: string }
 declare const Dialog: {
-  alert(options: { title: string; message: string; buttonLabel: string }): Promise<void>
+  alert(options: { title?: string; message: string; buttonLabel?: string }): Promise<void>
+  confirm(options: { title?: string; message: string; cancelLabel?: string; confirmLabel?: string }): Promise<boolean>
+  prompt(options: {
+    title: string
+    message?: string
+    defaultValue?: string
+    placeholder?: string
+    cancelLabel?: string
+    confirmLabel?: string
+  }): Promise<string | null>
+}
+
+declare class URL {
+  constructor(value: string, base?: string)
+  readonly protocol: string
+  readonly hostname: string
+  readonly pathname: string
+  readonly username: string
+  readonly password: string
+  toString(): string
+}
+
+declare const DocumentPicker: {
+  pickFiles(options?: {
+    initialDirectory?: string
+    types?: string[]
+    shouldShowFileExtensions?: boolean
+    allowsMultipleSelection?: boolean
+  }): Promise<string[]>
+  stopAcessingSecurityScopedResources(): void
 }
 
 declare class Data {
@@ -84,6 +113,7 @@ type NativeRedirectRequest = { readonly url: string }
 type NativeFetchOptions = {
   readonly timeout?: number
   readonly debugLabel?: string
+  readonly headers?: Readonly<Record<string, string>>
   readonly handleRedirect?: (request: NativeRedirectRequest) => Promise<NativeRedirectRequest | null>
 }
 type NativeResponse = {

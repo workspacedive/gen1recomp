@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gen1recomp.local/schemas/mod-registry.schema.json",
+  "title": "Gen1Recomp Scripting Mod Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "mods", "updatedAt"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "mods": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/mod" }
+    },
+    "updatedAt": { "$ref": "#/$defs/timestamp" }
+  },
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "nullableString": {
+      "type": ["string", "null"]
+    },
+    "mod": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "name", "version", "api", "entry", "category", "profile",
+        "description", "github", "permissions", "conflicts", "dependencies",
+        "packagePath", "packageSha256", "source", "releaseTag", "previousVersion",
+        "enabled", "installedAt", "updatedAt"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "version": { "type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$" },
+        "api": { "enum": [1, 2] },
+        "entry": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "category": { "type": "string", "minLength": 1, "maxLength": 32 },
+        "profile": { "enum": ["content", "overhaul", "total_conversion"] },
+        "description": { "type": "string" },
+        "github": { "$ref": "#/$defs/nullableString" },
+        "permissions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["network", "filesystem", "engine_internals", "steps", "background"] }
+        },
+        "conflicts": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$" }
+        },
+        "dependencies": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$" }
+        },
+        "packagePath": { "type": "string", "minLength": 1 },
+        "packageSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "source": { "enum": ["manual", "github"] },
+        "releaseTag": { "$ref": "#/$defs/nullableString" },
+        "previousVersion": { "$ref": "#/$defs/nullableString" },
+        "enabled": { "const": false },
+        "installedAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" }
+      }
+    }
+  }
+}

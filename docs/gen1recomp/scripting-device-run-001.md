@@ -1,4 +1,4 @@
-# Scripting physical-device runs 001–005
+# Scripting physical-device runs 001–006
 
 - **Evidence level:** user-reported installed Scripting host on a physical iOS device
 - **Scripting app version/build:** not yet supplied
@@ -34,6 +34,12 @@ The user-installed Preview 0.1.4 reached `preview.ready` at frame 2 on iPhone/iO
 
 The only observed error occurred after dismissal: the host logged `preview dismissed; requesting runtime flush and shutdown` and then `Script error.` The host had already lost a usable page before evaluating the shutdown bridge. This is a close/flush sequencing defect, not a runtime-start defect. The native 0.2.0 shell does not repeat post-dismiss JavaScript evaluation; save-bearing gameplay remains blocked until a pre-dismiss flush handshake is physically validated.
 
+## Run 006 — Native 0.2.0 diagnostic pass
+
+The user launched `Gen1Recomp Native 020`, reached its native Settings action, and started the packaged runtime diagnostic. The device log confirmed the exact `0.2.0 / 020` identity, pinned love.js revision/payload, all four embedded resources at expected byte lengths, classic bundle execution and `ready frame 21` without startup errors.
+
+This proves the Native 0.2.0 TSX host was sufficiently functional to present and invoke the Settings action and that its WebView adapter preserved the validated runtime path. No screenshot, system-update request, App Group interruption test, dismissal log or iPad evidence was supplied, so those remain separate. Native 0.3.0 adds manual component ZIP and file/GitHub mod management and requires a fresh run.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -59,4 +65,4 @@ The only observed error occurred after dismissal: the host logged `preview dismi
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-The separate `Gen1Recomp Native 020` package is not covered by this pass. Its native bottom navigation, App Group persistence, manual catalog request, update empty/current state, runtime diagnostic launch, interruption recovery, and updated-generation materialization each require fresh device evidence.
+Native 0.2.0's Settings-to-runtime diagnostic passed as Run 006. App Group persistence, manual system catalog/package installation, interruption recovery and updated-generation materialization remain untested. Native 0.3.0 additionally requires physical validation of its five-tab shell, DocumentPicker component/mod imports, GitHub API and signed-asset redirects, private mod registry recovery, deletion and manual individual/aggregate mod updates.

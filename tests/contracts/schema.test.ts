@@ -17,6 +17,9 @@ const componentManifest = ajv.compile(
 const updateCatalog = ajv.compile(
   schema("../../../../schemas/update-catalog.schema.json"),
 )
+const modRegistry = ajv.compile(
+  schema("../../../../schemas/mod-registry.schema.json"),
+)
 const hostMessage = ajv.compile(
   schema("../../../../schemas/host-message.schema.json"),
 )
@@ -56,6 +59,37 @@ test("published system update catalog matches the closed catalog and component s
   ), "utf8")) as unknown
   assert.equal(updateCatalog(catalog), true, JSON.stringify(updateCatalog.errors))
   assert.equal(updateCatalog({ ...(catalog as Record<string, unknown>), surprise: true }), false)
+})
+
+test("mod registry schema accepts inactive immutable packages and rejects implicit enablement", () => {
+  const registry = {
+    schemaVersion: 1,
+    updatedAt: "2026-08-16T22:36:04.000Z",
+    mods: [{
+      id: "potato_voxel",
+      name: "PotatoVoxel",
+      version: "1.7.4",
+      api: 2,
+      entry: "main.lua",
+      category: "GRAPHICS",
+      profile: "content",
+      description: "External test record only",
+      github: "ShaneMcGovernIE/potato_voxel",
+      permissions: ["engine_internals", "network"],
+      conflicts: ["DRAMATIC_SHAPE"],
+      dependencies: [],
+      packagePath: "/private/mods/potato_voxel/1.7.4",
+      packageSha256: "d".repeat(64),
+      source: "github",
+      releaseTag: "v1.7.4",
+      previousVersion: null,
+      enabled: false,
+      installedAt: "2026-08-16T22:36:04.000Z",
+      updatedAt: "2026-08-16T22:36:04.000Z",
+    }],
+  }
+  assert.equal(modRegistry(registry), true, JSON.stringify(modRegistry.errors))
+  assert.equal(modRegistry({ ...registry, mods: [{ ...registry.mods[0], enabled: true }] }), false)
 })
 
 test("component schema rejects unknown fields and non-SHA-256 integrity", () => {

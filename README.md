@@ -80,8 +80,10 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - [`docs/gen1recomp/ui-ux.md`](docs/gen1recomp/ui-ux.md) — native Plattform-UI versus originale Game-UI
 - [`docs/gen1recomp/native-shell-updates-spec.md`](docs/gen1recomp/native-shell-updates-spec.md) — Done Contract, Datenfluss und Sicherheitsgrenzen des manuellen System-Updaters
 - [`docs/gen1recomp/mod-store-architecture.md`](docs/gen1recomp/mod-store-architecture.md) — eigenständiger App-Store-inspirierter Mods-Tab, Profile, Consent, Updates und Rollback
+- [`docs/research/potato-voxel-mod-audit.md`](docs/research/potato-voxel-mod-audit.md) — externe, nicht integrierte PotatoVoxel-Referenz zu Manifest, GitHub Releases, Berechtigungen, Cache und Lizenzgrenzen
 - [`docs/gen1recomp/scripting-device-run-001.md`](docs/gen1recomp/scripting-device-run-001.md) — kumulative physische Läufe einschließlich bestandenem Preview-0.1.4-Start
-- [`docs/gen1recomp/scripting-native-020-report.json`](docs/gen1recomp/scripting-native-020-report.json) — maschinenlesbarer Paket-/Runtime-Bericht des nativen 0.2.0-Shells
+- [`docs/gen1recomp/scripting-native-020-report.json`](docs/gen1recomp/scripting-native-020-report.json) — physisch korrelierter nativer 0.2.0-Runtime-Bericht
+- [`docs/gen1recomp/scripting-native-030-report.json`](docs/gen1recomp/scripting-native-030-report.json) — Paket-, Sicherheits- und Runtime-Bericht der 0.3.0-Komponenten-/Modverwaltung
 - [`docs/gen1recomp/scripting-capability-probes.md`](docs/gen1recomp/scripting-capability-probes.md) — physischer Geräteprüfplan
 - [`docs/gen1recomp/device-connection.md`](docs/gen1recomp/device-connection.md) — sicherer lokaler `scripting-cli`-/Deklarations-Handoff
 - [`docs/gen1recomp/architecture-audit.md`](docs/gen1recomp/architecture-audit.md) — dokumentübergreifender Konsistenz- und Evidenzaudit
@@ -93,14 +95,14 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - `components/updates/src/`: geschlossener Katalogparser/Trust-Policy, Update-Inventar und -Planung, SemVer-/Dependency-/API-Kompatibilität, Archivrichtlinie, manueller Transaktionsorchestrator, Aktivierungsjournal und Recovery;
 - `updates/`: deterministische ROM-freie aktuelle LÖVE/Lua- und Gen1Recomp-Komponentenpakete plus sequenzierter Stable-Systemkatalog;
 - `scripting/Gen1RecompPreview/`: physisch validierter Preview-0.1.4-Runtime-Fallback;
-- `scripting/Gen1RecompApp/`: nativer 0.2.0-Produktshell mit Home/Games/Updates/Settings, privatem Komponentenstatus, manuellem System-Updater, Runtime-Materialisierung/First-Boot-Rollback und vorbereitetem Mods-Tab;
+- `scripting/Gen1RecompApp/`: nativer 0.3.0-Produktshell mit Home/Games/Updates/Mods/Settings, vertrauensgebundenem manuellen Komponentenimport, Datei-/GitHub-Modinstallation und -Updates, privatem Registry-Backup sowie Runtime-Materialisierung/First-Boot-Rollback;
 - `runtime/adapters/lovejs/` und `runtime/manager/`: serialisierte Persistenz, funktionale Capability-Evidenz und geordnete Lifecycle-/Concurrency-Grenzen;
 - `compatibility/love-web/`: vollständiger BitOp-Hostshim plus No-Worker-Normalisierung;
 - `schemas/`: geschlossene JSON-Schemas einschließlich Updatekatalog;
 - `tools/package_system_updates.py` und `tools/package_scripting_app.py`: reproduzierbare Systemfeeds und `.scripting`-Pakete;
 - `tests/`: Vertrag, Schema, Runtime, Archiv, Resolver, Katalog, Updateplan/-orchestrierung, Recovery, Scripting-Deklarationssubset und deterministische Pakete.
 
-Der native Games-Screen zeigt 0.2.0 bewusst als leeren Zustand; ROM-Identität, private Extraktion und persistente Bibliothek werden nicht durch eine Attrappe ersetzt. Physische TSX-/Updater-/App-Group-Validierung sowie ROM, Saves, produktionssicheres Close/Flush, Input/Audio und Mods bleiben aktive vertikale Schnitte.
+Der native Games-Screen zeigt 0.3.0 bewusst als leeren Zustand; ROM-Identität, private Extraktion und persistente Bibliothek werden nicht durch eine Attrappe ersetzt. Mods können sicher paketiert installiert/aktualisiert werden, bleiben aber bis zu Profil-, Consent- und Runtime-Injektion inaktiv. Physische 0.3.0-Datei-/GitHub-/App-Group-Validierung sowie ROM, Saves, produktionssicheres Close/Flush und Input/Audio bleiben aktive vertikale Schnitte.
 
 Gepinnte Gen1Recomp-/Wiki-/Runtime-Quellen reproduzieren und den ROM-freien Web-Probe vorbereiten:
 
@@ -122,4 +124,4 @@ python3 tools/audit_references.py --report docs/reference-audit.json
 
 Weitere Produktpfade werden nur nach ihrem jeweiligen Declaration-/Gerätegate aktiviert. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
 
-Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 ist der physisch validierte Runtime-Fallback; Native 0.2.0 ist der aktuelle native Shell-/Updater-Testkandidat.
+Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 und Native 0.2.0 belegen den physischen Runtimepfad; Native 0.3.0 ist der aktuelle Komponenten-/Modverwaltung-Testkandidat.

@@ -363,7 +363,7 @@ Archive policy before extraction:
 
 Because Scripting filesystem atomicity has not been proven, pointer updates use an abstract `ActivationStore` with `active`, `knownGood`, `previous` and `journal` records. The journal moves through `prepared → verified → tested → activating → activated`; recovery discards pre-pointer staging and conservatively restores the previous set from every pointer-changing phase. The native adapter now exists under `scripting/Gen1RecompApp/src/data/`: it pins the catalog/feed, verifies native `Data` with `Crypto.sha256`, inventories ZIP entries through `Archive`, extracts through `FileManager`, materializes a complete private runtime generation, and restores the previous generation if first boot does not reach ready. Its durable write/interruption and memory behavior still require physical device validation; these logical records are not a claim that host file replacement is atomic.
 
-The future Mods tab reuses only generic catalog/download/integrity/archive primitives. It owns a separate catalog domain, capability consent, profile/load-order model, activation journal, update-all plan and rollback history. See [`mod-store-architecture.md`](mod-store-architecture.md).
+Native 0.3.0 enables the separate Mods package-management tab. It reuses only generic manifest/GitHub-release/download/integrity/archive primitives and owns private package/registry storage. Manual ZIP/GitHub install, update checks and inactive registry management are implemented; capability consent, dependency auto-install, profile/load order, runtime injection, activation journal and runtime health rollback remain separate. See [`mod-store-architecture.md`](mod-store-architecture.md).
 
 ## 11. Compatibility/deprecation
 
@@ -426,11 +426,11 @@ The runtime gate is passed, so production directories now follow actual vertical
 - `compatibility/love-web/` contains the LuaJIT-BitOp overlay and pre-core no-worker normalization required by the tested PUC Lua runtime;
 - `runtime/adapters/lovejs/` and `runtime/manager/` retain the host-independent capability, persistence and lifecycle boundaries;
 - `scripting/Gen1RecompPreview/` remains the physically validated Preview 0.1.4 fallback;
-- `scripting/Gen1RecompApp/` is the first native product shell with bottom navigation, private component state, manual update UI/adapter, update materialization, first-boot rollback and explicit ROM-free runtime diagnostic;
+- `scripting/Gen1RecompApp/` is the native 0.3.0 product shell with five-tab navigation, private component state, trusted manual component packages, file/GitHub mod install/update/delete, registry backup, update materialization, first-boot rollback and explicit ROM-free runtime diagnostic;
 - `schemas/` includes closed wire, manifest, activation-journal, runtime-capability and update-catalog schemas;
 - `tests/contracts/`, `tests/runtime/`, `tests/updates/`, `tests/scripting/` and `tests/tools/` exercise host-independent logic, declaration-subset compatibility and deterministic packages.
 
-Physical WebView startup is proven. Native TSX rendering, the manual network/update adapter, private-store interruption durability and updated-generation launch still need device evidence. ROM verification/extraction, persistent game registration, saves, production close/flush, touch/audio parity, Mods and broad device validation remain active implementation slices.
+Physical WebView startup and Native 0.2.0 Settings-to-runtime launch are proven. Native 0.3.0 DocumentPicker, GitHub release/digest/redirect flow, component/mod private storage and registry recovery still need device evidence. ROM verification/extraction, persistent game registration, saves, production close/flush, touch/audio parity, mod consent/profile/runtime activation and broad device validation remain active slices.
 
 ## 13. Core-change exception process
 

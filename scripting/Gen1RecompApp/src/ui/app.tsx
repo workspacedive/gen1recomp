@@ -18,13 +18,15 @@ import {
 } from "scripting"
 
 import { COMPONENTS, PRODUCT, type ProductComponentId } from "../config/product"
+import { ModService, ModServiceError } from "../data/mod-service"
 import { SystemUpdateService, UpdateServiceError } from "../data/system-update-service"
+import type { InstalledMod, ModOperationStage, ModSnapshot, ModViewState } from "../domain/mods"
 import { PRODUCT_TABS, type UpdateMutationStage, type UpdateSnapshot, type UpdateViewState } from "../domain/models"
 import { formatDate, t } from "../i18n/strings"
 import { runRuntimeDiagnostic } from "../platform/runtime-diagnostic"
 
 const enabledTabs = PRODUCT_TABS.filter(({ enabled }) => enabled)
-const tabIndex = (id: "home" | "games" | "updates" | "settings") => enabledTabs.findIndex((tab) => tab.id === id)
+const tabIndex = (id: "home" | "games" | "updates" | "mods" | "settings") => enabledTabs.findIndex((tab) => tab.id === id)
 
 function ScreenToolbar() {
   const dismiss = Navigation.useDismiss()
@@ -201,6 +203,34 @@ function UpdatesScreen({
     }
   }
 
+  const importComponent = async () => {
+    if (isBusy || currentSnapshot == null) return
+    const paths = await DocumentPicker.pickFiles({
+      allowsMultipleSelection: false,
+      shouldShowFileExtensions: true,
+    })
+    const path = paths[0]
+    if (path == null) return
+    setState({ status: "installing", previous: currentSnapshot, stage: "integrity", componentLabel: null })
+    try {
+      const next = await updates.importComponentPackage(path, (stage, componentLabel) => {
+        setState({ status: "installing", previous: currentSnapshot, stage, componentLabel })
+      })
+      onSnapshot(next)
+      setState({ status: "success", snapshot: next, message: t("updateSuccess") })
+    } catch (error) {
+      const known = error instanceof UpdateServiceError ? error : null
+      setState({
+        status: "error",
+        previous: currentSnapshot,
+        message: known?.message ?? t("notAvailable"),
+        canRetry: known?.retryable ?? false,
+      })
+    } finally {
+      DocumentPicker.stopAcessingSecurityScopedResources()
+    }
+  }
+
   const install = async (ids: readonly ProductComponentId[]) => {
     if (isBusy || currentSnapshot == null) return
     setState({ status: "installing", previous: currentSnapshot, stage: "planning", componentLabel: null })
@@ -235,6 +265,13 @@ function UpdatesScreen({
             action={check}
             disabled={isBusy}
           />
+          <Button
+            title={t("componentImport")}
+            systemImage="shippingbox.and.arrow.backward.fill"
+            action={importComponent}
+            disabled={isBusy}
+          />
+          <Text foregroundStyle="secondaryLabel">{t("componentImportHint")}</Text>
         </Section>
 
         {state.status === "loading" ? (
@@ -298,6 +335,251 @@ function UpdatesScreen({
   )
 }
 
+function modStageText(stage: ModOperationStage): string {
+  if (stage === "github") return t("checking")
+  if (stage === "download") return t("download")
+  if (stage === "integrity") return t("integrity")
+  if (stage === "archive") return t("archive")
+  if (stage === "manifest") return t("planning")
+  if (stage === "installing") return t("staging")
+  return t("activation")
+}
+
+function ModRow({
+  mod,
+  updateAvailable,
+  disabled,
+  update,
+  remove,
+}: {
+  mod: InstalledMod
+  updateAvailable: boolean
+  disabled: boolean
+  update: () => void
+  remove: () => void
+}) {
+  return (
+    <VStack alignment="leading" spacing={8}>
+      <HStack>
+        <VStack alignment="leading" spacing={3}>
+          <Text font="headline">{mod.name}</Text>
+          <Text foregroundStyle="secondaryLabel">{`${mod.version} · ${mod.category}`}</Text>
+        </VStack>
+        <Spacer />
+        <Label title={t("inactive")} systemImage="pause.circle.fill" foregroundStyle="systemOrange" />
+      </HStack>
+      <Text foregroundStyle="secondaryLabel">
+        {`${t("permissions")}: ${mod.permissions.length === 0 ? "—" : mod.permissions.join(", ")}`}
+      </Text>
+      {mod.conflicts.length === 0 ? null : (
+        <Text foregroundStyle="secondaryLabel">{`${t("conflicts")}: ${mod.conflicts.join(", ")}`}</Text>
+      )}
+      <Text foregroundStyle="secondaryLabel">{`${t("source")}: ${mod.github ?? mod.source}`}</Text>
+      <HStack>
+        {updateAvailable ? <Button title={t("update")} action={update} disabled={disabled} /> : null}
+        <Button title={t("delete")} action={remove} disabled={disabled} />
+      </HStack>
+    </VStack>
+  )
+}
+
+function ModsScreen({ mods }: { mods: ModService }) {
+  const [state, setState] = useState<ModViewState>({ status: "loading" })
+
+  useEffect(() => {
+    let active = true
+    void mods.initialize().then((snapshot) => {
+      if (active) setState({ status: "content", snapshot })
+    }).catch((error: unknown) => {
+      if (!active) return
+      setState({
+        status: "error",
+        previous: { mods: [], updates: {}, checkedAt: null },
+        message: error instanceof Error ? error.message : t("notAvailable"),
+        canRetry: true,
+      })
+    })
+    return () => { active = false }
+  }, [])
+
+  const snapshot: ModSnapshot | null = state.status === "content" || state.status === "success"
+    ? state.snapshot
+    : state.status === "loading" ? null : state.previous
+  const busy = state.status === "loading" || state.status === "working"
+  const updateCount = snapshot == null ? 0 : Object.keys(snapshot.updates).length
+
+  const fail = (error: unknown, previous: ModSnapshot) => {
+    const known = error instanceof ModServiceError ? error : null
+    setState({
+      status: "error",
+      previous,
+      message: known?.message ?? t("notAvailable"),
+      canRetry: known?.retryable ?? false,
+    })
+  }
+
+  const importZip = async () => {
+    if (busy || snapshot == null) return
+    const paths = await DocumentPicker.pickFiles({ allowsMultipleSelection: false, shouldShowFileExtensions: true })
+    const path = paths[0]
+    if (path == null) return
+    setState({ status: "working", previous: snapshot, stage: "archive", label: null })
+    try {
+      const next = await mods.installFromFile(path, (stage, label) => {
+        setState({ status: "working", previous: snapshot, stage, label })
+      })
+      setState({ status: "success", snapshot: next, message: t("modInstalled") })
+    } catch (error) {
+      fail(error, snapshot)
+    } finally {
+      DocumentPicker.stopAcessingSecurityScopedResources()
+    }
+  }
+
+  const installGitHub = async () => {
+    if (busy || snapshot == null) return
+    const repository = await Dialog.prompt({
+      title: t("githubPromptTitle"),
+      message: t("githubPromptMessage"),
+      placeholder: t("githubPlaceholder"),
+      confirmLabel: t("install"),
+      cancelLabel: t("cancel"),
+    })
+    if (repository == null || repository.trim() === "") return
+    setState({ status: "working", previous: snapshot, stage: "github", label: repository })
+    try {
+      const next = await mods.installFromGitHub(repository, (stage, label) => {
+        setState({ status: "working", previous: snapshot, stage, label })
+      })
+      setState({ status: "success", snapshot: next, message: t("modInstalled") })
+    } catch (error) {
+      fail(error, snapshot)
+    }
+  }
+
+  const checkUpdates = async () => {
+    if (busy || snapshot == null) return
+    setState({ status: "working", previous: snapshot, stage: "github", label: null })
+    try {
+      const next = await mods.checkForUpdates((stage, label) => {
+        setState({ status: "working", previous: snapshot, stage, label })
+      })
+      setState({ status: "content", snapshot: next })
+    } catch (error) {
+      fail(error, snapshot)
+    }
+  }
+
+  const updateOne = async (modId: string) => {
+    if (busy || snapshot == null) return
+    setState({ status: "working", previous: snapshot, stage: "download", label: modId })
+    try {
+      const next = await mods.update(modId, (stage, label) => {
+        setState({ status: "working", previous: snapshot, stage, label })
+      })
+      setState({ status: "success", snapshot: next, message: t("modInstalled") })
+    } catch (error) {
+      fail(error, snapshot)
+    }
+  }
+
+  const updateAll = async () => {
+    if (busy || snapshot == null) return
+    setState({ status: "working", previous: snapshot, stage: "download", label: null })
+    try {
+      const next = await mods.updateAll((stage, label) => {
+        setState({ status: "working", previous: snapshot, stage, label })
+      })
+      setState({ status: "success", snapshot: next, message: t("modInstalled") })
+    } catch (error) {
+      fail(error, snapshot)
+    }
+  }
+
+  const remove = async (mod: InstalledMod) => {
+    if (busy || snapshot == null) return
+    const confirmed = await Dialog.confirm({
+      title: t("deleteModTitle"),
+      message: t("deleteModMessage"),
+      cancelLabel: t("cancel"),
+      confirmLabel: t("delete"),
+    })
+    if (!confirmed) return
+    setState({ status: "working", previous: snapshot, stage: "registry", label: mod.name })
+    try {
+      const next = await mods.remove(mod.id)
+      setState({ status: "success", snapshot: next, message: t("modRemoved") })
+    } catch (error) {
+      fail(error, snapshot)
+    }
+  }
+
+  return (
+    <NavigationStack>
+      <List
+        navigationTitle={t("modsTitle")}
+        navigationBarTitleDisplayMode="large"
+        toolbar={{ cancellationAction: <ScreenToolbar /> }}
+      >
+        <Section footer={<Text>{t("modsIntro")}</Text>}>
+          <Button title={t("importModZip")} systemImage="doc.zipper" action={importZip} disabled={busy} />
+          <Button title={t("installFromGitHub")} systemImage="chevron.left.forwardslash.chevron.right" action={installGitHub} disabled={busy} />
+          <Button title={t("checkModUpdates")} systemImage="arrow.clockwise" action={checkUpdates} disabled={busy} />
+          {updateCount > 1 ? (
+            <Button title={t("updateAllMods")} systemImage="arrow.down.circle.fill" action={updateAll} disabled={busy} />
+          ) : null}
+        </Section>
+
+        {state.status === "loading" ? (
+          <Section><VStack spacing={8}><ProgressView /><Text>{t("installing")}</Text></VStack></Section>
+        ) : null}
+        {state.status === "working" ? (
+          <Section>
+            <VStack alignment="leading" spacing={8}>
+              <ProgressView />
+              <Text font="headline">{modStageText(state.stage)}</Text>
+              {state.label == null ? null : <Text foregroundStyle="secondaryLabel">{state.label}</Text>}
+            </VStack>
+          </Section>
+        ) : null}
+        {state.status === "error" ? (
+          <Section>
+            <Label title={t("errorTitle")} systemImage="exclamationmark.triangle.fill" foregroundStyle="systemOrange" />
+            <Text>{state.message}</Text>
+          </Section>
+        ) : null}
+        {state.status === "success" ? (
+          <Section><Label title={state.message} systemImage="checkmark.circle.fill" foregroundStyle="systemGreen" /></Section>
+        ) : null}
+
+        {snapshot != null && snapshot.mods.length === 0 ? (
+          <Section>
+            <VStack alignment="center" spacing={10} frame={{ maxWidth: "infinity" }}>
+              <Image systemName="puzzlepiece.extension" font={{ name: "system", size: 44 }} />
+              <Text font="headline">{t("noMods")}</Text>
+              <Text foregroundStyle="secondaryLabel">{t("noModsHint")}</Text>
+            </VStack>
+          </Section>
+        ) : null}
+
+        {snapshot == null || snapshot.mods.length === 0 ? null : (
+          <Section title={t("installedMods")} footer={<Text>{t("modSecurity")}</Text>}>
+            {snapshot.mods.map((mod) => (
+              <ModRow
+                mod={mod}
+                updateAvailable={snapshot.updates[mod.id] != null}
+                disabled={busy}
+                update={() => { void updateOne(mod.id) }}
+                remove={() => { void remove(mod) }}
+              />
+            ))}
+          </Section>
+        )}
+      </List>
+    </NavigationStack>
+  )
+}
+
 function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
   const [running, setRunning] = useState(false)
   const runDiagnostic = async () => {
@@ -345,6 +627,7 @@ function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
 
 export default function App() {
   const updates = useMemo(() => new SystemUpdateService(), [])
+  const mods = useMemo(() => new ModService(), [])
   const [selectedTab, setSelectedTab] = useState(tabIndex("home"))
   const [versions, setVersions] = useState<Readonly<Record<ProductComponentId, string>>>({
     [COMPONENTS.runtime.id]: COMPONENTS.runtime.installedVersion,
@@ -374,6 +657,11 @@ export default function App() {
         onSnapshot={acceptSnapshot}
         tag={tabIndex("updates")}
         tabItem={<Label title={t("tabUpdates")} systemImage="arrow.down.circle.fill" />}
+      />
+      <ModsScreen
+        mods={mods}
+        tag={tabIndex("mods")}
+        tabItem={<Label title={t("tabMods")} systemImage="puzzlepiece.extension.fill" />}
       />
       <SettingsScreen
         updates={updates}

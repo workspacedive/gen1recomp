@@ -27,9 +27,9 @@ from package_scripting_phase0_probe import (
 )
 
 DEFAULT_SOURCE = REPO_ROOT / "scripting" / "Gen1RecompApp"
-DEFAULT_OUTPUT = REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Native 020.scripting"
-PACKAGED_RUNTIME = "runtime-v020"
-RUNTIME_SHELL = "runtime-shell-v020"
+DEFAULT_OUTPUT = REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Native 030.scripting"
+PACKAGED_RUNTIME = "runtime-v030"
+RUNTIME_SHELL = "runtime-shell-v030"
 STATIC_RUNTIME_FILES = ("index.html", "preview.css", "preview-bootstrap.js", "preview-loader.js")
 
 
@@ -71,7 +71,7 @@ def collect_entries(source: Path, launcher: Path, lock_path: Path) -> dict[str, 
     for required in ("name", "icon", "color", "version", "entry"):
         if not isinstance(metadata.get(required), str) or not metadata[required]:
             raise RuntimeError(f"script.json field is required: {required}")
-    if metadata["name"] != "Gen1Recomp Native 020" or metadata["version"] != "0.2.0":
+    if metadata["name"] != "Gen1Recomp Native 030" or metadata["version"] != "0.3.0":
         raise RuntimeError("native Scripting product identity is invalid")
     if any(not safe_path(name) for name in entries):
         raise RuntimeError("native Scripting package contains an unsafe path")
@@ -85,7 +85,7 @@ def package(source: Path, launcher: Path, lock_path: Path, output: Path) -> dict
         "runtimeRevision": RUNTIME_REVISION,
         "payloadSha256": PAYLOAD_SHA256,
         "payloadEntries": PAYLOAD_ENTRIES,
-        "scope": "native ROM-free product shell with manual system updater; physical native-page verification pending",
+        "scope": "native ROM-free shell with manual components and file/GitHub mod management; physical 0.3.0 verification pending",
     }
 
 

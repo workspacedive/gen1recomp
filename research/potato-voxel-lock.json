@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-16T22:36:00Z",
+  "purpose": "external mod architecture reference only; no source or assets integrated",
+  "repository": {
+    "url": "https://github.com/ShaneMcGovernIE/potato_voxel",
+    "revision": "d4785fff9b443eb9db2541b58638e1cac4a5af51",
+    "defaultBranch": "main",
+    "license": null,
+    "trackedFiles": 108
+  },
+  "release": {
+    "tag": "v1.7.4",
+    "version": "1.7.4",
+    "publishedAt": "2026-08-16T22:17:02Z",
+    "targetRevision": "d4785fff9b443eb9db2541b58638e1cac4a5af51",
+    "asset": {
+      "id": 517277663,
+      "name": "potato_voxel-1.7.4.zip",
+      "size": 641004,
+      "contentType": "application/zip",
+      "sha256": "261b070bed81516e3f0f468130b4561ee90267ca3d3e15f5d120f4a1fd849450",
+      "url": "https://github.com/ShaneMcGovernIE/potato_voxel/releases/download/v1.7.4/potato_voxel-1.7.4.zip"
+    }
+  },
+  "manifest": {
+    "id": "potato_voxel",
+    "api": 2,
+    "permissions": ["engine_internals", "network"],
+    "github": "ShaneMcGovernIE/potato_voxel",
+    "conflicts": [
+      "DRAMATIC_SHAPE",
+      "ds_fp_ceiling",
+      "dramatic_shape_brick",
+      "BATTLE_ART_VOXEL_FORK",
+      "DRAMALESS_SHAPE"
+    ]
+  },
+  "modIndex": {
+    "repository": "https://github.com/bryanthaboi/gen1recomp-mod-index",
+    "revision": "8b58e316d55c034c7495a9dc5322d9861c142b69",
+    "listedVersion": "1.2.0",
+    "cachedLatestVersion": "1.3.7",
+    "finding": "discovery metadata was stale relative to publisher release 1.7.4"
+  },
+  "localResearch": {
+    "sourceCheckout": "research/downloads/mods/potato_voxel",
+    "indexCheckout": "research/downloads/mods/gen1recomp-mod-index",
+    "ignoredByGit": true,
+    "officialReleaseAssetDownloaded": false,
+    "downloadBlocker": "release-assets.githubusercontent.com terminated transfer before payload bytes; zero-byte partial removed",
+    "sourceArchiveCharacterization": {
+      "officialRelease": false,
+      "uncompressedBytes": 2019383,
+      "zipEntriesIncludingDirectories": 118,
+      "sha256": "6a28775a4963fe801cb0f85a9172bb6b332ce06a0610d8f777f6e617512daeeb"
+    }
+  }
+}

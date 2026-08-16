@@ -104,8 +104,7 @@ export const PRODUCT_TABS: readonly ProductTabDefinition[] = [
   { id: "home", titleKey: "tabHome", systemImage: "house.fill", enabled: true },
   { id: "games", titleKey: "tabGames", systemImage: "square.grid.2x2.fill", enabled: true },
   { id: "updates", titleKey: "tabUpdates", systemImage: "arrow.down.circle.fill", enabled: true },
-  // The extension point is intentionally present but hidden until discovery/install is functional.
-  { id: "mods", titleKey: "tabMods", systemImage: "puzzlepiece.extension.fill", enabled: false },
+  { id: "mods", titleKey: "tabMods", systemImage: "puzzlepiece.extension.fill", enabled: true },
   { id: "settings", titleKey: "tabSettings", systemImage: "gearshape.fill", enabled: true },
 ]
 

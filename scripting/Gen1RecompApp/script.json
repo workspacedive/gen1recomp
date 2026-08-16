@@ -1,9 +1,9 @@
 {
-  "name": "Gen1Recomp Native 020",
+  "name": "Gen1Recomp Native 030",
   "icon": "gamecontroller.fill",
   "color": "systemRed",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "entry": "index.tsx",
   "runInApp": false,
-  "description": "Native Gen1Recomp library shell with manual component updates and a local ROM-free runtime diagnostic."
+  "description": "Native Gen1Recomp shell with manual component packages, file/GitHub mods, updates, and a ROM-free runtime diagnostic."
 }

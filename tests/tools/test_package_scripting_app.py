@@ -36,15 +36,17 @@ class PackageScriptingAppTests(unittest.TestCase):
                 names = archive.namelist()
                 self.assertEqual(names, sorted(names))
                 self.assertIn("src/data/system-update-service.ts", names)
+                self.assertIn("src/data/mod-service.ts", names)
                 self.assertIn("src/domain/models.ts", names)
+                self.assertIn("src/domain/mods.ts", names)
                 self.assertIn("src/ui/app.tsx", names)
-                self.assertIn("runtime-v020/embedded-packages.js", names)
-                self.assertIn("runtime-v020/player.js", names)
-                self.assertIn("runtime-shell-v020/preview-bundle.js", names)
-                self.assertNotIn("runtime-shell-v020/embedded-packages.js", names)
+                self.assertIn("runtime-v030/embedded-packages.js", names)
+                self.assertIn("runtime-v030/player.js", names)
+                self.assertIn("runtime-shell-v030/preview-bundle.js", names)
+                self.assertNotIn("runtime-shell-v030/embedded-packages.js", names)
                 metadata = json.loads(archive.read("script.json"))
-                self.assertEqual(metadata["name"], "Gen1Recomp Native 020")
-                self.assertEqual(metadata["version"], "0.2.0")
+                self.assertEqual(metadata["name"], "Gen1Recomp Native 030")
+                self.assertEqual(metadata["version"], "0.3.0")
                 source_text = "\n".join(
                     archive.read(name).decode("utf-8", errors="ignore")
                     for name in names
@@ -54,13 +56,13 @@ class PackageScriptingAppTests(unittest.TestCase):
                 self.assertNotIn("scriptable", source_text)
 
     def test_published_native_product_has_expected_identity(self) -> None:
-        artifact = ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Native 020.scripting"
+        artifact = ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Native 030.scripting"
         self.assertTrue(artifact.is_file())
         with zipfile.ZipFile(artifact) as archive:
             self.assertIsNone(archive.testzip())
-            self.assertEqual(len(archive.namelist()), 23)
-            self.assertIn(b"manual component updates", archive.read("script.json"))
-            self.assertIn(b"runtime identity 0.2.0 / 020", archive.read("runtime-v020/preview-loader.js"))
+            self.assertEqual(len(archive.namelist()), 25)
+            self.assertIn(b"manual component packages", archive.read("script.json"))
+            self.assertIn(b"runtime identity 0.3.0 / 030", archive.read("runtime-v030/preview-loader.js"))
 
     def test_missing_native_source_fails_closed(self) -> None:
         launcher = ROOT / "research" / "downloads" / "gen1recomp" / "lovejs-launcher"

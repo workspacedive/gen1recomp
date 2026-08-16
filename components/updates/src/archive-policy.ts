@@ -52,7 +52,7 @@ function validatePath(path: string, limits: ArchiveLimits): Result<string, Archi
   if (
     path.length === 0 ||
     path.length > limits.maximumPathLength ||
-    path.includes("\0") ||
+    /[\u0000-\u001f\u007f]/.test(path) ||
     path.includes("\\") ||
     path.startsWith("/") ||
     /^[A-Za-z]:/.test(path) ||
@@ -81,6 +81,7 @@ export function validateArchiveEntries(
   }
 
   const paths = new Set<string>()
+  const pathKinds = new Map<string, ArchiveEntry["kind"]>()
   let totalBytes = 0
   let files = 0
   for (const entry of entries) {
@@ -94,6 +95,7 @@ export function validateArchiveEntries(
       return rejection("path_collision", "entry collides under case-insensitive lookup", entry.path)
     }
     paths.add(collisionKey)
+    pathKinds.set(collisionKey, entry.kind)
 
     if (entry.kind === "symlink") {
       return rejection("symlink", "symbolic links are not accepted", entry.path)
@@ -123,6 +125,15 @@ export function validateArchiveEntries(
         : entry.uncompressedSize / entry.compressedSize
       if (ratio > limits.maximumCompressionRatio) {
         return rejection("compression_ratio", "entry exceeds the configured expansion ratio", entry.path)
+      }
+    }
+  }
+  for (const path of pathKinds.keys()) {
+    const components = path.split("/")
+    for (let depth = 1; depth < components.length; depth += 1) {
+      const ancestor = components.slice(0, depth).join("/")
+      if (pathKinds.get(ancestor) === "file") {
+        return rejection("path_collision", "file entry is also an ancestor of another archive entry", path)
       }
     }
   }

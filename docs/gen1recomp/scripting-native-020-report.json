@@ -11,7 +11,7 @@
   },
   "nativeShell": {
     "staticTypecheck": "passed against documented Scripting API subset",
-    "physicalStatus": "not-run",
+    "physicalStatus": "native Settings action launched packaged runtime; ready frame 21 on iPhone/iOS 18.7",
     "tabs": ["home", "games", "updates", "settings"],
     "reservedDisabledTabs": ["mods"],
     "automaticUpdateCheck": false
@@ -51,7 +51,7 @@
     "requestFailures": []
   },
   "openPhysicalChecks": [
-    "native TSX compile and bottom-tab rendering",
+    "complete bottom-tab layout, accessibility and adaptive iPad rendering",
     "App Group persistence and interrupted-write recovery",
     "manual catalog network request and redirect behavior",
     "native Archive and Crypto package verification",

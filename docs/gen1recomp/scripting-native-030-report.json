@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "package": {
+    "name": "Gen1Recomp-Native-030.scripting",
+    "project": "Gen1Recomp Native 030",
+    "version": "0.3.0",
+    "bytes": 8300856,
+    "entries": 25,
+    "sha256": "6d6700c064f44b964835b6629c9d063c68211574a1668236e1a1121a236de909",
+    "romFree": true
+  },
+  "nativeShell": {
+    "staticTypecheck": "passed against documented Scripting API subset",
+    "physicalStatus": "not-run",
+    "tabs": ["home", "games", "updates", "mods", "settings"],
+    "automaticSystemUpdateCheck": false,
+    "automaticModUpdateCheck": false,
+    "manualSystemComponentPackage": true,
+    "manualModZip": true,
+    "manualGitHubModInstallAndUpdate": true,
+    "modRuntimeActivation": false
+  },
+  "modSecurity": {
+    "githubAssetDigestRequired": true,
+    "installedEnabledDefault": false,
+    "indexIsInstallationAuthority": false,
+    "forbidden": [
+      "path traversal",
+      "case-insensitive collision",
+      "ancestor file collision",
+      "symlink",
+      "expansion bomb",
+      "ROM",
+      "ROM patch",
+      "baserom directory",
+      "native library",
+      "Lua bytecode"
+    ]
+  },
+  "outsideBrowserCharacterization": {
+    "observedAt": "2026-08-16T22:36:04.000Z",
+    "browser": "HeadlessChrome/149.0.7827.0",
+    "scope": "browser-tested runtime-v030; final package runtime entries compared byte-for-byte identical",
+    "httpStatus": 200,
+    "crossOriginIsolated": true,
+    "launcherVisible": true,
+    "canvas": {
+      "width": 1024,
+      "height": 768
+    },
+    "readyFrameObserved": 23,
+    "readyFrameLogged": 22,
+    "embeddedPackages": {
+      "gen1recomp.love": 5938923,
+      "lua/normalize1.lua": 2832,
+      "lua/normalize2.lua": 4095,
+      "11.5/love.wasm": 4720510
+    },
+    "shutdown": "pass",
+    "moduleDone": true,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "requestFailures": []
+  },
+  "openPhysicalChecks": [
+    "five-tab native rendering and accessibility",
+    "manual trusted component ZIP through DocumentPicker",
+    "manual mod ZIP inventory, extraction, registry and deletion",
+    "GitHub API latest stable release and signed asset redirect",
+    "GitHub SHA-256 verification and manifest source/version binding",
+    "individual and aggregate manual mod update UI",
+    "App Group registry backup recovery",
+    "iPad adaptive layout"
+  ]
+}

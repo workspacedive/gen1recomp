@@ -73,6 +73,14 @@ No system update operation runs while the game runtime is active. Repeated taps 
 - Status uses text and SF Symbols in addition to color; controls retain 44 pt targets and Dynamic Type.
 - German and English strings are centralized.
 
+## Native 0.3.0 manual-package extension
+
+- System components may also be selected through `DocumentPicker`; a package is accepted only when exact byte size and SHA-256 match a release in the already trusted system catalog. Manual selection cannot bypass catalog trust or install an unknown component.
+- LÖVE and Lua remain one physical love.js/WASM runtime component until an independently replaceable Lua ABI/artifact exists.
+- The Mods peer tab supports manual ZIP and public GitHub Release installation, manual update checks, individual/aggregate updates and deletion.
+- GitHub installation binds stable tag, asset ID/state/name/size/URL/GitHub digest, downloaded bytes and packaged manifest. Index data is discovery only.
+- Installed mods are private and inactive. Runtime injection, capability consent, dependency auto-install, game profiles/load order and mod health rollback are explicitly not implied by package installation.
+
 ## Mod-store extension contract
 
 The future `mods` tab is a peer product destination, not a subsection of system updates. It will own:

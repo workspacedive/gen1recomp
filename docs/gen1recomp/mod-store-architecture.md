@@ -1,13 +1,27 @@
 # Native Mods tab and mod marketplace architecture
 
-**Status:** reserved product boundary; implementation follows native library/update validation
+**Status:** Native 0.3.0 package-management slice implemented; discovery/profile activation remains gated
 **Date:** 2026-08-16
 
 ## Product position
 
 Mods become a peer **Bottom Navigation tab**, never a modal hidden under Settings and never part of the system-component Updates screen. The information architecture borrows the clarity and editorial hierarchy of the Apple App Store—large editorial features, scannable product rows, search, detail pages, update badges, and an account-like Installed area—without copying Apple artwork or making the project look like a generic storefront.
 
-The root tab registry already contains a disabled `mods` destination. Enabling it adds one destination and its feature module; Home, Games, Updates, and Settings do not need to be redesigned.
+The root tab registry was reserved in Native 0.2.0. Native 0.3.0 enables it without restructuring Home, Games, Updates, or Settings.
+
+## Implemented Native 0.3.0 slice
+
+- native peer Mods tab;
+- manual ZIP import through `DocumentPicker`;
+- public GitHub `owner/repo` latest-stable-release installation;
+- GitHub asset state/size/URL/SHA-256 binding and post-download manifest revalidation;
+- manual individual and aggregate update actions;
+- private immutable version directories, registry previous generation and deletion;
+- visible permissions, conflicts, source and inactive state;
+- archive rejection for traversal, collisions, ancestor-file conflicts, symlinks, expansion bombs, ROMs, patches, baseroms, native libraries and Lua bytecode;
+- installation always inactive, with no implicit capability grant.
+
+Not yet implemented: community-index discovery UI, thumbnails/search/categories, dependency auto-install, explicit capability consent, game/profile enablement/load order, save fingerprinting, mod injection into the game payload and runtime compatibility/rollback health checks. The installed registry is package management, not a claim that installed code has run.
 
 ## Navigation
 
@@ -167,13 +181,13 @@ Search and discovery never auto-install. Destructive removal distinguishes packa
 - Search can be remote only after disclosure; local installed search remains offline.
 - Logs contain public mod identity/version/stage, not private file paths or user data.
 
-## Activation gates
+## Runtime-activation gates
 
-The tab remains hidden until:
+The package-management tab may be visible while every installed mod remains inactive. Enabling a mod in the game plane is blocked until:
 
-1. system update journal/durability behavior is physically validated;
+1. system/mod registry durability behavior is physically validated;
 2. native library and selected game/profile identity exist;
-3. catalog/schema and mod-only activation coordinator have automated tests;
+3. the mod-only activation coordinator and payload/runtime injection have automated tests;
 4. capability consent language is reviewed in German and English;
 5. empty/offline/error/install/update/rollback UI has real-device coverage;
-6. at least one permitted test mod completes install, update, aggregate update, profile activation, failure attribution, and rollback without touching system pointers.
+6. at least one permitted, license-compatible test mod completes install, update, aggregate update, profile activation, failure attribution, cache persistence and rollback without touching system pointers.

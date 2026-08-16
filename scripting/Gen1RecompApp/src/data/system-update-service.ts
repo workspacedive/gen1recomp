@@ -382,9 +382,35 @@ export class SystemUpdateService {
     }
   }
 
+  public async importComponentPackage(
+    path: string,
+    onStage: (stage: UpdateMutationStage, componentLabel: string | null) => void,
+  ): Promise<UpdateSnapshot> {
+    if (this.#busy) throw new UpdateServiceError("busy", "Another update operation is already running.", true)
+    if (this.#catalog == null) throw new UpdateServiceError("catalog", "Check for updates before importing a component package.", true)
+    const data = await FileManager.readAsData(path)
+    if (data.size <= 0 || data.size > PRODUCT.artifactMaximumBytes) {
+      throw new UpdateServiceError("integrity", "The selected component package exceeds its size policy.")
+    }
+    const digest = Crypto.sha256(data).toHexString()
+    const release = this.#catalog.releases.find(({ manifest }) =>
+      manifest.artifact.size === data.size && manifest.artifact.sha256 === digest,
+    )
+    if (release == null) {
+      throw new UpdateServiceError("integrity", "The selected package is not present in the trusted system catalog.")
+    }
+    const identity = `${release.manifest.id}@${release.manifest.version}`
+    return this.install(
+      [release.manifest.id],
+      onStage,
+      new Map([[identity, data]]),
+    )
+  }
+
   public async install(
     requested: readonly ProductComponentId[],
     onStage: (stage: UpdateMutationStage, componentLabel: string | null) => void,
+    localPackages: ReadonlyMap<string, Data> = new Map(),
   ): Promise<UpdateSnapshot> {
     if (this.#busy) throw new UpdateServiceError("busy", "Another update operation is already running.", true)
     if (this.#catalog == null) throw new UpdateServiceError("catalog", "Check for updates before installing.", true)
@@ -438,8 +464,17 @@ export class SystemUpdateService {
         resolving.delete(release.manifest.id)
       }
       for (const id of [...new Set(requested)]) {
-        const release = latestRelease(catalog, id)
-        if (release == null || compareVersions(release.manifest.version, previous.active[id]) <= 0) {
+        const localIdentity = [...localPackages.keys()].find((identity) => identity.startsWith(`${id}@`))
+        const release = localIdentity === undefined
+          ? latestRelease(catalog, id)
+          : exactRelease(catalog, id, localIdentity.slice(`${id}@`.length))
+        if (release == null) {
+          throw new UpdateServiceError("no_update", `No ${COMPONENT_BY_ID[id].label} package is available.`)
+        }
+        const identity = `${release.manifest.id}@${release.manifest.version}`
+        const isTrustedManualReinstall = localPackages.has(identity)
+          && release.manifest.version === previous.active[id]
+        if (compareVersions(release.manifest.version, previous.active[id]) <= 0 && !isTrustedManualReinstall) {
           throw new UpdateServiceError("no_update", `No newer ${COMPONENT_BY_ID[id].label} version is available.`)
         }
         addRelease(release)
@@ -456,7 +491,14 @@ export class SystemUpdateService {
       await FileManager.createDirectory(transactionRoot, true)
       await this.#writeJournal({ schemaVersion: 1, transactionId, phase: "staging", previous, transactionRoot })
       for (const release of required.values()) {
-        await this.#stagePackage(transactionRoot, catalog, release, onStage)
+        const identity = `${release.manifest.id}@${release.manifest.version}`
+        await this.#stagePackage(
+          transactionRoot,
+          catalog,
+          release,
+          onStage,
+          localPackages.get(identity) ?? null,
+        )
       }
       onStage("staging", null)
       const runtimeRoot = await this.#materializeRuntime(transactionRoot, candidate)
@@ -528,22 +570,28 @@ export class SystemUpdateService {
     catalog: SystemCatalog,
     release: CatalogRelease,
     onStage: (stage: UpdateMutationStage, componentLabel: string | null) => void,
+    providedData: Data | null,
   ): Promise<void> {
     const label = COMPONENT_BY_ID[release.manifest.id].label
-    onStage("download", label)
-    const url = `${catalog.artifactBaseURL}${release.manifest.artifact.path}`
-    if (!url.startsWith(PRODUCT.artifactBaseURL)) throw new UpdateServiceError("catalog", "A package URL left the trusted update path.")
-    const response = await fetch(url, {
-      timeout: PRODUCT.networkTimeoutSeconds,
-      debugLabel: `Gen1Recomp ${release.manifest.id}`,
-      handleRedirect: async (request) => request.url.startsWith(PRODUCT.artifactBaseURL) ? request : null,
-    })
-    if (!response.ok || !response.url.startsWith(PRODUCT.artifactBaseURL)) throw new UpdateServiceError("network", `The package returned HTTP ${response.status}.`, true)
-    if (release.manifest.artifact.size > PRODUCT.artifactMaximumBytes
-      || (response.expectedContentLength !== undefined && response.expectedContentLength !== release.manifest.artifact.size)) {
-      throw new UpdateServiceError("integrity", "The package size does not match its manifest.")
+    let data: Data
+    if (providedData == null) {
+      onStage("download", label)
+      const url = `${catalog.artifactBaseURL}${release.manifest.artifact.path}`
+      if (!url.startsWith(PRODUCT.artifactBaseURL)) throw new UpdateServiceError("catalog", "A package URL left the trusted update path.")
+      const response = await fetch(url, {
+        timeout: PRODUCT.networkTimeoutSeconds,
+        debugLabel: `Gen1Recomp ${release.manifest.id}`,
+        handleRedirect: async (request) => request.url.startsWith(PRODUCT.artifactBaseURL) ? request : null,
+      })
+      if (!response.ok || !response.url.startsWith(PRODUCT.artifactBaseURL)) throw new UpdateServiceError("network", `The package returned HTTP ${response.status}.`, true)
+      if (release.manifest.artifact.size > PRODUCT.artifactMaximumBytes
+        || (response.expectedContentLength !== undefined && response.expectedContentLength !== release.manifest.artifact.size)) {
+        throw new UpdateServiceError("integrity", "The package size does not match its manifest.")
+      }
+      data = await response.data()
+    } else {
+      data = providedData
     }
-    const data = await response.data()
     if (data.size !== release.manifest.artifact.size) throw new UpdateServiceError("integrity", "The downloaded package has the wrong size.")
     onStage("integrity", label)
     if (Crypto.sha256(data).toHexString() !== release.manifest.artifact.sha256) {
@@ -597,7 +645,7 @@ export class SystemUpdateService {
   }
 
   async #materializeRuntime(transactionRoot: string, active: ActiveComponents): Promise<string> {
-    const name = `runtime-v020-r${active[COMPONENTS.runtime.id]}-c${active[COMPONENTS.core.id]}`
+    const name = `runtime-v030-r${active[COMPONENTS.runtime.id]}-c${active[COMPONENTS.core.id]}`
     const destination = `${this.#privateRoot}/runtimes/${name}`
     if (await FileManager.exists(destination)) {
       try {

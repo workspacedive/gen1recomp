@@ -25,7 +25,7 @@ test("archive policy accepts bounded regular files and directories", () => {
 })
 
 test("archive policy rejects traversal, absolute, Windows, and decomposed paths", () => {
-  for (const path of ["../escape", "/absolute", "C:/drive", "mod\\file", "mod/e\u0301.lua"]) {
+  for (const path of ["../escape", "/absolute", "C:/drive", "mod\\file", "mod/e\u0301.lua", "control\u0001/file"]) {
     const result = validateArchiveEntries([
       { path, kind: "file", compressedSize: 1, uncompressedSize: 1 },
     ], limits)
@@ -47,6 +47,15 @@ test("archive policy rejects case-insensitive collisions and symbolic links", ()
   ], limits)
   assert.equal(symlink.ok, false)
   if (!symlink.ok) assert.equal(symlink.error.code, "symlink")
+})
+
+test("archive policy rejects a file that is also an ancestor path", () => {
+  const result = validateArchiveEntries([
+    { path: "mods", kind: "file", compressedSize: 1, uncompressedSize: 1 },
+    { path: "mods/example/main.lua", kind: "file", compressedSize: 1, uncompressedSize: 1 },
+  ], limits)
+  assert.equal(result.ok, false)
+  if (!result.ok) assert.equal(result.error.code, "path_collision")
 })
 
 test("archive policy rejects expansion bombs and aggregate overflow", () => {

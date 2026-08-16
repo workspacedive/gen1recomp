@@ -1,6 +1,6 @@
 # Verifikationsprotokoll und Evidenzregeln
 
-**Letzter Lauf:** 2026-08-16T22:03:04Z
+**Letzter Lauf:** 2026-08-16T22:48:10Z
 **Maschinenlesbarer Bericht:** [`reference-audit.json`](reference-audit.json)
 
 ## Ausgeführte Checks
@@ -52,7 +52,7 @@ Zusätzlich wurde `tools/analyze_gen1recomp.py` erneut gegen den gepinnten v0.1.
 Ergebnis:
 
 - TypeScript 7.0.2 `strict`/`noEmit`: bestanden;
-- 89 Node-Unit-Tests: bestanden (Verträge einschließlich geschlossenem Runtime-Boot-Parser, JSON Schema 2020-12 einschließlich Updatekatalog, Viewport, funktionale Runtime-Evidenz, love.js-Browser-Surface, Persistenz-/Lifecycle-Port, Lifecycle-/Concurrency-Manager, Archivregeln, SemVer-Resolver, Katalog-Trust, System-Updateplanung/-orchestrierung, Aktivierungsjournal und Recovery);
+- 98 Node-Unit-Tests: bestanden (Verträge einschließlich geschlossenem Runtime-Boot-Parser, JSON Schema 2020-12 einschließlich Updatekatalog, Viewport, funktionale Runtime-Evidenz, love.js-Browser-Surface, Persistenz-/Lifecycle-Port, Lifecycle-/Concurrency-Manager, Archivregeln, SemVer-Resolver, Katalog-Trust, System-Updateplanung/-orchestrierung, Mod-API-2-Manifeste, GitHub-Release-Digests/Assets, Mod-Archiv-/ROM-Ausschluss, Aktivierungsjournal und Recovery);
 - 33 Python-Unit-Tests: bestanden (Acquisition-Größen/Hashes/Partials, deterministische LÖVE-, Systemkomponenten-, Phase-0-, Preview- und Native-`.scripting`-Archive, HTTP-Header/Report-Endpunkte einschließlich sicherer Player-Pfadauflösung und LuaJIT-BitOp-Shim-Parität);
 - npm-Audit: 0 bekannte Schwachstellen auf der eingestellten Audit-Stufe;
 - Python-Syntax aller Tools: bestanden;
@@ -76,11 +76,13 @@ Ergebnis:
 - Interaktive Scripting-Preview 0.1.4 (`Gen1Recomp Preview 014`): die Geräteberichte belegten nacheinander fehlenden `Script`-Import, nicht gestartete ES-Module, wiederverwendete Altdateien und schließlich vier gescheiterte lokale Player-Fetches. Die eindeutige 0.1.4-Identität lädt ein Safari-13-Bundle und vier hashgeprüfte eingebettete Pakete. Das deterministische ROM-freie Archiv hat 11 Einträge, 8.263.309 Bytes und SHA-256 `70a2cb7f…`; außerhalb Scripting bestand es Start und Flush. Auf physischem iPhone/iOS 18.7 erreichte es mit `crossOriginIsolated=false` den sichtbaren 1024 × 768 Launcher bei Frame 2 ohne Startupfehler. Der danach beobachtete `Script error` ist dem post-dismiss JavaScript-Aufruf zugeordnet; Produktions-Flush vor Dismiss bleibt offen;
 - Der lokale Scripting-WebView-Startpfad ist physisch belegt; ein vollständiger app-synchronisiert deklarationsgeprüfter Surface-/Lifecycle-Adapter mit Touch, Audio, Save und Pre-Dismiss-Flush bleibt offen;
 - Manueller System-Updater: geschlossener Katalog/Trust, individuelle/aggregierte Planung, Dependency-first-Aktivierungsset, API-Kompatibilität, Abbruch, `busy`, Paketfehler, Self-Test, Health-Check, Commit und Rollback sind host-unabhängig getestet. Der sequenzierte Stable-Katalog und zwei ROM-freie aktuelle Komponenten-ZIPs sind deterministisch und per Größe/SHA-256/Allowlist geprüft;
-- Native Scripting 0.2.0 (`Gen1Recomp Native 020`): 23 Einträge, 8.288.985 Bytes, SHA-256 `b50cde29…`; Home/Games/Updates/Settings, versteckter Mods-Erweiterungspunkt, App-Group-Komponentenstatus, manueller Fetch/Crypto/Archive/FileManager-Adapter, Runtime-Materialisierung und First-Boot-Rollback bestanden den strikten dokumentationsbasierten Deklarationssubset-Typecheck. Die byteidentischen finalen Runtime-Einträge erreichten in Chromium 149 Frame 23 und schlossen sauber ohne Fehler; Bericht: [`gen1recomp/scripting-native-020-report.json`](gen1recomp/scripting-native-020-report.json);
+- Native Scripting 0.2.0 (`Gen1Recomp Native 020`): 23 Einträge, 8.288.985 Bytes, SHA-256 `b50cde29…`; der dokumentationsbasierte Typecheck und Chromium-Runtime bestanden. Physisch startete der Nutzer die Runtime über die native Settings-Aktion; alle Pakete dekodierten und `ready frame 21` wurde ohne Startupfehler erreicht. Systemupdate/App-Group-Durability blieben ungetestet; Bericht: [`gen1recomp/scripting-native-020-report.json`](gen1recomp/scripting-native-020-report.json);
+- Native Scripting 0.3.0 (`Gen1Recomp Native 030`): 25 Einträge, 8.300.856 Bytes, SHA-256 `6d6700c0…`; fünf native Tabs, vertrauensgebundener manueller Komponentenimport, Datei-/GitHub-Modinstallation, manuelle Einzel-/Sammelupdates, Registry-Backup und inaktive Permission-Anzeige bestanden den Deklarationssubset-Typecheck. Die exakte Runtime erreichte in Chromium 149 Frame 23 und schloss ohne Console-/Page-/Requestfehler; native Datei-/GitHub-Wege sind offen. Bericht: [`gen1recomp/scripting-native-030-report.json`](gen1recomp/scripting-native-030-report.json);
+- PotatoVoxel wurde ausschließlich extern im ignorierten Research-Baum an Revision `d4785ff…`/Release 1.7.4 untersucht. Manifest, GitHub-Asset-Digest, Berechtigungen, Konflikte, scoped Cache und fehlende Lizenz wurden dokumentiert; kein fremder Code/Asset gelangte in Produkt oder Tests. Der offizielle Release-Binarytransfer war sandboxseitig blockiert, Quellcheckout/API-Metadaten waren verfügbar; Audit: [`research/potato-voxel-mod-audit.md`](research/potato-voxel-mod-audit.md);
 - Browser-Smoke-Bericht: [`gen1recomp/lovejs-smoke-report.json`](gen1recomp/lovejs-smoke-report.json). Der aktuelle Browser-Build ist gepinnt, aber SwiftShader liefert keinen Hardware-/Performancewert und der Lauf ist kein Scripting-/iOS-Beleg;
 - ROM-freier v0.1.96-Launcher-Boot: deterministischer, bootstrap-wrapped Overlay-Payload mit 486 ZIP-Einträgen, sichtbarer 1024x768-Canvas, 10 Sekunden Beobachtung, keine Page-/Runtime-/Request-Fehler; Screenshot zeigte Launcher/Tabs/„ROM REQUIRED“, aber keinerlei ROM-Inhalt. Browser-Mausklicks auf Red/Blue/Yellow/Gold erzeugten vier unterschiedliche Canvas-Zustände mit zugeordneten Screenshot-Hashes und Pixel-Diff-Bereichen. Bericht: [`gen1recomp/lovejs-launcher-report.json`](gen1recomp/lovejs-launcher-report.json);
 - Upstream-ROM-freie Quick-Suite erneut bestanden: 172 Engine-Suites, 23/23 Modkit-Suites und Cold Restart. Der erste Aufruf hatte zwar `LUA` absolut gesetzt, aber den von Modkit verschachtelt gestarteten Namen `luajit` nicht auf `PATH`; 22/23 war daher ein dokumentierter Umgebungsfehler. Mit dem gepinnten LuaJIT-Verzeichnis auf `PATH` bestand der unveränderte zweite Lauf vollständig;
-- physische Scripting-/iOS-Ausführung: Preview 0.1.4-Startup **bestanden** auf iPhone/iOS 18.7; Native 0.2.0 TSX/Updater und alle Spielparitätswege **noch nicht ausgeführt**.
+- physische Scripting-/iOS-Ausführung: Preview 0.1.4 und Native-0.2.0-Settings→Runtime-Startup **bestanden** auf iPhone/iOS 18.7; Native 0.3.0 Datei-/GitHub-/Modpfade und alle Spielparitätswege **noch nicht ausgeführt**.
 
 ## Evidenzstufen für kommende Implementierungen
 
@@ -100,8 +102,8 @@ Keine niedrigere Stufe wird sprachlich als höhere ausgegeben.
 Eine physische Scripting-App hat Preview 0.1.4 ausgeführt, ist aber nicht per `scripting-cli` mit diesem Workspace verbunden. Offen bleiben:
 
 - app-synchronisierte `.d.ts`-Diagnostik und genaue Scripting-App-Version/Buildnummer;
-- Native-0.2.0-TSX auf iPhone und iPad einschließlich Dark Mode, Dynamic Type und VoiceOver;
-- App-Group-Persistenz, Archive/Crypto/FileManager-Updateinstallation, Unterbrechungs-Recovery und materialisierte Runtime auf dem Gerät;
+- Native-0.3.0-Fünf-Tab-TSX auf iPhone und iPad einschließlich Dark Mode, Dynamic Type und VoiceOver;
+- DocumentPicker-Komponenten-/Modimport, GitHub API/Release-Asset-Redirect, App-Group-Registry/Persistenz, Unterbrechungs-Recovery und materialisierte Runtime auf dem Gerät;
 - produktionssicherer Pre-Dismiss-Flush statt JavaScript-Auswertung nach zerstörter WebView;
 - Nutzer-ROM-Identität/Extraktion, native Bibliothek, Saves, Mods und reale Spielparitätsgoldens;
 - hörbare Audio-, simultane Touch-, Lifecycle-, Performance- und Speicherbudgets.

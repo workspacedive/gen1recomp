@@ -1,6 +1,6 @@
 # Verifikationsprotokoll und Evidenzregeln
 
-**Letzter Lauf:** 2026-08-16T18:45:03Z
+**Letzter Lauf:** 2026-08-16T19:04:20Z
 **Maschinenlesbarer Bericht:** [`reference-audit.json`](reference-audit.json)
 
 ## Ausgeführte Checks
@@ -53,7 +53,7 @@ Ergebnis:
 
 - TypeScript 7.0.2 `strict`/`noEmit`: bestanden;
 - 72 Node-Unit-Tests: bestanden (Verträge einschließlich geschlossenem Runtime-Boot-Parser, JSON Schema 2020-12, Viewport, funktionale Runtime-Evidenz, love.js-Browser-Surface, Persistenz-/Lifecycle-Port, Lifecycle-/Concurrency-Manager, Archivregeln, SemVer-Resolver, Aktivierungsjournal und Recovery);
-- 21 Python-Unit-Tests: bestanden (Acquisition-Größen/Hashes/Partials, deterministisches LÖVE-Probe-Archiv, HTTP-Header/Report-Endpunkte einschließlich sicherer Player-Pfadauflösung und LuaJIT-BitOp-Shim-Parität);
+- 24 Python-Unit-Tests: bestanden (Acquisition-Größen/Hashes/Partials, deterministische LÖVE- und `.scripting`-Archive, HTTP-Header/Report-Endpunkte einschließlich sicherer Player-Pfadauflösung und LuaJIT-BitOp-Shim-Parität);
 - npm-Audit: 0 bekannte Schwachstellen auf der eingestellten Audit-Stufe;
 - Python-Syntax aller Tools: bestanden;
 - `tools/acquire_gen1recomp.py --source-only`: gepinnte Dev-/Wiki-/Release-Worktree-/love.js-Revisionen erfolgreich reproduziert; bestehende Git-Worktree-`.git`-Dateien werden korrekt erkannt;
@@ -72,7 +72,8 @@ Ergebnis:
 - Runtime-Manager: gültige Lifecycle-Übergänge, idempotentes Suspend/Resume, parallele `busy`-Ablehnung, Descriptor-Abgleich, ungültige Bootpfade, Verifier-Ausnahmen, Teilstart-Cleanup und Cleanup-Pflicht nach Lifecycle-Fehlern sind host-unabhängig getestet;
 - love.js-Runtime-Port: explizite Startup-Populate-Ownership (gepinnter Player oder Port), Quiesce vor Flush, Flush vor Dispose, Teilstart-Cleanup ohne unbewiesenen FS-Zugriff, sichere Flush-Wiederholung nach Fehlern, konkurrierende `busy`-Ablehnung und Descriptor-Snapshots sind über injizierte Fakes getestet;
 - Browser-Surface: der kompilierte Stack aus Runtime-Port, Persistence-Adapter und Browser-Surface startete den exakten ROM-freien Launcher statt des `nogame.love`-Fallbacks, hielt den Main-Loop bei Frame 26 für das 500-ms-Prüffenster an, absolvierte den Suspend-Flush, setzte ihn bis Frame 56 fort und beendete nach Stop-Flush mit unverändertem Frame/`Module.done=true`; keine Page-, Request- oder Runtime-Fehler. Chromium 149 lief mit `crossOriginIsolated=true`, nachdem unsichere package-seitige Security-Disable-Flags explizit entfernt wurden. Bericht: [`gen1recomp/lovejs-runtime-surface-report.md`](gen1recomp/lovejs-runtime-surface-report.md);
-- Ein konkreter Scripting-WebView-Surface-Adapter bleibt mangels synchronisierter Deklarationen unimplementiert und ungeprüft;
+- Scripting-Phase-0-Paket: deterministisches ROM-freies Archiv mit 19 Einträgen, 7.600.008 Bytes und SHA-256 `5db4f3fb…`; die exakt extrahierte Runtime bestand in Chromium Boot, Suspend-Flush (Frame 46 stabil), Resume (Frame 76) und Stop-Flush/Dispose ohne Fehler. `index.tsx` bestand strikte TypeScript-Diagnostik gegen einen temporären, aus der offiziellen Dokumentation übertragenen WebViewController-/FileManager-/Script-Signaturensatz und schreibt einen synthetischen Diagnosebericht; app-synchronisierte `.d.ts`-Diagnostik und physische Scripting-Ausführung sind weiterhin offen;
+- Ein physisch verifizierter Scripting-WebView-Surface-Adapter bleibt mangels synchronisierter Deklarationen und Gerätebericht ungeprüft;
 - Browser-Smoke-Bericht: [`gen1recomp/lovejs-smoke-report.json`](gen1recomp/lovejs-smoke-report.json). Der aktuelle Browser-Build ist gepinnt, aber SwiftShader liefert keinen Hardware-/Performancewert und der Lauf ist kein Scripting-/iOS-Beleg;
 - ROM-freier v0.1.96-Launcher-Boot: deterministischer, bootstrap-wrapped Overlay-Payload mit 486 ZIP-Einträgen, sichtbarer 1024x768-Canvas, 10 Sekunden Beobachtung, keine Page-/Runtime-/Request-Fehler; Screenshot zeigte Launcher/Tabs/„ROM REQUIRED“, aber keinerlei ROM-Inhalt. Browser-Mausklicks auf Red/Blue/Yellow/Gold erzeugten vier unterschiedliche Canvas-Zustände mit zugeordneten Screenshot-Hashes und Pixel-Diff-Bereichen. Bericht: [`gen1recomp/lovejs-launcher-report.json`](gen1recomp/lovejs-launcher-report.json);
 - Upstream-ROM-freie Quick-Suite erneut bestanden: 172 Engine-Suites, 23/23 Modkit-Suites und Cold Restart. Der erste Aufruf hatte zwar `LUA` absolut gesetzt, aber den von Modkit verschachtelt gestarteten Namen `luajit` nicht auf `PATH`; 22/23 war daher ein dokumentierter Umgebungsfehler. Mit dem gepinnten LuaJIT-Verzeichnis auf `PATH` bestand der unveränderte zweite Lauf vollständig;

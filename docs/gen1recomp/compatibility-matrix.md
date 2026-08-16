@@ -27,8 +27,8 @@ Versions below are contract starting points, not claims of completed artifacts.
 |---|---:|---:|---|
 | Host protocol | 0.1.0 | 1.0.0 | strict types, parser and JSON Schema implemented; no host transport yet |
 | Component/update contracts | 0.1.0 | manifest schema 1 | manifest parser/schema, safe archive preflight, dependency resolver and activation journal implemented host-independently |
-| Scripting host | 0.0.1-spike | 1.0.0 | pending connected-app `.d.ts` |
-| iOS/Scripting platform adapter | 0.0.1-spike | 1.0.0 | interface only; pending device probes |
+| Scripting host | 0.0.1-phase0 | 1.0.0 | deterministic ROM-free `.scripting` WebView lifecycle probe packaged from official-doc symbols; installed-app `.d.ts` and device run pending |
+| iOS/Scripting platform adapter | 0.0.1-spike | 1.0.0 | Phase-0 local-file WebView/report host path drafted; declaration diagnostics and device behavior pending |
 | Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
 | Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | evidence gate, runtime/persistence port and pinned browser `Player`/main-loop/exit surface implemented; outside-browser lifecycle passed; no concrete Scripting WebView surface, LuaJIT or FFI; Scripting profile hard-blocked |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |

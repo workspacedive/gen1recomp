@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "package": {
+    "name": "Gen1Recomp Phase 0.scripting",
+    "version": "0.1.0",
+    "bytes": 7600008,
+    "entries": 19,
+    "sha256": "5db4f3fbba29d9dfd1e34673537119d220d03dd24f88d0aab0684073d2462251",
+    "romFree": true
+  },
+  "runtime": {
+    "revision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "payloadSha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a"
+  },
+  "outsideBrowserCharacterization": {
+    "observedAt": "2026-08-16T18:59:17.275Z",
+    "browser": "HeadlessChrome/149.0.7827.0",
+    "crossOriginIsolated": true,
+    "boot": "pass",
+    "suspendFlush": "pass",
+    "resume": "pass",
+    "stopFlushDispose": "pass",
+    "frames": {
+      "running": 46,
+      "suspended": 46,
+      "resumed": 76,
+      "stopped": 76
+    },
+    "pageErrors": [],
+    "requestFailures": [],
+    "runtimeErrors": []
+  },
+  "scriptingDeviceStatus": "not-run",
+  "scope": "ROM-free Scripting import-format Phase-0 probe; device import not yet verified"
+}

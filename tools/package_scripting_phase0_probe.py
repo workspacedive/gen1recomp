@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""Build a deterministic ROM-free Gen1Recomp Phase-0 .scripting probe."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from pathlib import Path, PurePosixPath
+import zipfile
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_SOURCE = REPO_ROOT / "scripting" / "Gen1RecompPhase0"
+DEFAULT_COMPILED = REPO_ROOT / ".tmp" / "ts"
+DEFAULT_LAUNCHER = REPO_ROOT / "research" / "downloads" / "gen1recomp" / "lovejs-launcher"
+DEFAULT_LOCK = REPO_ROOT / "research" / "gen1recomp-lock.json"
+DEFAULT_OUTPUT = (
+    REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Phase 0.scripting"
+)
+RUNTIME_REVISION = "9355186de22db13bd88bf2a0db75d2925647d036"
+PAYLOAD_SHA256 = "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a"
+PAYLOAD_BYTES = 5_938_923
+PAYLOAD_ENTRIES = 486
+ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+
+SOURCE_FILES = (
+    "script.json",
+    "index.tsx",
+    "runtime/index.html",
+    "runtime/phase0.css",
+    "runtime/phase0-bootstrap.js",
+    "runtime/phase0-probe.js",
+)
+LAUNCHER_FILES = (
+    "player.js",
+    "lua/normalize1.lua",
+    "lua/normalize2.lua",
+    "11.5/love.js",
+    "11.5/love.wasm",
+)
+COMPILED_FILES = (
+    "runtime/adapters/lovejs/browser-surface.js",
+    "runtime/adapters/lovejs/persistence.js",
+    "runtime/adapters/lovejs/runtime-port.js",
+    "components/contracts/src/json.js",
+    "components/contracts/src/result.js",
+    "components/contracts/src/runtime.js",
+)
+
+
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def safe_path(name: str) -> bool:
+    path = PurePosixPath(name)
+    return (
+        bool(name)
+        and not name.startswith(("/", "\\"))
+        and "\\" not in name
+        and all(part not in ("", ".", "..") for part in path.parts)
+    )
+
+
+def read_required(root: Path, relative: str) -> bytes:
+    path = root / relative
+    if not path.is_file():
+        raise RuntimeError(f"required Phase-0 input is missing: {path}")
+    return path.read_bytes()
+
+
+def verify_locked_runtime(
+    launcher: Path,
+    lock: dict[str, object],
+) -> None:
+    candidate = lock["runtimeCandidates"]["lovejs11_5"]  # type: ignore[index]
+    if candidate["revision"] != RUNTIME_REVISION:  # type: ignore[index]
+        raise RuntimeError("locked love.js revision does not match the Phase-0 package")
+    files = candidate["files"]  # type: ignore[index]
+    for relative in LAUNCHER_FILES:
+        data = read_required(launcher, relative)
+        expected = files[relative]  # type: ignore[index]
+        if len(data) != expected["size"] or sha256_bytes(data) != expected["sha256"]:  # type: ignore[index]
+            raise RuntimeError(f"pinned love.js file mismatch: {relative}")
+
+
+def runtime_config() -> bytes:
+    config = {
+        "runtimeRevision": RUNTIME_REVISION,
+        "payload": {
+            "sha256": PAYLOAD_SHA256,
+            "bytes": PAYLOAD_BYTES,
+            "entries": PAYLOAD_ENTRIES,
+        },
+    }
+    encoded = json.dumps(config, sort_keys=True, separators=(",", ":"))
+    return f"window.__gen1recompRuntimeConfig = Object.freeze({encoded})\n".encode()
+
+
+def collect_entries(
+    source: Path,
+    compiled: Path,
+    launcher: Path,
+    lock_path: Path,
+) -> dict[str, bytes]:
+    if not lock_path.is_file():
+        raise RuntimeError(f"required Phase-0 input is missing: {lock_path}")
+    lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    verify_locked_runtime(launcher, lock)
+    entries: dict[str, bytes] = {}
+    for relative in SOURCE_FILES:
+        entries[relative] = read_required(source, relative)
+    for relative in LAUNCHER_FILES:
+        entries[f"runtime/{relative}"] = read_required(launcher, relative)
+    payload = read_required(launcher, "gen1recomp.love")
+    if len(payload) != PAYLOAD_BYTES or sha256_bytes(payload) != PAYLOAD_SHA256:
+        raise RuntimeError("prepared ROM-free launcher payload mismatch")
+    entries["runtime/gen1recomp.love"] = payload
+    for relative in COMPILED_FILES:
+        entries[f"runtime/modules/{relative}"] = read_required(compiled, relative)
+    entries["runtime/runtime-config.js"] = runtime_config()
+
+    metadata = json.loads(entries["script.json"])
+    for required in ("name", "icon", "color", "version", "entry"):
+        if not isinstance(metadata.get(required), str) or not metadata[required]:
+            raise RuntimeError(f"script.json field is required: {required}")
+    if metadata["entry"] != "index.tsx":
+        raise RuntimeError("Phase-0 script entry must be index.tsx")
+    if any(not safe_path(name) for name in entries):
+        raise RuntimeError("Phase-0 package contains an unsafe path")
+    if len(entries) != len(set(entries)):
+        raise RuntimeError("Phase-0 package contains duplicate paths")
+    return entries
+
+
+def write_archive(entries: dict[str, bytes], destination: Path) -> dict[str, object]:
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(destination, "w") as archive:
+        for name in sorted(entries):
+            info = zipfile.ZipInfo(name, ZIP_TIMESTAMP)
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = 0o100644 << 16
+            archive.writestr(info, entries[name])
+    with zipfile.ZipFile(destination) as archive:
+        corrupt = archive.testzip()
+        if corrupt is not None:
+            raise RuntimeError(f"Phase-0 archive failed integrity at {corrupt}")
+        if archive.namelist() != sorted(entries):
+            raise RuntimeError("Phase-0 archive entry order is not deterministic")
+    data = destination.read_bytes()
+    return {
+        "path": destination.as_posix(),
+        "entries": len(entries),
+        "bytes": len(data),
+        "sha256": sha256_bytes(data),
+        "runtimeRevision": RUNTIME_REVISION,
+        "payloadSha256": PAYLOAD_SHA256,
+        "scope": "ROM-free Scripting Phase-0 probe; not a production game application",
+    }
+
+
+def package(
+    source: Path,
+    compiled: Path,
+    launcher: Path,
+    lock_path: Path,
+    destination: Path,
+) -> dict[str, object]:
+    return write_archive(
+        collect_entries(source, compiled, launcher, lock_path),
+        destination,
+    )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
+    parser.add_argument("--compiled", type=Path, default=DEFAULT_COMPILED)
+    parser.add_argument("--launcher", type=Path, default=DEFAULT_LAUNCHER)
+    parser.add_argument("--lock", type=Path, default=DEFAULT_LOCK)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    args = parser.parse_args()
+    report = package(
+        args.source.resolve(),
+        args.compiled.resolve(),
+        args.launcher.resolve(),
+        args.lock.resolve(),
+        args.output.resolve(),
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

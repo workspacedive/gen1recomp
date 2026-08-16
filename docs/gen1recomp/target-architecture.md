@@ -425,10 +425,11 @@ Current pre-gate code is deliberately narrower than that target tree:
 - `runtime/adapters/lovejs/runtime-port.ts` implements the inner `LuaRuntimePort` lifecycle over injected game-surface and persistence boundaries, with explicit startup-population ownership plus quiesce/flush-before-dispose ordering;
 - `runtime/adapters/lovejs/browser-surface.ts` implements the exact pinned `Player`/`Module.Browser` lifecycle behind a narrow DOM binding and is exercised in an outside-Scripting browser harness, while making no claim that Scripting exposes the required WebView integration;
 - `runtime/manager/runtime-manager.ts` implements the outer host-independent single-instance lifecycle/concurrency gate over an injected evidence verifier and `LuaRuntimePort`;
+- `scripting/Gen1RecompPhase0/` is a finite, deterministic, ROM-free local-file WebView probe host using official-documentation symbols; it is intentionally not the launcher/product UI and remains declaration/device-unverified;
 - `schemas/` contains matching JSON Schema 2020-12 wire, manifest, activation-journal and runtime-capability definitions;
 - `tests/contracts/`, `tests/runtime/`, `tests/updates/` and `tests/tools/` exercise those host-independent boundaries.
 
-There is still no Scripting host adapter, WebView runtime, game payload integration or broad port. Those remain blocked on declaration-backed physical-device probes.
+There is still no declaration-verified production Scripting launcher/platform adapter, user-ROM path, physical WebView proof, input/audio integration, or broad game port. The Phase-0 package exists specifically to resolve the declaration-backed physical-device gate before those layers are claimed.
 
 ## 13. Core-change exception process
 

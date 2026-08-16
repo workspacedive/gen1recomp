@@ -1,0 +1,9 @@
+{
+  "name": "Gen1Recomp Phase 0",
+  "icon": "gamecontroller.fill",
+  "color": "systemRed",
+  "version": "0.1.0",
+  "entry": "index.tsx",
+  "runInApp": false,
+  "description": "ROM-free Gen1Recomp love.js capability and lifecycle probe."
+}

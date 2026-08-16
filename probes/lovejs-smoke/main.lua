@@ -1,6 +1,15 @@
 local results = {}
 local frameCount = 0
+local accumulator = 0
+local fixedTicks = 0
+local movingX = 0
+local completed = false
+local workerStarted = false
+local workerDone = false
+local workerChannel = nil
+local workerThread = nil
 local probeCanvas = nil
+local FIXED_STEP = 1 / 60
 
 local function clean(value)
     return tostring(value):gsub("[\r\n|]", " ")
@@ -61,6 +70,12 @@ function love.load()
         return shader ~= nil
     end)
 
+    guarded("filesystem.previousSession", function()
+        local previous = love.filesystem.read("lovejs-smoke-persistent.txt")
+        assert(love.filesystem.write("lovejs-smoke-persistent.txt", "persist-v1"))
+        return previous == "persist-v1" and "present" or "not-yet"
+    end)
+
     guarded("filesystem.sessionWrite", function()
         assert(love.filesystem.write("lovejs-smoke.txt", "session-probe"))
         return love.filesystem.read("lovejs-smoke.txt") == "session-probe"
@@ -77,14 +92,78 @@ function love.load()
         return after >= before
     end)
 
+    guarded("lua.coroutine", function()
+        local worker = coroutine.create(function(value) coroutine.yield(value + 1) end)
+        local resumed, value = coroutine.resume(worker, 41)
+        return resumed and value == 42
+    end)
+
+    guarded("audio.queueableBuffer", function()
+        local source = love.audio.newQueueableSource(8000, 16, 1, 2)
+        local samples = love.sound.newSoundData(64, 8000, 16, 1)
+        source:queue(samples)
+        local free = source:getFreeBufferCount()
+        source:stop()
+        return "queued; free=" .. tostring(free)
+    end)
+
+    guarded("thread.channel", function()
+        local channel = love.thread.getChannel("gen1recomp-smoke")
+        channel:clear()
+        channel:push("roundtrip")
+        return channel:pop() == "roundtrip"
+    end)
+    report("thread.newThreadCapability", true, type(love.thread.newThread))
+    do
+        workerChannel = love.thread.getChannel("gen1recomp-smoke-worker")
+        workerChannel:clear()
+        local started, threadOrError = pcall(love.thread.newThread, "worker.lua")
+        if started then
+            workerThread = threadOrError
+            local ran, startError = pcall(workerThread.start, workerThread)
+            if ran then
+                workerStarted = true
+                report("thread.workerStart", true, "started")
+            else
+                workerDone = true
+                report("thread.workerFallback", true, "unavailable: " .. tostring(startError))
+            end
+        else
+            workerDone = true
+            report("thread.workerFallback", true, "unavailable: " .. tostring(threadOrError))
+        end
+    end
     report("audio.module", type(love.audio) == "table", type(love.audio))
     report("touch.module", type(love.touch) == "table", type(love.touch))
     report("joystick.module", type(love.joystick) == "table", type(love.joystick))
 end
 
-function love.update()
+function love.update(dt)
     frameCount = frameCount + 1
-    if frameCount == 10 then
+    accumulator = accumulator + math.min(dt or 0, 0.25)
+    while accumulator >= FIXED_STEP do
+        accumulator = accumulator - FIXED_STEP
+        fixedTicks = fixedTicks + 1
+        movingX = (movingX + 1) % 160
+    end
+
+    if workerStarted and not workerDone then
+        local value = workerChannel:pop()
+        if value ~= nil then
+            workerDone = true
+            report("thread.workerRoundtrip", value == "worker-ok", tostring(value))
+        elseif frameCount >= 240 then
+            workerDone = true
+            local threadError = workerThread and workerThread:getError() or nil
+            report("thread.workerRoundtrip", false, threadError or "timeout")
+        end
+    end
+
+    local ready = fixedTicks >= 5 and (not workerStarted or workerDone)
+    if not completed and (ready or frameCount >= 240) then
+        completed = true
+        report("loop.fixedStep", fixedTicks >= 5 and movingX == fixedTicks % 160,
+            string.format("frames=%d ticks=%d x=%d", frameCount, fixedTicks, movingX))
         local failures = 0
         for _, result in ipairs(results) do
             if not result.passed then failures = failures + 1 end
@@ -108,6 +187,8 @@ function love.draw()
                 love.graphics.rectangle("fill", x * 16, y * 16, 16, 16)
             end
         end
+        love.graphics.setColor(1, 0.85, 0.25, 1)
+        love.graphics.rectangle("fill", movingX, 68, 4, 8)
         love.graphics.setCanvas()
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(probeCanvas, 0, 0)

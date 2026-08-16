@@ -60,7 +60,7 @@ The core statically references Lua 5.1-specific behavior:
 - global `unpack`: 16 occurrences across 6 files;
 - literal `require("bit")`: 11 occurrences across 11 files.
 
-These are compatibility requirements, not optional optimizations. The smoke probe therefore tests Lua 5.1, `setfenv`, `loadstring` and `bit` explicitly.
+These are compatibility requirements, not optional optimizations. The first outside-browser smoke run passed Lua 5.1, `setfenv` and `loadstring` but failed because 2dengine love.js did not provide `require("bit")`. The host compatibility layer now supplies `compatibility/love-web/bit.lua`, covering the full LuaJIT BitOp API. It passed 9,492 differential comparisons against vendored LuaJIT 2.1 and allowed the second 23-check smoke run to pass. This is an adapter overlay; no Gen1Recomp core or LÖVE source changed.
 
 FFI is referenced through 11 guarded loads across the seven files already identified by source forensics, plus two literal `require("ffi")` occurrences in platform/network code. Static analysis alone cannot prove every execution path is safely guarded. love.js is still described as PUC Lua 5.1 without LuaJIT/FFI; each native path must be disabled or replaced by an adapter without changing game rules.
 
@@ -98,4 +98,6 @@ A host that only maps a tap gesture is insufficient. Physical-device tests must 
 9. minimal ROM-free Gen1Recomp fixture boot.
 10. only then the source-built ROM-free full launcher payload; user ROM import remains later.
 
-Any non-replaceable failure in graphics, audio, input, storage or memory remains a Phase-0 no-go. The inventory is not permission to rewrite the game in TypeScript or move per-frame work over HostProtocol.
+Executed outside-Scripting status now covers steps 1–4 at smoke depth, coroutine/queueable-buffer/channel construction, detected worker-thread unavailability, and the ROM-free launcher-shell part of step 10. The overlaid source-built launcher rendered at 1024x768 for 10 seconds with clean runtime/page/request diagnostics, and browser pointer clicks switched all four game tabs into distinct hashed canvas states. It did not enter an imported title/game path.
+
+Any non-replaceable failure in graphics, audible audio, simultaneous input, lifecycle-safe storage or memory remains a Phase-0 no-go. Worker-dependent features must pass their upstream no-thread fallbacks because the tested `love.thread.newThread` is unusable. The inventory and launcher boot are not permission to rewrite the game in TypeScript or move per-frame work over HostProtocol.

@@ -113,6 +113,7 @@ Stable interface; implementations are separate artifacts:
 
 A host overlay, not changes inside Gen1Recomp:
 
+- supplies the parity-tested pure-Lua BitOp module missing from the tested love.js distribution;
 - maps persistent files and network broker into the LÖVE web filesystem;
 - maps pause/resume/input events;
 - supplies compatibility shims for guarded FFI/native calls;
@@ -415,6 +416,8 @@ Current pre-gate code is deliberately narrower than that target tree:
 
 - `components/contracts/src/` contains strict host, platform, runtime, renderer, input, mod-capability and manifest contracts;
 - `components/updates/src/` contains host-independent archive policy, dependency resolution and recoverable activation logic;
+- `compatibility/love-web/bit.lua` contains the LuaJIT-BitOp-compatible host overlay required by the tested PUC Lua runtime;
+- `runtime/adapters/lovejs/persistence.ts` serializes Emscripten populate/flush operations with timeout/error attribution after the probe exposed an immediate-reload durability race;
 - `schemas/` contains matching JSON Schema 2020-12 wire, manifest and activation-journal definitions;
 - `tests/contracts/`, `tests/updates/` and `tests/tools/` exercise those host-independent boundaries.
 

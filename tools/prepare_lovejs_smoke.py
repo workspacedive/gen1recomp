@@ -25,7 +25,12 @@ EXTERNAL_FILES = (
     "lua/normalize2.lua",
 )
 PROBE_FILES = ("index.html", "probe-ui.js", "probe.css")
-LOVE_FILES = ("main.lua", "conf.lua")
+LOVE_FILES = (
+    (PROBE_SOURCE / "main.lua", "main.lua"),
+    (PROBE_SOURCE / "conf.lua", "conf.lua"),
+    (PROBE_SOURCE / "worker.lua", "worker.lua"),
+    (REPO_ROOT / "compatibility" / "love-web" / "bit.lua", "bit.lua"),
+)
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
 
@@ -62,8 +67,8 @@ def source_revision(source: Path) -> str:
 
 def write_love_archive(destination: Path) -> None:
     with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-        for name in LOVE_FILES:
-            data = (PROBE_SOURCE / name).read_bytes()
+        for source, name in LOVE_FILES:
+            data = source.read_bytes()
             info = zipfile.ZipInfo(name, ZIP_TIMESTAMP)
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
@@ -71,7 +76,8 @@ def write_love_archive(destination: Path) -> None:
     with zipfile.ZipFile(destination) as archive:
         if archive.testzip() is not None:
             raise RuntimeError("generated smoke.love failed ZIP integrity")
-        if sorted(archive.namelist()) != sorted(LOVE_FILES):
+        expected = sorted(name for _, name in LOVE_FILES)
+        if sorted(archive.namelist()) != expected:
             raise RuntimeError("generated smoke.love has unexpected entries")
 
 

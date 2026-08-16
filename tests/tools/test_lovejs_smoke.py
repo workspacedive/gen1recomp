@@ -37,7 +37,10 @@ class PrepareTests(unittest.TestCase):
             prepare.write_love_archive(second)
             self.assertEqual(first.read_bytes(), second.read_bytes())
             with zipfile.ZipFile(first) as archive:
-                self.assertEqual(sorted(archive.namelist()), ["conf.lua", "main.lua"])
+                self.assertEqual(
+                    sorted(archive.namelist()),
+                    ["bit.lua", "conf.lua", "main.lua", "worker.lua"],
+                )
                 self.assertTrue(all(info.date_time == (1980, 1, 1, 0, 0, 0) for info in archive.infolist()))
 
     def test_verify_file_rejects_digest_mismatch(self) -> None:

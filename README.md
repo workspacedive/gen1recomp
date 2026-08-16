@@ -65,7 +65,7 @@ Das konkrete Ziel ist eine möglichst originalgetreue Gen1Recomp-Laufzeit in **S
 - keine ungeprüfte Behauptung, Scripting könne native LÖVE-, LuaJIT- oder Metal-Bibliotheken laden;
 - eine modulare Portierungsarchitektur mit dem Datenpfad Nutzer-ROM → verifizierter Import/privater Cache → originale Gen1Recomp-Logik → LÖVE-Kompatibilität → Renderer/Audio/Input.
 
-Die Laufzeitentscheidung ist noch durch reale Gerätetests blockiert. Der bevorzugte, aber unbewiesene Spike ist eine lokale Scripting-WebView mit einer gepinnten LÖVE-11.5-Weblaufzeit. `TimelineCanvas` bleibt Diagnose/Fallback und ist nicht als Paritätsrenderer freigegeben.
+Die Laufzeitentscheidung ist noch durch reale Scripting-Gerätetests blockiert. Die gepinnte LÖVE-11.5-Weblaufzeit hat inzwischen einen ROM-freien Outside-Browser-Smoke-Test bestanden, nachdem der erste Lauf das fehlende LuaJIT-`bit`-Modul korrekt aufdeckte und ein separat gegen LuaJIT getesteter reiner Lua-Hostshim ergänzt wurde. Das beweist weder Scripting-WKWebView noch iOS-Performance. `TimelineCanvas` bleibt Diagnose/Fallback und ist nicht als Paritätsrenderer freigegeben.
 
 ### Forschungs- und Architekturdokumente
 
@@ -73,7 +73,7 @@ Die Laufzeitentscheidung ist noch durch reale Gerätetests blockiert. Der bevorz
 - [`docs/gen1recomp/source-forensics.md`](docs/gen1recomp/source-forensics.md) — Quell-, Runtime-, Render-, Mod-, Save- und Update-Forensik
 - [`docs/gen1recomp/android-analysis.md`](docs/gen1recomp/android-analysis.md) — getrennte Android-Referenzanalyse
 - [`docs/gen1recomp/technology-evaluation.md`](docs/gen1recomp/technology-evaluation.md) — Runtime-/Grafik-/Audio-/Input-Entscheidungsmatrix
-- [`docs/gen1recomp/web-runtime-analysis.md`](docs/gen1recomp/web-runtime-analysis.md) / [`web-runtime-surface.json`](docs/gen1recomp/web-runtime-surface.json) — reproduzierbarer LÖVE-/Lua-Web-Kompatibilitätsumfang
+- [`docs/gen1recomp/web-runtime-analysis.md`](docs/gen1recomp/web-runtime-analysis.md) / [`web-runtime-surface.json`](docs/gen1recomp/web-runtime-surface.json) / [`lovejs-smoke-report.json`](docs/gen1recomp/lovejs-smoke-report.json) / [`lovejs-launcher-report.json`](docs/gen1recomp/lovejs-launcher-report.json) — reproduzierbarer LÖVE-/Lua-Web-Kompatibilitätsumfang, ausgeführter Smoke-Test und ROM-freier Launcher-Boot
 - [`docs/gen1recomp/target-architecture.md`](docs/gen1recomp/target-architecture.md) — Komponenten, Ports, Protokolle und Rollback
 - [`docs/gen1recomp/compatibility-matrix.md`](docs/gen1recomp/compatibility-matrix.md) — unabhängige Versionen und Aktivierungsregeln
 - [`docs/gen1recomp/ui-ux.md`](docs/gen1recomp/ui-ux.md) — native Plattform-UI versus originale Game-UI
@@ -89,8 +89,11 @@ Der erste host-unabhängige Schnitt ist implementiert; ein spielbarer Scripting-
 - `components/contracts/src/`: strikte TypeScript-Verträge für Hostprotokoll, Plattform, Runtime, Renderer, Input und Komponentenmanifeste;
 - `schemas/`: JSON Schema 2020-12 für Hostnachrichten und Komponentenmanifeste;
 - `components/updates/src/`: sichere Archiv-Vorprüfung, SemVer-Abhängigkeitsauflösung sowie journalisierte Aktivierung/Recovery;
-- `tests/`: Vertrags-, Schema-, Archiv-, Resolver-, Journal-/Recovery- und Acquisition-Tests;
-- `probes/lovejs-smoke/`: ROM-freier, extern vorbereitbarer LÖVE-11.5-Web-Smoke-Test; noch kein Scripting-Runtime-Pass.
+- `runtime/adapters/lovejs/persistence.ts`: serialisierte explizite Emscripten-Persistenzbarriere mit Timeout/Fehlerzuordnung;
+- `tests/`: Vertrags-, Schema-, Archiv-, Resolver-, Journal-/Recovery-, BitOp-, Persistenz- und Acquisition-Tests;
+- `compatibility/love-web/bit.lua`: vollständiger reiner-Lua-BitOp-Hostshim, gegen vendored LuaJIT 2.1 differenziell geprüft;
+- `probes/lovejs-smoke/`: ROM-freier, außerhalb Scripting bestandener LÖVE-11.5-Web-Smoke-Test;
+- `probes/lovejs-launcher/` und `tools/prepare_lovejs_launcher.py`: reproduzierbarer ROM-freier v0.1.96-Launcher-Boot mit Overlay, weiterhin kein Scripting-Runtime-Pass.
 
 Gepinnte Gen1Recomp-/Wiki-/Runtime-Quellen reproduzieren und den ROM-freien Web-Probe vorbereiten:
 

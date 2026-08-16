@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-16T09:30:00Z",
+  "observedAt": "2026-08-16T11:19:19Z",
   "upstream": {
     "repository": "https://github.com/bryanthaboi/gen1recomp.git",
     "devRevision": "9469e399262e4e989902b61b449dd353c1fded3b",
@@ -49,7 +49,30 @@
         "lua/normalize1.lua": { "size": 2832, "sha256": "76a3002bf521add045973022be3318f74d0836f2ff9e90a505a08afabeb82a9e" },
         "lua/normalize2.lua": { "size": 4095, "sha256": "64e70ede76e301bb4adc3358a14c640c5c291e489a8a5607d38785875b655eef" }
       },
-      "status": "Pinned candidate only. Static files were acquired and hashed; browser execution was not completed in this environment because no browser was installed and the Playwright Chromium transfer failed before TLS establishment."
+      "compatibilityOverlays": {
+        "bit": {
+          "path": "compatibility/love-web/bit.lua",
+          "size": 4261,
+          "sha256": "07f3ba40f298bb776e06fb514718bbc82a93cec7b977c8b42fd5e5b002ce3348",
+          "luaJitBitOpComparisons": 9492,
+          "parityStatus": "passed"
+        }
+      },
+      "outsideBrowserSmoke": {
+        "report": "docs/gen1recomp/lovejs-smoke-report.json",
+        "initialStatus": "failed: required bit module absent",
+        "finalStatus": "passed: 23 checks, 0 failures",
+        "browser": "HeadlessChrome/92.0.4512.0",
+        "renderer": "Google SwiftShader",
+        "evidenceScope": "outside Scripting only"
+      },
+      "outsideLauncherBoot": {
+        "report": "docs/gen1recomp/lovejs-launcher-report.json",
+        "preparedPayloadSha256": "620147588cf8cffcd45e7c44a20fe1054854926cc23fdf93472e239f400cc943",
+        "status": "passed: visible ROM-free 1024x768 launcher for 10 seconds with no page/runtime/request errors",
+        "evidenceScope": "outside Scripting launcher shell only"
+      },
+      "status": "Pinned candidate passed the ROM-free outside-browser smoke test with a separately parity-tested BitOp compatibility overlay. Scripting WKWebView, physical iOS behavior, performance, audio, input, persistence and Gen1Recomp payload compatibility remain unverified."
     }
   },
   "nativeIosDependencies": {

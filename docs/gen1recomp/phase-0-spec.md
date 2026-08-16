@@ -28,6 +28,7 @@ Determine a technically honest path that can run the original hand-written Gen1R
 - Scripting documents TypeScript/JavaScript, TSX/SwiftUI, `TimelineCanvas`, `WebViewController`, binary file APIs, embedded Python, shell utilities and native media APIs.
 - Scripting explicitly does **not** allow scripts to execute arbitrary bundled native binaries.
 - No Scripting documentation was found for embedding a native library, Lua/LuaJIT, LÖVE, Metal/CAMetalLayer, GameController, raw multi-touch identifiers, PCM output, `os_signpost`, or process CPU/memory metrics.
+- The ROM-free source-built v0.1.96 launcher payload now boots outside Scripting through pinned love.js plus the BitOp overlay: a visible 1024x768 launcher rendered for 10 seconds with no page/runtime/request errors. This is not a game, ROM-import or Scripting pass.
 
 ## Feasibility hypotheses
 
@@ -37,11 +38,11 @@ Determine a technically honest path that can run the original hand-written Gen1R
 
 ### H2 — Original `.love` payload through LÖVE WebAssembly in a Scripting WebView
 
-**Status: plausible but unproven; preferred spike.** Scripting exposes a `WKWebView`-backed controller. WebKit supports JavaScript, WebGL and WebAssembly generally, and a third-party `love.js` claims LÖVE 11.5 support. However:
+**Status: outside-browser smoke passed with a compatibility shim; Scripting remains unproven; preferred spike.** Scripting exposes a `WKWebView`-backed controller. WebKit supports JavaScript, WebGL and WebAssembly generally. Pinned 2dengine love.js revision `9355186…` executed a ROM-free 23-check LÖVE 11.5 probe in Headless Chrome 92/SwiftShader after the first run exposed its missing `bit` module and a pure-Lua BitOp overlay passed 9,492 LuaJIT differential checks. However:
 
 - `love.js` uses PUC Lua 5.1, not LuaJIT;
 - FFI is unavailable;
-- threads, SharedArrayBuffer/cross-origin isolation, local `.love` loading, audio, file persistence and mobile memory need real-device proof;
+- `love.thread.newThread` creation is unavailable in the outside-browser run despite the symbol existing, so upstream no-thread fallbacks are mandatory; SharedArrayBuffer/cross-origin isolation, local `.love` loading, audible audio, file persistence and mobile memory still need real-device proof;
 - `love.js` is third-party and reports known compatibility/performance limits;
 - Gen1Recomp has conditional fallbacks for some FFI/thread features, but not a proven browser target.
 
@@ -69,8 +70,10 @@ Determine a technically honest path that can run the original hand-written Gen1R
 - [ ] Connect Scripting App through `scripting-cli` and obtain current `.d.ts` files.
 - [ ] Run WebView WebAssembly/WebGL/AudioContext/local-file probes on a physical iPhone.
 - [ ] Run TimelineCanvas/input/file-I/O probes on the same device.
-- [ ] Build and execute an unmodified minimal LÖVE 11.5 `.love` in the selected Web runtime.
-- [ ] Run a minimal subset of Gen1Recomp (boot/import fixture/title) before any broad port work.
+- [x] Build and execute a ROM-free minimal LÖVE 11.5 `.love` outside Scripting; record the unmodified missing-`bit` failure and adapter-only passing rerun.
+- [ ] Repeat the pinned minimal LÖVE 11.5 bundle inside a physical Scripting WebView.
+- [x] Boot the source-built ROM-free Gen1Recomp launcher outside Scripting and capture a structured report/non-ROM screenshot.
+- [ ] Run a minimal synthetic import fixture/title path inside the selected physical Scripting runtime before any broad port work.
 
 ## Go/no-go criteria
 

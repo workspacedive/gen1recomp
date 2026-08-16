@@ -10,7 +10,7 @@ The runtime is intentionally not committed. Acquire the pinned repository/revisi
 python3 tools/prepare_lovejs_smoke.py
 ```
 
-The preparer verifies five external runtime files by size/SHA-256 and creates a deterministic `smoke.love` in the ignored research tree.
+The preparer verifies five external runtime files by size/SHA-256 and creates a deterministic `smoke.love` in the ignored research tree. The archive includes `compatibility/love-web/bit.lua` as a root-level overlay because the first unmodified runtime execution proved that love.js does not provide Gen1Recomp's required LuaJIT BitOp module.
 
 ## Serve
 
@@ -22,14 +22,15 @@ The server supplies the COOP/COEP, CSP and WASM MIME headers required by this ca
 
 ## Evidence boundary
 
-A browser pass proves only that this pinned probe ran in that browser/environment. It does not prove:
+The recorded Headless Chrome 92/SwiftShader run passed 23/23 checks after the BitOp overlay; see `docs/gen1recomp/lovejs-smoke-report.json`. A browser pass proves only that this pinned probe ran in that browser/environment. It does not prove:
 
 - execution inside Scripting's WKWebView;
 - audible Web Audio after user gesture;
 - simultaneous touch/controller behavior;
-- durable IndexedDB/Emscripten filesystem persistence;
+- durable IndexedDB/Emscripten filesystem persistence under Scripting termination (browser reload requires settling or explicit sync);
+- working `love.thread.newThread` workers (creation was detected as unavailable) or complete no-thread fallback parity;
 - background/resume/context-loss recovery;
-- Gen1Recomp or mod compatibility;
+- Gen1Recomp game or mod compatibility (only the separate ROM-free launcher shell has booted);
 - frame-rate, memory or parity targets.
 
 The same pinned bundle must later be run inside a declaration-backed Scripting WebView on a physical device and recorded separately.

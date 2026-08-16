@@ -1,6 +1,6 @@
 # Verifikationsprotokoll und Evidenzregeln
 
-**Letzter Lauf:** 2026-08-16T09:59:44Z
+**Letzter Lauf:** 2026-08-16T11:19:19Z
 **Maschinenlesbarer Bericht:** [`reference-audit.json`](reference-audit.json)
 
 ## Ausgeführte Checks
@@ -41,7 +41,9 @@ python3 -m py_compile tools/*.py
 python3 tools/audit_references.py --report docs/reference-audit.json
 python3 tools/analyze_web_runtime_surface.py --source research/downloads/gen1recomp/source-v0.1.96 --out docs/gen1recomp/web-runtime-surface.json
 python3 tools/prepare_lovejs_smoke.py
+python3 tools/prepare_lovejs_launcher.py
 python3 -m zipfile -t research/downloads/gen1recomp/lovejs-smoke/smoke.love
+python3 -m zipfile -t research/downloads/gen1recomp/lovejs-launcher/gen1recomp.love
 ```
 
 Zusätzlich wurde `tools/analyze_gen1recomp.py` erneut gegen den gepinnten v0.1.96-Quellbaum, das lokale `game.love` und den leeren fehlgeschlagenen APK-Transfer ausgeführt; der Bericht war nach Entfernen nur des Laufzeitstempels exakt gleich zu `docs/gen1recomp/forensics.json`.
@@ -49,8 +51,8 @@ Zusätzlich wurde `tools/analyze_gen1recomp.py` erneut gegen den gepinnten v0.1.
 Ergebnis:
 
 - TypeScript 7.0.2 `strict`/`noEmit`: bestanden;
-- 37 Node-Unit-Tests: bestanden (Verträge, JSON Schema 2020-12, Viewport, Archivregeln, SemVer-Resolver, Aktivierungsjournal und Recovery);
-- 11 Python-Unit-Tests: bestanden (Acquisition-Größen/Hashes/Partials sowie deterministisches LÖVE-Probe-Archiv und HTTP-Header/Report-Endpunkt);
+- 41 Node-Unit-Tests: bestanden (Verträge, JSON Schema 2020-12, Viewport, Archivregeln, SemVer-Resolver, Aktivierungsjournal und Recovery);
+- 15 Python-Unit-Tests: bestanden (Acquisition-Größen/Hashes/Partials, deterministisches LÖVE-Probe-Archiv, HTTP-Header/Report-Endpunkt und LuaJIT-BitOp-Shim-Parität);
 - npm-Audit: 0 bekannte Schwachstellen auf der eingestellten Audit-Stufe;
 - Python-Syntax aller Tools: bestanden;
 - `tools/acquire_gen1recomp.py --source-only`: gepinnte Dev-/Wiki-/Release-Worktree-/love.js-Revisionen erfolgreich reproduziert; bestehende Git-Worktree-`.git`-Dateien werden korrekt erkannt;
@@ -58,7 +60,13 @@ Ergebnis:
 - love.js-Kandidatenrevision und fünf Runtime-Dateien per Größe/SHA-256 bestätigt;
 - deterministisches `smoke.love`: ZIP-Integrität bestanden;
 - statischer Smoke-Server: COOP/COEP/CSP, `application/wasm`, No-Store und begrenzter Report-Endpunkt geprüft;
-- Browserausführung des LÖVE-Smoke-Tests: **noch nicht belegt**. Kein Browser ist installiert; der Playwright-Chromium-Transfer scheiterte vor dem TLS-Aufbau. Ein gestarteter Live-Preview allein ist kein Runtime-Pass;
+- erste Browserausführung: reproduzierbarer Fail durch fehlendes `require("bit")`; keine stille Kompatibilitätsannahme;
+- `compatibility/love-web/bit.lua`: vollständige reine-Lua-BitOp-Oberfläche, **9.492 Differentialvergleiche gegen vendored LuaJIT 2.1 bestanden**;
+- erweiterte Browserausführung: **23/23 Smoke-Checks bestanden** in Headless Chrome 92 mit SwiftShader, darunter LÖVE 11.5, Lua 5.1, `setfenv`, `loadstring`, BitOp, Coroutine, WASM, WebGL1/2, Canvas, ImageData, Minimalshader, deterministischer 1/60-Schritt, Queueable-Audiobuffer, Thread-Channel, Session-Datei, SHA-256 und Timer;
+- Thread-Befund: `love.thread.newThread` ist als Funktion sichtbar, Worker-Erstellung scheitert jedoch reproduzierbar in love.js' Normalisierungsschicht. Der Probe behandelt dies als erkannte Unverfügbarkeit; alle betroffenen Upstream-No-Thread-Fallbacks bleiben einzeln zu charakterisieren;
+- Persistenz-Charakterisierung: ein sofortiger Reload kann den noch asynchronen Write verlieren; nach Settling bzw. explizitem `FS.syncfs(false)` wurde der Marker beim Reload wiederhergestellt. Der neue serialisierte Persistence-Adapter macht diesen Flush zu einer expliziten Lifecycle-Barriere;
+- Browserbericht: [`gen1recomp/lovejs-smoke-report.json`](gen1recomp/lovejs-smoke-report.json). Dies ist ausdrücklich kein aktueller Browser-/Performancewert und kein Scripting-/iOS-Beleg;
+- ROM-freier v0.1.96-Launcher-Boot: vorbereiteter Overlay-Payload mit 522 ZIP-Einträgen, sichtbarer 1024x768-Canvas, 10 Sekunden Beobachtung, keine Page-/Runtime-/Request-Fehler; Screenshot zeigte Launcher/Tabs/„ROM REQUIRED“, aber keinerlei ROM-Inhalt. Browser-Mausklicks auf Red/Blue/Yellow/Gold erzeugten vier unterschiedliche Canvas-Zustände mit zugeordneten Screenshot-Hashes und Pixel-Diff-Bereichen. Bericht: [`gen1recomp/lovejs-launcher-report.json`](gen1recomp/lovejs-launcher-report.json);
 - physische Scripting-/iOS-Ausführung: **nicht ausgeführt**.
 
 ## Evidenzstufen für kommende Implementierungen
@@ -84,4 +92,4 @@ Das Gen1Recomp-Ziel ist festgelegt, aber es ist noch keine physische Scripting-A
 - Gen1Recomp-Payload-Boot, Nutzer-ROM-Import, Mods, Saves oder Paritätsgoldens in Scripting;
 - belastbare Performance-/Speicherbudgets.
 
-Diese Punkte sind harte Phase-0-Gates. Sie werden nicht durch die erfolgreiche Browser-Harness-Vorbereitung oder host-unabhängige Unit-Tests ersetzt.
+Diese Punkte sind harte Phase-0-Gates. Sie werden nicht durch den erfolgreichen außerhalb von Scripting ausgeführten Browser-Smoke-Test oder host-unabhängige Unit-Tests ersetzt.

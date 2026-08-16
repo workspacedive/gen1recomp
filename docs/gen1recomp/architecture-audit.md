@@ -10,7 +10,7 @@
 |---|---|
 | Scripting, never Scriptable | Pass. Gen1Recomp documents use the Scripting TS/TSX/WebView surface and do not introduce Scriptable APIs. |
 | Not a Game Boy emulator | Pass. The architecture preserves ROM import/extraction into data consumed by handwritten game logic. No CPU, instruction, bus, PPU or emulator-core layer exists. |
-| Research and boundaries before broad code | Pass. Forensics, Android, technology, architecture, compatibility, UX and probe specifications preceded the host-independent contracts. No game port/runtime integration has started. |
+| Research and boundaries before broad code | Pass. Forensics, Android, technology, architecture, compatibility, UX and probe specifications preceded implementation. Only host-independent contracts and a ROM-free runtime/shim probe exist; no Gen1Recomp payload integration has started. |
 | Scripting code outside core | Pass. The target dependency direction uses ports/brokers; current TypeScript code imports no upstream Lua/core files. |
 | Kernel/LÖVE independently replaceable | Pass as design, not yet as artifact. The documents prohibit extraction/core changes before characterization; no Kernel/LÖVE source was modified. |
 | Honest mod isolation | Pass. Documents consistently describe language/application-level capability control and explicitly deny OS/process sandboxing. |
@@ -56,6 +56,8 @@ Both were still their respective `main` tips at `2026-08-16T09:47:14Z`. The lock
 | `android-analysis.md` | Official metadata, failed transfer and local payload are kept separate; no APK runtime result is claimed. |
 | `technology-evaluation.md` | General iOS/WebKit capability is not promoted to Scripting support; the conditional WebView direction remains accurate. |
 | `web-runtime-analysis.md` / `web-runtime-surface.json` | Reproducibly inventories the broad LÖVE/Lua surface while labelling lexical false positives and refusing support/performance conclusions. |
+| `lovejs-smoke-report.json` | Records the initial missing-`bit` failure, adapter-only remediation, 9,492 BitOp differential checks, final 23/23 outside-browser pass and persistence-race characterization with strict environment limitations. |
+| `lovejs-launcher-report.json` | Records a visible 1024x768 ROM-free v0.1.96 launcher boot through the overlay, with no page/runtime/request errors and no claim of game/ROM/Scripting parity. |
 | `target-architecture.md` | Host envelopes now use JSON values rather than unconstrained `unknown`; manifest integrity and journal records now match implemented contracts. |
 | `compatibility-matrix.md` | Implemented host-independent contracts are distinguished from interfaces and unavailable backends; iOS reconstruction status is explicit. |
 | `ui-ux.md` | Original Game UI and native Platform UI remain separate; no inaccessible overlay or guessed active version is required. |
@@ -74,22 +76,24 @@ Implemented definitions:
 - SemVer resolver with newest-compatible selection, backtracking, optional constraints, cycle rejection and dependency-first order;
 - named API compatibility evaluation that attributes missing, malformed and unsatisfied ranges;
 - upstream mod-permission mapping and least-privilege capability decisions without raw filesystem grants or sandbox claims;
+- LuaJIT-BitOp-compatible pure Lua web overlay with 9,492 differential comparisons;
+- serialized Emscripten persistence populate/flush barrier with timeout and attributed failure handling;
 - recoverable activation journal with conservative rollback for every phase that may have changed the active pointer.
 
 The archive module validates an adapter-provided entry inventory; it is not itself a ZIP parser/extractor. File-kind allowlists and ROM-content distribution checks remain responsibilities of the component/mod policy layer. The activation store is abstract; no atomic or durable Scripting filesystem behavior is claimed.
 
 ## 6. Verification boundary
 
-Current local verification covers TypeScript compilation, pure unit tests, JSON Schema compilation/validation, Python acquisition behavior and npm dependency audit. It does **not** cover:
+Current local verification covers TypeScript compilation, pure unit tests, JSON Schema compilation/validation, Python acquisition behavior, npm dependency audit, LuaJIT-vs-shim BitOp differential testing and a ROM-free love.js execution in Headless Chrome 92/SwiftShader. It does **not** cover:
 
 - Scripting-synchronized declarations;
 - Scripting runtime execution;
 - physical iPhone/iPad WebView behavior;
-- local WASM, WebGL, Web Audio or persistent Emscripten storage;
+- Scripting-local WASM/WebGL, audible Web Audio or persistent Emscripten storage;
 - simultaneous touch/controller behavior;
-- Gen1Recomp `.love` boot, ROM import, game render/audio, mods or saves in Scripting;
+- Gen1Recomp game/title boot, ROM import, in-game render/audio, mods or saves in Scripting (only the ROM-free launcher shell has booted outside Scripting);
 - visual/audio golden parity or performance budgets.
 
 A static audit of pinned `scripting-cli@1.5.0` found a local Express/Socket.IO synchronization service but no authentication/pairing-token layer in the inspected server/router paths. It is therefore not exposed through Arena's public preview proxy. Exact app-synchronized declarations require a trusted local-network session on the user's machine.
 
-Therefore the current implementation is architecture groundwork, not a playable app and not evidence that the preferred runtime will pass Phase 0.
+Therefore the current implementation is architecture groundwork with one successful outside-Scripting runtime slice, not a playable app and not evidence that the preferred runtime will pass the physical Scripting Phase-0 gates.

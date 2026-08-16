@@ -17,7 +17,8 @@
   }
 
   async function publish(status, detail) {
-    const diagnosticCanvas = document.createElement("canvas")
+    const webgl1Canvas = document.createElement("canvas")
+    const webgl2Canvas = document.createElement("canvas")
     const report = {
       schemaVersion: 1,
       status,
@@ -26,8 +27,8 @@
       userAgent: navigator.userAgent,
       crossOriginIsolated: window.crossOriginIsolated,
       webAssembly: typeof WebAssembly === "object",
-      webgl1: diagnosticCanvas.getContext("webgl") !== null,
-      webgl2: diagnosticCanvas.getContext("webgl2") !== null,
+      webgl1: webgl1Canvas.getContext("webgl") !== null,
+      webgl2: webgl2Canvas.getContext("webgl2") !== null,
       observedAt: new Date().toISOString(),
     }
     try {

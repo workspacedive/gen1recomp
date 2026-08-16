@@ -105,10 +105,10 @@ def main() -> int:
     parser.add_argument("--directory", type=Path, default=DEFAULT_DIRECTORY)
     args = parser.parse_args()
     directory = args.directory.resolve()
-    required = directory / "probe-manifest.json"
-    if not required.is_file():
+    manifests = (directory / "probe-manifest.json", directory / "launcher-manifest.json")
+    if not any(path.is_file() for path in manifests):
         raise RuntimeError(
-            f"prepared probe not found at {directory}; run tools/prepare_lovejs_smoke.py"
+            f"prepared probe not found at {directory}; run a love.js prepare tool first"
         )
     handler = partial(ProbeHandler, directory=str(directory))
     server = ProbeServer((args.bind, args.port), handler)

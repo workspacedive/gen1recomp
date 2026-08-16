@@ -20,6 +20,9 @@ const hostMessage = ajv.compile(
 const activationJournal = ajv.compile(
   schema("../../../../schemas/activation-journal.schema.json"),
 )
+const runtimeCapabilityReport = ajv.compile(
+  schema("../../../../schemas/runtime-capability-report.schema.json"),
+)
 
 const validManifest = {
   schemaVersion: 1,
@@ -76,6 +79,46 @@ test("activation journal schema closes phases, component IDs, and versions", () 
     previous: {},
     candidate: { core: "latest" },
   }), false)
+})
+
+test("runtime capability schema accepts functional evidence and rejects invented checks", () => {
+  const canonical = JSON.parse(readFileSync(new URL(
+    "../../../../docs/gen1recomp/runtime-capability-report.outside-browser.json",
+    import.meta.url,
+  ), "utf8")) as unknown
+  assert.equal(
+    runtimeCapabilityReport(canonical),
+    true,
+    JSON.stringify(runtimeCapabilityReport.errors),
+  )
+  const valid = {
+    schemaVersion: 1,
+    purpose: "live-activation",
+    sessionId: "capability-session-1",
+    runtimeRevision: "9355186de22db13bd88bf2a0db75d2925647d036",
+    observedAt: "2026-08-16T11:22:42.019Z",
+    environment: {
+      host: "outside-browser",
+      hostVersion: "149.0.7827.0",
+      osVersion: null,
+      renderer: "SwiftShader",
+    },
+    checks: {
+      "web.wasm": { status: "pass", observed: true },
+      "thread.workerRoundtrip": {
+        status: "unavailable",
+        observed: "worker construction failed",
+      },
+    },
+  }
+  assert.equal(runtimeCapabilityReport(valid), true, JSON.stringify(runtimeCapabilityReport.errors))
+  assert.equal(runtimeCapabilityReport({
+    ...valid,
+    checks: { "graphics.metal": { status: "pass", observed: true } },
+  }), false)
+  assert.equal(runtimeCapabilityReport({ ...valid, sessionId: "../stale" }), false)
+  assert.equal(runtimeCapabilityReport({ ...valid, runtimeRevision: "main" }), false)
+  assert.equal(runtimeCapabilityReport({ ...valid, observedAt: "2026-08-16 11:22" }), false)
 })
 
 test("host schema distinguishes success and failure responses", () => {

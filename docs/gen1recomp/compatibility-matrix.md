@@ -29,8 +29,8 @@ Versions below are contract starting points, not claims of completed artifacts.
 | Component/update contracts | 0.1.0 | manifest schema 1 | manifest parser/schema, safe archive preflight, dependency resolver and activation journal implemented host-independently |
 | Scripting host | 0.0.1-spike | 1.0.0 | pending connected-app `.d.ts` |
 | iOS/Scripting platform adapter | 0.0.1-spike | 1.0.0 | interface only; pending device probes |
-| Runtime manager | 0.0.1-spike | 1.0.0 | state/interface only; backend manager pending |
-| Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | outside-browser smoke passed; no LuaJIT/FFI; Scripting pending |
+| Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
+| Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | closed functional-evidence parser/gate and outside-browser profile implemented; no LuaJIT/FFI; Scripting profile hard-blocked pending declarations/device capture |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
 | LÖVE host compatibility | 0.1.0-spike | 1.0.0 | BitOp parity-tested; unusable worker capability normalized before core; Fetch/Update/Mod Job/Import/ChipAudio fallbacks characterized; explicit Emscripten flush adapter implemented |
 | LÖVE distribution | candidate 11.5 web | 11.5.0 | pinned outside-browser smoke/launcher passed; worker creation unavailable despite symbol/COOP/COEP; Scripting/device not validated |
@@ -61,8 +61,8 @@ A component set is runnable only when all are true:
 1. every manifest/schema/API major parses;
 2. every dependency semver range matches;
 3. host protocol major matches;
-4. runtime reports required Lua features;
-5. LÖVE compatibility reports required modules and shader level;
+4. a closed functional report from the current boot session matches the required host and exact runtime revision, and every required operation passes;
+5. LÖVE compatibility reports required modules and shader level; namespace/symbol presence alone cannot satisfy this rule;
 6. kernel façade major matches core adapter;
 7. Mod API provided is at least each enabled mod's request;
 8. save/cache migration path exists;

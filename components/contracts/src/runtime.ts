@@ -9,9 +9,13 @@ export type RuntimeCapability =
   | "bitLibrary"
   | "ffi"
   | "threads"
+  | "threadChannels"
   | "filesystem"
+  | "persistentStorage"
   | "networkBroker"
   | "pcmOutput"
+  | "queueableAudio"
+  | "webAssembly"
   | "webgl1"
   | "webgl2"
   | "shaders"
@@ -27,10 +31,15 @@ export type RuntimeState =
   | { readonly status: "starting"; readonly componentId: string }
   | { readonly status: "running"; readonly sessionId: string }
   | { readonly status: "suspended"; readonly sessionId: string; readonly reason: string }
-  | { readonly status: "stopping"; readonly sessionId: string }
+  | { readonly status: "stopping"; readonly sessionId: string | null }
   | { readonly status: "stopped" }
   | { readonly status: "recovering"; readonly failedVersion: string; readonly fallbackVersion: string }
-  | { readonly status: "failed"; readonly code: string; readonly message: string; readonly retryable: boolean }
+  | {
+      readonly status: "failed"
+      readonly code: RuntimeError["code"]
+      readonly message: string
+      readonly retryable: boolean
+    }
 
 export type RuntimeDescriptor = {
   readonly id: string
@@ -49,7 +58,17 @@ export type RuntimeBootRequest = {
 }
 
 export type RuntimeError = {
-  readonly code: "unsupported" | "invalid_payload" | "integrity" | "startup" | "lifecycle" | "internal"
+  readonly code:
+    | "unsupported"
+    | "invalid_payload"
+    | "integrity"
+    | "capability"
+    | "incompatible"
+    | "busy"
+    | "invalid_state"
+    | "startup"
+    | "lifecycle"
+    | "internal"
   readonly message: string
   readonly retryable: boolean
 }

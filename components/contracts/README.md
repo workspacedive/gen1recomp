@@ -15,6 +15,6 @@ Host-independent strict TypeScript contracts for the Gen1Recomp Scripting feasib
 | `component-manifest.ts` | closed manifest v1 parser with artifact integrity and dependency metadata | artifact extraction, compatibility activation or durable storage |
 | `json.ts` / `result.ts` | JSON boundary and explicit result primitives | exceptions-as-control-flow policy |
 
-Wire definitions are mirrored by `schemas/host-message.schema.json` and `schemas/component-manifest.schema.json` using JSON Schema 2020-12. Runtime parsers additionally enforce semantic constraints that JSON Schema cannot conveniently express, such as duplicate dependency IDs.
+Wire definitions are mirrored by `schemas/host-message.schema.json` and `schemas/component-manifest.schema.json` using JSON Schema 2020-12; the update journal and love.js functional-evidence adapter have their own closed schemas alongside them. Runtime parsers additionally enforce semantic constraints that JSON Schema cannot conveniently express, such as duplicate dependency IDs and canonical timestamp validity.
 
 No module imports Scripting, Gen1Recomp Lua, LÖVE or a rendering backend. That dependency rule is intentional: adapters depend on these contracts, never the reverse.

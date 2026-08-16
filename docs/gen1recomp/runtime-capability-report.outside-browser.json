@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "purpose": "archival",
+  "sessionId": "archived-capture-20260816T112242019Z",
+  "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+  "observedAt": "2026-08-16T11:22:42.019Z",
+  "environment": {
+    "host": "outside-browser",
+    "hostVersion": "HeadlessChromium/149.0.7827.0",
+    "osVersion": null,
+    "renderer": "ANGLE Vulkan / Google SwiftShader"
+  },
+  "checks": {
+    "runtime.love11_5": {
+      "status": "pass",
+      "observed": "11.5.0 Mysterious Mysteries"
+    },
+    "lua.version51": {
+      "status": "pass",
+      "observed": "Lua 5.1"
+    },
+    "lua.setfenv": {
+      "status": "pass",
+      "observed": true
+    },
+    "lua.loadstring": {
+      "status": "pass",
+      "observed": true
+    },
+    "lua.bit": {
+      "status": "pass",
+      "observed": "root-level bit.lua compatibility overlay"
+    },
+    "lua.coroutine": {
+      "status": "pass",
+      "observed": "create/resume/yield roundtrip"
+    },
+    "web.wasm": {
+      "status": "pass",
+      "observed": true
+    },
+    "web.crossOriginIsolated": {
+      "status": "pass",
+      "observed": true
+    },
+    "graphics.webgl1": {
+      "status": "pass",
+      "observed": "WebGL 1.0 (OpenGL ES 2.0 Chromium)"
+    },
+    "graphics.webgl2": {
+      "status": "pass",
+      "observed": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "graphics.canvas": {
+      "status": "pass",
+      "observed": [160, 144]
+    },
+    "graphics.imageData": {
+      "status": "pass",
+      "observed": true
+    },
+    "graphics.shader": {
+      "status": "pass",
+      "observed": "minimal shader compiled"
+    },
+    "loop.fixedStep": {
+      "status": "pass",
+      "observed": "accumulator advanced deterministic 1/60 ticks and state"
+    },
+    "storage.session": {
+      "status": "pass",
+      "observed": "same-session write/read"
+    },
+    "storage.explicitSync": {
+      "status": "pass",
+      "observed": "marker recovered after explicit Module.FS.syncfs(false) and reload"
+    },
+    "audio.queueableBuffer": {
+      "status": "pass",
+      "observed": "generated buffer queued; audible output not tested"
+    },
+    "input.touchNamespace": {
+      "status": "pass",
+      "observed": "namespace presence only"
+    },
+    "input.simultaneousTouch": {
+      "status": "unavailable",
+      "observed": "not measured outside a physical touch device"
+    },
+    "input.joystickNamespace": {
+      "status": "pass",
+      "observed": "namespace presence only"
+    },
+    "thread.channel": {
+      "status": "pass",
+      "observed": "same-state push/pop roundtrip"
+    },
+    "thread.workerRoundtrip": {
+      "status": "unavailable",
+      "observed": "symbol present but worker construction failed"
+    }
+  }
+}

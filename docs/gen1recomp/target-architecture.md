@@ -95,11 +95,12 @@ Adapters around exact documented Scripting APIs:
 
 ### `runtime-manager`
 
-- loads a runtime manifest;
-- verifies API/dependency ranges and artifact checksum;
-- starts/stops/suspends one runtime instance;
-- owns runtime state machine;
-- reports capabilities actually detected, not desired capabilities.
+- receives a runtime already selected and integrity-checked by the update/component control plane;
+- requires injected, same-session functional capability evidence before calling the backend;
+- compares evidenced identity, versions and capabilities with `LuaRuntimePort.describe()`;
+- starts/stops/suspends one runtime instance and rejects overlapping operations;
+- owns the runtime state machine and cleans up partial starts;
+- reports capabilities actually exercised, not desired capabilities or visible symbols.
 
 ### `lua-runtime`
 
@@ -203,7 +204,7 @@ Any pre-running failure → failed
 Any running fatal error → recovering → known-good or failed
 ```
 
-Transitions are discriminated and logged. `starting` cannot be re-entered, and suspend/resume commands are idempotent.
+Transitions are discriminated. `starting` cannot be re-entered, suspend/resume commands are idempotent only at their target state, and concurrent lifecycle commands fail with `busy`. A backend boot error is treated as a potentially partial start and receives a best-effort stop before the manager publishes `failed`; lifecycle failures require a successful explicit stop before another boot. Structured logging remains a host observability responsibility and is not implemented by the manager slice yet.
 
 ## 6. Renderer interface
 
@@ -420,8 +421,10 @@ Current pre-gate code is deliberately narrower than that target tree:
 - `compatibility/love-web/` contains the LuaJIT-BitOp overlay and pre-core thread-capability normalization required by the tested PUC Lua runtime;
 - `tools/package_gen1recomp_payload.py` deterministically packages the pinned ROM-free payload before the launcher wrapper is applied;
 - `runtime/adapters/lovejs/persistence.ts` serializes Emscripten populate/flush operations with timeout/error attribution after the probe exposed an immediate-reload durability race;
-- `schemas/` contains matching JSON Schema 2020-12 wire, manifest and activation-journal definitions;
-- `tests/contracts/`, `tests/updates/` and `tests/tools/` exercise those host-independent boundaries.
+- `runtime/adapters/lovejs/capabilities.ts` parses closed functional evidence, binds it to the pinned runtime/host/session, and derives only evidenced runtime capabilities; its Scripting profile is hard-blocked pending declaration-backed device evidence;
+- `runtime/manager/runtime-manager.ts` implements the host-independent single-instance lifecycle/concurrency gate over an injected evidence verifier and `LuaRuntimePort`;
+- `schemas/` contains matching JSON Schema 2020-12 wire, manifest, activation-journal and runtime-capability definitions;
+- `tests/contracts/`, `tests/runtime/`, `tests/updates/` and `tests/tools/` exercise those host-independent boundaries.
 
 There is still no Scripting host adapter, WebView runtime, game payload integration or broad port. Those remain blocked on declaration-backed physical-device probes.
 

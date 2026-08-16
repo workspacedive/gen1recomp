@@ -15,10 +15,19 @@ export async function runRuntimeDiagnostic(
   let runtimeRoot = state.activeRuntimeRoot ?? packaged
   let usedUpdatedComponents = state.activeRuntimeRoot != null
   const entry = `${runtimeRoot}/index.html`
-  if (!await FileManager.exists(entry) && usedUpdatedComponents) {
-    await updates.rollbackAfterRuntimeFailure()
-    runtimeRoot = packaged
-    usedUpdatedComponents = false
+  if (usedUpdatedComponents) {
+    const configPath = `${runtimeRoot}/runtime-config.js`
+    let compatible = false
+    try {
+      compatible = await FileManager.exists(entry) && await FileManager.exists(configPath)
+        && (await FileManager.readAsString(configPath)).includes("\"hostSessionProtocol\":1")
+    } catch {
+      compatible = false
+    }
+    if (!compatible) {
+      runtimeRoot = packaged
+      usedUpdatedComponents = false
+    }
   }
   if (!await FileManager.exists(`${runtimeRoot}/index.html`)) throw new Error("runtime_missing")
 
@@ -46,6 +55,10 @@ export async function runRuntimeDiagnostic(
     if (!await controller.loadFile(`${runtimeRoot}/index.html`, runtimeRoot) || !await controller.waitForLoad()) {
       throw new Error("runtime_load_failed")
     }
+    const started = await controller.evaluateJavaScript<boolean>(
+      "return window.__gen1recompStart({schemaVersion:1,mode:'diagnostic'})",
+    )
+    if (started !== true) throw new Error("runtime_session_rejected")
     await controller.present({ fullscreen: true, navigationTitle: "Gen1Recomp Runtime" })
     // Scripting resolves present only after dismissal. Evaluating JavaScript here would target a destroyed
     // page on affected builds, so Preview 0.1.4's post-dismiss flush is intentionally not repeated.

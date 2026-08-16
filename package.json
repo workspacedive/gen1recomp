@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "typecheck:scripting": "tsc --noEmit -p tests/scripting/tsconfig.json",
     "build:contracts": "tsc --outDir .tmp/ts",
-    "test:contracts": "npm run build:contracts && node --test .tmp/ts/tests/contracts/*.test.js .tmp/ts/tests/mods/*.test.js .tmp/ts/tests/runtime/*.test.js .tmp/ts/tests/updates/*.test.js",
+    "test:contracts": "npm run build:contracts && node --test .tmp/ts/tests/contracts/*.test.js .tmp/ts/tests/games/*.test.js .tmp/ts/tests/mods/*.test.js .tmp/ts/tests/runtime/*.test.js .tmp/ts/tests/updates/*.test.js",
     "test:tools": "python3 -m unittest discover -s tests/tools -p 'test_*.py'",
     "verify": "npm run typecheck && npm run typecheck:scripting && npm run test:contracts && npm run test:tools"
   },

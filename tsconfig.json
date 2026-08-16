@@ -17,6 +17,6 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["node"]
   },
-  "include": ["components/**/*.ts", "runtime/**/*.ts", "tests/contracts/**/*.ts", "tests/mods/**/*.ts", "tests/runtime/**/*.ts", "tests/updates/**/*.ts"],
+  "include": ["components/**/*.ts", "runtime/**/*.ts", "scripting/Gen1RecompApp/src/domain/games.ts", "tests/contracts/**/*.ts", "tests/games/**/*.ts", "tests/mods/**/*.ts", "tests/runtime/**/*.ts", "tests/updates/**/*.ts"],
   "exclude": ["node_modules", "research", "references"]
 }

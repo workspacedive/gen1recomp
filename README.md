@@ -71,6 +71,7 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 
 - [`docs/gen1recomp/phase-0-spec.md`](docs/gen1recomp/phase-0-spec.md) — Machbarkeitshypothesen, Gates und No-Go-Kriterien
 - [`docs/gen1recomp/source-forensics.md`](docs/gen1recomp/source-forensics.md) — Quell-, Runtime-, Render-, Mod-, Save- und Update-Forensik
+- [`docs/research/gen1recomp-rom-library-audit.md`](docs/research/gen1recomp-rom-library-audit.md) — gepinnte Import-/Cache-/Save-Grenzen und daraus abgeleiteter Native-0.4.0-Handoff
 - [`docs/gen1recomp/android-analysis.md`](docs/gen1recomp/android-analysis.md) — getrennte Android-Referenzanalyse
 - [`docs/gen1recomp/technology-evaluation.md`](docs/gen1recomp/technology-evaluation.md) — Runtime-/Grafik-/Audio-/Input-Entscheidungsmatrix
 - [`docs/gen1recomp/web-runtime-analysis.md`](docs/gen1recomp/web-runtime-analysis.md) / [`web-runtime-surface.json`](docs/gen1recomp/web-runtime-surface.json) / [`lovejs-smoke-report.json`](docs/gen1recomp/lovejs-smoke-report.json) / [`lovejs-launcher-report.json`](docs/gen1recomp/lovejs-launcher-report.json) — reproduzierbarer LÖVE-/Lua-Web-Kompatibilitätsumfang, ausgeführter Smoke-Test und ROM-freier Launcher-Boot
@@ -84,6 +85,7 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - [`docs/gen1recomp/scripting-device-run-001.md`](docs/gen1recomp/scripting-device-run-001.md) — kumulative physische Läufe einschließlich bestandenem Preview-0.1.4-Start
 - [`docs/gen1recomp/scripting-native-020-report.json`](docs/gen1recomp/scripting-native-020-report.json) — physisch korrelierter nativer 0.2.0-Runtime-Bericht
 - [`docs/gen1recomp/scripting-native-030-report.json`](docs/gen1recomp/scripting-native-030-report.json) — Paket-, Sicherheits- und Runtime-Bericht der 0.3.0-Komponenten-/Modverwaltung
+- [`docs/gen1recomp/scripting-native-040-report.json`](docs/gen1recomp/scripting-native-040-report.json) / [`scripting-native-040-device-plan.md`](docs/gen1recomp/scripting-native-040-device-plan.md) — automatisierter Bericht und noch offener Geräteplan zu verifiziertem ROM-Import, Bibliothek, Runtime-Handoff und Cachewartung in 0.4.0
 - [`docs/gen1recomp/scripting-capability-probes.md`](docs/gen1recomp/scripting-capability-probes.md) — physischer Geräteprüfplan
 - [`docs/gen1recomp/device-connection.md`](docs/gen1recomp/device-connection.md) — sicherer lokaler `scripting-cli`-/Deklarations-Handoff
 - [`docs/gen1recomp/architecture-audit.md`](docs/gen1recomp/architecture-audit.md) — dokumentübergreifender Konsistenz- und Evidenzaudit
@@ -95,14 +97,14 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - `components/updates/src/`: geschlossener Katalogparser/Trust-Policy, Update-Inventar und -Planung, SemVer-/Dependency-/API-Kompatibilität, Archivrichtlinie, manueller Transaktionsorchestrator, Aktivierungsjournal und Recovery;
 - `updates/`: deterministische ROM-freie aktuelle LÖVE/Lua- und Gen1Recomp-Komponentenpakete plus sequenzierter Stable-Systemkatalog;
 - `scripting/Gen1RecompPreview/`: physisch validierter Preview-0.1.4-Runtime-Fallback;
-- `scripting/Gen1RecompApp/`: nativer 0.3.0-Produktshell mit Home/Games/Updates/Mods/Settings, vertrauensgebundenem manuellen Komponentenimport, Datei-/GitHub-Modinstallation und -Updates, privatem Registry-Backup sowie Runtime-Materialisierung/First-Boot-Rollback;
+- `scripting/Gen1RecompApp/`: nativer 0.4.0-Produktshell mit persistentem verifiziertem Spieleimport, privater Registry/Recovery, dynamischen Karten, ROM-zu-Extractor-Handoff, direktem Game-Start, Save-Metadaten und Cachelöschung sowie den getrennten Komponenten-/Modpfaden aus 0.3.0;
 - `runtime/adapters/lovejs/` und `runtime/manager/`: serialisierte Persistenz, funktionale Capability-Evidenz und geordnete Lifecycle-/Concurrency-Grenzen;
 - `compatibility/love-web/`: vollständiger BitOp-Hostshim plus No-Worker-Normalisierung;
 - `schemas/`: geschlossene JSON-Schemas einschließlich Updatekatalog;
 - `tools/package_system_updates.py` und `tools/package_scripting_app.py`: reproduzierbare Systemfeeds und `.scripting`-Pakete;
 - `tests/`: Vertrag, Schema, Runtime, Archiv, Resolver, Katalog, Updateplan/-orchestrierung, Recovery, Scripting-Deklarationssubset und deterministische Pakete.
 
-Der native Games-Screen zeigt 0.3.0 bewusst als leeren Zustand; ROM-Identität, private Extraktion und persistente Bibliothek werden nicht durch eine Attrappe ersetzt. Mods können sicher paketiert installiert/aktualisiert werden, bleiben aber bis zu Profil-, Consent- und Runtime-Injektion inaktiv. Physische 0.3.0-Datei-/GitHub-/App-Group-Validierung sowie ROM, Saves, produktionssicheres Close/Flush und Input/Audio bleiben aktive vertikale Schnitte.
+Native 0.4.0 identifiziert ausschließlich exakte kanonische Dumps, registriert sie recoverbar und privat, übergibt die Bytes einmalig im Speicher an den unveränderten Upstream-Importer und löscht ROM-Kopien erst nach vollständig geflushtem Cache. Der anschließende Start verwendet `--game=<id>` statt des Web-Launchers; Save-Inhalte bleiben getrennt und es werden nativ nur Metadaten angezeigt. Der ROM-freie und synthetische Browserpfad ist automatisiert bestanden, reale ROM-Extraktion, WebKit-/App-Group-Dauerhaftigkeit, Lifecycle, Input/Audio/Fidelity sowie alle 0.3.0-Datei-/GitHub-Aktionen bleiben physische Gates. Mods bleiben bis zu Profil-, Consent- und Runtime-Injektion inaktiv.
 
 Gepinnte Gen1Recomp-/Wiki-/Runtime-Quellen reproduzieren und den ROM-freien Web-Probe vorbereiten:
 
@@ -124,4 +126,4 @@ python3 tools/audit_references.py --report docs/reference-audit.json
 
 Weitere Produktpfade werden nur nach ihrem jeweiligen Declaration-/Gerätegate aktiviert. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
 
-Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 und Native 0.2.0 belegen den physischen Runtimepfad; Native 0.3.0 ist der aktuelle Komponenten-/Modverwaltung-Testkandidat.
+Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 und Native 0.2.0 belegen den physischen Runtimepfad; Native 0.4.0 ist der aktuelle verifizierte Spielebibliothek-/Extraktions-Testkandidat. Native 0.3.0 bleibt der noch physisch zu prüfende Komponenten-/Modverwaltungsvorgänger.

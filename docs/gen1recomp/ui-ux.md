@@ -76,7 +76,7 @@ No blank canvas while the runtime starts. Show the exact stage and a safe cancel
 
 ### Bottom navigation and future Mods destination
 
-The native root uses peer tabs for Home, Games, Updates, Mods, and Settings. Native 0.3.0 enables Mods for safe inactive package management without restructuring the other destinations.
+The native root uses peer tabs for Home, Games, Updates, Mods, and Settings. Native 0.3.0 enabled Mods for safe inactive package management; Native 0.4.0 turns Games into a persistent library without restructuring the peer destinations.
 
 The current Mods slice provides file/GitHub installation, update checks, individual/aggregate update actions and deletion. The later App-Store-inspired hierarchy—editorial Discover, scannable product rows, native Search, details, profiles and load order—remains modular. Its catalog, capability consent, activation journal and runtime rollback stay separate from system-component Updates. Full contract: [`mod-store-architecture.md`](mod-store-architecture.md).
 
@@ -93,6 +93,8 @@ Choose file
 → release source bytes
 → Ready
 ```
+
+Native 0.4.0 implements this as stateful game cards: exact size/SHA-1 verification, fixed private staging, pending-extraction retry, ready/direct-play, missing-cache reimport, discovered-save count, and deletion that explicitly preserves saves. The selected file itself is the import consent; no redundant confirmation interrupts a successful canonical match. Progress remains stage-based because native hashing/staging and upstream extraction do not expose one shared trustworthy percentage.
 
 UX requirements:
 

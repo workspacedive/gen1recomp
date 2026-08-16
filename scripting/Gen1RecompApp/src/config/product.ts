@@ -1,10 +1,10 @@
 export const PRODUCT = {
-  projectDirectoryName: "Gen1Recomp Native 030",
-  version: "0.3.0",
-  build: "030",
+  projectDirectoryName: "Gen1Recomp Native 040",
+  version: "0.4.0",
+  build: "040",
   privateDirectoryName: "Gen1Recomp",
-  packagedRuntimeDirectory: "runtime-v030",
-  runtimeShellDirectory: "runtime-shell-v030",
+  packagedRuntimeDirectory: "runtime-v040",
+  runtimeShellDirectory: "runtime-shell-v040",
   systemCatalogURL: "https://raw.githubusercontent.com/workspacedive/gen1recomp/main/updates/catalog/stable.json",
   systemCatalogId: "org.gen1recomp.system",
   systemCatalogSequence: 1,
@@ -58,4 +58,6 @@ export const RUNTIME_SHELL_FILES = [
   "preview-loader.js",
   "preview-bundle.js",
   "runtime-config.js",
+  "maintenance.html",
+  "maintenance.js",
 ] as const

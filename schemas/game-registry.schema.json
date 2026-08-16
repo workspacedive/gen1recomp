@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://workspacedive.github.io/gen1recomp/schemas/game-registry.schema.json",
+  "title": "Gen1Recomp private game registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "games",
+    "updatedAt"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "updatedAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?Z$"
+    },
+    "games": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "$ref": "#/$defs/game"
+      }
+    }
+  },
+  "$defs": {
+    "save": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "bytes",
+        "modifiedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(slot[1-9][0-9]*|legacy)$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "modifiedAt": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "game": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "generation",
+        "support",
+        "romSize",
+        "romSha1",
+        "cacheFormat",
+        "status",
+        "retainedSource",
+        "importedAt",
+        "updatedAt",
+        "saves"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "red",
+            "blue",
+            "yellow",
+            "gold"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "generation": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "support": {
+          "enum": [
+            "stable",
+            "beta"
+          ]
+        },
+        "romSize": {
+          "enum": [
+            1048576,
+            2097152
+          ]
+        },
+        "romSha1": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "cacheFormat": {
+          "const": "rom-cache-v10"
+        },
+        "status": {
+          "enum": [
+            "pendingExtraction",
+            "ready",
+            "needsReimport"
+          ]
+        },
+        "retainedSource": {
+          "type": "boolean"
+        },
+        "importedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?Z$"
+        },
+        "updatedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?Z$"
+        },
+        "saves": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/save"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "pendingExtraction"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "retainedSource": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "retainedSource": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "id": {
+                  "const": "red"
+                },
+                "title": {
+                  "const": "Pokémon Red"
+                },
+                "generation": {
+                  "const": 1
+                },
+                "support": {
+                  "const": "stable"
+                },
+                "romSize": {
+                  "const": 1048576
+                },
+                "romSha1": {
+                  "const": "ea9bcae617fdf159b045185467ae58b2e4a48b9a"
+                }
+              }
+            },
+            {
+              "properties": {
+                "id": {
+                  "const": "blue"
+                },
+                "title": {
+                  "const": "Pokémon Blue"
+                },
+                "generation": {
+                  "const": 1
+                },
+                "support": {
+                  "const": "stable"
+                },
+                "romSize": {
+                  "const": 1048576
+                },
+                "romSha1": {
+                  "const": "d7037c83e1ae5b39bde3c30787637ba1d4c48ce2"
+                }
+              }
+            },
+            {
+              "properties": {
+                "id": {
+                  "const": "yellow"
+                },
+                "title": {
+                  "const": "Pokémon Yellow"
+                },
+                "generation": {
+                  "const": 1
+                },
+                "support": {
+                  "const": "stable"
+                },
+                "romSize": {
+                  "const": 1048576
+                },
+                "romSha1": {
+                  "const": "cc7d03262ebfaf2f06772c1a480c7d9d5f4a38e1"
+                }
+              }
+            },
+            {
+              "properties": {
+                "id": {
+                  "const": "gold"
+                },
+                "title": {
+                  "const": "Pokémon Gold"
+                },
+                "generation": {
+                  "const": 2
+                },
+                "support": {
+                  "const": "beta"
+                },
+                "romSize": {
+                  "const": 2097152
+                },
+                "romSha1": {
+                  "const": "d8b8a3600a465308c9953dfa04f0081c05bdcb94"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

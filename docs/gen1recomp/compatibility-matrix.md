@@ -1,7 +1,7 @@
 # Component Versioning and Compatibility Matrix
 
 **Status:** baseline design; rows marked unverified cannot be activated
-**Date:** 2026-08-16
+**Date:** 2026-08-17
 
 ## 1. Observed upstream matrix
 
@@ -16,7 +16,7 @@
 | Mod API | `2` (absent manifest = v1 compatibility) | engine `modApi >= requested` | `Version.lua`, manifest loader |
 | Link protocol | `2` | handshake/fingerprint | `Version.lua` |
 | Save format | `4` | migrations/validation | `Version.lua`, SaveData |
-| ROM cache | `rom-cache-v5` | complete marker + version tree | `Version.lua`, importer |
+| ROM cache | `rom-cache-v10` | per-version complete marker + required generated-file set | pinned v0.1.96 `RomImporter.lua`; Native 0.4.0 mirrors this readiness gate |
 | Game/platform UI | coupled to engine `0.1.96` | direct core/render imports | source graph |
 
 ## 2. Target independent components
@@ -27,8 +27,8 @@ Versions below are contract starting points, not claims of completed artifacts.
 |---|---:|---:|---|
 | Host protocol | 0.1.0 | 1.0.0 | strict types, parser and JSON Schema implemented; no host transport yet |
 | Component/update contracts | 0.2.0 | manifest/catalog schema 1 | strict catalog trust, archive preflight, dependency/API planner, manual orchestrator, activation journal and recovery implemented host-independently |
-| Scripting host | 0.3.0-native | 1.0.0 | native Home/Games/Updates/Mods/Settings shell with deterministic ROM-free package; Native 0.2.0 Settings→runtime physically passed, 0.3.0 file/GitHub paths pending |
-| iOS/Scripting platform adapter | 0.3.0-spike | 1.0.0 | physical local-file WebView path passed; DocumentPicker/App Group/Archive/Crypto/GitHub redirect behavior pending |
+| Scripting host | 0.4.0-native | 1.0.0 | persistent verified game library, direct game session, cache maintenance, component/mod management; Native 0.2.0 runtime physically passed, all 0.4.0 game paths and 0.3.0 file/GitHub paths pending |
+| iOS/Scripting platform adapter | 0.4.0-spike | 1.0.0 | physical local-file WebView path passed; current DocumentPicker/Crypto.sha1/Data/WebView evaluate contracts implemented; App Group/import/extraction/cache durability and file/GitHub behavior pending device proof |
 | Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
 | Lua runtime adapter | love.js PUC Lua 5.1 | 1.0.0 | physical Scripting startup passed; no LuaJIT/FFI; complete touch/audio/persistence live-activation profile remains blocked |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
@@ -37,7 +37,7 @@ Versions below are contract starting points, not claims of completed artifacts.
 | Kernel façade | 0.1.0 | 1.0.0 | façade/characterization work pending |
 | Gen1Recomp core payload | 0.1.96 | upstream internal contract | pinned ROM-free source-built payload; outside-browser launcher boot passed |
 | Mod API adapter | 0.2.0 | 2.0.0 | strict API-1/2 manifest/GitHub/archive package management and scoped capability policy implemented; native consent/profile/runtime injection and Lua façade validation pending |
-| Platform UI | 0.3.0-native | 1.0.0 | five-tab navigation, manual component packages and inactive file/GitHub mod management implemented; ROM library and physical 0.3.0 validation pending |
+| Platform UI | 0.4.0-native | 1.0.0 | five-tab navigation, dynamic native game cards/import states/save counts/cache deletion, manual components and inactive mods implemented; adaptive and physical validation pending |
 | Individual mods | own semver | manifest API 1/2 | install only after runtime parity |
 
 Component/API versions use canonical `X.Y.Z` semantic versions in target manifests. This is separate from compact upstream integers (shell/Mod API/link) and the HostProtocol envelope discriminator `protocol: 1`.
@@ -50,7 +50,7 @@ Component/API versions use canonical `X.Y.Z` semantic versions in target manifes
 | native iOS shell | LuaJIT interpreter semantics | 12.0 development | Gen1Recomp 0.1.96 | 1/2 | **released upstream IPA exists; reproducibility risk** |
 | Scripting main JS runtime | none documented | none | Gen1Recomp 0.1.96 | none | **incompatible** |
 | Scripting TimelineCanvas | no Lua runtime yet | custom incomplete façade | Gen1Recomp 0.1.96 | none | **diagnostic only** |
-| Scripting WebView | love.js PUC Lua 5.1 + BitOp shim | pinned love.js 11.5 | Gen1Recomp 0.1.96 | target 1/2 | **physical ROM-free startup passed; full game/touch/audio/save/update parity unverified** |
+| Scripting WebView | love.js PUC Lua 5.1 + BitOp shim | pinned love.js 11.5 | Gen1Recomp 0.1.96 | target 1/2 | **physical ROM-free startup passed; Native 0.4.0 in-memory transfer/cleanup and cache maintenance passed only in Chromium; real extraction/game/touch/audio/save parity unverified** |
 | Scripting WebView | Wasmoon Lua 5.4 | custom LÖVE façade | Gen1Recomp 0.1.96 | unknown | **not recommended: semantic mismatch/high effort** |
 | Scripting + external native IPA | native upstream | native upstream | Gen1Recomp 0.1.96 | 1/2 | **runtime works separately; not hosted inside Scripting** |
 
@@ -101,8 +101,8 @@ No component is independently updateable merely because it has a directory. It b
 ## 7. Immediate compatibility blockers
 
 1. No connected Scripting app/version-specific declarations or reported Scripting app build.
-2. Runtime startup is verified, but audible audio, simultaneous input, save persistence and pre-dismiss flush are not.
-3. Native 0.3.0 DocumentPicker, App Group durability, Archive/Crypto package installation, GitHub signed-asset redirects and updated-generation boot are not physically validated.
+2. Runtime startup is verified, but real ROM extraction/game boot, audible audio, simultaneous input, save persistence and pre-dismiss flush are not.
+3. Native 0.4.0 DocumentPicker/Crypto.sha1/App Group/import/IDBFS paths and Native 0.3.0 Archive/component/mod/GitHub redirect paths are not physically validated.
 4. No controller API in reviewed Scripting docs.
 5. No direct Metal API in reviewed Scripting docs.
 6. Heavy upstream cross-component/direct-LÖVE coupling.

@@ -18,11 +18,19 @@ import {
 } from "scripting"
 
 import { COMPONENTS, PRODUCT, type ProductComponentId } from "../config/product"
+import {
+  GameLibraryError,
+  GameLibraryService,
+  type GameLibrarySnapshot,
+  type RomImportStage,
+} from "../data/game-library-service"
 import { ModService, ModServiceError } from "../data/mod-service"
 import { SystemUpdateService, UpdateServiceError } from "../data/system-update-service"
+import type { InstalledGame } from "../domain/games"
 import type { InstalledMod, ModOperationStage, ModSnapshot, ModViewState } from "../domain/mods"
 import { PRODUCT_TABS, type UpdateMutationStage, type UpdateSnapshot, type UpdateViewState } from "../domain/models"
 import { formatDate, t } from "../i18n/strings"
+import { GameRuntimeService } from "../platform/game-runtime"
 import { runRuntimeDiagnostic } from "../platform/runtime-diagnostic"
 
 const enabledTabs = PRODUCT_TABS.filter(({ enabled }) => enabled)
@@ -36,10 +44,13 @@ function ScreenToolbar() {
 function HomeScreen({
   openGames,
   versions,
+  library,
 }: {
   openGames: () => void
   versions: Readonly<Record<ProductComponentId, string>>
+  library: GameLibrarySnapshot | null
 }) {
+  const readyGames = library?.games.filter(({ status }) => status === "ready") ?? []
   return (
     <NavigationStack>
       <List
@@ -60,7 +71,13 @@ function HomeScreen({
         </Section>
         <Section title={t("tabGames")} footer={<Text>{t("continueHint")}</Text>}>
           <VStack alignment="leading" spacing={8}>
-            <Label title={t("continueUnavailable")} systemImage="square.dashed" />
+            {readyGames.length === 0
+              ? <Label title={t("continueUnavailable")} systemImage="square.dashed" />
+              : <Label
+                  title={`${readyGames.length} ${readyGames.length === 1 ? t("gameReady") : t("gamesReady")}`}
+                  systemImage="checkmark.seal.fill"
+                  foregroundStyle="systemGreen"
+                />}
             <Button title={t("openGames")} systemImage="square.grid.2x2" action={openGames} />
           </VStack>
         </Section>
@@ -81,14 +98,190 @@ function HomeScreen({
   )
 }
 
-function GamesScreen() {
-  const explainImport = async () => {
-    await Dialog.alert({
-      title: t("importPendingTitle"),
-      message: t("importPendingMessage"),
-      buttonLabel: t("okay"),
+type GameLibraryViewState =
+  | { readonly status: "loading" }
+  | { readonly status: "content"; readonly snapshot: GameLibrarySnapshot }
+  | {
+      readonly status: "working"
+      readonly previous: GameLibrarySnapshot
+      readonly stage: RomImportStage | "launching" | "deleting"
+      readonly gameTitle: string | null
+    }
+  | { readonly status: "error"; readonly previous: GameLibrarySnapshot; readonly message: string }
+
+function gameStatus(game: InstalledGame): { readonly title: string; readonly image: string; readonly color: string } {
+  if (game.status === "ready") return { title: t("readyToPlay"), image: "checkmark.circle.fill", color: "systemGreen" }
+  if (game.status === "pendingExtraction") return { title: t("finishImport"), image: "arrow.triangle.2.circlepath", color: "systemOrange" }
+  return { title: t("reimportRequired"), image: "exclamationmark.triangle.fill", color: "systemOrange" }
+}
+
+function gameWorkText(stage: RomImportStage | "launching" | "deleting"): string {
+  if (stage === "reading") return t("readingRom")
+  if (stage === "identity") return t("verifyingRom")
+  if (stage === "staging") return t("stagingRom")
+  if (stage === "registry") return t("registeringGame")
+  if (stage === "deleting") return t("deletingGame")
+  return t("startingGame")
+}
+
+function GameCard({
+  game,
+  disabled,
+  play,
+  remove,
+}: {
+  game: InstalledGame
+  disabled: boolean
+  play: () => void
+  remove: () => void
+}) {
+  const status = gameStatus(game)
+  return (
+    <VStack alignment="leading" spacing={10}>
+      <HStack spacing={12}>
+        <Image systemName={game.id === "yellow" ? "bolt.fill" : game.id === "red" ? "flame.fill" : game.id === "blue" ? "drop.fill" : "sparkles"} font={{ name: "system", size: 34 }} foregroundStyle={game.id === "yellow" ? "systemYellow" : game.id === "red" ? "systemRed" : game.id === "blue" ? "systemBlue" : "systemOrange"} />
+        <VStack alignment="leading" spacing={3}>
+          <Text font="title3" fontWeight="bold">{game.title}</Text>
+          <Text foregroundStyle="secondaryLabel">{game.support === "beta" ? t("generationTwoBeta") : t("generationOne")}</Text>
+        </VStack>
+        <Spacer />
+        <Label title={status.title} systemImage={status.image} foregroundStyle={status.color} />
+      </HStack>
+      <HStack>
+        <Label
+          title={game.saves.length === 0 ? t("noSaveSlots") : `${game.saves.length} ${game.saves.length === 1 ? t("saveSlot") : t("saveSlots")}`}
+          systemImage="externaldrive.fill"
+          foregroundStyle="secondaryLabel"
+        />
+        <Spacer />
+        <Text foregroundStyle="secondaryLabel">{`SHA-1 ${game.romSha1.slice(0, 8)}…`}</Text>
+      </HStack>
+      {game.saves.slice(0, 3).map((save) => (
+        <HStack>
+          <Label title={save.id === "legacy" ? t("legacySave") : save.id} systemImage="doc.fill" />
+          <Spacer />
+          <Text foregroundStyle="secondaryLabel">
+            {save.modifiedAt == null ? `${save.bytes} B` : formatDate(save.modifiedAt)}
+          </Text>
+        </HStack>
+      ))}
+      {game.saves.length > 3
+        ? <Text foregroundStyle="secondaryLabel">{`+${game.saves.length - 3} ${t("moreSaves")}`}</Text>
+        : null}
+      <HStack spacing={12}>
+        <Button
+          title={game.status === "ready" ? t("play") : game.status === "pendingExtraction" ? t("finishImport") : t("importAgain")}
+          systemImage={game.status === "ready" ? "play.fill" : "arrow.down.doc.fill"}
+          action={play}
+          disabled={disabled}
+        />
+        <Spacer />
+        <Button title={t("delete")} systemImage="trash" action={remove} disabled={disabled} />
+      </HStack>
+    </VStack>
+  )
+}
+
+function GamesScreen({
+  library,
+  runtime,
+  onSnapshot,
+}: {
+  library: GameLibraryService
+  runtime: GameRuntimeService
+  onSnapshot: (snapshot: GameLibrarySnapshot) => void
+}) {
+  const empty: GameLibrarySnapshot = { games: [], updatedAt: new Date().toISOString() }
+  const [state, setState] = useState<GameLibraryViewState>({ status: "loading" })
+  const current = state.status === "content" ? state.snapshot : state.status === "loading" ? null : state.previous
+  const busy = state.status === "loading" || state.status === "working"
+
+  useEffect(() => {
+    let active = true
+    void library.initialize().then((snapshot) => {
+      if (!active) return
+      onSnapshot(snapshot)
+      setState({ status: "content", snapshot })
+    }).catch((error: unknown) => {
+      if (!active) return
+      setState({ status: "error", previous: empty, message: error instanceof Error ? error.message : t("libraryUnavailable") })
     })
+    return () => { active = false }
+  }, [])
+
+  const launch = async (game: InstalledGame, previous: GameLibrarySnapshot) => {
+    setState({ status: "working", previous, stage: "launching", gameTitle: game.title })
+    try {
+      const result = await runtime.launch(game)
+      onSnapshot(result.snapshot)
+      if (result.errors.length > 0) {
+        setState({ status: "error", previous: result.snapshot, message: result.errors.join("\n") })
+      } else {
+        setState({ status: "content", snapshot: result.snapshot })
+      }
+    } catch (error) {
+      setState({ status: "error", previous, message: error instanceof Error ? error.message : t("runtimeFailed") })
+    }
   }
+
+  const importRom = async () => {
+    if (busy) return
+    let paths: string[]
+    try {
+      paths = await DocumentPicker.pickFiles({
+        allowsMultipleSelection: false,
+        shouldShowFileExtensions: true,
+        types: ["public.data"],
+      })
+    } catch (error) {
+      setState({
+        status: "error",
+        previous: current ?? empty,
+        message: error instanceof Error ? error.message : t("libraryUnavailable"),
+      })
+      return
+    }
+    const path = paths[0]
+    if (path == null) return
+    const previous = current ?? empty
+    let imported: InstalledGame | null = null
+    let importedSnapshot = previous
+    try {
+      setState({ status: "working", previous, stage: "reading", gameTitle: null })
+      const result = await library.importRom(path, (stage) => {
+        setState({ status: "working", previous, stage, gameTitle: imported?.title ?? null })
+      })
+      imported = result.game
+      importedSnapshot = result.snapshot
+      onSnapshot(result.snapshot)
+    } catch (error) {
+      const known = error instanceof GameLibraryError ? error : null
+      setState({ status: "error", previous, message: known?.message ?? t("libraryUnavailable") })
+    } finally {
+      DocumentPicker.stopAcessingSecurityScopedResources()
+    }
+    if (imported != null) await launch(imported, importedSnapshot)
+  }
+
+  const remove = async (game: InstalledGame) => {
+    if (busy || current == null) return
+    const confirmed = await Dialog.confirm({
+      title: t("deleteGameTitle"),
+      message: t("deleteGameMessage"),
+      cancelLabel: t("cancel"),
+      confirmLabel: t("delete"),
+    })
+    if (!confirmed) return
+    setState({ status: "working", previous: current, stage: "deleting", gameTitle: game.title })
+    try {
+      const next = await runtime.removeGame(game)
+      onSnapshot(next)
+      setState({ status: "content", snapshot: next })
+    } catch (error) {
+      setState({ status: "error", previous: current, message: error instanceof Error ? error.message : t("libraryUnavailable") })
+    }
+  }
+
   return (
     <NavigationStack>
       <List
@@ -96,14 +289,52 @@ function GamesScreen() {
         navigationBarTitleDisplayMode="large"
         toolbar={{ cancellationAction: <ScreenToolbar /> }}
       >
-        <Section>
-          <VStack alignment="center" spacing={12} frame={{ maxWidth: "infinity" }}>
-            <Image systemName="square.stack.3d.up.slash" font={{ name: "system", size: 48 }} />
-            <Text font="headline">{t("noGames")}</Text>
-            <Text foregroundStyle="secondaryLabel">{t("noGamesHint")}</Text>
-            <Button title={t("importGame")} systemImage="doc.badge.plus" action={explainImport} />
-          </VStack>
+        <Section footer={<Text>{t("romPrivacy")}</Text>}>
+          <Button title={t("importGame")} systemImage="doc.badge.plus" action={importRom} disabled={busy} />
         </Section>
+
+        {state.status === "loading" ? <Section><ProgressView label={t("loadingLibrary")} /></Section> : null}
+        {state.status === "working" ? (
+          <Section>
+            <VStack alignment="leading" spacing={8}>
+              <ProgressView />
+              <Text font="headline">{gameWorkText(state.stage)}</Text>
+              {state.gameTitle == null ? null : <Text foregroundStyle="secondaryLabel">{state.gameTitle}</Text>}
+            </VStack>
+          </Section>
+        ) : null}
+        {state.status === "error" ? (
+          <Section>
+            <VStack alignment="leading" spacing={8}>
+              <Label title={t("errorTitle")} systemImage="exclamationmark.triangle.fill" foregroundStyle="systemRed" />
+              <Text>{state.message}</Text>
+            </VStack>
+          </Section>
+        ) : null}
+
+        {current != null && current.games.length === 0 ? (
+          <Section>
+            <VStack alignment="center" spacing={12} frame={{ maxWidth: "infinity" }}>
+              <Image systemName="square.stack.3d.up.slash" font={{ name: "system", size: 48 }} />
+              <Text font="headline">{t("noGames")}</Text>
+              <Text foregroundStyle="secondaryLabel">{t("noGamesHint")}</Text>
+            </VStack>
+          </Section>
+        ) : null}
+
+        {current?.games.map((game) => (
+          <Section footer={game.status === "needsReimport" ? <Text>{t("cacheMissingHint")}</Text> : null}>
+            <GameCard
+              game={game}
+              disabled={busy}
+              play={() => {
+                if (game.status === "needsReimport") void importRom()
+                else if (current != null) void launch(game, current)
+              }}
+              remove={() => { void remove(game) }}
+            />
+          </Section>
+        ))}
       </List>
     </NavigationStack>
   )
@@ -627,8 +858,11 @@ function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
 
 export default function App() {
   const updates = useMemo(() => new SystemUpdateService(), [])
+  const library = useMemo(() => new GameLibraryService(), [])
+  const runtime = useMemo(() => new GameRuntimeService(updates, library), [])
   const mods = useMemo(() => new ModService(), [])
   const [selectedTab, setSelectedTab] = useState(tabIndex("home"))
+  const [gameSnapshot, setGameSnapshot] = useState<GameLibrarySnapshot | null>(null)
   const [versions, setVersions] = useState<Readonly<Record<ProductComponentId, string>>>({
     [COMPONENTS.runtime.id]: COMPONENTS.runtime.installedVersion,
     [COMPONENTS.core.id]: COMPONENTS.core.installedVersion,
@@ -640,15 +874,28 @@ export default function App() {
       return next
     })
   }
+  useEffect(() => {
+    let active = true
+    void runtime.recoverTransientSessions().then(() => library.initialize()).then((snapshot) => {
+      if (active) setGameSnapshot(snapshot)
+    }).catch(() => {
+      // The Games tab presents actionable registry recovery details.
+    })
+    return () => { active = false }
+  }, [])
   return (
     <TabView tabIndex={selectedTab} onTabIndexChanged={setSelectedTab}>
       <HomeScreen
         openGames={() => setSelectedTab(tabIndex("games"))}
         versions={versions}
+        library={gameSnapshot}
         tag={tabIndex("home")}
         tabItem={<Label title={t("tabHome")} systemImage="house.fill" />}
       />
       <GamesScreen
+        library={library}
+        runtime={runtime}
+        onSnapshot={setGameSnapshot}
         tag={tabIndex("games")}
         tabItem={<Label title={t("tabGames")} systemImage="square.grid.2x2.fill" />}
       />

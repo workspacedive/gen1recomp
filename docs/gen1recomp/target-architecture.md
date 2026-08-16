@@ -365,6 +365,29 @@ Because Scripting filesystem atomicity has not been proven, pointer updates use 
 
 Native 0.3.0 enables the separate Mods package-management tab. It reuses only generic manifest/GitHub-release/download/integrity/archive primitives and owns private package/registry storage. Manual ZIP/GitHub install, update checks and inactive registry management are implemented; capability consent, dependency auto-install, profile/load order, runtime injection, activation journal and runtime health rollback remain separate. See [`mod-store-architecture.md`](mod-store-architecture.md).
 
+### Native 0.4.0 game-library vertical slice
+
+The game library is a distinct native control-plane service, not a new core subsystem:
+
+```text
+DocumentPicker external path (never persisted)
+→ native Data + exact byte count + Crypto.sha1
+→ canonical identity table
+→ private fixed-name staging + readback hash
+→ strict registry (pendingExtraction)
+→ one-use in-memory WebView host command
+→ Emscripten post-IDBFS-populate transfer file
+→ upstream POKEPORT_IMPORT_ROM / RomImporter / RomExtractor
+→ per-game rom-cache-v10 marker + complete required-file gate
+→ IDBFS flush
+→ registry ready + native retained-ROM deletion
+→ later --game=<id> direct boot
+```
+
+The adapter changes no upstream Lua. It uses the upstream scripted import and launch environment contracts, then observes only upstream-owned completion files. A verified native source survives interrupted extraction so retry does not reopen the external picker. The Emscripten transfer is unlinked as soon as `love.load` has synchronously read it, before any close/periodic flush can persist ROM bytes. Registry records contain canonical identity and save metadata, never source paths or bytes.
+
+Runtime storage remains the game plane's private IDBFS. Native code receives cache-ready/missing and save-file summary events only. A separate maintenance document removes known per-game cache-prefix records while preserving `saves/<game>/`, flat legacy saves, shared options, and other games. Browser evidence covers the ROM-free session, a deliberately noncanonical all-zero transfer/cleanup fixture, and maintenance behavior; real Scripting/WebKit extraction remains a physical gate. The periodic/visibility/pagehide flush layers reduce lifecycle risk but do not become a proven clean-close claim until device interruption tests pass.
+
 ## 11. Compatibility/deprecation
 
 - APIs use major/minor versions; only major breaks semantics.
@@ -426,11 +449,11 @@ The runtime gate is passed, so production directories now follow actual vertical
 - `compatibility/love-web/` contains the LuaJIT-BitOp overlay and pre-core no-worker normalization required by the tested PUC Lua runtime;
 - `runtime/adapters/lovejs/` and `runtime/manager/` retain the host-independent capability, persistence and lifecycle boundaries;
 - `scripting/Gen1RecompPreview/` remains the physically validated Preview 0.1.4 fallback;
-- `scripting/Gen1RecompApp/` is the native 0.3.0 product shell with five-tab navigation, private component state, trusted manual component packages, file/GitHub mod install/update/delete, registry backup, update materialization, first-boot rollback and explicit ROM-free runtime diagnostic;
-- `schemas/` includes closed wire, manifest, activation-journal, runtime-capability and update-catalog schemas;
-- `tests/contracts/`, `tests/runtime/`, `tests/updates/`, `tests/scripting/` and `tests/tools/` exercise host-independent logic, declaration-subset compatibility and deterministic packages.
+- `scripting/Gen1RecompApp/` is the native 0.4.0 product shell with game-library domain/service/runtime adapters plus the five-tab component/mod/update control plane;
+- `schemas/` includes closed wire, manifest, game/mod registry, activation-journal, runtime-capability and update-catalog schemas;
+- `tests/contracts/`, `tests/games/`, `tests/runtime/`, `tests/updates/`, `tests/scripting/` and `tests/tools/` exercise host-independent logic, declaration-subset compatibility and deterministic packages.
 
-Physical WebView startup and Native 0.2.0 Settings-to-runtime launch are proven. Native 0.3.0 DocumentPicker, GitHub release/digest/redirect flow, component/mod private storage and registry recovery still need device evidence. ROM verification/extraction, persistent game registration, saves, production close/flush, touch/audio parity, mod consent/profile/runtime activation and broad device validation remain active slices.
+Physical WebView startup and Native 0.2.0 Settings-to-runtime launch are proven. Native 0.4.0's browser-only transfer and maintenance checks do not replace physical DocumentPicker/Crypto/App Group/real-ROM extraction/cache/game/save evidence. Native 0.3.0 GitHub release/digest/redirect, component/mod private storage and registry recovery also still need device evidence. Production close/flush, touch/audio parity, full save management, mod consent/profile/runtime activation and broad device validation remain active slices.
 
 ## 13. Core-change exception process
 

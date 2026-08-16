@@ -20,6 +20,9 @@ const updateCatalog = ajv.compile(
 const modRegistry = ajv.compile(
   schema("../../../../schemas/mod-registry.schema.json"),
 )
+const gameRegistry = ajv.compile(
+  schema("../../../../schemas/game-registry.schema.json"),
+)
 const hostMessage = ajv.compile(
   schema("../../../../schemas/host-message.schema.json"),
 )
@@ -90,6 +93,31 @@ test("mod registry schema accepts inactive immutable packages and rejects implic
   }
   assert.equal(modRegistry(registry), true, JSON.stringify(modRegistry.errors))
   assert.equal(modRegistry({ ...registry, mods: [{ ...registry.mods[0], enabled: true }] }), false)
+})
+
+test("game registry schema binds canonical identity and pending-source state", () => {
+  const registry = {
+    schemaVersion: 1,
+    updatedAt: "2026-08-17T12:00:00.000Z",
+    games: [{
+      id: "yellow",
+      title: "Pokémon Yellow",
+      generation: 1,
+      support: "stable",
+      romSize: 1048576,
+      romSha1: "cc7d03262ebfaf2f06772c1a480c7d9d5f4a38e1",
+      cacheFormat: "rom-cache-v10",
+      status: "pendingExtraction",
+      retainedSource: true,
+      importedAt: "2026-08-17T12:00:00.000Z",
+      updatedAt: "2026-08-17T12:00:00.000Z",
+      saves: [],
+    }],
+  }
+  assert.equal(gameRegistry(registry), true, JSON.stringify(gameRegistry.errors))
+  assert.equal(gameRegistry({ ...registry, games: [{ ...registry.games[0], retainedSource: false }] }), false)
+  assert.equal(gameRegistry({ ...registry, games: [{ ...registry.games[0], romSha1: "0".repeat(40) }] }), false)
+  assert.equal(gameRegistry({ ...registry, sourcePath: "/private/rom.gb" }), false)
 })
 
 test("component schema rejects unknown fields and non-SHA-256 integrity", () => {

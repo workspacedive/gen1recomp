@@ -78,8 +78,11 @@ declare class Data {
 }
 
 declare const Crypto: {
+  sha1(data: Data): Data
   sha256(data: Data): Data
 }
+
+declare function setTimeout(callback: () => void, milliseconds: number): number
 
 type ArchiveEntry = {
   readonly path: string
@@ -128,9 +131,10 @@ declare function fetch(url: string, options?: NativeFetchOptions): Promise<Nativ
 
 declare class WebViewController {
   constructor(options?: { ephemeral?: boolean })
-  addScriptMessageHandler<P = unknown, R = unknown>(name: string, handler: (params?: P) => R): Promise<void>
+  addScriptMessageHandler<P = unknown, R = unknown>(name: string, handler: (params?: P) => R | Promise<R>): Promise<void>
   loadFile(path: string, allowingReadAccessTo?: string): Promise<boolean>
   waitForLoad(): Promise<boolean>
+  evaluateJavaScript<T = unknown>(javascript: string): Promise<T>
   present(options?: { fullscreen?: boolean; navigationTitle?: string }): Promise<void>
   dispose(): void
 }

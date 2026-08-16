@@ -108,6 +108,8 @@ def verify_locked_runtime(
 def runtime_config() -> bytes:
     config = {
         "runtimeRevision": RUNTIME_REVISION,
+        "hostSessionProtocol": 1,
+        "cacheFormat": "rom-cache-v10",
         "payload": {
             "sha256": PAYLOAD_SHA256,
             "bytes": PAYLOAD_BYTES,

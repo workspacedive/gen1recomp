@@ -453,7 +453,7 @@ The runtime gate is passed, so production directories now follow actual vertical
 - `schemas/` includes closed wire, manifest, game/mod registry, activation-journal, runtime-capability and update-catalog schemas;
 - `tests/contracts/`, `tests/games/`, `tests/runtime/`, `tests/updates/`, `tests/scripting/` and `tests/tools/` exercise host-independent logic, declaration-subset compatibility and deterministic packages.
 
-Physical WebView startup and Native 0.2.0 Settings-to-runtime launch are proven. Native 0.4.0's browser-only transfer and maintenance checks do not replace physical DocumentPicker/Crypto/App Group/real-ROM extraction/cache/game/save evidence. Native 0.3.0 GitHub release/digest/redirect, component/mod private storage and registry recovery also still need device evidence. Production close/flush, touch/audio parity, full save management, mod consent/profile/runtime activation and broad device validation remain active slices.
+Physical WebView startup and Native 0.2.0 Settings-to-runtime launch are proven. Native 0.4.0 additionally proved DocumentPicker access, canonical Yellow size/SHA-1, same-session private pending registration/retry, in-memory handoff and entry into the upstream extractor on Scripting 3.2.0/iOS 26.6. Extraction then failed because the PUC-Lua adapter had not reproduced LuaJIT's global `_G.bit`; Native 0.4.1 installs the existing tested module globally before upstream main, with no core patch. Completed extraction, App Group relaunch durability, cache/game/save evidence, production close/flush, touch/audio parity, full save management, mod consent/profile/runtime activation, Native 0.3.0 component/mod/GitHub operations and broad device validation remain active slices.
 
 ## 13. Core-change exception process
 

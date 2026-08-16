@@ -2,7 +2,7 @@
 
 **Candidate:** `Gen1Recomp Native 040` / 0.4.0 (040)
 **Artifact SHA-256:** `2d6ae25c8e8f6dab55c242270b042d14e1d70a76f8cdb0dbd4d3b829fdaf2c96`
-**Status:** required; no step below is claimed complete
+**Status:** partially executed as physical Run 007. Canonical Yellow identity, pending registration/retry and extractor entry passed; extraction failed on the missing global BitOp corrected in Native 0.4.1. Continue with `scripting-native-041-device-plan.md`.
 
 ## Preconditions
 

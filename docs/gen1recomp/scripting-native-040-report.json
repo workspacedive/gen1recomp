@@ -46,7 +46,11 @@
       "ready": true,
       "failed": false,
       "frame": 104,
-      "canvas": { "width": 1024, "height": 768, "visible": true },
+      "canvas": {
+        "width": 1024,
+        "height": 768,
+        "visible": true
+      },
       "pageErrors": [],
       "failedRequests": [],
       "httpErrors": []
@@ -83,9 +87,8 @@
     "periodic, visibility, pagehide, and pinned-runtime exit persistence layers"
   ],
   "notYetPhysicallyVerified": [
-    "Scripting DocumentPicker and security-scoped file access",
-    "Crypto.sha1 and App Group persistence on device",
-    "real canonical ROM extraction and extracted-cache persistence",
+    "completed canonical Yellow extraction after the Native 0.4.1 global-BitOp correction",
+    "App Group persistence across full script/app relaunch; same-session pending registration is proven",
     "game-only startup from a physically extracted cache",
     "save discovery after real gameplay and lifecycle interruption",
     "cache deletion in WKWebView persistent storage",
@@ -97,5 +100,26 @@
     "romDerivedCacheIncluded": false,
     "saveIncluded": false,
     "romUsedForAutomatedVerification": false
+  },
+  "physicalVerification": {
+    "status": "partial-failed-at-extraction-compatibility",
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "canonicalYellowIdentityAccepted": true,
+    "privatePendingRegistrationObserved": true,
+    "retryWithoutPickerObserved": true,
+    "runtimeReadyFrames": [
+      17,
+      2,
+      2
+    ],
+    "extractionCompleted": false,
+    "failure": "src/import/Rom.lua:198: attempt to index global bit (a nil value)",
+    "attribution": "love.js PUC-Lua adapter provided require(\"bit\") but not LuaJIT-compatible _G.bit",
+    "fixedInCandidate": "Native 0.4.1 / 041",
+    "intermittentUIObservation": "Failed to build component: t.__type__; screen later rendered and remained actionable"
   }
 }

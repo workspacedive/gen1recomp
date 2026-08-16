@@ -215,7 +215,8 @@ export class GameRuntimeService {
     if (await FileManager.exists(candidateEntry) && await FileManager.exists(candidateConfig)) {
       try {
         const config = await FileManager.readAsString(candidateConfig)
-        if (config.includes(`\"hostSessionProtocol\":${HOST_SESSION_PROTOCOL}`)) {
+        if (config.includes(`\"hostSessionProtocol\":${HOST_SESSION_PROTOCOL}`)
+            && config.includes(`\"sha256\":\"${PRODUCT.packagedPayloadSha256}\"`)) {
           return { root: candidate, usedUpdatedComponents: state.activeRuntimeRoot != null }
         }
       } catch {

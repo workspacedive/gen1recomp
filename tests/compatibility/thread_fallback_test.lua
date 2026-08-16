@@ -22,6 +22,9 @@ local report = Bootstrap.install(love, {
   threadReason = "characterization",
 })
 same("bootstrap report", report.threadWorker, "disabled")
+same("bootstrap BitOp report", report.bitGlobal, "installed")
+same("global BitOp installed", type(_G.bit), "table")
+same("global BitOp functional", _G.bit.bxor(0xAA, 0x0F), 0xA5)
 same("worker constructor hidden", love.thread.newThread, nil)
 same("channels preserved", type(love.thread.getChannel), "function")
 

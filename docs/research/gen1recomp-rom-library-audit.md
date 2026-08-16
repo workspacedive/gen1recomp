@@ -74,6 +74,10 @@ native picker/hash/registry
 
 This is not a Game Boy emulator: no instruction decoder, CPU, bus, PPU, memory mapper, timing loop, or emulator ROM execution is introduced. The ROM is input to upstream data extraction; gameplay remains recompiled/interpreted Gen1Recomp Lua logic on LÖVE/love.js.
 
+## Physical extraction correction
+
+Native 0.4.0's first canonical Yellow run reached `Rom.decompressPic` and failed at `src/import/Rom.lua:198` because that upstream file uses LuaJIT's global `bit.bxor`. The web overlay's `bit.lua` already matched BitOp through 9,492 differential comparisons, but was only available through `require("bit")`. Native 0.4.1 corrects the host bootstrap to assign that same module to `_G.bit` before upstream main loads. This reproduces a LuaJIT host semantic in the adapter instead of editing `Rom.lua` or any other core file.
+
 ## Evidence limits
 
 Chromium 149 proves the ROM-free session, the transfer/unlink ordering with a noncopyrighted all-zero fixture, and selective IDBFS maintenance. It cannot prove native Scripting file access, WebKit IDBFS durability, canonical extraction, title fidelity, saves, input, audio, or physical lifecycle behavior. Those remain the Native 0.4.0 device plan.

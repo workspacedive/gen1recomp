@@ -1,4 +1,4 @@
-# Scripting physical-device runs 001–006
+# Scripting physical-device runs 001–007
 
 - **Evidence level:** user-reported installed Scripting host on a physical iOS device
 - **Scripting app version/build:** not yet supplied
@@ -40,6 +40,23 @@ The user launched `Gen1Recomp Native 020`, reached its native Settings action, a
 
 This proves the Native 0.2.0 TSX host was sufficiently functional to present and invoke the Settings action and that its WebView adapter preserved the validated runtime path. No screenshot, system-update request, App Group interruption test, dismissal log or iPad evidence was supplied, so those remain separate. Native 0.3.0 adds manual component ZIP and file/GitHub mod management and requires a fresh run.
 
+## Run 007 — Native 0.4.0 canonical Yellow import reaches extractor, then fails at global BitOp
+
+Environment supplied by the user: **Scripting 3.2.0**, **iOS 26.6**, **iPhone 16 Pro Max**. The user selected their renamed `.txt` cartridge file through DocumentPicker; Native 0.4.0 accepted it as canonical Pokémon Yellow, which proves the device-side exact 1 MiB/SHA-1 gate passed. The native Games card persisted Yellow with digest prefix `cc7d0326…` and `Import abschließen`, proving private registration and pending-source retry survived runtime dismissal without another picker.
+
+Three runtime attempts reached the exact Native 0.4.0 identity and embedded payload. Reported ready frames were 17, 2, and 2. The upstream Yellow launcher then showed:
+
+```text
+Import failed
+src/import/Rom.lua:198: attempt to index global 'bit' (a nil value)
+```
+
+Attribution is exact: `Rom.decompressPic` uses LuaJIT's global `bit.bxor`; the love.js PUC-Lua overlay supplied a parity-tested `require("bit")` module but did not install the LuaJIT-compatible global. This is a host-adapter defect, not a bad ROM, extractor/core algorithm defect, or emulator issue. Native 0.4.1 corrects `compatibility/love-web/bootstrap.lua` to install the same tested module into `_G.bit` before upstream main loads. No upstream core file is changed.
+
+One Scripting console event at 01:43:55 also reported `Failed to build component. TypeError: undefined is not an object (evaluating 't.__type__')`. The native screen subsequently rendered and remained actionable, so it is tracked as a separate intermittent UI-build observation rather than attributed to extraction. Native 0.4.1 also moves the card status to its own row to reduce the severe text compression visible in the supplied screenshot. A clean 0.4.1 run must confirm whether the component error recurs.
+
+This run proves DocumentPicker access, native canonical Yellow identity, private pending registration, retry without reselection, in-memory WebView handoff, and upstream importer entry on the specified device. It does **not** prove completed extraction, cache persistence, direct game boot, saves, audio, input, or fidelity.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -51,6 +68,7 @@ This proves the Native 0.2.0 TSX host was sufficiently functional to present and
 7. Decoded package byte lengths are logged and the base64 strings are released after use to reduce retained memory.
 8. Both Preview and automatic Phase-0 package paths use the same embedded-package and diagnostic-loader correction.
 9. Deterministic packaging tests assert that emitted browser bundles contain no `import`, `export`, private-field, or optional-chaining syntax and that all four embedded package keys are present.
+10. Native 0.4.1 installs the parity-tested `bit` compatibility module into `_G.bit` before upstream main loads, matching the LuaJIT global used by ROM picture extraction and several Gen 2 paths.
 
 ## Replacement artifact
 
@@ -65,4 +83,4 @@ This proves the Native 0.2.0 TSX host was sufficiently functional to present and
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's Settings-to-runtime diagnostic passed as Run 006. App Group persistence, manual system catalog/package installation, interruption recovery and updated-generation materialization remain untested. Native 0.3.0 additionally requires physical validation of its five-tab shell, DocumentPicker component/mod imports, GitHub API and signed-asset redirects, private mod registry recovery, deletion and manual individual/aggregate mod updates.
+Native 0.2.0's Settings-to-runtime diagnostic passed as Run 006. Native 0.4.0 Run 007 reached canonical Yellow extraction and exposed the corrected global-BitOp adapter defect. Native 0.4.1 is the immediate regression candidate. Completed extraction, App Group relaunch durability, direct boot, saves, input/audio/fidelity, manual system catalog/package installation, and updated-generation materialization remain untested. Native 0.3.0's component/mod/GitHub operations also still require physical validation.

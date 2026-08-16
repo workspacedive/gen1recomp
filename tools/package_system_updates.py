@@ -21,6 +21,7 @@ RUNTIME_COMPONENT_ID = "org.gen1recomp.runtime.lovejs"
 RUNTIME_COMPONENT_VERSION = "0.1.0"
 CORE_COMPONENT_ID = "org.gen1recomp.core"
 CORE_COMPONENT_VERSION = "0.1.96"
+CORE_PAYLOAD_SHA256 = "a8a370be1c86606cb679b57134fdab9c21c615b21e668ddc559151a860f3e276"
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 RUNTIME_FILES = (
     "player.js",
@@ -69,8 +70,10 @@ def verify_inputs(launcher: Path, lock_path: Path) -> None:
         if len(data) != expected["size"] or sha256(data) != expected["sha256"]:
             raise RuntimeError(f"locked runtime input mismatch: {name}")
     payload = (launcher / "gen1recomp.love").read_bytes()
-    expected_payload = runtime["outsideLauncherBoot"]["preparedPayloadSha256"]
-    if sha256(payload) != expected_payload:
+    # outsideLauncherBoot is immutable historical evidence for the prior
+    # payload. Current packaging binds the corrected compatibility overlay
+    # explicitly without rewriting that archived observation.
+    if sha256(payload) != CORE_PAYLOAD_SHA256:
         raise RuntimeError("locked ROM-free Gen1Recomp payload mismatch")
 
 

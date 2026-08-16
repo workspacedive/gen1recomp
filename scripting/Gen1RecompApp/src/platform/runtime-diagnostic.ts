@@ -19,8 +19,11 @@ export async function runRuntimeDiagnostic(
     const configPath = `${runtimeRoot}/runtime-config.js`
     let compatible = false
     try {
-      compatible = await FileManager.exists(entry) && await FileManager.exists(configPath)
-        && (await FileManager.readAsString(configPath)).includes("\"hostSessionProtocol\":1")
+      if (await FileManager.exists(entry) && await FileManager.exists(configPath)) {
+        const config = await FileManager.readAsString(configPath)
+        compatible = config.includes("\"hostSessionProtocol\":1")
+          && config.includes(`\"sha256\":\"${PRODUCT.packagedPayloadSha256}\"`)
+      }
     } catch {
       compatible = false
     }

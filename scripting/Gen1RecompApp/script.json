@@ -1,9 +1,9 @@
 {
-  "name": "Gen1Recomp Native 040",
+  "name": "Gen1Recomp Native 041",
   "icon": "gamecontroller.fill",
   "color": "systemYellow",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "entry": "index.tsx",
   "runInApp": false,
-  "description": "Native Gen1Recomp game library with verified ROM import, private extraction handoff, game-only runtime, updates, and manual mods."
+  "description": "Native Gen1Recomp game library with verified ROM import, corrected PUC-Lua BitOp extraction compatibility, game-only runtime, updates, and manual mods."
 }

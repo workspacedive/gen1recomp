@@ -145,8 +145,8 @@ function GameCard({
           <Text foregroundStyle="secondaryLabel">{game.support === "beta" ? t("generationTwoBeta") : t("generationOne")}</Text>
         </VStack>
         <Spacer />
-        <Label title={status.title} systemImage={status.image} foregroundStyle={status.color} />
       </HStack>
+      <Label title={status.title} systemImage={status.image} foregroundStyle={status.color} />
       <HStack>
         <Label
           title={game.saves.length === 0 ? t("noSaveSlots") : `${game.saves.length} ${game.saves.length === 1 ? t("saveSlot") : t("saveSlots")}`}

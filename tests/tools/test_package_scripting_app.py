@@ -43,14 +43,14 @@ class PackageScriptingAppTests(unittest.TestCase):
                 self.assertIn("src/domain/mods.ts", names)
                 self.assertIn("src/platform/game-runtime.ts", names)
                 self.assertIn("src/ui/app.tsx", names)
-                self.assertIn("runtime-v040/embedded-packages.js", names)
-                self.assertIn("runtime-v040/player.js", names)
-                self.assertIn("runtime-v040/maintenance.html", names)
-                self.assertIn("runtime-shell-v040/preview-bundle.js", names)
-                self.assertNotIn("runtime-shell-v040/embedded-packages.js", names)
+                self.assertIn("runtime-v041/embedded-packages.js", names)
+                self.assertIn("runtime-v041/player.js", names)
+                self.assertIn("runtime-v041/maintenance.html", names)
+                self.assertIn("runtime-shell-v041/preview-bundle.js", names)
+                self.assertNotIn("runtime-shell-v041/embedded-packages.js", names)
                 metadata = json.loads(archive.read("script.json"))
-                self.assertEqual(metadata["name"], "Gen1Recomp Native 040")
-                self.assertEqual(metadata["version"], "0.4.0")
+                self.assertEqual(metadata["name"], "Gen1Recomp Native 041")
+                self.assertEqual(metadata["version"], "0.4.1")
                 source_text = "\n".join(
                     archive.read(name).decode("utf-8", errors="ignore")
                     for name in names
@@ -60,13 +60,13 @@ class PackageScriptingAppTests(unittest.TestCase):
                 self.assertNotIn("scriptable", source_text)
 
     def test_published_native_product_has_expected_identity(self) -> None:
-        artifact = ROOT / "artifacts" / "Gen1Recomp-Native-040.scripting"
+        artifact = ROOT / "artifacts" / "Gen1Recomp-Native-041.scripting"
         self.assertTrue(artifact.is_file())
         with zipfile.ZipFile(artifact) as archive:
             self.assertIsNone(archive.testzip())
             self.assertEqual(len(archive.namelist()), 32)
             self.assertIn(b"verified ROM import", archive.read("script.json"))
-            self.assertIn(b"runtime identity 0.4.0 / 040", archive.read("runtime-v040/preview-loader.js"))
+            self.assertIn(b"runtime identity 0.4.1 / 041", archive.read("runtime-v041/preview-loader.js"))
 
     def test_missing_native_source_fails_closed(self) -> None:
         launcher = ROOT / "research" / "downloads" / "gen1recomp" / "lovejs-launcher"

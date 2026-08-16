@@ -1,6 +1,6 @@
 # Verifikationsprotokoll und Evidenzregeln
 
-**Letzter Lauf:** 2026-08-16T11:19:19Z
+**Letzter Lauf:** 2026-08-16T11:24:51Z
 **Maschinenlesbarer Bericht:** [`reference-audit.json`](reference-audit.json)
 
 ## Ausgeführte Checks
@@ -62,10 +62,10 @@ Ergebnis:
 - statischer Smoke-Server: COOP/COEP/CSP, `application/wasm`, No-Store und begrenzter Report-Endpunkt geprüft;
 - erste Browserausführung: reproduzierbarer Fail durch fehlendes `require("bit")`; keine stille Kompatibilitätsannahme;
 - `compatibility/love-web/bit.lua`: vollständige reine-Lua-BitOp-Oberfläche, **9.492 Differentialvergleiche gegen vendored LuaJIT 2.1 bestanden**;
-- erweiterte Browserausführung: **23/23 Smoke-Checks bestanden** in Headless Chrome 92 mit SwiftShader, darunter LÖVE 11.5, Lua 5.1, `setfenv`, `loadstring`, BitOp, Coroutine, WASM, WebGL1/2, Canvas, ImageData, Minimalshader, deterministischer 1/60-Schritt, Queueable-Audiobuffer, Thread-Channel, Session-Datei, SHA-256 und Timer;
+- erweiterte Browserausführung: **23/23 Smoke-Checks bestanden** in gepinntem Headless Chromium 149 mit SwiftShader, COOP/COEP-Isolation aktiv (`crossOriginIsolated=true`, `SharedArrayBuffer` vorhanden); geprüft wurden LÖVE 11.5, Lua 5.1, `setfenv`, `loadstring`, BitOp, Coroutine, WASM, WebGL1/2, Canvas, ImageData, Minimalshader, deterministischer 1/60-Schritt, Queueable-Audiobuffer, Thread-Channel, Session-Datei, SHA-256 und Timer;
 - Thread-Befund: `love.thread.newThread` ist als Funktion sichtbar, Worker-Erstellung scheitert jedoch reproduzierbar in love.js' Normalisierungsschicht. Der Probe behandelt dies als erkannte Unverfügbarkeit; alle betroffenen Upstream-No-Thread-Fallbacks bleiben einzeln zu charakterisieren;
-- Persistenz-Charakterisierung: ein sofortiger Reload kann den noch asynchronen Write verlieren; nach Settling bzw. explizitem `FS.syncfs(false)` wurde der Marker beim Reload wiederhergestellt. Der neue serialisierte Persistence-Adapter macht diesen Flush zu einer expliziten Lifecycle-Barriere;
-- Browserbericht: [`gen1recomp/lovejs-smoke-report.json`](gen1recomp/lovejs-smoke-report.json). Dies ist ausdrücklich kein aktueller Browser-/Performancewert und kein Scripting-/iOS-Beleg;
+- Persistenz-Charakterisierung: ein sofortiger Reload verlor den Marker in einem Chrome-92-Lauf, stellte ihn im isolierten Chromium-149-Lauf aber wieder her; explizites `FS.syncfs(false)` stellte ihn konsistent wieder her. Der neue serialisierte Persistence-Adapter macht diesen Flush deshalb zu einer expliziten Lifecycle-Barriere;
+- Browserbericht: [`gen1recomp/lovejs-smoke-report.json`](gen1recomp/lovejs-smoke-report.json). Der aktuelle Browser-Build ist gepinnt, aber SwiftShader liefert keinen Hardware-/Performancewert und der Lauf ist kein Scripting-/iOS-Beleg;
 - ROM-freier v0.1.96-Launcher-Boot: vorbereiteter Overlay-Payload mit 522 ZIP-Einträgen, sichtbarer 1024x768-Canvas, 10 Sekunden Beobachtung, keine Page-/Runtime-/Request-Fehler; Screenshot zeigte Launcher/Tabs/„ROM REQUIRED“, aber keinerlei ROM-Inhalt. Browser-Mausklicks auf Red/Blue/Yellow/Gold erzeugten vier unterschiedliche Canvas-Zustände mit zugeordneten Screenshot-Hashes und Pixel-Diff-Bereichen. Bericht: [`gen1recomp/lovejs-launcher-report.json`](gen1recomp/lovejs-launcher-report.json);
 - physische Scripting-/iOS-Ausführung: **nicht ausgeführt**.
 

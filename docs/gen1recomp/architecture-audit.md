@@ -84,7 +84,7 @@ The archive module validates an adapter-provided entry inventory; it is not itse
 
 ## 6. Verification boundary
 
-Current local verification covers TypeScript compilation, pure unit tests, JSON Schema compilation/validation, Python acquisition behavior, npm dependency audit, LuaJIT-vs-shim BitOp differential testing and a ROM-free love.js execution in Headless Chrome 92/SwiftShader. It does **not** cover:
+Current local verification covers TypeScript compilation, pure unit tests, JSON Schema compilation/validation, Python acquisition behavior, npm dependency audit, LuaJIT-vs-shim BitOp differential testing and a ROM-free love.js execution in Headless Chromium 149/SwiftShader. It does **not** cover:
 
 - Scripting-synchronized declarations;
 - Scripting runtime execution;

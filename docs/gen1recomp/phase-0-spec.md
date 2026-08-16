@@ -38,7 +38,7 @@ Determine a technically honest path that can run the original hand-written Gen1R
 
 ### H2 — Original `.love` payload through LÖVE WebAssembly in a Scripting WebView
 
-**Status: outside-browser smoke passed with a compatibility shim; Scripting remains unproven; preferred spike.** Scripting exposes a `WKWebView`-backed controller. WebKit supports JavaScript, WebGL and WebAssembly generally. Pinned 2dengine love.js revision `9355186…` executed a ROM-free 23-check LÖVE 11.5 probe in Headless Chrome 92/SwiftShader after the first run exposed its missing `bit` module and a pure-Lua BitOp overlay passed 9,492 LuaJIT differential checks. However:
+**Status: outside-browser smoke passed with a compatibility shim; Scripting remains unproven; preferred spike.** Scripting exposes a `WKWebView`-backed controller. WebKit supports JavaScript, WebGL and WebAssembly generally. Pinned 2dengine love.js revision `9355186…` executed a ROM-free 23-check LÖVE 11.5 probe in Headless Chromium 149/SwiftShader after the first run exposed its missing `bit` module and a pure-Lua BitOp overlay passed 9,492 LuaJIT differential checks. However:
 
 - `love.js` uses PUC Lua 5.1, not LuaJIT;
 - FFI is unavailable;

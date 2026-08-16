@@ -22,7 +22,7 @@ The server supplies the COOP/COEP, CSP and WASM MIME headers required by this ca
 
 ## Evidence boundary
 
-The recorded Headless Chrome 92/SwiftShader run passed 23/23 checks after the BitOp overlay; see `docs/gen1recomp/lovejs-smoke-report.json`. A browser pass proves only that this pinned probe ran in that browser/environment. It does not prove:
+The recorded Headless Chromium 149/SwiftShader run passed 23/23 checks after the BitOp overlay; see `docs/gen1recomp/lovejs-smoke-report.json`. A browser pass proves only that this pinned probe ran in that browser/environment. It does not prove:
 
 - execution inside Scripting's WKWebView;
 - audible Web Audio after user gesture;

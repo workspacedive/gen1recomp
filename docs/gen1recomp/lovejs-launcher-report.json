@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "evidence": "outside-scripting-rom-free-launcher-boot",
-  "observedAt": "2026-08-16T11:07:23.999Z",
+  "observedAt": "2026-08-16T11:21:41.047Z",
   "sourcePayload": {
     "provenance": "local v0.1.96 source build; not an official release artifact",
     "revision": "73fbaaa25093338585923b8b9809f2fea7fc59dc",
@@ -25,8 +25,8 @@
   "runtime": {
     "loveJsRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
     "loveVersion": "11.5",
-    "browser": "HeadlessChrome/92.0.4512.0",
-    "renderer": "Google SwiftShader",
+    "browser": "HeadlessChromium/149.0.7827.0",
+    "renderer": "ANGLE Vulkan / Google SwiftShader",
     "serverHeaders": [
       "Cross-Origin-Opener-Policy: same-origin",
       "Cross-Origin-Embedder-Policy: require-corp",
@@ -50,13 +50,13 @@
     "runtimeErrorLines": [],
     "screenshot": {
       "tracked": false,
-      "sha256": "589ef6eae73a6b9eac473d236485b979def8edad4e9bfd90065c58393312ffb2",
-      "bytes": 62618,
+      "sha256": "aa332c9ee4b584a1bc5a7a17e719e971541d561ac41ad19c40b2d8b61038821a",
+      "bytes": 53202,
       "pixels": [
         1280,
         900
       ],
-      "uniqueRgbColors": 2034,
+      "uniqueRgbColors": 2015,
       "nonWhitePixels": 783538
     },
     "visualInspection": [
@@ -74,44 +74,44 @@
       ],
       "snapshots": {
         "red": {
-          "sha256": "08f5ed6afe5c914f32d7e088a1a3d5e7da9d8a622b4de9442916604c7ac0e051",
-          "bytes": 59639,
+          "sha256": "64545a30a4c97f8e86013fe01e9752228f045818d361d17078a69f468cba6ed3",
+          "bytes": 51533,
           "uniqueRgbColors": 2034
         },
         "blue": {
-          "sha256": "160cdebb8e26e4d99e454535b3dca3295c276f63ad0c8b574ae9566e3e571183",
-          "bytes": 59421,
-          "uniqueRgbColors": 2029
+          "sha256": "83546479e12e19f33b37546fa84457131662d02bada0e4898347b12f8e3e56d7",
+          "bytes": 51026,
+          "uniqueRgbColors": 2013
         },
         "yellow": {
-          "sha256": "c33ac0f392313eedc4cc868f4232dd64e79e3a62af31c1b19178d9bc6832140a",
-          "bytes": 60340,
-          "uniqueRgbColors": 2042
+          "sha256": "d759952d401ca5faa39372dbf7c0f6d5b089e6b9a298194864843618e9dc98fc",
+          "bytes": 51032,
+          "uniqueRgbColors": 2014
         },
         "gold": {
-          "sha256": "d25aeded05886b731caccf0d314b5a1846290bf2dfe5df734a01f9d885b3d9a1",
-          "bytes": 62318,
-          "uniqueRgbColors": 2041
+          "sha256": "c7e8cffb4c1a4c48ab56da8be0ff593bdca09bf340d65880b3f4ce7a7ad8adc2",
+          "bytes": 51109,
+          "uniqueRgbColors": 2015
         }
       },
       "consecutivePixelDiffs": {
         "redToBlue": [
-          23,
+          82,
           102,
-          234,
-          211
+          136,
+          156
         ],
         "blueToYellow": [
-          24,
+          82,
           102,
-          261,
-          211
+          195,
+          156
         ],
         "yellowToGold": [
-          24,
+          141,
           102,
-          342,
-          211
+          254,
+          156
         ]
       },
       "status": "pass: each tab click produced a distinct rendered canvas state"

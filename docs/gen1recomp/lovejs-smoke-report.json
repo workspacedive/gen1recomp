@@ -10,15 +10,16 @@
     "ffi": false
   },
   "browserEnvironment": {
-    "browser": "HeadlessChrome/92.0.4512.0",
-    "automation": "puppeteer-core 10.1.0",
-    "browserPackage": "chrome-aws-lambda 10.1.0",
-    "graphics": "Google SwiftShader software renderer",
-    "crossOriginIsolated": false,
+    "browser": "HeadlessChromium/149.0.7827.0",
+    "automation": "playwright-core 1.62.1",
+    "browserPackage": "@sparticuz/chromium 149.0.0",
+    "graphics": "ANGLE Vulkan / Google SwiftShader software renderer",
+    "crossOriginIsolated": true,
     "notes": [
-      "This older headless browser was used only because current Playwright browser downloads were blocked and the sandbox had no browser.",
-      "The result is not a current-Chromium performance result and is not evidence about Scripting WKWebView or physical iOS graphics."
-    ]
+      "The browser binary was pinned and delivered through npm because the sandbox had no system browser and Playwright CDN transfers were blocked.",
+      "The result is not a hardware performance result and is not evidence about Scripting WKWebView or physical iOS graphics."
+    ],
+    "launchPolicy": "COOP/COEP server headers with no disable-web-security flag"
   },
   "initialRun": {
     "observedAt": "2026-08-16T10:47:28.084Z",
@@ -29,7 +30,8 @@
       "id": "lua.bit",
       "observed": "module 'bit' not found",
       "impact": "Gen1Recomp has 11 literal bit-module imports and hundreds of bit operations; unmodified love.js cannot boot all required paths."
-    }
+    },
+    "browser": "HeadlessChrome/92.0.4512.0"
   },
   "compatibilityShim": {
     "path": "compatibility/love-web/bit.lua",
@@ -58,7 +60,7 @@
     }
   },
   "finalRun": {
-    "observedAt": "2026-08-16T11:15:49.899Z",
+    "observedAt": "2026-08-16T11:22:42.019Z",
     "status": "pass",
     "checks": 23,
     "failures": 0,
@@ -103,20 +105,23 @@
       "webgl2": true,
       "webgl1Version": "WebGL 1.0 (OpenGL ES 2.0 Chromium)",
       "webgl2Version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
-      "renderer": "Google SwiftShader",
+      "renderer": "ANGLE Vulkan / Google SwiftShader",
       "maximumTextureSize": 8192,
       "canvasPixels": [
         160,
         144
-      ]
+      ],
+      "crossOriginIsolated": true,
+      "sharedArrayBuffer": true
     },
     "runtimeErrors": [],
     "persistence": {
-      "immediateReloadWithoutAwaitingSync": "marker not recovered",
-      "reloadAfterAllowingAsynchronousSync": "marker recovered",
+      "chrome92ImmediateReloadWithoutAwaitingSync": "marker not recovered in one forced-reload trial",
+      "chromium149ImmediateReload": "marker recovered in the current isolated trial",
       "explicitModuleFsSyncBeforeReload": "marker recovered",
-      "conclusion": "Persistence exists in this browser, but lifecycle-safe durability requires a serialized explicit sync/flush barrier; immediate navigation can race the asynchronous write."
-    }
+      "conclusion": "Automatic durability is timing/environment sensitive; lifecycle-safe saves still require a serialized explicit sync/flush barrier."
+    },
+    "browser": "HeadlessChromium/149.0.7827.0"
   },
   "notProven": [
     "Scripting main runtime or WKWebView execution",

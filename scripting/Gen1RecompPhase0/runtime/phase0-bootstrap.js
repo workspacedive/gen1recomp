@@ -21,7 +21,46 @@
     detailNode.textContent = detail
   }
 
-  window.__gen1recompPhase0 = { evidence, send, setStatus, started: false, finished: false }
+  const failBundle = (stage, message) => {
+    const probe = window.__gen1recompPhase0
+    if (probe.started || probe.finished) return
+    const report = {
+      schemaVersion: 1,
+      status: "error",
+      observedAt: new Date().toISOString(),
+      stage,
+      message,
+      lines: evidence.lines,
+      errors: evidence.errors,
+    }
+    probe.finished = true
+    setStatus("fail", "Runtime script failed", message)
+    void send(report)
+  }
+  const loadBundle = (source) => {
+    const script = document.createElement("script")
+    script.src = source
+    script.async = false
+    script.onerror = () => failBundle("bundle-load", `Could not load ${source}`)
+    script.onload = () => window.setTimeout(() => {
+      if (!window.__gen1recompPhase0.started) {
+        failBundle(
+          "bundle-execution",
+          `${source} loaded but did not execute; likely WebKit syntax/runtime incompatibility`,
+        )
+      }
+    }, 250)
+    document.body.appendChild(script)
+  }
+
+  window.__gen1recompPhase0 = {
+    evidence,
+    send,
+    setStatus,
+    loadBundle,
+    started: false,
+    finished: false,
+  }
   window.Module = {
     print: (value) => consume(value),
     printErr: (value) => consume(value, true),
@@ -32,17 +71,6 @@
   window.setTimeout(() => {
     const probe = window.__gen1recompPhase0
     if (probe.started || probe.finished) return
-    const report = {
-      schemaVersion: 1,
-      status: "error",
-      observedAt: new Date().toISOString(),
-      stage: "module-load",
-      message: "The local ES module probe did not start",
-      lines: evidence.lines,
-      errors: evidence.errors,
-    }
-    probe.finished = true
-    setStatus("fail", "Runtime module failed", report.message)
-    void send(report)
+    failBundle("bundle-timeout", "The local Phase-0 bundle did not start")
   }, 5000)
 })()

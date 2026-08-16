@@ -29,6 +29,7 @@ SOURCE_FILES = (
     "runtime/index.html",
     "runtime/phase0.css",
     "runtime/phase0-bootstrap.js",
+    "runtime/phase0-loader.js",
 )
 LAUNCHER_FILES = (
     "player.js",
@@ -73,7 +74,7 @@ def bundle_browser_entry(entry: Path) -> bytes:
             "--bundle",
             "--format=iife",
             "--platform=browser",
-            "--target=es2022",
+            "--target=safari13",
             "--charset=utf8",
             "--legal-comments=none",
             "--log-level=error",

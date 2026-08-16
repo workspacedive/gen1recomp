@@ -34,6 +34,7 @@ SOURCE_FILES = (
     "runtime/index.html",
     "runtime/preview.css",
     "runtime/preview-bootstrap.js",
+    "runtime/preview-loader.js",
 )
 LAUNCHER_FILES = (
     "player.js",

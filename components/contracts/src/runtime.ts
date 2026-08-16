@@ -108,7 +108,9 @@ function parseRuntimeBootRequestInner(value: unknown): Result<RuntimeBootRequest
     return err(`query exceeds ${MAXIMUM_QUERY_ENTRIES} entries`)
   }
   const parsedQuery = Object.create(null) as Record<string, JsonValue>
-  for (const [key, candidate] of entries) {
+  for (const entry of entries) {
+    const key = entry[0]
+    const candidate = entry[1]
     if (!RUNTIME_NAMESPACE.test(key)) return err(`query key is not canonical: ${key}`)
     if (!isJsonValue(candidate)) return err(`query value is not JSON: ${key}`)
     parsedQuery[key] = cloneJsonValue(candidate)

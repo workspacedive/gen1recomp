@@ -46,6 +46,6 @@ python3 tools/package_scripting_phase0_probe.py
 
 The browser/runtime code is bundled into one classic script because the first physical Scripting run showed that local ES modules did not start in the WKWebView file-loading path.
 
-The current package is 7,597,422 bytes with 13 entries and SHA-256 `3d9fc937ff2fb9a56529f92e0e74dccfad1e68e050b790de09c9502b907ed12d`. Its exact extracted runtime passed the full lifecycle in Chromium 149, which validates packaging and relative resource resolution but not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-phase0-package-report.json`](../../docs/gen1recomp/scripting-phase0-package-report.json).
+The current package is 7,598,818 bytes with 14 entries and SHA-256 `7e8b63421a1d3209ef787e025ed47fe6c8c6255bb39edba284788ea15366cab6`. Its exact extracted runtime passed the full lifecycle in Chromium 149, which validates packaging and relative resource resolution but not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-phase0-package-report.json`](../../docs/gen1recomp/scripting-phase0-package-report.json).
 
 The final product additionally requires native launcher/import/save/mod/settings UI, physical input/audio/persistence/lifecycle measurements, a user-supplied ROM import path, title/game parity, accessibility, diagnostics, staged updates, and rollback.

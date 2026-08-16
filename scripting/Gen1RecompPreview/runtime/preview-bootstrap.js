@@ -20,13 +20,43 @@
   }
   const event = (value) => post("gen1recompEvent", value)
 
+  const failBundle = (stage, message) => {
+    const preview = window.__gen1recompPreview
+    if (preview.failed || preview.started) return
+    preview.failed = true
+    setStatus("fail", "Runtime script failed", message)
+    log("error", `${stage}: ${message}`)
+    void event({ type: "preview.error", stage, message })
+  }
+  const loadBundle = (source) => {
+    log("info", `loading classic bundle ${source}`)
+    const script = document.createElement("script")
+    script.src = source
+    script.async = false
+    script.onerror = () => failBundle("bundle-load", `Could not load ${source}`)
+    script.onload = () => {
+      log("info", `classic bundle resource loaded ${source}`)
+      window.setTimeout(() => {
+        if (!window.__gen1recompPreview.started) {
+          failBundle(
+            "bundle-execution",
+            `${source} loaded but did not execute; likely WebKit syntax/runtime incompatibility`,
+          )
+        }
+      }, 250)
+    }
+    document.body.appendChild(script)
+  }
+
   window.__gen1recompPreview = {
     evidence,
     log,
     event,
     setStatus,
+    loadBundle,
     started: false,
     ready: false,
+    failed: false,
   }
   window.Module = {
     print: (value) => log("info", value),
@@ -37,10 +67,7 @@
 
   window.setTimeout(() => {
     const preview = window.__gen1recompPreview
-    if (preview.started || preview.ready) return
-    const message = "The local preview module did not start"
-    setStatus("fail", "Runtime module failed", message)
-    log("error", message)
-    void event({ type: "preview.error", stage: "module-load", message })
+    if (preview.started || preview.ready || preview.failed) return
+    failBundle("bundle-timeout", "The local preview bundle did not start")
   }, 8000)
 })()

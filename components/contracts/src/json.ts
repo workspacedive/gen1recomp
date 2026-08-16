@@ -41,7 +41,9 @@ export function cloneJsonValue(value: JsonValue): JsonValue {
   if (value === null || typeof value !== "object") return value
   if (Array.isArray(value)) return value.map((candidate) => cloneJsonValue(candidate))
   const output = Object.create(null) as Record<string, JsonValue>
-  for (const [key, candidate] of Object.entries(value)) {
+  for (const entry of Object.entries(value)) {
+    const key = entry[0]
+    const candidate = entry[1]
     output[key] = cloneJsonValue(candidate)
   }
   return output

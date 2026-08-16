@@ -77,6 +77,8 @@ class PackageScriptingPhase0Tests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertNotIn(b"import ", first)
         self.assertNotIn(b"export ", first)
+        self.assertNotIn(b"#bindings", first)
+        self.assertNotIn(b"?.", first)
         self.assertIn(b"BrowserLoveJsGameSurface", first)
 
 

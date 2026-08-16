@@ -1,4 +1,4 @@
-# Gen1Recomp Preview 0.1.1
+# Gen1Recomp Preview 0.1.2
 
 **Status:** first interactive `.scripting` import-format build for physical-device feedback; not yet device-verified or production-ready
 
@@ -26,4 +26,4 @@ python3 tools/package_scripting_preview.py
 
 The packager uses pinned `esbuild` to emit one classic `preview-bundle.js`. This avoids local `file://` ES-module loading, which the first physical Scripting run showed did not start in WKWebView.
 
-Current artifact: 13 entries, 7,597,578 bytes, SHA-256 `fac9ae156a6125f7af6f1257233236edf3d80d0cb2322325b31940e67b08c959`. The exact extracted package reached the interactive launcher and completed explicit flush/shutdown in Chromium 149 without page, runtime, console, or request errors. This validates package contents, not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-preview-report.json`](../../docs/gen1recomp/scripting-preview-report.json).
+Current artifact: 14 entries, 7,598,943 bytes, SHA-256 `af0284b47839bc42db4a46ff1d1eb47f0ce2e7889440f8e2b24c7dc6468ed8f8`. The exact extracted package reached the interactive launcher and completed explicit flush/shutdown in Chromium 149 without page, runtime, console, or request errors. This validates package contents, not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-preview-report.json`](../../docs/gen1recomp/scripting-preview-report.json).

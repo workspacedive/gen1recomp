@@ -14,6 +14,9 @@ function schema(path: string): AnySchema {
 const componentManifest = ajv.compile(
   schema("../../../../schemas/component-manifest.schema.json"),
 )
+const updateCatalog = ajv.compile(
+  schema("../../../../schemas/update-catalog.schema.json"),
+)
 const hostMessage = ajv.compile(
   schema("../../../../schemas/host-message.schema.json"),
 )
@@ -44,6 +47,15 @@ const validManifest = {
 
 test("JSON Schema 2020-12 accepts a complete component manifest", () => {
   assert.equal(componentManifest(validManifest), true, JSON.stringify(componentManifest.errors))
+})
+
+test("published system update catalog matches the closed catalog and component schemas", () => {
+  const catalog = JSON.parse(readFileSync(new URL(
+    "../../../../updates/catalog/stable.json",
+    import.meta.url,
+  ), "utf8")) as unknown
+  assert.equal(updateCatalog(catalog), true, JSON.stringify(updateCatalog.errors))
+  assert.equal(updateCatalog({ ...(catalog as Record<string, unknown>), surprise: true }), false)
 })
 
 test("component schema rejects unknown fields and non-SHA-256 integrity", () => {

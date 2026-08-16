@@ -74,6 +74,12 @@ error with action
 
 No blank canvas while the runtime starts. Show the exact stage and a safe cancellation/recovery action.
 
+### Bottom navigation and future Mods destination
+
+The native root uses peer tabs for Home, Games, Updates, and Settings. A `mods` destination already exists in the typed tab registry but remains hidden until discovery/install/update/profile flows are functional. Enabling it must not restructure the other destinations.
+
+The future Mods tab uses an App-Store-inspired hierarchy—editorial Discover, scannable product rows, native Search, detail pages, update badges, Installed and Profiles—adapted to Gen1Recomp's restrained visual identity. Its catalog, capability consent, activation journal, update-all transaction, profile/load order and rollback history are separate from system-component Updates. Full contract: [`mod-store-architecture.md`](mod-store-architecture.md).
+
 ## 4. ROM/data flow
 
 ```text

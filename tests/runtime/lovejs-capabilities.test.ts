@@ -108,6 +108,25 @@ test("outside-browser evidence cannot activate the Scripting device profile", ()
   assert.ok(evaluated.issues.some(({ check }) => check === "input.simultaneousTouch"))
 })
 
+test("Scripting profile models physical non-isolation as an expected no-worker condition", () => {
+  const candidate: LoveJsCapabilityReport = {
+    ...report({
+      "web.crossOriginIsolated": { status: "unavailable", observed: false },
+      "input.simultaneousTouch": PASS,
+    }),
+    environment: {
+      host: "scripting-webview",
+      hostVersion: "physical-preview-0.1.4",
+      osVersion: "iOS 18.7",
+      renderer: null,
+    },
+  }
+  const evaluated = evaluateLoveJsCapabilities(candidate, LOVEJS_SCRIPTING_DEVICE_PROFILE)
+  assert.equal(evaluated.compatible, false)
+  assert.ok(evaluated.issues.some(({ code }) => code === "activation_blocked"))
+  assert.equal(evaluated.issues.some(({ check }) => check === "web.crossOriginIsolated"), false)
+})
+
 test("synthetic Scripting results remain blocked while declaration and device evidence is pending", () => {
   const candidate: LoveJsCapabilityReport = {
     ...report({ "input.simultaneousTouch": PASS }),

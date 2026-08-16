@@ -26,18 +26,18 @@ Versions below are contract starting points, not claims of completed artifacts.
 | Component | Package version | API version | State |
 |---|---:|---:|---|
 | Host protocol | 0.1.0 | 1.0.0 | strict types, parser and JSON Schema implemented; no host transport yet |
-| Component/update contracts | 0.1.0 | manifest schema 1 | manifest parser/schema, safe archive preflight, dependency resolver and activation journal implemented host-independently |
-| Scripting host | 0.1.4-preview | 1.0.0 | deterministic interactive ROM-free `.scripting` launcher preview plus lifecycle probe packaged from official-doc symbols; console/message bridge and shutdown diagnostics implemented; installed-app `.d.ts` and device run pending |
-| iOS/Scripting platform adapter | 0.0.1-spike | 1.0.0 | Phase-0 local-file WebView/report host path drafted; declaration diagnostics and device behavior pending |
+| Component/update contracts | 0.2.0 | manifest/catalog schema 1 | strict catalog trust, archive preflight, dependency/API planner, manual orchestrator, activation journal and recovery implemented host-independently |
+| Scripting host | 0.2.0-native | 1.0.0 | native Home/Games/Updates/Settings shell and deterministic ROM-free package; native TSX device run pending. Preview 0.1.4 separately passed physical runtime startup |
+| iOS/Scripting platform adapter | 0.2.0-spike | 1.0.0 | physical local-file WebView path passed; App Group update storage/materialization and native page behavior pending |
 | Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
-| Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | evidence gate, runtime/persistence port and pinned browser `Player`/main-loop/exit surface implemented; outside-browser lifecycle passed; no concrete Scripting WebView surface, LuaJIT or FFI; Scripting profile hard-blocked |
+| Lua runtime adapter | love.js PUC Lua 5.1 | 1.0.0 | physical Scripting startup passed; no LuaJIT/FFI; complete touch/audio/persistence live-activation profile remains blocked |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
 | LÖVE host compatibility | 0.1.0-spike | 1.0.0 | BitOp parity-tested; unusable worker capability normalized before core; Fetch/Update/Mod Job/Import/ChipAudio fallbacks characterized; explicit Emscripten flush adapter implemented |
-| LÖVE distribution | candidate 11.5 web | 11.5.0 | pinned outside-browser smoke/launcher passed; worker creation unavailable despite symbol/COOP/COEP; Scripting/device not validated |
+| LÖVE distribution | selected pinned 11.5 web | 11.5.0 | physical Scripting launcher startup passed; no-worker mode required; real-title/audio/input/save/performance pending |
 | Kernel façade | 0.1.0 | 1.0.0 | façade/characterization work pending |
 | Gen1Recomp core payload | 0.1.96 | upstream internal contract | pinned ROM-free source-built payload; outside-browser launcher boot passed |
 | Mod API adapter | 0.1.0 | 2.0.0 | scoped permission/capability policy implemented; Lua façade and v1 behavior integration pending |
-| Platform UI | 0.0.1-spike | 1.0.0 | UX spec only |
+| Platform UI | 0.2.0-native | 1.0.0 | native bottom navigation/update states implemented; ROM library and physical TSX validation pending |
 | Individual mods | own semver | manifest API 1/2 | install only after runtime parity |
 
 Component/API versions use canonical `X.Y.Z` semantic versions in target manifests. This is separate from compact upstream integers (shell/Mod API/link) and the HostProtocol envelope discriminator `protocol: 1`.
@@ -50,7 +50,7 @@ Component/API versions use canonical `X.Y.Z` semantic versions in target manifes
 | native iOS shell | LuaJIT interpreter semantics | 12.0 development | Gen1Recomp 0.1.96 | 1/2 | **released upstream IPA exists; reproducibility risk** |
 | Scripting main JS runtime | none documented | none | Gen1Recomp 0.1.96 | none | **incompatible** |
 | Scripting TimelineCanvas | no Lua runtime yet | custom incomplete façade | Gen1Recomp 0.1.96 | none | **diagnostic only** |
-| Scripting WebView | love.js PUC Lua 5.1 candidate + BitOp shim | love.js 11.5 candidate | Gen1Recomp 0.1.96 | target 1/2 | **outside-browser 23-check smoke, ROM-free launcher boot and start/pause/resume/exit surface lifecycle passed; Scripting remains unverified** |
+| Scripting WebView | love.js PUC Lua 5.1 + BitOp shim | pinned love.js 11.5 | Gen1Recomp 0.1.96 | target 1/2 | **physical ROM-free startup passed; full game/touch/audio/save/update parity unverified** |
 | Scripting WebView | Wasmoon Lua 5.4 | custom LÖVE façade | Gen1Recomp 0.1.96 | unknown | **not recommended: semantic mismatch/high effort** |
 | Scripting + external native IPA | native upstream | native upstream | Gen1Recomp 0.1.96 | 1/2 | **runtime works separately; not hosted inside Scripting** |
 
@@ -100,11 +100,11 @@ No component is independently updateable merely because it has a directory. It b
 
 ## 7. Immediate compatibility blockers
 
-1. No connected Scripting app/version-specific declarations.
-2. No verified Lua/LÖVE runtime in Scripting.
-3. No verified WebView local WASM/WebGL/audio/input behavior.
+1. No connected Scripting app/version-specific declarations or reported Scripting app build.
+2. Runtime startup is verified, but audible audio, simultaneous input, save persistence and pre-dismiss flush are not.
+3. Native 0.2.0 TSX, App Group durability, Archive/Crypto package installation and updated-generation boot are not physically validated.
 4. No controller API in reviewed Scripting docs.
 5. No direct Metal API in reviewed Scripting docs.
 6. Heavy upstream cross-component/direct-LÖVE coupling.
-7. Existing iOS build still fetches mutable LÖVE/Apple dependency `main` branches; the v0.1.96 build-time tips were reconstructed, but the build does not itself pin or attest them.
-8. Existing mod replacement is not a full old-version rollback transaction.
+7. Existing native iOS build still fetches mutable LÖVE/Apple dependency `main` branches; the v0.1.96 build-time tips were reconstructed, but the build does not itself pin or attest them.
+8. The future mod store needs its separate catalog, capability consent, profile activation and rollback implementation before its reserved tab is enabled.

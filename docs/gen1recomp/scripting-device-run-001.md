@@ -1,8 +1,9 @@
-# Scripting physical-device runs 001–004
+# Scripting physical-device runs 001–005
 
 - **Evidence level:** user-reported installed Scripting host on a physical iOS device
-- **App/iOS/device versions:** not yet supplied
-- **Artifact:** Gen1Recomp Preview 0.1.0, SHA-256 `0804a7651bc0f506abd4932d81ef9d4ac4cff2dd2541994a628198b0f99369e5`
+- **Scripting app version/build:** not yet supplied
+- **OS/device:** iOS 18.7 on iPhone; exact model not yet supplied
+- **Artifacts:** Preview lineage 0.1.0–0.1.4; current physical pass is Preview 0.1.4, SHA-256 `70a2cb7febc106f42c5bfbba55636879c560bd24b438ba03871cfcec02242184`
 
 ## Observed
 
@@ -27,6 +28,12 @@ The next submitted log still contained the exact removed strings `module-load` a
 
 Preview 0.1.3 proved that the unique project path, classic loader, downleveled bundle, native bridge, and runtime entry all execute. The pinned player then emitted four immediate `TypeError: Load failed` errors before entering its error state. These map exactly to its four `fetch` requests for `gen1recomp.love`, `normalize1.lua`, `normalize2.lua`, and `love.wasm`; Scripting WKWebView permits local classic scripts but rejects these local-file fetches.
 
+## Run 005 — Preview 0.1.4 physical pass
+
+The user-installed Preview 0.1.4 reached `preview.ready` at frame 2 on iPhone/iOS 18.7 with a visible 1024 × 768 surface. The device log confirmed the intended `0.1.4 / 014` host/runtime identity, embedded package adapter, exact decoded payload/Lua/WASM byte lengths, classic bundle execution, LÖVE/Lua startup, and `crossOriginIsolated: false`. No local fetch failure or startup `TypeError` remained.
+
+The only observed error occurred after dismissal: the host logged `preview dismissed; requesting runtime flush and shutdown` and then `Script error.` The host had already lost a usable page before evaluating the shutdown bridge. This is a close/flush sequencing defect, not a runtime-start defect. The native 0.2.0 shell does not repeat post-dismiss JavaScript evaluation; save-bearing gameplay remains blocked until a pre-dismiss flush handshake is physically validated.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -50,4 +57,6 @@ Preview 0.1.3 proved that the unique project path, classic loader, downleveled b
 - SHA-256 `70a2cb7febc106f42c5bfbba55636879c560bd24b438ba03871cfcec02242184`;
 - exact extracted archive re-passed interactive launcher startup and controlled shutdown in Chromium 149.
 
-The replacement has not yet run on the physical Scripting device. The next report must include the Scripting app version/build, iOS version, device family, compiler diagnostics, console lines, and generated diagnostic JSON if available.
+The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
+
+The separate `Gen1Recomp Native 020` package is not covered by this pass. Its native bottom navigation, App Group persistence, manual catalog request, update empty/current state, runtime diagnostic launch, interruption recovery, and updated-generation materialization each require fresh device evidence.

@@ -1,6 +1,6 @@
 # Target Architecture — Gen1Recomp on Scripting/iOS
 
-**Status:** Architecture baseline; runtime backend pending Phase 0 device gate
+**Status:** Preview 0.1.4 physical runtime gate passed; native control/update plane implementation active
 **Decision:** preserve original `.love` payload first; do not begin a TypeScript game rewrite
 
 ## 1. Two-plane model
@@ -29,7 +29,7 @@ Owns:
 - mod registry/events/hooks;
 - game rendering and audio.
 
-For the preferred spike this plane is a local `WebViewController` running a pinned LÖVE 11.5 web runtime. The backend remains provisional until real-device evidence.
+The selected Scripting backend is a local `WebViewController` running a pinned LÖVE 11.5 web runtime. Preview 0.1.4 physically proved local host execution, embedded payload/Lua/WASM loading, WebGL presentation, and a running frame loop on iPhone/iOS 18.7. ROM extraction, real-title parity, touch/audio/save behavior, update activation, shutdown ordering, performance, and broad-device support remain separate gates.
 
 ## 2. Required layer order
 
@@ -335,8 +335,12 @@ Immutable component files live under `components/<id>/<version>/`. Runtime mutab
 
 ## 10. Update and rollback transaction
 
+System updates are manually triggered and use a catalog namespace, activation journal, and private storage tree that are never shared with the future mod marketplace. The native UI supports individual LÖVE/Lua or Gen1Recomp updates plus one aggregate system plan; it performs no automatic request at launch.
+
 ```text
-download into .part
+fetch and trust-check sequence-numbered HTTPS system catalog
+→ resolve selected component/dependency set
+→ download into transaction staging
 → verify transport result, size and SHA-256
 → safe extract into staging/<transaction-id>
 → validate manifest/schema/dependency graph/capabilities
@@ -357,7 +361,9 @@ Archive policy before extraction:
 - no ROM/cache/baseroms in distributed mod/package artifacts;
 - checksum after extraction where manifests list files.
 
-Because Scripting filesystem atomicity has not been proven, pointer updates use an abstract `ActivationStore` with `active`, `knownGood`, `previous` and `journal` records. The journal moves through `prepared → verified → tested → activating → activated`; recovery discards pre-pointer staging and conservatively restores the previous set from every pointer-changing phase. The eventual Scripting storage adapter must prove durable write semantics on-device; these logical records are not a claim that host file replacement is atomic.
+Because Scripting filesystem atomicity has not been proven, pointer updates use an abstract `ActivationStore` with `active`, `knownGood`, `previous` and `journal` records. The journal moves through `prepared → verified → tested → activating → activated`; recovery discards pre-pointer staging and conservatively restores the previous set from every pointer-changing phase. The native adapter now exists under `scripting/Gen1RecompApp/src/data/`: it pins the catalog/feed, verifies native `Data` with `Crypto.sha256`, inventories ZIP entries through `Archive`, extracts through `FileManager`, materializes a complete private runtime generation, and restores the previous generation if first boot does not reach ready. Its durable write/interruption and memory behavior still require physical device validation; these logical records are not a claim that host file replacement is atomic.
+
+The future Mods tab reuses only generic catalog/download/integrity/archive primitives. It owns a separate catalog domain, capability consent, profile/load-order model, activation journal, update-all plan and rollback history. See [`mod-store-architecture.md`](mod-store-architecture.md).
 
 ## 11. Compatibility/deprecation
 
@@ -412,24 +418,19 @@ gen1recomp-scripting/
 └── tools/
 ```
 
-No empty production directories are created before the runtime gate passes. Documentation/contracts come first; implementation follows the smallest vertical slice.
-
-Current pre-gate code is deliberately narrower than that target tree:
+The runtime gate is passed, so production directories now follow actual vertical slices rather than placeholders:
 
 - `components/contracts/src/` contains strict host, platform, runtime, renderer, input, mod-capability and manifest contracts;
-- `components/updates/src/` contains host-independent archive policy, dependency resolution and recoverable activation logic;
-- `compatibility/love-web/` contains the LuaJIT-BitOp overlay and pre-core thread-capability normalization required by the tested PUC Lua runtime;
-- `tools/package_gen1recomp_payload.py` deterministically packages the pinned ROM-free payload before the launcher wrapper is applied;
-- `runtime/adapters/lovejs/persistence.ts` serializes Emscripten populate/flush operations with timeout/error attribution after the probe exposed an immediate-reload durability race;
-- `runtime/adapters/lovejs/capabilities.ts` parses closed functional evidence, binds it to the pinned runtime/host/session, and derives only evidenced runtime capabilities; its Scripting profile is hard-blocked pending declaration-backed device evidence;
-- `runtime/adapters/lovejs/runtime-port.ts` implements the inner `LuaRuntimePort` lifecycle over injected game-surface and persistence boundaries, with explicit startup-population ownership plus quiesce/flush-before-dispose ordering;
-- `runtime/adapters/lovejs/browser-surface.ts` implements the exact pinned `Player`/`Module.Browser` lifecycle behind a narrow DOM binding and is exercised in an outside-Scripting browser harness, while making no claim that Scripting exposes the required WebView integration;
-- `runtime/manager/runtime-manager.ts` implements the outer host-independent single-instance lifecycle/concurrency gate over an injected evidence verifier and `LuaRuntimePort`;
-- `scripting/Gen1RecompPhase0/` is the finite lifecycle gate, while `scripting/Gen1RecompPreview/` is the first interactive ROM-free local-file WebView launcher with console/message bridging, diagnostic export and controlled shutdown; both use official-documentation symbols and remain declaration/device-unverified;
-- `schemas/` contains matching JSON Schema 2020-12 wire, manifest, activation-journal and runtime-capability definitions;
-- `tests/contracts/`, `tests/runtime/`, `tests/updates/` and `tests/tools/` exercise those host-independent boundaries.
+- `components/updates/src/` now contains strict catalog trust, update inventory/planning, archive policy, dependency/API compatibility, manual transaction orchestration, activation journal and recovery;
+- `updates/` publishes the deterministic ROM-free current runtime/core artifacts and sequence-numbered stable system catalog;
+- `compatibility/love-web/` contains the LuaJIT-BitOp overlay and pre-core no-worker normalization required by the tested PUC Lua runtime;
+- `runtime/adapters/lovejs/` and `runtime/manager/` retain the host-independent capability, persistence and lifecycle boundaries;
+- `scripting/Gen1RecompPreview/` remains the physically validated Preview 0.1.4 fallback;
+- `scripting/Gen1RecompApp/` is the first native product shell with bottom navigation, private component state, manual update UI/adapter, update materialization, first-boot rollback and explicit ROM-free runtime diagnostic;
+- `schemas/` includes closed wire, manifest, activation-journal, runtime-capability and update-catalog schemas;
+- `tests/contracts/`, `tests/runtime/`, `tests/updates/`, `tests/scripting/` and `tests/tools/` exercise host-independent logic, declaration-subset compatibility and deterministic packages.
 
-There is still no declaration-verified production Scripting launcher/platform adapter, user-ROM path, physical WebView proof, input/audio integration, or broad game port. The Phase-0 package exists specifically to resolve the declaration-backed physical-device gate before those layers are claimed.
+Physical WebView startup is proven. Native TSX rendering, the manual network/update adapter, private-store interruption durability and updated-generation launch still need device evidence. ROM verification/extraction, persistent game registration, saves, production close/flush, touch/audio parity, Mods and broad device validation remain active implementation slices.
 
 ## 13. Core-change exception process
 

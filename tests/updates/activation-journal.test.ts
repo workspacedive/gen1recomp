@@ -170,6 +170,17 @@ test("coordinator rejects non-canonical component IDs and versions", async () =>
   assert.equal(store.values.has("journal"), false)
 })
 
+test("coordinator rejects a plan based on a stale active component set", async () => {
+  const store = new MemoryStore()
+  store.values.set("active", candidate)
+  const coordinator = new ActivationCoordinator(store)
+  const stale = await coordinator.prepare("stale", candidate, previous)
+  assert.equal(stale.ok, false)
+  if (!stale.ok) assert.equal(stale.error.code, "stale_state")
+  assert.equal(store.values.has("journal"), false)
+  assert.deepEqual(store.values.get("active"), candidate)
+})
+
 test("coordinator rejects overlapping activation transactions", async () => {
   const store = new MemoryStore()
   store.values.set("active", previous)

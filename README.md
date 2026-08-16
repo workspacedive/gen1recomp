@@ -65,7 +65,7 @@ Das konkrete Ziel ist eine möglichst originalgetreue Gen1Recomp-Laufzeit in **S
 - keine ungeprüfte Behauptung, Scripting könne native LÖVE-, LuaJIT- oder Metal-Bibliotheken laden;
 - eine modulare Portierungsarchitektur mit dem Datenpfad Nutzer-ROM → verifizierter Import/privater Cache → originale Gen1Recomp-Logik → LÖVE-Kompatibilität → Renderer/Audio/Input.
 
-Die Laufzeitentscheidung ist noch durch reale Scripting-Gerätetests blockiert. Die gepinnte LÖVE-11.5-Weblaufzeit hat inzwischen einen ROM-freien Outside-Browser-Smoke-Test bestanden, nachdem der erste Lauf das fehlende LuaJIT-`bit`-Modul korrekt aufdeckte und ein separat gegen LuaJIT getesteter reiner Lua-Hostshim ergänzt wurde. Das beweist weder Scripting-WKWebView noch iOS-Performance. `TimelineCanvas` bleibt Diagnose/Fallback und ist nicht als Paritätsrenderer freigegeben.
+Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physischen iPhone mit iOS 18.7 den lokalen Scripting-Host, klassische Bundles, eingebetteten ROM-freien Payload, Lua-Normalisierer, WASM, love.js/Lua, WebGL, Canvas und laufenden Frame-Loop belegt. Das beweist noch keine ROM-Extraktion, Spielparität, Touch-/Audio-/Save-Qualität, Update-Dauerhaftigkeit, Performance oder breite Gerätekompatibilität. `TimelineCanvas` bleibt Diagnose/Fallback und ist nicht als Paritätsrenderer freigegeben.
 
 ### Forschungs- und Architekturdokumente
 
@@ -78,24 +78,29 @@ Die Laufzeitentscheidung ist noch durch reale Scripting-Gerätetests blockiert. 
 - [`docs/gen1recomp/target-architecture.md`](docs/gen1recomp/target-architecture.md) — Komponenten, Ports, Protokolle und Rollback
 - [`docs/gen1recomp/compatibility-matrix.md`](docs/gen1recomp/compatibility-matrix.md) — unabhängige Versionen und Aktivierungsregeln
 - [`docs/gen1recomp/ui-ux.md`](docs/gen1recomp/ui-ux.md) — native Plattform-UI versus originale Game-UI
+- [`docs/gen1recomp/native-shell-updates-spec.md`](docs/gen1recomp/native-shell-updates-spec.md) — Done Contract, Datenfluss und Sicherheitsgrenzen des manuellen System-Updaters
+- [`docs/gen1recomp/mod-store-architecture.md`](docs/gen1recomp/mod-store-architecture.md) — eigenständiger App-Store-inspirierter Mods-Tab, Profile, Consent, Updates und Rollback
+- [`docs/gen1recomp/scripting-device-run-001.md`](docs/gen1recomp/scripting-device-run-001.md) — kumulative physische Läufe einschließlich bestandenem Preview-0.1.4-Start
+- [`docs/gen1recomp/scripting-native-020-report.json`](docs/gen1recomp/scripting-native-020-report.json) — maschinenlesbarer Paket-/Runtime-Bericht des nativen 0.2.0-Shells
 - [`docs/gen1recomp/scripting-capability-probes.md`](docs/gen1recomp/scripting-capability-probes.md) — physischer Geräteprüfplan
 - [`docs/gen1recomp/device-connection.md`](docs/gen1recomp/device-connection.md) — sicherer lokaler `scripting-cli`-/Deklarations-Handoff
 - [`docs/gen1recomp/architecture-audit.md`](docs/gen1recomp/architecture-audit.md) — dokumentübergreifender Konsistenz- und Evidenzaudit
 - [`docs/gen1recomp/forensics.json`](docs/gen1recomp/forensics.json) — maschinenlesbare Faktenbasis
 
-### Aktueller minimaler Implementierungsstand
+### Aktueller Implementierungsstand
 
-Der erste host-unabhängige Schnitt ist implementiert; ein spielbarer Scripting-Port ist es noch nicht:
+- `components/contracts/src/`: strikte TypeScript-Verträge für Hostprotokoll, Plattform, Runtime, Renderer, Input, Mods und Komponentenmanifeste;
+- `components/updates/src/`: geschlossener Katalogparser/Trust-Policy, Update-Inventar und -Planung, SemVer-/Dependency-/API-Kompatibilität, Archivrichtlinie, manueller Transaktionsorchestrator, Aktivierungsjournal und Recovery;
+- `updates/`: deterministische ROM-freie aktuelle LÖVE/Lua- und Gen1Recomp-Komponentenpakete plus sequenzierter Stable-Systemkatalog;
+- `scripting/Gen1RecompPreview/`: physisch validierter Preview-0.1.4-Runtime-Fallback;
+- `scripting/Gen1RecompApp/`: nativer 0.2.0-Produktshell mit Home/Games/Updates/Settings, privatem Komponentenstatus, manuellem System-Updater, Runtime-Materialisierung/First-Boot-Rollback und vorbereitetem Mods-Tab;
+- `runtime/adapters/lovejs/` und `runtime/manager/`: serialisierte Persistenz, funktionale Capability-Evidenz und geordnete Lifecycle-/Concurrency-Grenzen;
+- `compatibility/love-web/`: vollständiger BitOp-Hostshim plus No-Worker-Normalisierung;
+- `schemas/`: geschlossene JSON-Schemas einschließlich Updatekatalog;
+- `tools/package_system_updates.py` und `tools/package_scripting_app.py`: reproduzierbare Systemfeeds und `.scripting`-Pakete;
+- `tests/`: Vertrag, Schema, Runtime, Archiv, Resolver, Katalog, Updateplan/-orchestrierung, Recovery, Scripting-Deklarationssubset und deterministische Pakete.
 
-- `components/contracts/src/`: strikte TypeScript-Verträge für Hostprotokoll, Plattform, Runtime, Renderer, Input und Komponentenmanifeste;
-- `schemas/`: JSON Schema 2020-12 für Hostnachrichten und Komponentenmanifeste;
-- `components/updates/src/`: sichere Archiv-Vorprüfung, SemVer-Abhängigkeitsauflösung sowie journalisierte Aktivierung/Recovery;
-- `runtime/adapters/lovejs/persistence.ts`: serialisierte explizite Emscripten-Persistenzbarriere mit Timeout/Fehlerzuordnung;
-- `tests/`: Vertrags-, Schema-, Archiv-, Resolver-, Journal-/Recovery-, BitOp-, Persistenz- und Acquisition-Tests;
-- `compatibility/love-web/`: vollständiger BitOp-Hostshim plus Bootstrap, der den gemessen unbrauchbaren Worker-Konstruktor ausblendet und bestehende Upstream-Fallbacks aktiviert;
-- `tools/package_gen1recomp_payload.py`: byte-reproduzierbarer ROM-freier v0.1.96-Payload mit festen ZIP-Zeitstempeln;
-- `probes/lovejs-smoke/`: ROM-freier, außerhalb Scripting bestandener LÖVE-11.5-Web-Smoke-Test;
-- `probes/lovejs-launcher/` und `tools/prepare_lovejs_launcher.py`: deterministischer ROM-freier v0.1.96-Launcher-Boot mit Wrapper/Overlays, weiterhin kein Scripting-Runtime-Pass.
+Der native Games-Screen zeigt 0.2.0 bewusst als leeren Zustand; ROM-Identität, private Extraktion und persistente Bibliothek werden nicht durch eine Attrappe ersetzt. Physische TSX-/Updater-/App-Group-Validierung sowie ROM, Saves, produktionssicheres Close/Flush, Input/Audio und Mods bleiben aktive vertikale Schnitte.
 
 Gepinnte Gen1Recomp-/Wiki-/Runtime-Quellen reproduzieren und den ROM-freien Web-Probe vorbereiten:
 
@@ -115,4 +120,6 @@ npm audit --audit-level=moderate
 python3 tools/audit_references.py --report docs/reference-audit.json
 ```
 
-Breite Portierung, Scripting-API-Adapter und Payload-Integration beginnen erst nach declaration-backed Geräteproben. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
+Weitere Produktpfade werden nur nach ihrem jeweiligen Declaration-/Gerätegate aktiviert. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
+
+Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 ist der physisch validierte Runtime-Fallback; Native 0.2.0 ist der aktuelle native Shell-/Updater-Testkandidat.

@@ -23,7 +23,7 @@ export type ActivationJournal = {
 }
 
 export type ActivationError = {
-  readonly code: "busy" | "missing_journal" | "invalid_phase" | "invalid_journal" | "storage"
+  readonly code: "busy" | "stale_state" | "missing_journal" | "invalid_phase" | "invalid_journal" | "storage"
   readonly message: string
 }
 
@@ -139,6 +139,16 @@ async function writeJournal(
   }
 }
 
+function sameActivationSet(left: ActivationSet, right: ActivationSet): boolean {
+  const leftEntries = Object.entries(left).sort(([a], [b]) => a.localeCompare(b))
+  const rightEntries = Object.entries(right).sort(([a], [b]) => a.localeCompare(b))
+  return leftEntries.length === rightEntries.length
+    && leftEntries.every(([id, version], index) => {
+      const candidate = rightEntries[index]
+      return candidate !== undefined && candidate[0] === id && candidate[1] === version
+    })
+}
+
 export class ActivationCoordinator {
   readonly #store: ActivationStore
 
@@ -149,6 +159,7 @@ export class ActivationCoordinator {
   public async prepare(
     transactionId: string,
     candidate: ActivationSet,
+    expectedPrevious?: ActivationSet,
   ): Promise<Result<ActivationJournal, ActivationError>> {
     if (transactionId.trim().length === 0) {
       return activationError("invalid_journal", "transactionId is required")
@@ -160,6 +171,13 @@ export class ActivationCoordinator {
     }
     const previous = await readSet(this.#store, "active")
     if (!previous.ok) return previous
+    if (expectedPrevious !== undefined) {
+      const validExpected = parseActivationSet(expectedPrevious)
+      if (!validExpected.ok) return validExpected
+      if (!sameActivationSet(previous.value, validExpected.value)) {
+        return activationError("stale_state", "the active component set changed after update planning")
+      }
+    }
     const validCandidate = parseActivationSet(candidate)
     if (!validCandidate.ok) return validCandidate
     const journal: ActivationJournal = {

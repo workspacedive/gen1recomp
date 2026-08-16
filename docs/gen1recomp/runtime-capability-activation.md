@@ -1,6 +1,6 @@
 # love.js functional capability activation
 
-**Status:** outside-browser profile eligible for host-independent integration; Scripting profile blocked
+**Status:** physical Scripting startup proved; complete live-activation profile remains blocked
 **Date:** 2026-08-16
 
 ## Evidence chain
@@ -8,6 +8,8 @@
 [`runtime-capability-report.outside-browser.json`](runtime-capability-report.outside-browser.json) is the closed archival normalization of the measurements recorded in [`lovejs-smoke-report.json`](lovejs-smoke-report.json), whose SHA-256 at extraction time was `14d8ba868bc7aab8b8398910a980c04dbd023701b9a81fa01dd0f1e8c61459d0`. It identifies pinned love.js revision `9355186de22db13bd88bf2a0db75d2925647d036`, Chromium `149.0.7827.0`, the original observation time, and one status/observation for each modeled operation. Its `purpose` is `archival`, and its `archived-capture-…` session identifier is documentary correlation assigned during normalization, not a nonce emitted by the original browser run. The activation verifier accepts only `purpose: "live-activation"`, so this file cannot be replayed as live boot evidence.
 
 This normalization adds no higher evidence claim. `osVersion` remains `null`; queued audio explicitly remains inaudible/unverified; touch and joystick are namespace observations only; simultaneous touch is unavailable; worker creation is unavailable even though the symbol existed. Chromium/SwiftShader evidence remains separate from Scripting/WebKit/device evidence.
+
+Preview 0.1.4 separately supplied physical Scripting evidence on iPhone/iOS 18.7: the pinned runtime loaded its embedded ROM-free payload, Lua normalizers and WASM, displayed a 1024 × 768 WebGL surface and emitted ready at frame 2 with `crossOriginIsolated=false`. This passes the startup gate but is not a schema-complete same-session capability report. The Scripting profile now treats cross-origin isolation and worker roundtrip as expected unavailable conditions; it remains blocked on touch, audible audio, explicit persistence/lifecycle and app-declaration evidence.
 
 ## Gate rules
 
@@ -19,7 +21,8 @@ This normalization adds no higher evidence claim. `osVersion` remains `null`; qu
 4. requires successful functional checks and exact expected-unavailable outcomes;
 5. derives a conservative `RuntimeDescriptor` only from passed checks;
 6. never derives `threads` from `love.thread.newThread` presence, `rawMultiTouch` from `love.touch`, or `gameController` from `love.joystick`;
-7. keeps `LOVEJS_SCRIPTING_DEVICE_PROFILE` in `evidence-pending` state regardless of reported check values.
+7. models both `web.crossOriginIsolated` and worker roundtrip as unavailable for the measured Scripting no-worker path;
+8. keeps `LOVEJS_SCRIPTING_DEVICE_PROFILE` in `evidence-pending` state until the remaining same-session checks exist.
 
 The session identifier is correlation, not cryptographic attestation. The eventual Scripting host must create the session, run the probe in the runtime instance being booted, and deliver the report over a trusted application boundary. Accepting uploaded or stale report JSON as live capability evidence would be incorrect.
 

@@ -1,6 +1,6 @@
 # Verifikationsprotokoll und Evidenzregeln
 
-**Letzter Lauf:** 2026-08-16T20:52:46Z
+**Letzter Lauf:** 2026-08-16T22:03:04Z
 **Maschinenlesbarer Bericht:** [`reference-audit.json`](reference-audit.json)
 
 ## Ausgeführte Checks
@@ -52,8 +52,8 @@ Zusätzlich wurde `tools/analyze_gen1recomp.py` erneut gegen den gepinnten v0.1.
 Ergebnis:
 
 - TypeScript 7.0.2 `strict`/`noEmit`: bestanden;
-- 72 Node-Unit-Tests: bestanden (Verträge einschließlich geschlossenem Runtime-Boot-Parser, JSON Schema 2020-12, Viewport, funktionale Runtime-Evidenz, love.js-Browser-Surface, Persistenz-/Lifecycle-Port, Lifecycle-/Concurrency-Manager, Archivregeln, SemVer-Resolver, Aktivierungsjournal und Recovery);
-- 27 Python-Unit-Tests: bestanden (Acquisition-Größen/Hashes/Partials, deterministische LÖVE-, Phase-0- und Preview-`.scripting`-Archive, HTTP-Header/Report-Endpunkte einschließlich sicherer Player-Pfadauflösung und LuaJIT-BitOp-Shim-Parität);
+- 89 Node-Unit-Tests: bestanden (Verträge einschließlich geschlossenem Runtime-Boot-Parser, JSON Schema 2020-12 einschließlich Updatekatalog, Viewport, funktionale Runtime-Evidenz, love.js-Browser-Surface, Persistenz-/Lifecycle-Port, Lifecycle-/Concurrency-Manager, Archivregeln, SemVer-Resolver, Katalog-Trust, System-Updateplanung/-orchestrierung, Aktivierungsjournal und Recovery);
+- 33 Python-Unit-Tests: bestanden (Acquisition-Größen/Hashes/Partials, deterministische LÖVE-, Systemkomponenten-, Phase-0-, Preview- und Native-`.scripting`-Archive, HTTP-Header/Report-Endpunkte einschließlich sicherer Player-Pfadauflösung und LuaJIT-BitOp-Shim-Parität);
 - npm-Audit: 0 bekannte Schwachstellen auf der eingestellten Audit-Stufe;
 - Python-Syntax aller Tools: bestanden;
 - `tools/acquire_gen1recomp.py --source-only`: gepinnte Dev-/Wiki-/Release-Worktree-/love.js-Revisionen erfolgreich reproduziert; bestehende Git-Worktree-`.git`-Dateien werden korrekt erkannt;
@@ -68,17 +68,19 @@ Ergebnis:
 - Thread-Befund: `love.thread.newThread` ist als Funktion sichtbar, Worker-Erstellung scheitert jedoch reproduzierbar in love.js' Normalisierungsschicht. Der bootstrap-generierte Hostwrapper blendet nur diesen Konstruktor vor Core-Load aus;
 - No-Thread-Charakterisierung: Fetch liefert sofortigen Fehler statt Pending, Update meldet Fehlerzustand, Mod Jobs melden unavailable, ROM Import wählt Coroutine und ChipAudio besteht den synchronen Fanfare-/Restore-Pfad;
 - Persistenz-Charakterisierung: ein sofortiger Reload verlor den Marker in einem Chrome-92-Lauf, stellte ihn im isolierten Chromium-149-Lauf aber wieder her; explizites `FS.syncfs(false)` stellte ihn konsistent wieder her. Der neue serialisierte Persistence-Adapter macht diesen Flush deshalb zu einer expliziten Lifecycle-Barriere;
-- Capability-Gate: das geschlossene Schema und der strikte Parser akzeptieren nur kanonische JSON-Berichte, binden Live-Evidenz an Host, exakte love.js-Revision und aktuelle Session und leiten Fähigkeiten nur aus bestandenen Funktionschecks ab. Der archivierte Chromium-Bericht ist ausdrücklich nicht aktivierbar; das Scripting-Profil bleibt auch bei synthetischen Pass-Werten hart auf `evidence-pending`;
+- Capability-Gate: das geschlossene Schema und der strikte Parser akzeptieren nur kanonische JSON-Berichte, binden Live-Evidenz an Host, exakte love.js-Revision und aktuelle Session und leiten Fähigkeiten nur aus bestandenen Funktionschecks ab. Der archivierte Chromium-Bericht ist ausdrücklich nicht aktivierbar. Das Scripting-Profil modelliert den physisch beobachteten No-Worker-Pfad jetzt mit `crossOriginIsolated` und Worker-Roundtrip als erwartet unverfügbar; es bleibt bis zu Touch-/Audio-/Persistenz-/Deklarationsevidenz auf `evidence-pending`;
 - Runtime-Manager: gültige Lifecycle-Übergänge, idempotentes Suspend/Resume, parallele `busy`-Ablehnung, Descriptor-Abgleich, ungültige Bootpfade, Verifier-Ausnahmen, Teilstart-Cleanup und Cleanup-Pflicht nach Lifecycle-Fehlern sind host-unabhängig getestet;
 - love.js-Runtime-Port: explizite Startup-Populate-Ownership (gepinnter Player oder Port), Quiesce vor Flush, Flush vor Dispose, Teilstart-Cleanup ohne unbewiesenen FS-Zugriff, sichere Flush-Wiederholung nach Fehlern, konkurrierende `busy`-Ablehnung und Descriptor-Snapshots sind über injizierte Fakes getestet;
 - Browser-Surface: der kompilierte Stack aus Runtime-Port, Persistence-Adapter und Browser-Surface startete den exakten ROM-freien Launcher statt des `nogame.love`-Fallbacks, hielt den Main-Loop bei Frame 26 für das 500-ms-Prüffenster an, absolvierte den Suspend-Flush, setzte ihn bis Frame 56 fort und beendete nach Stop-Flush mit unverändertem Frame/`Module.done=true`; keine Page-, Request- oder Runtime-Fehler. Chromium 149 lief mit `crossOriginIsolated=true`, nachdem unsichere package-seitige Security-Disable-Flags explizit entfernt wurden. Bericht: [`gen1recomp/lovejs-runtime-surface-report.md`](gen1recomp/lovejs-runtime-surface-report.md);
 - Scripting-Phase-0-Paket: dokumentierter `Script`-Import, Safari-13-Bundle, diagnostischer Loader und eingebettete Player-Pakete; deterministisches ROM-freies Archiv mit 11 Einträgen, 8.262.935 Bytes und SHA-256 `bddcb53a…`; die exakt extrahierte Runtime bestand in Chromium Boot, Suspend-Flush (Frame 46 stabil), Resume (Frame 76) und Stop-Flush/Dispose ohne Fehler, ohne HTTP-Anfragen für Payload/Lua/WASM;
-- Interaktive Scripting-Preview 0.1.4 (`Gen1Recomp Preview 014`): die Geräteberichte belegten nacheinander fehlenden `Script`-Import, nicht gestartete ES-Module, wiederverwendete Altdateien und schließlich vier gescheiterte lokale Player-Fetches. Die neue eindeutige Projekt-/Runtime-Identität lädt ein Safari-13-Bundle und vier hashgeprüfte eingebettete Pakete. Das deterministische ROM-freie Archiv hat 11 Einträge, 8.263.309 Bytes und SHA-256 `70a2cb7f…`; die exakt extrahierte Preview dekodierte Payload (5.938.923 Bytes), Lua-Normalisierer und WASM (4.720.510 Bytes), erreichte den sichtbaren Launcher und schloss per Flush mit `Module.done=true` ohne Page-, Request- oder Runtime-Fehler. Beide `index.tsx` bestanden strikte TypeScript-Diagnostik gegen einen temporären, aus der offiziellen Dokumentation übertragenen WebViewController-/FileManager-/Script-Signaturensatz; app-synchronisierte `.d.ts`-Diagnostik und physische Scripting-Ausführung sind weiterhin offen;
-- Ein physisch verifizierter Scripting-WebView-Surface-Adapter bleibt mangels synchronisierter Deklarationen und Gerätebericht ungeprüft;
+- Interaktive Scripting-Preview 0.1.4 (`Gen1Recomp Preview 014`): die Geräteberichte belegten nacheinander fehlenden `Script`-Import, nicht gestartete ES-Module, wiederverwendete Altdateien und schließlich vier gescheiterte lokale Player-Fetches. Die eindeutige 0.1.4-Identität lädt ein Safari-13-Bundle und vier hashgeprüfte eingebettete Pakete. Das deterministische ROM-freie Archiv hat 11 Einträge, 8.263.309 Bytes und SHA-256 `70a2cb7f…`; außerhalb Scripting bestand es Start und Flush. Auf physischem iPhone/iOS 18.7 erreichte es mit `crossOriginIsolated=false` den sichtbaren 1024 × 768 Launcher bei Frame 2 ohne Startupfehler. Der danach beobachtete `Script error` ist dem post-dismiss JavaScript-Aufruf zugeordnet; Produktions-Flush vor Dismiss bleibt offen;
+- Der lokale Scripting-WebView-Startpfad ist physisch belegt; ein vollständiger app-synchronisiert deklarationsgeprüfter Surface-/Lifecycle-Adapter mit Touch, Audio, Save und Pre-Dismiss-Flush bleibt offen;
+- Manueller System-Updater: geschlossener Katalog/Trust, individuelle/aggregierte Planung, Dependency-first-Aktivierungsset, API-Kompatibilität, Abbruch, `busy`, Paketfehler, Self-Test, Health-Check, Commit und Rollback sind host-unabhängig getestet. Der sequenzierte Stable-Katalog und zwei ROM-freie aktuelle Komponenten-ZIPs sind deterministisch und per Größe/SHA-256/Allowlist geprüft;
+- Native Scripting 0.2.0 (`Gen1Recomp Native 020`): 23 Einträge, 8.288.985 Bytes, SHA-256 `b50cde29…`; Home/Games/Updates/Settings, versteckter Mods-Erweiterungspunkt, App-Group-Komponentenstatus, manueller Fetch/Crypto/Archive/FileManager-Adapter, Runtime-Materialisierung und First-Boot-Rollback bestanden den strikten dokumentationsbasierten Deklarationssubset-Typecheck. Die byteidentischen finalen Runtime-Einträge erreichten in Chromium 149 Frame 23 und schlossen sauber ohne Fehler; Bericht: [`gen1recomp/scripting-native-020-report.json`](gen1recomp/scripting-native-020-report.json);
 - Browser-Smoke-Bericht: [`gen1recomp/lovejs-smoke-report.json`](gen1recomp/lovejs-smoke-report.json). Der aktuelle Browser-Build ist gepinnt, aber SwiftShader liefert keinen Hardware-/Performancewert und der Lauf ist kein Scripting-/iOS-Beleg;
 - ROM-freier v0.1.96-Launcher-Boot: deterministischer, bootstrap-wrapped Overlay-Payload mit 486 ZIP-Einträgen, sichtbarer 1024x768-Canvas, 10 Sekunden Beobachtung, keine Page-/Runtime-/Request-Fehler; Screenshot zeigte Launcher/Tabs/„ROM REQUIRED“, aber keinerlei ROM-Inhalt. Browser-Mausklicks auf Red/Blue/Yellow/Gold erzeugten vier unterschiedliche Canvas-Zustände mit zugeordneten Screenshot-Hashes und Pixel-Diff-Bereichen. Bericht: [`gen1recomp/lovejs-launcher-report.json`](gen1recomp/lovejs-launcher-report.json);
 - Upstream-ROM-freie Quick-Suite erneut bestanden: 172 Engine-Suites, 23/23 Modkit-Suites und Cold Restart. Der erste Aufruf hatte zwar `LUA` absolut gesetzt, aber den von Modkit verschachtelt gestarteten Namen `luajit` nicht auf `PATH`; 22/23 war daher ein dokumentierter Umgebungsfehler. Mit dem gepinnten LuaJIT-Verzeichnis auf `PATH` bestand der unveränderte zweite Lauf vollständig;
-- physische Scripting-/iOS-Ausführung: **nicht ausgeführt**.
+- physische Scripting-/iOS-Ausführung: Preview 0.1.4-Startup **bestanden** auf iPhone/iOS 18.7; Native 0.2.0 TSX/Updater und alle Spielparitätswege **noch nicht ausgeführt**.
 
 ## Evidenzstufen für kommende Implementierungen
 
@@ -93,14 +95,15 @@ Ergebnis:
 
 Keine niedrigere Stufe wird sprachlich als höhere ausgegeben.
 
-## Noch nicht möglich
+## Offene reale Gates
 
-Das Gen1Recomp-Ziel ist festgelegt, aber es ist noch keine physische Scripting-App mit diesem Workspace verbunden. Daher wurden noch nicht ausgeführt:
+Eine physische Scripting-App hat Preview 0.1.4 ausgeführt, ist aber nicht per `scripting-cli` mit diesem Workspace verbunden. Offen bleiben:
 
-- app-synchronisierte `.d.ts`-Diagnostik;
-- Scripting-Main-Runtime oder WebView-Runtime;
-- physische iPhone-/iPad-UI, Lifecycle, Input, Audio oder Persistenz;
-- Gen1Recomp-Payload-Boot, Nutzer-ROM-Import, Mods, Saves oder Paritätsgoldens in Scripting;
-- belastbare Performance-/Speicherbudgets.
+- app-synchronisierte `.d.ts`-Diagnostik und genaue Scripting-App-Version/Buildnummer;
+- Native-0.2.0-TSX auf iPhone und iPad einschließlich Dark Mode, Dynamic Type und VoiceOver;
+- App-Group-Persistenz, Archive/Crypto/FileManager-Updateinstallation, Unterbrechungs-Recovery und materialisierte Runtime auf dem Gerät;
+- produktionssicherer Pre-Dismiss-Flush statt JavaScript-Auswertung nach zerstörter WebView;
+- Nutzer-ROM-Identität/Extraktion, native Bibliothek, Saves, Mods und reale Spielparitätsgoldens;
+- hörbare Audio-, simultane Touch-, Lifecycle-, Performance- und Speicherbudgets.
 
-Diese Punkte sind harte Phase-0-Gates. Sie werden nicht durch den erfolgreichen außerhalb von Scripting ausgeführten Browser-Smoke-Test oder host-unabhängige Unit-Tests ersetzt.
+Der bestandene Runtime-Start ersetzt keinen dieser spezifischen Nachweise. Ebenso ersetzen Browser- und Unit-Tests keine native TSX-, Berechtigungs- oder Dateisystemprüfung.

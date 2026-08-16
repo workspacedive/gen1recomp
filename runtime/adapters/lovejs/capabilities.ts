@@ -169,12 +169,16 @@ export const LOVEJS_SCRIPTING_DEVICE_PROFILE: LoveJsCapabilityProfile = {
   requiredHost: "scripting-webview",
   activation: {
     status: "evidence-pending",
-    reason: "requires app-synchronized Scripting declarations and physical-device evidence",
+    reason: "Preview 0.1.4 proves physical startup, but activation still requires same-session touch, audio, and persistence evidence plus app-synchronized declarations",
   },
   required: new Set<LoveJsCheckId>([
-    ...LOVEJS_OUTSIDE_BROWSER_PROFILE.required,
+    ...[...LOVEJS_OUTSIDE_BROWSER_PROFILE.required].filter((check) => check !== "web.crossOriginIsolated"),
     "input.touchNamespace",
     "input.simultaneousTouch",
+  ]),
+  expectedUnavailable: new Set<LoveJsCheckId>([
+    ...LOVEJS_OUTSIDE_BROWSER_PROFILE.expectedUnavailable,
+    "web.crossOriginIsolated",
   ]),
 }
 

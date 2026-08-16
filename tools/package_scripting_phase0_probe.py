@@ -7,11 +7,11 @@ import argparse
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
+import subprocess
 import zipfile
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = REPO_ROOT / "scripting" / "Gen1RecompPhase0"
-DEFAULT_COMPILED = REPO_ROOT / ".tmp" / "ts"
 DEFAULT_LAUNCHER = REPO_ROOT / "research" / "downloads" / "gen1recomp" / "lovejs-launcher"
 DEFAULT_LOCK = REPO_ROOT / "research" / "gen1recomp-lock.json"
 DEFAULT_OUTPUT = (
@@ -29,7 +29,6 @@ SOURCE_FILES = (
     "runtime/index.html",
     "runtime/phase0.css",
     "runtime/phase0-bootstrap.js",
-    "runtime/phase0-probe.js",
 )
 LAUNCHER_FILES = (
     "player.js",
@@ -37,14 +36,6 @@ LAUNCHER_FILES = (
     "lua/normalize2.lua",
     "11.5/love.js",
     "11.5/love.wasm",
-)
-COMPILED_FILES = (
-    "runtime/adapters/lovejs/browser-surface.js",
-    "runtime/adapters/lovejs/persistence.js",
-    "runtime/adapters/lovejs/runtime-port.js",
-    "components/contracts/src/json.js",
-    "components/contracts/src/result.js",
-    "components/contracts/src/runtime.js",
 )
 
 
@@ -67,6 +58,33 @@ def read_required(root: Path, relative: str) -> bytes:
     if not path.is_file():
         raise RuntimeError(f"required Phase-0 input is missing: {path}")
     return path.read_bytes()
+
+
+def bundle_browser_entry(entry: Path) -> bytes:
+    esbuild = REPO_ROOT / "node_modules" / ".bin" / "esbuild"
+    if not esbuild.is_file():
+        raise RuntimeError("esbuild is missing; run npm install")
+    if not entry.is_file():
+        raise RuntimeError(f"browser entry is missing: {entry}")
+    result = subprocess.run(
+        [
+            str(esbuild),
+            str(entry),
+            "--bundle",
+            "--format=iife",
+            "--platform=browser",
+            "--target=es2022",
+            "--charset=utf8",
+            "--legal-comments=none",
+            "--log-level=error",
+        ],
+        cwd=REPO_ROOT,
+        check=True,
+        capture_output=True,
+    )
+    if not result.stdout:
+        raise RuntimeError("esbuild produced an empty browser bundle")
+    return result.stdout
 
 
 def verify_locked_runtime(
@@ -99,7 +117,6 @@ def runtime_config() -> bytes:
 
 def collect_entries(
     source: Path,
-    compiled: Path,
     launcher: Path,
     lock_path: Path,
 ) -> dict[str, bytes]:
@@ -116,8 +133,9 @@ def collect_entries(
     if len(payload) != PAYLOAD_BYTES or sha256_bytes(payload) != PAYLOAD_SHA256:
         raise RuntimeError("prepared ROM-free launcher payload mismatch")
     entries["runtime/gen1recomp.love"] = payload
-    for relative in COMPILED_FILES:
-        entries[f"runtime/modules/{relative}"] = read_required(compiled, relative)
+    entries["runtime/phase0-bundle.js"] = bundle_browser_entry(
+        source / "runtime" / "phase0-probe.js"
+    )
     entries["runtime/runtime-config.js"] = runtime_config()
 
     metadata = json.loads(entries["script.json"])
@@ -161,13 +179,12 @@ def write_archive(entries: dict[str, bytes], destination: Path) -> dict[str, obj
 
 def package(
     source: Path,
-    compiled: Path,
     launcher: Path,
     lock_path: Path,
     destination: Path,
 ) -> dict[str, object]:
     return write_archive(
-        collect_entries(source, compiled, launcher, lock_path),
+        collect_entries(source, launcher, lock_path),
         destination,
     )
 
@@ -175,14 +192,12 @@ def package(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
-    parser.add_argument("--compiled", type=Path, default=DEFAULT_COMPILED)
     parser.add_argument("--launcher", type=Path, default=DEFAULT_LAUNCHER)
     parser.add_argument("--lock", type=Path, default=DEFAULT_LOCK)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
     report = package(
         args.source.resolve(),
-        args.compiled.resolve(),
         args.launcher.resolve(),
         args.lock.resolve(),
         args.output.resolve(),

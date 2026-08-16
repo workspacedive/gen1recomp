@@ -3,9 +3,9 @@
   "package": {
     "name": "Gen1Recomp Phase 0.scripting",
     "version": "0.1.0",
-    "bytes": 7600008,
-    "entries": 19,
-    "sha256": "5db4f3fbba29d9dfd1e34673537119d220d03dd24f88d0aab0684073d2462251",
+    "bytes": 7597422,
+    "entries": 13,
+    "sha256": "3d9fc937ff2fb9a56529f92e0e74dccfad1e68e050b790de09c9502b907ed12d",
     "romFree": true
   },
   "runtime": {
@@ -13,7 +13,7 @@
     "payloadSha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a"
   },
   "outsideBrowserCharacterization": {
-    "observedAt": "2026-08-16T18:59:17.275Z",
+    "observedAt": "2026-08-16T19:41:26.838Z",
     "browser": "HeadlessChrome/149.0.7827.0",
     "crossOriginIsolated": true,
     "boot": "pass",
@@ -21,10 +21,10 @@
     "resume": "pass",
     "stopFlushDispose": "pass",
     "frames": {
-      "running": 46,
-      "suspended": 46,
-      "resumed": 76,
-      "stopped": 76
+      "running": 43,
+      "suspended": 43,
+      "resumed": 73,
+      "stopped": 73
     },
     "pageErrors": [],
     "requestFailures": [],

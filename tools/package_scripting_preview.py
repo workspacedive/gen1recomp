@@ -8,8 +8,6 @@ import json
 from pathlib import Path
 
 from package_scripting_phase0_probe import (
-    COMPILED_FILES,
-    DEFAULT_COMPILED,
     DEFAULT_LAUNCHER,
     DEFAULT_LOCK,
     PAYLOAD_BYTES,
@@ -17,6 +15,7 @@ from package_scripting_phase0_probe import (
     PAYLOAD_SHA256,
     REPO_ROOT,
     RUNTIME_REVISION,
+    bundle_browser_entry,
     read_required,
     runtime_config,
     safe_path,
@@ -35,7 +34,6 @@ SOURCE_FILES = (
     "runtime/index.html",
     "runtime/preview.css",
     "runtime/preview-bootstrap.js",
-    "runtime/preview.js",
 )
 LAUNCHER_FILES = (
     "player.js",
@@ -48,7 +46,6 @@ LAUNCHER_FILES = (
 
 def collect_entries(
     source: Path,
-    compiled: Path,
     launcher: Path,
     lock_path: Path,
 ) -> dict[str, bytes]:
@@ -65,8 +62,9 @@ def collect_entries(
     if len(payload) != PAYLOAD_BYTES or sha256_bytes(payload) != PAYLOAD_SHA256:
         raise RuntimeError("prepared ROM-free launcher payload mismatch")
     entries["runtime/gen1recomp.love"] = payload
-    for relative in COMPILED_FILES:
-        entries[f"runtime/modules/{relative}"] = read_required(compiled, relative)
+    entries["runtime/preview-bundle.js"] = bundle_browser_entry(
+        source / "runtime" / "preview.js"
+    )
     entries["runtime/runtime-config.js"] = runtime_config()
 
     metadata = json.loads(entries["script.json"])
@@ -82,13 +80,12 @@ def collect_entries(
 
 def package(
     source: Path,
-    compiled: Path,
     launcher: Path,
     lock_path: Path,
     output: Path,
 ) -> dict[str, object]:
     report = write_archive(
-        collect_entries(source, compiled, launcher, lock_path),
+        collect_entries(source, launcher, lock_path),
         output,
     )
     return {
@@ -103,14 +100,12 @@ def package(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
-    parser.add_argument("--compiled", type=Path, default=DEFAULT_COMPILED)
     parser.add_argument("--launcher", type=Path, default=DEFAULT_LAUNCHER)
     parser.add_argument("--lock", type=Path, default=DEFAULT_LOCK)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
     report = package(
         args.source.resolve(),
-        args.compiled.resolve(),
         args.launcher.resolve(),
         args.lock.resolve(),
         args.output.resolve(),

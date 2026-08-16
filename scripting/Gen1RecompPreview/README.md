@@ -1,4 +1,4 @@
-# Gen1Recomp Preview 0.1.0
+# Gen1Recomp Preview 0.1.1
 
 **Status:** first interactive `.scripting` import-format build for physical-device feedback; not yet device-verified or production-ready
 
@@ -19,9 +19,11 @@ The source uses officially documented `WebViewController`, script message handle
 Build command:
 
 ```bash
-npm run build:contracts
+npm install
 python3 tools/prepare_lovejs_launcher.py
 python3 tools/package_scripting_preview.py
 ```
 
-Current artifact: 19 entries, 7,600,136 bytes, SHA-256 `0804a7651bc0f506abd4932d81ef9d4ac4cff2dd2541994a628198b0f99369e5`. The exact extracted package reached the interactive launcher and completed explicit flush/shutdown in Chromium 149 without page, runtime, console, or request errors. This validates package contents, not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-preview-report.json`](../../docs/gen1recomp/scripting-preview-report.json).
+The packager uses pinned `esbuild` to emit one classic `preview-bundle.js`. This avoids local `file://` ES-module loading, which the first physical Scripting run showed did not start in WKWebView.
+
+Current artifact: 13 entries, 7,597,578 bytes, SHA-256 `fac9ae156a6125f7af6f1257233236edf3d80d0cb2322325b31940e67b08c959`. The exact extracted package reached the interactive launcher and completed explicit flush/shutdown in Chromium 149 without page, runtime, console, or request errors. This validates package contents, not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-preview-report.json`](../../docs/gen1recomp/scripting-preview-report.json).

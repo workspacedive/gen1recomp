@@ -1,13 +1,13 @@
 import {
   BrowserLoveJsGameSurface,
   DomLoveJsBrowserBindings,
-} from "./modules/runtime/adapters/lovejs/browser-surface.js"
+} from "../../../runtime/adapters/lovejs/browser-surface.ts"
 import {
   LoveJsPersistenceAdapter,
-} from "./modules/runtime/adapters/lovejs/persistence.js"
+} from "../../../runtime/adapters/lovejs/persistence.ts"
 import {
   LoveJsRuntimePort,
-} from "./modules/runtime/adapters/lovejs/runtime-port.js"
+} from "../../../runtime/adapters/lovejs/runtime-port.ts"
 
 const bridge = window.__gen1recompPhase0
 const config = window.__gen1recompRuntimeConfig

@@ -1,3 +1,5 @@
+import { Script } from "scripting"
+
 const PROJECT_DIRECTORY_NAME = "Gen1Recomp Preview"
 const LOG_HANDLER = "gen1recompLog"
 const EVENT_HANDLER = "gen1recompEvent"

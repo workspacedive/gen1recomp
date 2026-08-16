@@ -39,11 +39,13 @@ The implementation uses officially documented `WebViewController`, `FileManager.
 The deterministic packager writes the ignored deliverable with:
 
 ```bash
-npm run build:contracts
+npm install
 python3 tools/prepare_lovejs_launcher.py
 python3 tools/package_scripting_phase0_probe.py
 ```
 
-The current package is 7,600,008 bytes with 19 entries and SHA-256 `5db4f3fbba29d9dfd1e34673537119d220d03dd24f88d0aab0684073d2462251`. Its exact extracted runtime passed the full lifecycle in Chromium 149, which validates packaging and relative resource resolution but not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-phase0-package-report.json`](../../docs/gen1recomp/scripting-phase0-package-report.json).
+The browser/runtime code is bundled into one classic script because the first physical Scripting run showed that local ES modules did not start in the WKWebView file-loading path.
+
+The current package is 7,597,422 bytes with 13 entries and SHA-256 `3d9fc937ff2fb9a56529f92e0e74dccfad1e68e050b790de09c9502b907ed12d`. Its exact extracted runtime passed the full lifecycle in Chromium 149, which validates packaging and relative resource resolution but not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-phase0-package-report.json`](../../docs/gen1recomp/scripting-phase0-package-report.json).
 
 The final product additionally requires native launcher/import/save/mod/settings UI, physical input/audio/persistence/lifecycle measurements, a user-supplied ROM import path, title/game parity, accessibility, diagnostics, staged updates, and rollback.

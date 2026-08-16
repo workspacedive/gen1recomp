@@ -1,3 +1,5 @@
+import { Script } from "scripting"
+
 const PROJECT_DIRECTORY_NAME = "Gen1Recomp Phase 0"
 const MESSAGE_HANDLER = "gen1recompProbe"
 

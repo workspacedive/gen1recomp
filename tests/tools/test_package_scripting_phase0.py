@@ -68,10 +68,10 @@ class PackageScriptingPhase0Tests(unittest.TestCase):
                 )
 
     def test_preview_output_name_matches_project_identity(self) -> None:
-        self.assertEqual(package_preview.DEFAULT_OUTPUT.name, "Gen1Recomp Preview.scripting")
+        self.assertEqual(package_preview.DEFAULT_OUTPUT.name, "Gen1Recomp Preview 013.scripting")
 
     def test_browser_bundle_is_deterministic_classic_script(self) -> None:
-        entry = ROOT / "scripting/Gen1RecompPreview/runtime/preview.js"
+        entry = ROOT / "scripting/Gen1RecompPreview/runtime-v013/preview.js"
         first = package_probe.bundle_browser_entry(entry)
         second = package_probe.bundle_browser_entry(entry)
         self.assertEqual(first, second)

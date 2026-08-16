@@ -19,22 +19,29 @@ Artifact: Preview 0.1.1, SHA-256 `fac9ae156a6125f7af6f1257233236edf3d80d0cb23223
 
 The first classic-bundle replacement removed the `Script` diagnostic, but the bundle still did not set its startup marker. Its ES2022 output contained JavaScript private fields and optional chaining, so classic-vs-module loading alone was not sufficient. The previous timeout could not distinguish resource loading from parser/execution failure.
 
+## Run 003
+
+The next submitted log still contained the exact removed strings `module-load` and `The local preview module did not start`. Those literals are absent from the 0.1.2 archive, proving that Scripting/iCloud continued to execute the previously imported project tree or WebView URL cache rather than the replacement files.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
 2. Browser/runtime TypeScript is bundled with pinned `esbuild@0.28.2` into one classic IIFE script. No local `type="module"`, runtime imports, or module dependency tree remains in the archive.
 3. The bundle target is now Safari 13; private fields and optional chaining are transformed away.
 4. A separate classic loader reports `bundle-load`, `bundle-execution`, or `bundle-timeout` and mirrors each stage to the Scripting console.
-5. Both Preview and automatic Phase-0 package paths use the same correction.
-6. Deterministic packaging tests assert that emitted browser bundles contain no `import`, `export`, private-field, or optional-chaining syntax.
+5. Preview 0.1.3 uses a new Scripting project identity (`Gen1Recomp Preview 013`) and a new local runtime URL root (`runtime-v013`) to prevent old imported files or WebView URL cache from being reused.
+6. Both Preview and automatic Phase-0 package paths use the same downlevel/diagnostic-loader correction.
+7. Deterministic packaging tests assert that emitted browser bundles contain no `import`, `export`, private-field, or optional-chaining syntax.
 
 ## Replacement artifact
 
-`Gen1Recomp Preview.scripting` version 0.1.2
+`Gen1Recomp Preview 013.scripting` version 0.1.3
 
+- new project identity `Gen1Recomp Preview 013`;
+- new runtime URL root `runtime-v013`;
 - 14 entries;
-- 7,598,943 bytes;
-- SHA-256 `af0284b47839bc42db4a46ff1d1eb47f0ce2e7889440f8e2b24c7dc6468ed8f8`;
+- 7,599,148 bytes;
+- SHA-256 `a9f6975837b9791999da42a6c40c34c4d8ddc1a095e6fd8aff948dd756fd8862`;
 - exact extracted archive re-passed interactive launcher startup and controlled shutdown in Chromium 149.
 
 The replacement has not yet run on the physical Scripting device. The next report must include the Scripting app version/build, iOS version, device family, compiler diagnostics, console lines, and generated diagnostic JSON if available.

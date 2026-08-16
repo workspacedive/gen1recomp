@@ -26,15 +26,16 @@ from package_scripting_phase0_probe import (
 
 DEFAULT_SOURCE = REPO_ROOT / "scripting" / "Gen1RecompPreview"
 DEFAULT_OUTPUT = (
-    REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Preview.scripting"
+    REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Preview 013.scripting"
 )
+RUNTIME_ROOT = "runtime-v013"
 SOURCE_FILES = (
     "script.json",
     "index.tsx",
-    "runtime/index.html",
-    "runtime/preview.css",
-    "runtime/preview-bootstrap.js",
-    "runtime/preview-loader.js",
+    f"{RUNTIME_ROOT}/index.html",
+    f"{RUNTIME_ROOT}/preview.css",
+    f"{RUNTIME_ROOT}/preview-bootstrap.js",
+    f"{RUNTIME_ROOT}/preview-loader.js",
 )
 LAUNCHER_FILES = (
     "player.js",
@@ -58,21 +59,21 @@ def collect_entries(
     for relative in SOURCE_FILES:
         entries[relative] = read_required(source, relative)
     for relative in LAUNCHER_FILES:
-        entries[f"runtime/{relative}"] = read_required(launcher, relative)
+        entries[f"{RUNTIME_ROOT}/{relative}"] = read_required(launcher, relative)
     payload = read_required(launcher, "gen1recomp.love")
     if len(payload) != PAYLOAD_BYTES or sha256_bytes(payload) != PAYLOAD_SHA256:
         raise RuntimeError("prepared ROM-free launcher payload mismatch")
-    entries["runtime/gen1recomp.love"] = payload
-    entries["runtime/preview-bundle.js"] = bundle_browser_entry(
-        source / "runtime" / "preview.js"
+    entries[f"{RUNTIME_ROOT}/gen1recomp.love"] = payload
+    entries[f"{RUNTIME_ROOT}/preview-bundle.js"] = bundle_browser_entry(
+        source / RUNTIME_ROOT / "preview.js"
     )
-    entries["runtime/runtime-config.js"] = runtime_config()
+    entries[f"{RUNTIME_ROOT}/runtime-config.js"] = runtime_config()
 
     metadata = json.loads(entries["script.json"])
     for required in ("name", "icon", "color", "version", "entry"):
         if not isinstance(metadata.get(required), str) or not metadata[required]:
             raise RuntimeError(f"script.json field is required: {required}")
-    if metadata["name"] != "Gen1Recomp Preview" or metadata["entry"] != "index.tsx":
+    if metadata["name"] != "Gen1Recomp Preview 013" or metadata["entry"] != "index.tsx":
         raise RuntimeError("Preview metadata identity is invalid")
     if any(not safe_path(name) for name in entries):
         raise RuntimeError("Preview package contains an unsafe path")

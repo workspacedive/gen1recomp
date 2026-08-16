@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "package": {
-    "name": "Gen1Recomp Preview.scripting",
-    "version": "0.1.2",
-    "bytes": 7598943,
+    "name": "Gen1Recomp Preview 013.scripting",
+    "version": "0.1.3",
+    "bytes": 7599148,
     "entries": 14,
-    "sha256": "af0284b47839bc42db4a46ff1d1eb47f0ce2e7889440f8e2b24c7dc6468ed8f8",
+    "sha256": "a9f6975837b9791999da42a6c40c34c4d8ddc1a095e6fd8aff948dd756fd8862",
     "romFree": true
   },
   "runtime": {
@@ -13,7 +13,7 @@
     "payloadSha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a"
   },
   "outsideBrowserCharacterization": {
-    "observedAt": "2026-08-16T19:54:55Z",
+    "observedAt": "2026-08-16T20:06:03Z",
     "browser": "HeadlessChrome/149.0.7827.0",
     "crossOriginIsolated": true,
     "launcherVisible": true,
@@ -21,7 +21,7 @@
       "width": 1024,
       "height": 768
     },
-    "readyFrame": 29,
+    "readyFrame": 28,
     "shutdown": "pass",
     "moduleDone": true,
     "consoleErrors": [],

@@ -1,0 +1,42 @@
+{
+  "boot": {
+    "ok": true
+  },
+  "environment": {
+    "crossOriginIsolated": true,
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.0 Safari/537.36"
+  },
+  "errors": [],
+  "frames": {
+    "resumed": 56,
+    "running": 26,
+    "stopped": 56,
+    "suspended": 26
+  },
+  "lines": [],
+  "moduleDone": true,
+  "observedAt": "2026-08-16T18:44:20.572Z",
+  "payload": {
+    "bytes": 5938923,
+    "entries": 486,
+    "sha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a"
+  },
+  "resume": {
+    "ok": true
+  },
+  "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+  "schemaVersion": 1,
+  "scope": "pinned love.js browser surface lifecycle outside Scripting",
+  "status": "pass",
+  "stop": {
+    "ok": true
+  },
+  "surface": {
+    "height": 1024,
+    "visible": true,
+    "width": 1024
+  },
+  "suspend": {
+    "ok": true
+  }
+}

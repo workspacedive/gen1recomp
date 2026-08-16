@@ -14,6 +14,14 @@ export interface LoveJsPersistencePort {
   flush(reason: string): Promise<Result<void, PersistenceError>>
 }
 
+export type LoveJsRuntimeOptions = {
+  /**
+   * Pinned player.js owns its initial FS.syncfs(true) and must use "surface".
+   * "port" is reserved for a host that exposes an initialized FS before start.
+   */
+  readonly startupPersistence: "surface" | "port"
+}
+
 /**
  * Host-facing game surface below LuaRuntimePort.
  *
@@ -51,6 +59,7 @@ export class LoveJsRuntimePort implements LuaRuntimePort {
   readonly #descriptor: RuntimeDescriptor
   readonly #surface: LoveJsGameSurfacePort
   readonly #persistence: LoveJsPersistencePort
+  readonly #startupPersistence: LoveJsRuntimeOptions["startupPersistence"]
   #state: RuntimeState = { status: "idle" }
   #busy = false
   #surfaceMayBeActive = false
@@ -63,13 +72,18 @@ export class LoveJsRuntimePort implements LuaRuntimePort {
     descriptor: RuntimeDescriptor,
     surface: LoveJsGameSurfacePort,
     persistence: LoveJsPersistencePort,
+    options: LoveJsRuntimeOptions,
   ) {
+    if (options.startupPersistence !== "surface" && options.startupPersistence !== "port") {
+      throw new TypeError("startupPersistence must be surface or port")
+    }
     this.#descriptor = {
       ...descriptor,
       capabilities: new Set(descriptor.capabilities),
     }
     this.#surface = surface
     this.#persistence = persistence
+    this.#startupPersistence = options.startupPersistence
   }
 
   public async describe(): Promise<RuntimeDescriptor> {
@@ -95,11 +109,13 @@ export class LoveJsRuntimePort implements LuaRuntimePort {
     this.#sessionId = validatedRequest.sessionId
     this.#state = { status: "preparing", componentId: this.#descriptor.id }
     try {
-      const populated = await this.#persistence.populate("runtime-start")
-      if (!populated.ok) {
-        return this.#failed(persistenceFailure(populated.error, "startup"))
+      if (this.#startupPersistence === "port") {
+        const populated = await this.#persistence.populate("runtime-start")
+        if (!populated.ok) {
+          return this.#failed(persistenceFailure(populated.error, "startup"))
+        }
+        this.#persistenceReady = true
       }
-      this.#persistenceReady = true
       this.#state = { status: "starting", componentId: this.#descriptor.id }
       this.#surfaceMayBeActive = true
       let started: Result<void, RuntimeError>
@@ -113,6 +129,7 @@ export class LoveJsRuntimePort implements LuaRuntimePort {
         })
       }
       if (!started.ok) return this.#failed(started.error)
+      if (this.#startupPersistence === "surface") this.#persistenceReady = true
       this.#started = true
       this.#quiesced = false
       this.#state = { status: "running", sessionId: validatedRequest.sessionId }

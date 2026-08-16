@@ -5,9 +5,11 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import sys
 import tempfile
 from threading import Thread
 import unittest
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 import zipfile
 
@@ -26,6 +28,11 @@ def load(name: str, relative: str):  # type: ignore[no-untyped-def]
 
 prepare = load("prepare_lovejs_smoke", "tools/prepare_lovejs_smoke.py")
 serve = load("serve_lovejs_smoke", "tools/serve_lovejs_smoke.py")
+sys.modules["serve_lovejs_smoke"] = serve
+serve_surface = load(
+    "serve_lovejs_surface_probe",
+    "tools/serve_lovejs_surface_probe.py",
+)
 
 
 class PrepareTests(unittest.TestCase):
@@ -56,6 +63,39 @@ class PrepareTests(unittest.TestCase):
 
 
 class ServerTests(unittest.TestCase):
+    def test_surface_server_requires_compiled_and_prepared_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaisesRegex(RuntimeError, "inputs are missing"):
+                serve_surface.verify_inputs(root)
+            for relative in serve_surface.REQUIRED:
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("fixture", encoding="utf-8")
+            serve_surface.verify_inputs(root)
+
+            serve_surface.SurfaceProbeHandler.launcher_directory = (
+                root / "research/downloads/gen1recomp/lovejs-launcher"
+            )
+            handler = partial(serve_surface.SurfaceProbeHandler, directory=str(root))
+            server = serve.ProbeServer(("127.0.0.1", 0), handler)
+            thread = Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                url = (
+                    f"http://127.0.0.1:{server.server_port}"
+                    "/probes/lovejs-runtime-surface/gen1recomp.love"
+                )
+                with urlopen(url) as response:
+                    self.assertEqual(response.read(), b"fixture")
+                with self.assertRaises(HTTPError) as blocked:
+                    urlopen(f"http://127.0.0.1:{server.server_port}/.git/HEAD")
+                self.assertEqual(blocked.exception.code, 404)
+            finally:
+                server.shutdown()
+                server.server_close()
+                thread.join(timeout=2)
+
     def test_server_headers_and_bounded_report_endpoint(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

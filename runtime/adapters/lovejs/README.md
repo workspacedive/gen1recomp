@@ -34,12 +34,18 @@ The canonical archival outside-browser evidence is [`../../../docs/gen1recomp/ru
 
 `runtime-port.ts` implements `LuaRuntimePort` over two injected, host-neutral boundaries: `LoveJsGameSurfacePort` and `LoveJsPersistencePort`. It does not invent or import a Scripting WebView API. The concrete surface is still blocked on synchronized declarations.
 
-The port enforces this order:
+Startup persistence ownership is explicit rather than guessed. The pinned love.js `player.js` performs `FS.syncfs(true)` internally and calls `main` only from its callback, so its adapter uses `startupPersistence: "surface"`. A future host that exposes an initialized filesystem before game start may instead use `"port"`. The port then enforces:
 
-1. populate IDBFS before the game surface starts;
-2. ask the game surface to quiesce and settle Lua-side writes;
-3. flush IDBFS before publishing `suspended` or disposing the surface;
-4. retain a quiesced surface when flush fails so an explicit stop can retry without losing data;
-5. flush and dispose a surface that may have started only partially.
+1. successful startup population by exactly one owner;
+2. game-surface quiescence and settled Lua-side writes before flush;
+3. IDBFS flush before publishing `suspended` or disposing the surface;
+4. retention of a quiesced surface when flush fails, allowing a safe explicit retry;
+5. cleanup of a surface that may have started only partially, without claiming its filesystem exists when surface-owned startup failed.
 
-`quiesce` is an application contract, not a browser primitive: an implementation must stop game callbacks and wait for save writes before returning success. The current code proves lifecycle/error ordering with fakes only. It does not prove a Scripting lifecycle deadline, IndexedDB durability after iOS termination, or a real WebView loader.
+`quiesce` is an application contract, not a browser primitive: an implementation must stop game callbacks and wait for save writes before returning success.
+
+## Pinned browser surface
+
+`browser-surface.ts` is the concrete outside-browser reference for the pinned player. It starts only a broker-resolved payload URI, rejects love.js' silent `nogame.love` fallback, waits for a visible canvas, initialized filesystem and installed main loop, functionally verifies pause/resume through frame counters, and awaits the asynchronous `Module.exit(0)` callback. Player, module, DOM and timing access remain behind `LoveJsBrowserBindings`.
+
+The exact ROM-free browser run is recorded in [`../../../docs/gen1recomp/lovejs-runtime-surface-report.md`](../../../docs/gen1recomp/lovejs-runtime-surface-report.md): the compiled runtime port, persistence adapter, and browser surface completed boot, suspend/flush, resume, and stop/flush/dispose with no page/request/runtime errors in Chromium 149 under COOP/COEP isolation. `Player` and `Module.Browser` are pinned love.js/Emscripten implementation APIs, not LÖVE or Scripting APIs. No concrete Scripting WebView adapter, iOS lifecycle deadline, or termination-durability claim exists.

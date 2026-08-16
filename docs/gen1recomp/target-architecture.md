@@ -422,7 +422,8 @@ Current pre-gate code is deliberately narrower than that target tree:
 - `tools/package_gen1recomp_payload.py` deterministically packages the pinned ROM-free payload before the launcher wrapper is applied;
 - `runtime/adapters/lovejs/persistence.ts` serializes Emscripten populate/flush operations with timeout/error attribution after the probe exposed an immediate-reload durability race;
 - `runtime/adapters/lovejs/capabilities.ts` parses closed functional evidence, binds it to the pinned runtime/host/session, and derives only evidenced runtime capabilities; its Scripting profile is hard-blocked pending declaration-backed device evidence;
-- `runtime/adapters/lovejs/runtime-port.ts` implements the inner `LuaRuntimePort` lifecycle over injected game-surface and persistence boundaries, including populate-before-start and quiesce/flush-before-dispose ordering, without assuming a Scripting WebView API;
+- `runtime/adapters/lovejs/runtime-port.ts` implements the inner `LuaRuntimePort` lifecycle over injected game-surface and persistence boundaries, with explicit startup-population ownership plus quiesce/flush-before-dispose ordering;
+- `runtime/adapters/lovejs/browser-surface.ts` implements the exact pinned `Player`/`Module.Browser` lifecycle behind a narrow DOM binding and is exercised in an outside-Scripting browser harness, while making no claim that Scripting exposes the required WebView integration;
 - `runtime/manager/runtime-manager.ts` implements the outer host-independent single-instance lifecycle/concurrency gate over an injected evidence verifier and `LuaRuntimePort`;
 - `schemas/` contains matching JSON Schema 2020-12 wire, manifest, activation-journal and runtime-capability definitions;
 - `tests/contracts/`, `tests/runtime/`, `tests/updates/` and `tests/tools/` exercise those host-independent boundaries.

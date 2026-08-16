@@ -30,7 +30,7 @@ Versions below are contract starting points, not claims of completed artifacts.
 | Scripting host | 0.0.1-spike | 1.0.0 | pending connected-app `.d.ts` |
 | iOS/Scripting platform adapter | 0.0.1-spike | 1.0.0 | interface only; pending device probes |
 | Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
-| Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | functional-evidence gate plus host-neutral runtime/persistence lifecycle port implemented; no concrete Scripting WebView surface, LuaJIT or FFI; Scripting profile hard-blocked pending declarations/device capture |
+| Lua runtime adapter | candidate love.js PUC Lua 5.1 | 1.0.0 | evidence gate, runtime/persistence port and pinned browser `Player`/main-loop/exit surface implemented; outside-browser lifecycle passed; no concrete Scripting WebView surface, LuaJIT or FFI; Scripting profile hard-blocked |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
 | LÖVE host compatibility | 0.1.0-spike | 1.0.0 | BitOp parity-tested; unusable worker capability normalized before core; Fetch/Update/Mod Job/Import/ChipAudio fallbacks characterized; explicit Emscripten flush adapter implemented |
 | LÖVE distribution | candidate 11.5 web | 11.5.0 | pinned outside-browser smoke/launcher passed; worker creation unavailable despite symbol/COOP/COEP; Scripting/device not validated |
@@ -50,7 +50,7 @@ Component/API versions use canonical `X.Y.Z` semantic versions in target manifes
 | native iOS shell | LuaJIT interpreter semantics | 12.0 development | Gen1Recomp 0.1.96 | 1/2 | **released upstream IPA exists; reproducibility risk** |
 | Scripting main JS runtime | none documented | none | Gen1Recomp 0.1.96 | none | **incompatible** |
 | Scripting TimelineCanvas | no Lua runtime yet | custom incomplete façade | Gen1Recomp 0.1.96 | none | **diagnostic only** |
-| Scripting WebView | love.js PUC Lua 5.1 candidate + BitOp shim | love.js 11.5 candidate | Gen1Recomp 0.1.96 | target 1/2 | **outside-browser 23-check smoke and ROM-free launcher boot passed; Scripting remains unverified** |
+| Scripting WebView | love.js PUC Lua 5.1 candidate + BitOp shim | love.js 11.5 candidate | Gen1Recomp 0.1.96 | target 1/2 | **outside-browser 23-check smoke, ROM-free launcher boot and start/pause/resume/exit surface lifecycle passed; Scripting remains unverified** |
 | Scripting WebView | Wasmoon Lua 5.4 | custom LÖVE façade | Gen1Recomp 0.1.96 | unknown | **not recommended: semantic mismatch/high effort** |
 | Scripting + external native IPA | native upstream | native upstream | Gen1Recomp 0.1.96 | 1/2 | **runtime works separately; not hosted inside Scripting** |
 

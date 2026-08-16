@@ -82,7 +82,9 @@ class FakeSurface implements LoveJsGameSurfacePort {
   }
 }
 
-function fixture(): {
+function fixture(
+  startupPersistence: "surface" | "port" = "port",
+): {
   events: string[]
   persistence: FakePersistence
   surface: FakeSurface
@@ -95,7 +97,12 @@ function fixture(): {
     events,
     persistence,
     surface,
-    runtime: new LoveJsRuntimePort(descriptor, surface, persistence),
+    runtime: new LoveJsRuntimePort(
+      descriptor,
+      surface,
+      persistence,
+      { startupPersistence },
+    ),
   }
 }
 
@@ -132,6 +139,18 @@ test("love.js runtime orders population, lifecycle barriers, and disposal", asyn
     "quiesce:lifecycle-suspend:background",
     "flush:lifecycle-suspend:background",
     "resume",
+    "quiesce:runtime-stop",
+    "flush:runtime-stop",
+    "dispose",
+  ])
+})
+
+test("pinned player surface owns startup population before the port takes over flushes", async () => {
+  const { events, runtime } = fixture("surface")
+  assert.equal((await runtime.boot(request)).ok, true)
+  assert.equal((await runtime.stop()).ok, true)
+  assert.deepEqual(events, [
+    "start:runtime-session-1",
     "quiesce:runtime-stop",
     "flush:runtime-stop",
     "dispose",
@@ -178,6 +197,18 @@ test("love.js runtime cleans up a partially failed surface start", async () => {
     "flush:runtime-stop",
     "dispose",
   ])
+})
+
+test("surface-owned startup does not flush an unavailable FS after start failure", async () => {
+  const { events, surface, runtime } = fixture("surface")
+  surface.startResult = Promise.resolve(err({
+    code: "startup",
+    message: "love.js failed before FS initialization",
+    retryable: true,
+  }))
+  assert.equal((await runtime.boot(request)).ok, false)
+  assert.equal((await runtime.stop()).ok, true)
+  assert.deepEqual(events, ["start:runtime-session-1", "dispose"])
 })
 
 test("love.js runtime retains a quiesced surface when flush fails and retries safely", async () => {

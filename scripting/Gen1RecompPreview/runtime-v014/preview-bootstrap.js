@@ -28,6 +28,49 @@
     log("error", `${stage}: ${message}`)
     void event({ type: "preview.error", stage, message })
   }
+  const decodeBase64 = (value) => {
+    const binary = atob(value)
+    const output = new Uint8Array(binary.length)
+    for (let index = 0; index < binary.length; index += 1) {
+      output[index] = binary.charCodeAt(index)
+    }
+    return output
+  }
+  const installEmbeddedPackages = () => {
+    const player = window.Player
+    const encoded = window.__gen1recompEmbeddedPackages
+    if (!player || !encoded) {
+      failBundle("embedded-install", "Player or embedded package table is unavailable")
+      return false
+    }
+    const decoded = Object.create(null)
+    player.cache = false
+    player.requestPkg = (uri) => new Promise((resolve, reject) => {
+      if (decoded[uri]) {
+        resolve({ data: decoded[uri], name: uri })
+        return
+      }
+      const value = encoded[uri]
+      if (typeof value !== "string") {
+        const message = `embedded package unavailable: ${uri}`
+        log("error", message)
+        reject(message)
+        return
+      }
+      try {
+        const data = decodeBase64(value)
+        decoded[uri] = data
+        delete encoded[uri]
+        log("info", `embedded package ready ${uri} (${data.length} bytes)`)
+        resolve({ data, name: uri })
+      } catch (error) {
+        log("error", `embedded package decode failed ${uri}: ${String(error)}`)
+        reject(error)
+      }
+    })
+    log("info", "embedded package adapter installed")
+    return true
+  }
   const loadBundle = (source) => {
     log("info", `loading classic bundle ${source}`)
     const script = document.createElement("script")
@@ -53,6 +96,7 @@
     log,
     event,
     setStatus,
+    installEmbeddedPackages,
     loadBundle,
     started: false,
     ready: false,

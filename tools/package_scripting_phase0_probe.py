@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
@@ -38,6 +39,7 @@ LAUNCHER_FILES = (
     "11.5/love.js",
     "11.5/love.wasm",
 )
+DIRECT_LAUNCHER_FILES = ("player.js", "11.5/love.js")
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -116,6 +118,21 @@ def runtime_config() -> bytes:
     return f"window.__gen1recompRuntimeConfig = Object.freeze({encoded})\n".encode()
 
 
+def embedded_packages_script(launcher: Path) -> bytes:
+    packages = {
+        "gen1recomp.love": read_required(launcher, "gen1recomp.love"),
+        "lua/normalize1.lua": read_required(launcher, "lua/normalize1.lua"),
+        "lua/normalize2.lua": read_required(launcher, "lua/normalize2.lua"),
+        "11.5/love.wasm": read_required(launcher, "11.5/love.wasm"),
+    }
+    encoded = {
+        name: base64.b64encode(data).decode("ascii")
+        for name, data in sorted(packages.items())
+    }
+    payload = json.dumps(encoded, sort_keys=True, separators=(",", ":"))
+    return f"window.__gen1recompEmbeddedPackages = {payload}\n".encode()
+
+
 def collect_entries(
     source: Path,
     launcher: Path,
@@ -128,12 +145,12 @@ def collect_entries(
     entries: dict[str, bytes] = {}
     for relative in SOURCE_FILES:
         entries[relative] = read_required(source, relative)
-    for relative in LAUNCHER_FILES:
+    for relative in DIRECT_LAUNCHER_FILES:
         entries[f"runtime/{relative}"] = read_required(launcher, relative)
     payload = read_required(launcher, "gen1recomp.love")
     if len(payload) != PAYLOAD_BYTES or sha256_bytes(payload) != PAYLOAD_SHA256:
         raise RuntimeError("prepared ROM-free launcher payload mismatch")
-    entries["runtime/gen1recomp.love"] = payload
+    entries["runtime/embedded-packages.js"] = embedded_packages_script(launcher)
     entries["runtime/phase0-bundle.js"] = bundle_browser_entry(
         source / "runtime" / "phase0-probe.js"
     )

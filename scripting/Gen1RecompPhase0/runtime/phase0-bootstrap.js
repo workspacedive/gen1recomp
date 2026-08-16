@@ -37,6 +37,44 @@
     setStatus("fail", "Runtime script failed", message)
     void send(report)
   }
+  const decodeBase64 = (value) => {
+    const binary = atob(value)
+    const output = new Uint8Array(binary.length)
+    for (let index = 0; index < binary.length; index += 1) {
+      output[index] = binary.charCodeAt(index)
+    }
+    return output
+  }
+  const installEmbeddedPackages = () => {
+    const player = window.Player
+    const encoded = window.__gen1recompEmbeddedPackages
+    if (!player || !encoded) {
+      failBundle("embedded-install", "Player or embedded package table is unavailable")
+      return false
+    }
+    const decoded = Object.create(null)
+    player.cache = false
+    player.requestPkg = (uri) => new Promise((resolve, reject) => {
+      if (decoded[uri]) {
+        resolve({ data: decoded[uri], name: uri })
+        return
+      }
+      const value = encoded[uri]
+      if (typeof value !== "string") {
+        reject(`embedded package unavailable: ${uri}`)
+        return
+      }
+      try {
+        const data = decodeBase64(value)
+        decoded[uri] = data
+        delete encoded[uri]
+        resolve({ data, name: uri })
+      } catch (error) {
+        reject(error)
+      }
+    })
+    return true
+  }
   const loadBundle = (source) => {
     const script = document.createElement("script")
     script.src = source
@@ -57,6 +95,7 @@
     evidence,
     send,
     setStatus,
+    installEmbeddedPackages,
     loadBundle,
     started: false,
     finished: false,

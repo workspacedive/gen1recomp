@@ -1,6 +1,6 @@
 import { Script } from "scripting"
 
-const PROJECT_DIRECTORY_NAME = "Gen1Recomp Preview 013"
+const PROJECT_DIRECTORY_NAME = "Gen1Recomp Preview 014"
 const LOG_HANDLER = "gen1recompLog"
 const EVENT_HANDLER = "gen1recompEvent"
 const LOG_PREFIX = "[Gen1Recomp Preview]"
@@ -66,9 +66,9 @@ async function run(): Promise<void> {
       return { accepted: true }
     })
 
-    log("info", "native host build 0.1.3 cache-bust 013")
+    log("info", "native host build 0.1.4 cache-bust 014")
     const projectDirectory = `${FileManager.scriptsDirectory}/${PROJECT_DIRECTORY_NAME}`
-    const runtimeDirectory = `${projectDirectory}/runtime-v013`
+    const runtimeDirectory = `${projectDirectory}/runtime-v014`
     const entryPath = `${runtimeDirectory}/index.html`
     log("info", `loading local runtime ${entryPath}`)
     if (!await FileManager.exists(entryPath)) {

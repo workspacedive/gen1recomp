@@ -10,12 +10,14 @@ from pathlib import Path
 from package_scripting_phase0_probe import (
     DEFAULT_LAUNCHER,
     DEFAULT_LOCK,
+    DIRECT_LAUNCHER_FILES,
     PAYLOAD_BYTES,
     PAYLOAD_ENTRIES,
     PAYLOAD_SHA256,
     REPO_ROOT,
     RUNTIME_REVISION,
     bundle_browser_entry,
+    embedded_packages_script,
     read_required,
     runtime_config,
     safe_path,
@@ -26,9 +28,9 @@ from package_scripting_phase0_probe import (
 
 DEFAULT_SOURCE = REPO_ROOT / "scripting" / "Gen1RecompPreview"
 DEFAULT_OUTPUT = (
-    REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Preview 013.scripting"
+    REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Preview 014.scripting"
 )
-RUNTIME_ROOT = "runtime-v013"
+RUNTIME_ROOT = "runtime-v014"
 SOURCE_FILES = (
     "script.json",
     "index.tsx",
@@ -37,15 +39,6 @@ SOURCE_FILES = (
     f"{RUNTIME_ROOT}/preview-bootstrap.js",
     f"{RUNTIME_ROOT}/preview-loader.js",
 )
-LAUNCHER_FILES = (
-    "player.js",
-    "lua/normalize1.lua",
-    "lua/normalize2.lua",
-    "11.5/love.js",
-    "11.5/love.wasm",
-)
-
-
 def collect_entries(
     source: Path,
     launcher: Path,
@@ -58,12 +51,12 @@ def collect_entries(
     entries: dict[str, bytes] = {}
     for relative in SOURCE_FILES:
         entries[relative] = read_required(source, relative)
-    for relative in LAUNCHER_FILES:
+    for relative in DIRECT_LAUNCHER_FILES:
         entries[f"{RUNTIME_ROOT}/{relative}"] = read_required(launcher, relative)
     payload = read_required(launcher, "gen1recomp.love")
     if len(payload) != PAYLOAD_BYTES or sha256_bytes(payload) != PAYLOAD_SHA256:
         raise RuntimeError("prepared ROM-free launcher payload mismatch")
-    entries[f"{RUNTIME_ROOT}/gen1recomp.love"] = payload
+    entries[f"{RUNTIME_ROOT}/embedded-packages.js"] = embedded_packages_script(launcher)
     entries[f"{RUNTIME_ROOT}/preview-bundle.js"] = bundle_browser_entry(
         source / RUNTIME_ROOT / "preview.js"
     )
@@ -73,7 +66,7 @@ def collect_entries(
     for required in ("name", "icon", "color", "version", "entry"):
         if not isinstance(metadata.get(required), str) or not metadata[required]:
             raise RuntimeError(f"script.json field is required: {required}")
-    if metadata["name"] != "Gen1Recomp Preview 013" or metadata["entry"] != "index.tsx":
+    if metadata["name"] != "Gen1Recomp Preview 014" or metadata["entry"] != "index.tsx":
         raise RuntimeError("Preview metadata identity is invalid")
     if any(not safe_path(name) for name in entries):
         raise RuntimeError("Preview package contains an unsafe path")

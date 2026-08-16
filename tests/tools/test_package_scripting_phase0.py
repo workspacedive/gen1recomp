@@ -68,10 +68,30 @@ class PackageScriptingPhase0Tests(unittest.TestCase):
                 )
 
     def test_preview_output_name_matches_project_identity(self) -> None:
-        self.assertEqual(package_preview.DEFAULT_OUTPUT.name, "Gen1Recomp Preview 013.scripting")
+        self.assertEqual(package_preview.DEFAULT_OUTPUT.name, "Gen1Recomp Preview 014.scripting")
+
+    def test_embedded_packages_are_deterministic_and_complete(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixtures = {
+                "gen1recomp.love": b"PK fixture",
+                "lua/normalize1.lua": b"normalize one",
+                "lua/normalize2.lua": b"normalize two",
+                "11.5/love.wasm": b"wasm fixture",
+            }
+            for relative, data in fixtures.items():
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(data)
+            first = package_probe.embedded_packages_script(root)
+            second = package_probe.embedded_packages_script(root)
+            self.assertEqual(first, second)
+            for relative in fixtures:
+                self.assertIn(relative.encode(), first)
+            self.assertTrue(first.startswith(b"window.__gen1recompEmbeddedPackages = {"))
 
     def test_browser_bundle_is_deterministic_classic_script(self) -> None:
-        entry = ROOT / "scripting/Gen1RecompPreview/runtime-v013/preview.js"
+        entry = ROOT / "scripting/Gen1RecompPreview/runtime-v014/preview.js"
         first = package_probe.bundle_browser_entry(entry)
         second = package_probe.bundle_browser_entry(entry)
         self.assertEqual(first, second)

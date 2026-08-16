@@ -44,8 +44,8 @@ python3 tools/prepare_lovejs_launcher.py
 python3 tools/package_scripting_phase0_probe.py
 ```
 
-The browser/runtime code is bundled into one classic script because the first physical Scripting run showed that local ES modules did not start in the WKWebView file-loading path.
+The browser/runtime code is bundled into one Safari-13-compatible classic script because physical Scripting runs showed that local ES modules did not start. Payload, Lua normalizers, and WASM are embedded into classic-script data because the pinned player's four `fetch(file://…)` requests failed in WKWebView.
 
-The current package is 7,598,818 bytes with 14 entries and SHA-256 `7e8b63421a1d3209ef787e025ed47fe6c8c6255bb39edba284788ea15366cab6`. Its exact extracted runtime passed the full lifecycle in Chromium 149, which validates packaging and relative resource resolution but not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-phase0-package-report.json`](../../docs/gen1recomp/scripting-phase0-package-report.json).
+The current package is 8,262,935 bytes with 11 entries and SHA-256 `bddcb53af3ad8d405744a0bd405851d17249f8183a210dea9d82fff6cabc4f18`. Its exact extracted runtime passed the full lifecycle in Chromium 149, which validates packaging and relative resource resolution but not Scripting/WebKit. See [`../../docs/gen1recomp/scripting-phase0-package-report.json`](../../docs/gen1recomp/scripting-phase0-package-report.json).
 
 The final product additionally requires native launcher/import/save/mod/settings UI, physical input/audio/persistence/lifecycle measurements, a user-supplied ROM import path, title/game parity, accessibility, diagnostics, staged updates, and rollback.

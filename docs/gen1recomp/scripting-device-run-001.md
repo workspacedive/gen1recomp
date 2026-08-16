@@ -1,4 +1,4 @@
-# Scripting physical-device runs 001–002
+# Scripting physical-device runs 001–004
 
 - **Evidence level:** user-reported installed Scripting host on a physical iOS device
 - **App/iOS/device versions:** not yet supplied
@@ -23,25 +23,31 @@ The first classic-bundle replacement removed the `Script` diagnostic, but the bu
 
 The next submitted log still contained the exact removed strings `module-load` and `The local preview module did not start`. Those literals are absent from the 0.1.2 archive, proving that Scripting/iCloud continued to execute the previously imported project tree or WebView URL cache rather than the replacement files.
 
+## Run 004
+
+Preview 0.1.3 proved that the unique project path, classic loader, downleveled bundle, native bridge, and runtime entry all execute. The pinned player then emitted four immediate `TypeError: Load failed` errors before entering its error state. These map exactly to its four `fetch` requests for `gen1recomp.love`, `normalize1.lua`, `normalize2.lua`, and `love.wasm`; Scripting WKWebView permits local classic scripts but rejects these local-file fetches.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
 2. Browser/runtime TypeScript is bundled with pinned `esbuild@0.28.2` into one classic IIFE script. No local `type="module"`, runtime imports, or module dependency tree remains in the archive.
 3. The bundle target is now Safari 13; private fields and optional chaining are transformed away.
 4. A separate classic loader reports `bundle-load`, `bundle-execution`, or `bundle-timeout` and mirrors each stage to the Scripting console.
-5. Preview 0.1.3 uses a new Scripting project identity (`Gen1Recomp Preview 013`) and a new local runtime URL root (`runtime-v013`) to prevent old imported files or WebView URL cache from being reused.
-6. Both Preview and automatic Phase-0 package paths use the same downlevel/diagnostic-loader correction.
-7. Deterministic packaging tests assert that emitted browser bundles contain no `import`, `export`, private-field, or optional-chaining syntax.
+5. Preview 0.1.3 proved cache isolation through `Gen1Recomp Preview 013` and `runtime-v013`.
+6. Preview 0.1.4 uses another distinct project/runtime identity and embeds the exact payload, both Lua normalizers, and WASM as deterministic base64 classic-script data. The player package loader is replaced before boot, so it performs no `fetch(file://…)` calls.
+7. Decoded package byte lengths are logged and the base64 strings are released after use to reduce retained memory.
+8. Both Preview and automatic Phase-0 package paths use the same embedded-package and diagnostic-loader correction.
+9. Deterministic packaging tests assert that emitted browser bundles contain no `import`, `export`, private-field, or optional-chaining syntax and that all four embedded package keys are present.
 
 ## Replacement artifact
 
-`Gen1Recomp Preview 013.scripting` version 0.1.3
+`Gen1Recomp Preview 014.scripting` version 0.1.4
 
-- new project identity `Gen1Recomp Preview 013`;
-- new runtime URL root `runtime-v013`;
-- 14 entries;
-- 7,599,148 bytes;
-- SHA-256 `a9f6975837b9791999da42a6c40c34c4d8ddc1a095e6fd8aff948dd756fd8862`;
+- new project identity `Gen1Recomp Preview 014`;
+- new runtime URL root `runtime-v014`;
+- 11 entries;
+- 8,263,309 bytes;
+- SHA-256 `70a2cb7febc106f42c5bfbba55636879c560bd24b438ba03871cfcec02242184`;
 - exact extracted archive re-passed interactive launcher startup and controlled shutdown in Chromium 149.
 
 The replacement has not yet run on the physical Scripting device. The next report must include the Scripting app version/build, iOS version, device family, compiler diagnostics, console lines, and generated diagnostic JSON if available.

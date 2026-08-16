@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-16T10:15:50Z",
+  "package": "scripting-cli",
+  "version": "1.5.0",
+  "publishedAt": "2026-07-21T07:18:40.442Z",
+  "tarball": "https://registry.npmjs.org/scripting-cli/-/scripting-cli-1.5.0.tgz",
+  "size": 18592,
+  "unpackedSize": 71182,
+  "sha1": "47fb3f2e5043fdf3e93548d45a6c39d586a4b6a3",
+  "sha512": "fdbbfad638d8de8ebbf9986663f0f7dfe048cf62524d5cdac6b041a7655d7dda18b08e33a7426acc3a2a9359ef0cad344316df23b7cff34cb8cd537abe0abc77",
+  "npmIntegrity": "sha512-/bv61jjY3o67+ZhmY/D33+BIz2JSTVzaxrBBp2VdfdoYsI4zp0JqzDoqk1nvDK00QxbfI7fP80y4zVN6vgq8dw==",
+  "audit": {
+    "files": [
+      "dist/start_server.js",
+      "dist/http_router.js",
+      "dist/controller.js",
+      "dist/util.js"
+    ],
+    "finding": "Version 1.5.0 starts an Express/Socket.IO sync service and advertises a local HTTP LAN address. No authentication or pairing-token check was found in the inspected connection/router paths. Do not expose the service through Arena's public preview proxy; obtain app-synced declarations through a trusted local network workflow."
+  }
+}

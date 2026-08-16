@@ -1,0 +1,6509 @@
+{
+  "schemaVersion": 1,
+  "analyzedAt": "2026-08-16T10:21:11+00:00",
+  "source": {
+    "path": "/home/user/gen1recomp/research/downloads/gen1recomp/source-v0.1.96",
+    "revision": "73fbaaa25093338585923b8b9809f2fea7fc59dc"
+  },
+  "scope": {
+    "luaFiles": 347,
+    "roots": [
+      "main.lua",
+      "conf.lua",
+      "src/**/*.lua"
+    ],
+    "method": "lexical occurrence scan; comments/strings may contribute false positives"
+  },
+  "loveMemberReferences": {
+    "love.arg.parseGameArguments": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.audio.newQueueableSource": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/core/ChipAudio.lua"
+      ]
+    },
+    "love.audio.newSource": {
+      "occurrences": 7,
+      "files": 3,
+      "paths": [
+        "src/core/ChipAudio.lua",
+        "src/core/Music.lua",
+        "src/core/Sound.lua"
+      ]
+    },
+    "love.data.encode": {
+      "occurrences": 4,
+      "files": 3,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/mods/RequiredImports.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.data.hash": {
+      "occurrences": 4,
+      "files": 3,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/mods/RequiredImports.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.event.poll": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.event.pump": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua"
+      ]
+    },
+    "love.event.quit": {
+      "occurrences": 23,
+      "files": 9,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua",
+        "src/core/Input.lua",
+        "src/import/RomImporter.lua",
+        "src/link/LinkState.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/mods/ManagerState.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/gen2/MainMenu.lua"
+      ]
+    },
+    "love.filesystem._mounts": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/CacheFs.lua"
+      ]
+    },
+    "love.filesystem.append": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.filesystem.createDirectory": {
+      "occurrences": 17,
+      "files": 6,
+      "paths": [
+        "src/core/Printer.lua",
+        "src/core/SaveData.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.getAppdataDirectory": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.filesystem.getDirectoryItems": {
+      "occurrences": 14,
+      "files": 6,
+      "paths": [
+        "conf.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/mods/Loader.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.filesystem.getInfo": {
+      "occurrences": 49,
+      "files": 13,
+      "paths": [
+        "main.lua",
+        "src/core/NxAssetOverlay.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ModUpdate.lua",
+        "src/mods/RequiredImports.lua",
+        "src/mods/job_worker.lua",
+        "src/net/fetch_worker.lua",
+        "src/save_convert/SaveConvert.lua",
+        "src/ui/TitleState.lua",
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.getRealDirectory": {
+      "occurrences": 4,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.filesystem.getSaveDirectory": {
+      "occurrences": 26,
+      "files": 10,
+      "paths": [
+        "src/core/HostShell.lua",
+        "src/core/Printer.lua",
+        "src/core/SaveData.lua",
+        "src/import/CacheFs.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/mods/ModUpdate.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.getSource": {
+      "occurrences": 8,
+      "files": 4,
+      "paths": [
+        "src/core/SaveData.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LauncherMods.lua"
+      ]
+    },
+    "love.filesystem.getSourceBaseDirectory": {
+      "occurrences": 7,
+      "files": 4,
+      "paths": [
+        "src/core/SaveData.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "love.filesystem.getUserDirectory": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.filesystem.getWorkingDirectory": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.filesystem.init": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/HostShell.lua"
+      ]
+    },
+    "love.filesystem.isFused": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.filesystem.lines": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.filesystem.load": {
+      "occurrences": 13,
+      "files": 10,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/core/chip_worker.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/mods/job_worker.lua",
+        "src/net/fetch_worker.lua",
+        "src/save_convert/SaveConvert.lua",
+        "src/update/Boot.lua",
+        "src/update/Check.lua",
+        "src/update/check_worker.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.filesystem.mount": {
+      "occurrences": 11,
+      "files": 4,
+      "paths": [
+        "src/import/CacheFs.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.filesystem.newFileData": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.filesystem.read": {
+      "occurrences": 28,
+      "files": 10,
+      "paths": [
+        "src/core/ChipSynth.lua",
+        "src/core/HostShell.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/import/RomManifest.lua",
+        "src/import/SaveFileIO.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.remove": {
+      "occurrences": 39,
+      "files": 9,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/ModUpdate.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.setIdentity": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.filesystem.setSymlinksEnabled": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "conf.lua"
+      ]
+    },
+    "love.filesystem.unmount": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/import/CacheFs.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.filesystem.write": {
+      "occurrences": 12,
+      "files": 8,
+      "paths": [
+        "main.lua",
+        "src/core/gen2/Save.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.graphics.Text": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/kit/Kit.lua"
+      ]
+    },
+    "love.graphics.captureScreenshot": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "main.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.graphics.circle": {
+      "occurrences": 7,
+      "files": 4,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/TradeAnim.lua"
+      ]
+    },
+    "love.graphics.clear": {
+      "occurrences": 12,
+      "files": 8,
+      "paths": [
+        "main.lua",
+        "src/core/Printer.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.draw": {
+      "occurrences": 179,
+      "files": 38,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/TouchControls.lua",
+        "src/import/LauncherView.lua",
+        "src/render/Font.lua",
+        "src/render/GBCFX.lua",
+        "src/render/HudTiles.lua",
+        "src/render/Renderer.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PicBox.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BattleAnimView.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/OverworldController.lua",
+        "src/world/Player.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.getBackgroundColor": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.graphics.getColor": {
+      "occurrences": 4,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/render/Font.lua",
+        "src/render/HudTiles.lua"
+      ]
+    },
+    "love.graphics.getDPIScale": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/render/PixelCanvas.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "love.graphics.getDimensions": {
+      "occurrences": 14,
+      "files": 10,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/core/SafeArea.lua",
+        "src/render/Renderer.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/kit/Layout.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.getFont": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/render/Font.lua"
+      ]
+    },
+    "love.graphics.getPixelDimensions": {
+      "occurrences": 9,
+      "files": 4,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/core/SafeArea.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "love.graphics.getScissor": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua"
+      ]
+    },
+    "love.graphics.getShader": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/render/GbcPalette.lua",
+        "src/ui/gen2/Chrome.lua"
+      ]
+    },
+    "love.graphics.intersectScissor": {
+      "occurrences": 3,
+      "files": 1,
+      "paths": [
+        "src/battle/BattleState.lua"
+      ]
+    },
+    "love.graphics.isActive": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.graphics.line": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.newCanvas": {
+      "occurrences": 15,
+      "files": 11,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/core/Printer.lua",
+        "src/render/Pipelines.lua",
+        "src/render/PixelCanvas.lua",
+        "src/render/Renderer.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.newFont": {
+      "occurrences": 6,
+      "files": 4,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/render/Font.lua",
+        "src/render/UiFont.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.newImage": {
+      "occurrences": 71,
+      "files": 36,
+      "paths": [
+        "src/battle/AnimPlayer.lua",
+        "src/battle/BattleState.lua",
+        "src/core/TouchControls.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/import/CacheFs.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/Loader.lua",
+        "src/render/Assets.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PicBox.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/CopyrightSplash.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/TitleState.lua",
+        "src/world/OverworldController.lua",
+        "src/world/Player.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.newMesh": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "love.graphics.newQuad": {
+      "occurrences": 90,
+      "files": 40,
+      "paths": [
+        "src/battle/AnimPlayer.lua",
+        "src/battle/BattleState.lua",
+        "src/render/Font.lua",
+        "src/render/HudTiles.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/Credits.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BattleAnimView.lua",
+        "src/ui/gen2/BattleHud.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/PackGfx.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TileSheet.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.newShader": {
+      "occurrences": 12,
+      "files": 6,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/render/GBCFX.lua",
+        "src/render/GbcPalette.lua",
+        "src/render/PaletteFX.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua"
+      ]
+    },
+    "love.graphics.newSpriteBatch": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/render/TileRenderer.lua",
+        "src/ui/gen2/Diploma.lua"
+      ]
+    },
+    "love.graphics.origin": {
+      "occurrences": 9,
+      "files": 8,
+      "paths": [
+        "main.lua",
+        "src/core/Printer.lua",
+        "src/core/TouchControls.lua",
+        "src/import/LauncherView.lua",
+        "src/ui/PadCursor.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.polygon": {
+      "occurrences": 9,
+      "files": 2,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/ui/PadCursor.lua"
+      ]
+    },
+    "love.graphics.pop": {
+      "occurrences": 24,
+      "files": 15,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/core/Printer.lua",
+        "src/core/TouchControls.lua",
+        "src/import/LauncherView.lua",
+        "src/render/Pipelines.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.present": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.graphics.print": {
+      "occurrences": 11,
+      "files": 4,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/mods/Manifest.lua",
+        "src/render/Font.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.printf": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.push": {
+      "occurrences": 24,
+      "files": 15,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/core/Printer.lua",
+        "src/core/TouchControls.lua",
+        "src/import/LauncherView.lua",
+        "src/render/Pipelines.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.rectangle": {
+      "occurrences": 114,
+      "files": 38,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/dev/Console.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/mods/ManagerState.lua",
+        "src/render/BattleTransition.lua",
+        "src/render/Font.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/render/Transition.lua",
+        "src/script/Commands.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/Diploma.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionRows.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/QuarantineReport.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BankOfMom.lua",
+        "src/ui/gen2/Chrome.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "love.graphics.rotate": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "love.graphics.scale": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/Printer.lua",
+        "src/render/Renderer.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "love.graphics.setCanvas": {
+      "occurrences": 16,
+      "files": 5,
+      "paths": [
+        "src/core/Printer.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/gen2/BorderFill.lua"
+      ]
+    },
+    "love.graphics.setColor": {
+      "occurrences": 396,
+      "files": 87,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua",
+        "src/battle/gen2/HpBar.lua",
+        "src/core/Printer.lua",
+        "src/core/TouchControls.lua",
+        "src/dev/Console.lua",
+        "src/import/LauncherView.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/mods/ManagerState.lua",
+        "src/render/BattleTransition.lua",
+        "src/render/Font.lua",
+        "src/render/GBCFX.lua",
+        "src/render/HudTiles.lua",
+        "src/render/Renderer.lua",
+        "src/render/TextBox.lua",
+        "src/render/TileRenderer.lua",
+        "src/render/Transition.lua",
+        "src/script/Commands.lua",
+        "src/ui/BindingsMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/ChoiceBox.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/Diploma.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/Menu.lua",
+        "src/ui/MoveLearnMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionRows.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PicBox.lua",
+        "src/ui/QuantityBox.lua",
+        "src/ui/QuarantineReport.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BankOfMom.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/CenterPcMenu.lua",
+        "src/ui/gen2/Chrome.lua",
+        "src/ui/gen2/ContestMenu.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/DayCareMenu.lua",
+        "src/ui/gen2/DecorationMenu.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/ElevatorMenu.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/HeldItemMenu.lua",
+        "src/ui/gen2/ItemPcMenu.lua",
+        "src/ui/gen2/MailMenu.lua",
+        "src/ui/gen2/MailRead.lua",
+        "src/ui/gen2/MailboxMenu.lua",
+        "src/ui/gen2/MartMenu.lua",
+        "src/ui/gen2/MoveDeleter.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PackMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/ui/gen2/SaveMenu.lua",
+        "src/ui/gen2/ScriptMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/TradeMenu.lua",
+        "src/ui/gen2/TrainerCard.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.setDefaultFilter": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.graphics.setFont": {
+      "occurrences": 10,
+      "files": 3,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/render/Font.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.setLineJoin": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "love.graphics.setLineWidth": {
+      "occurrences": 7,
+      "files": 3,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.setScissor": {
+      "occurrences": 24,
+      "files": 4,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua",
+        "src/core/Game2.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "love.graphics.setShader": {
+      "occurrences": 33,
+      "files": 8,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/import/LauncherView.lua",
+        "src/render/GBCFX.lua",
+        "src/render/GbcPalette.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/gen2/Chrome.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "love.graphics.translate": {
+      "occurrences": 13,
+      "files": 6,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/import/LauncherView.lua",
+        "src/render/Renderer.lua",
+        "src/ui/TradeAnim.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "love.image.newImageData": {
+      "occurrences": 31,
+      "files": 13,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/import/ImageWriter.lua",
+        "src/mods/AssetTransform.lua",
+        "src/pokemon/Evolution.lua",
+        "src/render/Assets.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/Credits.lua",
+        "src/ui/PartyMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.joystick.getJoystickCount": {
+      "occurrences": 6,
+      "files": 2,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.keyboard.isDown": {
+      "occurrences": 8,
+      "files": 3,
+      "paths": [
+        "src/dev/Console.lua",
+        "src/import/RomImporter.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.keyboard.setKeyRepeat": {
+      "occurrences": 4,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "love.keyboard.setTextInput": {
+      "occurrences": 7,
+      "files": 2,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/ui/kit/Kit.lua"
+      ]
+    },
+    "love.math.getRandomState": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/BattleCheckpoint.lua",
+        "src/core/Checkpoint.lua"
+      ]
+    },
+    "love.math.random": {
+      "occurrences": 71,
+      "files": 35,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/Catching.lua",
+        "src/battle/Damage.lua",
+        "src/battle/TrainerAI.lua",
+        "src/battle/TurnOrder.lua",
+        "src/battle/gen2/Battle.lua",
+        "src/battle/gen2/BerryJuice.lua",
+        "src/battle/gen2/Catching.lua",
+        "src/battle/gen2/Damage.lua",
+        "src/battle/gen2/Effects.lua",
+        "src/battle/gen2/Encounter.lua",
+        "src/battle/gen2/Mon.lua",
+        "src/core/gen2/Breeding.lua",
+        "src/core/gen2/BugContest.lua",
+        "src/core/gen2/Pokerus.lua",
+        "src/core/gen2/Roamers.lua",
+        "src/core/gen2/Save.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/pokemon/Stats.lua",
+        "src/script/Commands.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/gen2/CardFlip.lua",
+        "src/ui/gen2/SlotMachine.lua",
+        "src/ui/gen2/TitleState.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/Encounter.lua",
+        "src/world/NPC.lua",
+        "src/world/OverworldController.lua",
+        "src/world/PikachuFollower.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.math.setRandomState": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/core/BattleCheckpoint.lua",
+        "src/core/Checkpoint.lua"
+      ]
+    },
+    "love.mouse.getPosition": {
+      "occurrences": 17,
+      "files": 5,
+      "paths": [
+        "main.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.mouse.getSystemCursor": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.mouse.isCursorSupported": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.mouse.isDown": {
+      "occurrences": 10,
+      "files": 5,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua",
+        "src/import/LauncherView.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/kit/Kit.lua"
+      ]
+    },
+    "love.mouse.setCursor": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.mouse.setPosition": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.sound.newSoundData": {
+      "occurrences": 7,
+      "files": 3,
+      "paths": [
+        "src/core/ChipAudio.lua",
+        "src/core/ChipSynth.lua",
+        "src/core/Sound.lua"
+      ]
+    },
+    "love.system.createFile": {
+      "occurrences": 4,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.getClipboardText": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.system.getOS": {
+      "occurrences": 72,
+      "files": 21,
+      "paths": [
+        "main.lua",
+        "src/core/DiscordPresence.lua",
+        "src/core/FaithfulRes.lua",
+        "src/core/GamepadMap.lua",
+        "src/core/HostShell.lua",
+        "src/core/Orientation.lua",
+        "src/core/Performance.lua",
+        "src/core/Platform.lua",
+        "src/core/SaveData.lua",
+        "src/core/TouchControls.lua",
+        "src/core/VideoMode.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/import/LauncherSettings.lua",
+        "src/import/RomImporter.lua",
+        "src/net/Gen1Tls.lua",
+        "src/render/GBCFX.lua",
+        "src/render/Renderer.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/kit/Kit.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.system.getPickError": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.getPickedFile": {
+      "occurrences": 5,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.getPowerInfo": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "love.system.getProcessorCount": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/core/Performance.lua"
+      ]
+    },
+    "love.system.httpDownload": {
+      "occurrences": 7,
+      "files": 4,
+      "paths": [
+        "src/core/HostShell.lua",
+        "src/core/Platform.lua",
+        "src/mods/ModIndex.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.system.openURL": {
+      "occurrences": 11,
+      "files": 3,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.system.pickFile": {
+      "occurrences": 8,
+      "files": 2,
+      "paths": [
+        "src/core/Platform.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.pickFileKinds": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.restartApp": {
+      "occurrences": 4,
+      "files": 1,
+      "paths": [
+        "src/core/HostShell.lua"
+      ]
+    },
+    "love.system.setClipboardText": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "love.system.syncHealthSteps": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/mods/Steps.lua"
+      ]
+    },
+    "love.system.tlsClose": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "love.system.tlsError": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "love.system.tlsOpen": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "love.system.tlsReceive": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "love.system.tlsSend": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "love.system.tlsStatus": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "love.system.vibrate": {
+      "occurrences": 7,
+      "files": 3,
+      "paths": [
+        "src/core/SaveData.lua",
+        "src/core/TouchControls.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "love.thread.getChannel": {
+      "occurrences": 26,
+      "files": 11,
+      "paths": [
+        "src/core/ChipAudio.lua",
+        "src/core/HostShell.lua",
+        "src/core/chip_worker.lua",
+        "src/import/ExtractThread.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/Job.lua",
+        "src/mods/job_worker.lua",
+        "src/net/Fetch.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/Check.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.thread.newThread": {
+      "occurrences": 10,
+      "files": 5,
+      "paths": [
+        "src/core/ChipAudio.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/Job.lua",
+        "src/net/Fetch.lua",
+        "src/update/Check.lua"
+      ]
+    },
+    "love.timer.getDelta": {
+      "occurrences": 3,
+      "files": 1,
+      "paths": [
+        "src/render/TileRenderer.lua"
+      ]
+    },
+    "love.timer.getTime": {
+      "occurrences": 31,
+      "files": 11,
+      "paths": [
+        "main.lua",
+        "src/core/DiscordPresence.lua",
+        "src/core/HostShell.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/import/ExtractThread.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/link/Net.lua",
+        "src/mods/Job.lua",
+        "src/render/GBCFX.lua",
+        "src/ui/kit/Kit.lua"
+      ]
+    },
+    "love.timer.sleep": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua",
+        "src/core/chip_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.timer.step": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.touch.getPosition": {
+      "occurrences": 5,
+      "files": 2,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.touch.getTouches": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.window.getDPIScale": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/core/FaithfulRes.lua",
+        "src/core/Game2.lua"
+      ]
+    },
+    "love.window.getDesktopDimensions": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.window.getMode": {
+      "occurrences": 7,
+      "files": 3,
+      "paths": [
+        "main.lua",
+        "src/core/FaithfulRes.lua",
+        "src/core/NxDisplay.lua"
+      ]
+    },
+    "love.window.getSafeArea": {
+      "occurrences": 3,
+      "files": 1,
+      "paths": [
+        "src/core/SafeArea.lua"
+      ]
+    },
+    "love.window.setFullscreen": {
+      "occurrences": 3,
+      "files": 1,
+      "paths": [
+        "src/core/VideoMode.lua"
+      ]
+    },
+    "love.window.setMode": {
+      "occurrences": 13,
+      "files": 4,
+      "paths": [
+        "main.lua",
+        "src/core/FaithfulRes.lua",
+        "src/core/NxDisplay.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.window.setTitle": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.window.showFileDialog": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    }
+  },
+  "loveCalls": {
+    "love.arg.parseGameArguments": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.audio": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/ChipSynth.lua"
+      ]
+    },
+    "love.audio.newSource": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/core/ChipAudio.lua",
+        "src/core/Sound.lua"
+      ]
+    },
+    "love.data.encode": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/mods/RequiredImports.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.data.hash": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/mods/RequiredImports.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.draw": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "main.lua",
+        "src/ui/kit/Kit.lua"
+      ]
+    },
+    "love.event.poll": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.event.pump": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua"
+      ]
+    },
+    "love.event.quit": {
+      "occurrences": 15,
+      "files": 8,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua",
+        "src/core/Input.lua",
+        "src/import/RomImporter.lua",
+        "src/link/LinkState.lua",
+        "src/mods/ManagerState.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/gen2/MainMenu.lua"
+      ]
+    },
+    "love.filesystem": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "src/core/chip_worker.lua",
+        "src/import/CacheFs.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/SafePath.lua"
+      ]
+    },
+    "love.filesystem.createDirectory": {
+      "occurrences": 10,
+      "files": 5,
+      "paths": [
+        "src/core/Printer.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.getDirectoryItems": {
+      "occurrences": 11,
+      "files": 3,
+      "paths": [
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.filesystem.getInfo": {
+      "occurrences": 40,
+      "files": 10,
+      "paths": [
+        "main.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/RequiredImports.lua",
+        "src/mods/job_worker.lua",
+        "src/net/fetch_worker.lua",
+        "src/save_convert/SaveConvert.lua",
+        "src/ui/TitleState.lua",
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.getRealDirectory": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.filesystem.getSaveDirectory": {
+      "occurrences": 19,
+      "files": 8,
+      "paths": [
+        "src/core/Printer.lua",
+        "src/core/SaveData.lua",
+        "src/import/CacheFs.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/ModUpdate.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.getSource": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "src/core/SaveData.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LauncherMods.lua"
+      ]
+    },
+    "love.filesystem.getSourceBaseDirectory": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/SaveData.lua",
+        "src/import/RomImporter.lua",
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "love.filesystem.isFused": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.filesystem.load": {
+      "occurrences": 6,
+      "files": 6,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/core/chip_worker.lua",
+        "src/mods/job_worker.lua",
+        "src/save_convert/SaveConvert.lua",
+        "src/update/Boot.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.filesystem.mount": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/import/CacheFs.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.filesystem.read": {
+      "occurrences": 25,
+      "files": 8,
+      "paths": [
+        "src/core/ChipSynth.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/import/RomManifest.lua",
+        "src/import/SaveFileIO.lua",
+        "src/mods/LauncherMods.lua",
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.remove": {
+      "occurrences": 32,
+      "files": 5,
+      "paths": [
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem.setSymlinksEnabled": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "conf.lua"
+      ]
+    },
+    "love.filesystem.unmount": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/CacheFs.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.filesystem.write": {
+      "occurrences": 7,
+      "files": 4,
+      "paths": [
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.focus": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.getVersion": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/render/Renderer.lua"
+      ]
+    },
+    "love.graphics.captureScreenshot": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "main.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.graphics.circle": {
+      "occurrences": 7,
+      "files": 4,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/TradeAnim.lua"
+      ]
+    },
+    "love.graphics.clear": {
+      "occurrences": 12,
+      "files": 8,
+      "paths": [
+        "main.lua",
+        "src/core/Printer.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.draw": {
+      "occurrences": 177,
+      "files": 38,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/TouchControls.lua",
+        "src/import/LauncherView.lua",
+        "src/render/Font.lua",
+        "src/render/GBCFX.lua",
+        "src/render/HudTiles.lua",
+        "src/render/Renderer.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PicBox.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BattleAnimView.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/OverworldController.lua",
+        "src/world/Player.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.getBackgroundColor": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.graphics.getColor": {
+      "occurrences": 4,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/render/Font.lua",
+        "src/render/HudTiles.lua"
+      ]
+    },
+    "love.graphics.getDPIScale": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/render/PixelCanvas.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "love.graphics.getDimensions": {
+      "occurrences": 10,
+      "files": 9,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/core/SafeArea.lua",
+        "src/render/Renderer.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/kit/Layout.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.getFont": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/render/Font.lua"
+      ]
+    },
+    "love.graphics.getPixelDimensions": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/core/SafeArea.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "love.graphics.getScissor": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua"
+      ]
+    },
+    "love.graphics.getShader": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/render/GbcPalette.lua",
+        "src/ui/gen2/Chrome.lua"
+      ]
+    },
+    "love.graphics.intersectScissor": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/battle/BattleState.lua"
+      ]
+    },
+    "love.graphics.isActive": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.graphics.line": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.newCanvas": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/render/PixelCanvas.lua",
+        "src/render/Renderer.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.newFont": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.newImage": {
+      "occurrences": 25,
+      "files": 12,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/import/CacheFs.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/Loader.lua",
+        "src/render/Assets.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/PartyMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.newMesh": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "love.graphics.newQuad": {
+      "occurrences": 87,
+      "files": 38,
+      "paths": [
+        "src/battle/AnimPlayer.lua",
+        "src/battle/BattleState.lua",
+        "src/render/Font.lua",
+        "src/render/HudTiles.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/Credits.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BattleAnimView.lua",
+        "src/ui/gen2/BattleHud.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/PackGfx.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/TileSheet.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.newShader": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "love.graphics.newSpriteBatch": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/render/TileRenderer.lua",
+        "src/ui/gen2/Diploma.lua"
+      ]
+    },
+    "love.graphics.origin": {
+      "occurrences": 8,
+      "files": 8,
+      "paths": [
+        "main.lua",
+        "src/core/Printer.lua",
+        "src/core/TouchControls.lua",
+        "src/import/LauncherView.lua",
+        "src/ui/PadCursor.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.polygon": {
+      "occurrences": 7,
+      "files": 2,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/ui/PadCursor.lua"
+      ]
+    },
+    "love.graphics.pop": {
+      "occurrences": 24,
+      "files": 15,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/core/Printer.lua",
+        "src/core/TouchControls.lua",
+        "src/import/LauncherView.lua",
+        "src/render/Pipelines.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.present": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.graphics.print": {
+      "occurrences": 10,
+      "files": 3,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/render/Font.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.printf": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.push": {
+      "occurrences": 24,
+      "files": 15,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/core/Printer.lua",
+        "src/core/TouchControls.lua",
+        "src/import/LauncherView.lua",
+        "src/render/Pipelines.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.rectangle": {
+      "occurrences": 114,
+      "files": 38,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/dev/Console.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/mods/ManagerState.lua",
+        "src/render/BattleTransition.lua",
+        "src/render/Font.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/render/Transition.lua",
+        "src/script/Commands.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/Diploma.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionRows.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/QuarantineReport.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BankOfMom.lua",
+        "src/ui/gen2/Chrome.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "love.graphics.rotate": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "love.graphics.scale": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/Printer.lua",
+        "src/render/Renderer.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "love.graphics.setCanvas": {
+      "occurrences": 16,
+      "files": 5,
+      "paths": [
+        "src/core/Printer.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/gen2/BorderFill.lua"
+      ]
+    },
+    "love.graphics.setColor": {
+      "occurrences": 396,
+      "files": 87,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua",
+        "src/battle/gen2/HpBar.lua",
+        "src/core/Printer.lua",
+        "src/core/TouchControls.lua",
+        "src/dev/Console.lua",
+        "src/import/LauncherView.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/mods/ManagerState.lua",
+        "src/render/BattleTransition.lua",
+        "src/render/Font.lua",
+        "src/render/GBCFX.lua",
+        "src/render/HudTiles.lua",
+        "src/render/Renderer.lua",
+        "src/render/TextBox.lua",
+        "src/render/TileRenderer.lua",
+        "src/render/Transition.lua",
+        "src/script/Commands.lua",
+        "src/ui/BindingsMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/ChoiceBox.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/Diploma.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/Menu.lua",
+        "src/ui/MoveLearnMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionRows.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PicBox.lua",
+        "src/ui/QuantityBox.lua",
+        "src/ui/QuarantineReport.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BankOfMom.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/CenterPcMenu.lua",
+        "src/ui/gen2/Chrome.lua",
+        "src/ui/gen2/ContestMenu.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/DayCareMenu.lua",
+        "src/ui/gen2/DecorationMenu.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/ElevatorMenu.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/HeldItemMenu.lua",
+        "src/ui/gen2/ItemPcMenu.lua",
+        "src/ui/gen2/MailMenu.lua",
+        "src/ui/gen2/MailRead.lua",
+        "src/ui/gen2/MailboxMenu.lua",
+        "src/ui/gen2/MartMenu.lua",
+        "src/ui/gen2/MoveDeleter.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PackMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/ui/gen2/SaveMenu.lua",
+        "src/ui/gen2/ScriptMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/TradeMenu.lua",
+        "src/ui/gen2/TrainerCard.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.graphics.setDefaultFilter": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.graphics.setFont": {
+      "occurrences": 10,
+      "files": 3,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/render/Font.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.setLineJoin": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "love.graphics.setLineWidth": {
+      "occurrences": 6,
+      "files": 3,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.graphics.setScissor": {
+      "occurrences": 21,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "love.graphics.setShader": {
+      "occurrences": 33,
+      "files": 8,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/import/LauncherView.lua",
+        "src/render/GBCFX.lua",
+        "src/render/GbcPalette.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/gen2/Chrome.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "love.graphics.translate": {
+      "occurrences": 13,
+      "files": 6,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/import/LauncherView.lua",
+        "src/render/Renderer.lua",
+        "src/ui/TradeAnim.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "love.image.newImageData": {
+      "occurrences": 15,
+      "files": 6,
+      "paths": [
+        "src/import/ImageWriter.lua",
+        "src/mods/AssetTransform.lua",
+        "src/render/Assets.lua",
+        "src/render/TileRenderer.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.joystick.getJoystickCount": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.keyboard.isDown": {
+      "occurrences": 7,
+      "files": 3,
+      "paths": [
+        "src/dev/Console.lua",
+        "src/import/RomImporter.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.keyboard.setTextInput": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/ui/kit/Kit.lua"
+      ]
+    },
+    "love.load": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "main.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "love.math.random": {
+      "occurrences": 38,
+      "files": 26,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/gen2/Battle.lua",
+        "src/battle/gen2/BerryJuice.lua",
+        "src/battle/gen2/Catching.lua",
+        "src/battle/gen2/Damage.lua",
+        "src/battle/gen2/Effects.lua",
+        "src/battle/gen2/Encounter.lua",
+        "src/battle/gen2/Mon.lua",
+        "src/core/gen2/Breeding.lua",
+        "src/core/gen2/BugContest.lua",
+        "src/core/gen2/Pokerus.lua",
+        "src/core/gen2/Roamers.lua",
+        "src/core/gen2/Save.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/gen2/CardFlip.lua",
+        "src/ui/gen2/SlotMachine.lua",
+        "src/ui/gen2/TitleState.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/NPC.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "love.mouse.getPosition": {
+      "occurrences": 6,
+      "files": 4,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.mouse.isCursorSupported": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.mouse.isDown": {
+      "occurrences": 6,
+      "files": 5,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua",
+        "src/import/LauncherView.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/kit/Kit.lua"
+      ]
+    },
+    "love.mouse.setCursor": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.quit": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.sound.newSoundData": {
+      "occurrences": 6,
+      "files": 3,
+      "paths": [
+        "src/core/ChipAudio.lua",
+        "src/core/ChipSynth.lua",
+        "src/core/Sound.lua"
+      ]
+    },
+    "love.system.createFile": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.getOS": {
+      "occurrences": 50,
+      "files": 21,
+      "paths": [
+        "main.lua",
+        "src/core/DiscordPresence.lua",
+        "src/core/FaithfulRes.lua",
+        "src/core/GamepadMap.lua",
+        "src/core/HostShell.lua",
+        "src/core/Orientation.lua",
+        "src/core/Performance.lua",
+        "src/core/Platform.lua",
+        "src/core/SaveData.lua",
+        "src/core/TouchControls.lua",
+        "src/core/VideoMode.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/import/LauncherSettings.lua",
+        "src/import/RomImporter.lua",
+        "src/net/Gen1Tls.lua",
+        "src/render/GBCFX.lua",
+        "src/render/Renderer.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/kit/Kit.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.system.getPickError": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.getPickedFile": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.getProcessorCount": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/Performance.lua"
+      ]
+    },
+    "love.system.httpDownload": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/HostShell.lua"
+      ]
+    },
+    "love.system.openURL": {
+      "occurrences": 7,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "love.system.pickFile": {
+      "occurrences": 3,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "love.system.restartApp": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/HostShell.lua"
+      ]
+    },
+    "love.system.syncHealthSteps": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Steps.lua"
+      ]
+    },
+    "love.thread": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/net/Fetch.lua"
+      ]
+    },
+    "love.thread.getChannel": {
+      "occurrences": 24,
+      "files": 10,
+      "paths": [
+        "src/core/ChipAudio.lua",
+        "src/core/chip_worker.lua",
+        "src/import/ExtractThread.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/Job.lua",
+        "src/mods/job_worker.lua",
+        "src/net/Fetch.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/Check.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.timer.getDelta": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/render/TileRenderer.lua"
+      ]
+    },
+    "love.timer.getTime": {
+      "occurrences": 26,
+      "files": 11,
+      "paths": [
+        "main.lua",
+        "src/core/DiscordPresence.lua",
+        "src/core/HostShell.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/import/ExtractThread.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/link/Net.lua",
+        "src/mods/Job.lua",
+        "src/render/GBCFX.lua",
+        "src/ui/kit/Kit.lua"
+      ]
+    },
+    "love.timer.sleep": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "main.lua",
+        "src/core/HostShell.lua",
+        "src/core/chip_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.timer.step": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.touch.getTouches": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "love.update": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.window.getDPIScale": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/Game2.lua"
+      ]
+    },
+    "love.window.getDesktopDimensions": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "love.window.getMode": {
+      "occurrences": 4,
+      "files": 3,
+      "paths": [
+        "main.lua",
+        "src/core/FaithfulRes.lua",
+        "src/core/NxDisplay.lua"
+      ]
+    },
+    "love.window.getSafeArea": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/SafeArea.lua"
+      ]
+    },
+    "love.window.setFullscreen": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/core/VideoMode.lua"
+      ]
+    },
+    "love.window.setMode": {
+      "occurrences": 5,
+      "files": 3,
+      "paths": [
+        "main.lua",
+        "src/core/FaithfulRes.lua",
+        "src/core/NxDisplay.lua"
+      ]
+    },
+    "love.window.setTitle": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    }
+  },
+  "callbacks": {
+    "conf": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "conf.lua"
+      ]
+    },
+    "draw": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "errorhandler": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "filedropped": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "focus": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "gamepadaxis": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "gamepadpressed": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "gamepadreleased": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "joystickadded": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "joystickaxis": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "joystickhat": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "joystickpressed": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "joystickreleased": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "joystickremoved": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "keypressed": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "keyreleased": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "load": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "lowmemory": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "mousemoved": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "mousepressed": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "mousereleased": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "quit": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "run": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "textinput": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "touchmoved": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "touchpressed": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "touchreleased": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "update": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "visible": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "wheelmoved": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    }
+  },
+  "requires": {
+    "%s": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "App": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "Kit": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "Party": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "bit": {
+      "occurrences": 11,
+      "files": 11,
+      "paths": [
+        "src/battle/gen2/AnimObjects.lua",
+        "src/battle/gen2/AnimRunner.lua",
+        "src/battle/gen2/BgEffects.lua",
+        "src/core/ChipSynth.lua",
+        "src/import/RomExtractor.lua",
+        "src/import/RomExtractorGen2.lua",
+        "src/save_convert/GenSave.lua",
+        "src/script/gen2/Movement.lua",
+        "src/ui/gen2/BattleAnimView.lua",
+        "src/ui/gen2/SpriteAnims.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "data.generated.*": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/CacheFs.lua"
+      ]
+    },
+    "data.generated.battle_anims": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/AnimPlayer.lua"
+      ]
+    },
+    "data.scripts.ai_classes": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/TrainerAI.lua"
+      ]
+    },
+    "data.scripts.gyms": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "data.scripts.init": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/ui/BagMenu.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "data.scripts.victories": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "ffi": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/HostShell.lua",
+        "src/net/Gen1Tls.lua"
+      ]
+    },
+    "io": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/mods/Loader.lua",
+        "src/mods/Sandbox.lua"
+      ]
+    },
+    "love.data": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.filesystem": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/core/chip_worker.lua",
+        "src/import/ExtractThread.lua",
+        "src/mods/job_worker.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.image": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/ExtractThread.lua"
+      ]
+    },
+    "love.math": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/ExtractThread.lua"
+      ]
+    },
+    "love.sound": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/chip_worker.lua"
+      ]
+    },
+    "love.system": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/import/ExtractThread.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.thread": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/core/chip_worker.lua",
+        "src/mods/job_worker.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "love.timer": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/core/chip_worker.lua",
+        "src/import/ExtractThread.lua",
+        "src/mods/job_worker.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "os": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "socket": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/link/Net.lua"
+      ]
+    },
+    "src.battle.BattleSafety": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Checkpoint.lua"
+      ]
+    },
+    "src.battle.BattleState": {
+      "occurrences": 16,
+      "files": 9,
+      "paths": [
+        "src/core/BattleCheckpoint.lua",
+        "src/core/Checkpoint.lua",
+        "src/core/Game.lua",
+        "src/link/LinkBattle.lua",
+        "src/render/PaletteFX.lua",
+        "src/script/Commands.lua",
+        "src/ui/BagMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/WorldAPI.lua"
+      ]
+    },
+    "src.battle.Catching": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/BattleState.lua"
+      ]
+    },
+    "src.battle.Damage": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleAPI.lua",
+        "src/battle/BattleState.lua",
+        "src/battle/TurnOrder.lua"
+      ]
+    },
+    "src.battle.EffectRegistry": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/BattleState.lua"
+      ]
+    },
+    "src.battle.Experience": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/pokemon/Evolution.lua",
+        "src/ui/BagMenu.lua"
+      ]
+    },
+    "src.battle.MoveEffects": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/EffectRegistry.lua"
+      ]
+    },
+    "src.battle.Status": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/Catching.lua",
+        "src/battle/Damage.lua",
+        "src/battle/StatusRegistry.lua",
+        "src/battle/TurnOrder.lua"
+      ]
+    },
+    "src.battle.StatusRegistry": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/battle/EffectRegistry.lua",
+        "src/battle/MoveEffects.lua"
+      ]
+    },
+    "src.battle.TrainerAI": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/BattleState.lua"
+      ]
+    },
+    "src.battle.TurnOrder": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/MoveEffects.lua",
+        "src/link/LinkBattle.lua"
+      ]
+    },
+    "src.battle.TypeChart": {
+      "occurrences": 9,
+      "files": 9,
+      "paths": [
+        "src/battle/BattleAPI.lua",
+        "src/battle/BattleState.lua",
+        "src/battle/Damage.lua",
+        "src/battle/MoveEffects.lua",
+        "src/battle/TrainerAI.lua",
+        "src/battle/WideBattle.lua",
+        "src/core/Game.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/SummaryMenu.lua"
+      ]
+    },
+    "src.battle.UIVisibility": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/render/TextBox.lua",
+        "src/ui/ChoiceBox.lua"
+      ]
+    },
+    "src.battle.WideBattle": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/BattleState.lua"
+      ]
+    },
+    "src.battle.gen2.Ai": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/gen2/Battle.lua"
+      ]
+    },
+    "src.battle.gen2.AnimObjects": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/battle/gen2/AnimRunner.lua",
+        "src/battle/gen2/BgEffects.lua"
+      ]
+    },
+    "src.battle.gen2.AnimRunner": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/BattleState.lua"
+      ]
+    },
+    "src.battle.gen2.Battle": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/ui/gen2/BattleState.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.battle.gen2.BattleMusic": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/ui/gen2/BattleState.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.battle.gen2.BerryJuice": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/BattleState.lua"
+      ]
+    },
+    "src.battle.gen2.BgEffects": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/gen2/AnimRunner.lua"
+      ]
+    },
+    "src.battle.gen2.Catching": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/BattleState.lua"
+      ]
+    },
+    "src.battle.gen2.Damage": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/battle/gen2/Ai.lua",
+        "src/battle/gen2/Battle.lua"
+      ]
+    },
+    "src.battle.gen2.Effects": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/gen2/Battle.lua"
+      ]
+    },
+    "src.battle.gen2.Encounter": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.battle.gen2.HpBar": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/ui/gen2/BattleHud.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua"
+      ]
+    },
+    "src.battle.gen2.Mon": {
+      "occurrences": 26,
+      "files": 20,
+      "paths": [
+        "src/battle/gen2/Battle.lua",
+        "src/core/Game2.lua",
+        "src/core/gen2/Breeding.lua",
+        "src/core/gen2/BugContest.lua",
+        "src/core/gen2/Evolution.lua",
+        "src/core/gen2/ItemEffects.lua",
+        "src/core/gen2/NpcTrade.lua",
+        "src/core/gen2/Roamers.lua",
+        "src/core/gen2/Save.lua",
+        "src/link/Protocol.lua",
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/PackMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PrizeMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/world/gen2/Trainers.lua",
+        "src/world/gen2/World.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.battle.gen2.Prize": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/gen2/Battle.lua"
+      ]
+    },
+    "src.battle.rulesets.gen1_faithful": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/BattleCheckpoint.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "src.battle.rulesets.modern_clean": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/BattleCheckpoint.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "src.core.BattleCheckpoint": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/Checkpoint.lua"
+      ]
+    },
+    "src.core.ChipAudio": {
+      "occurrences": 13,
+      "files": 3,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Music.lua",
+        "src/core/Sound.lua"
+      ]
+    },
+    "src.core.ChipSynth": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/core/ChipAudio.lua",
+        "src/core/Sound.lua"
+      ]
+    },
+    "src.core.Data": {
+      "occurrences": 10,
+      "files": 8,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/inventory/Bag.lua",
+        "src/mods/Loader.lua",
+        "src/pokemon/Pokemon.lua",
+        "src/render/HudTiles.lua",
+        "src/render/Pipelines.lua",
+        "src/script/MapScripts.lua"
+      ]
+    },
+    "src.core.DateTime": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.core.DiscordPresence": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua"
+      ]
+    },
+    "src.core.FaithfulRes": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/Game.lua",
+        "src/render/Renderer.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "src.core.FixedStep": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.FrameCap": {
+      "occurrences": 4,
+      "files": 3,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "src.core.Game": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "main.lua",
+        "src/render/PaletteFX.lua",
+        "src/world/OverworldController.lua",
+        "src/world/Player.lua"
+      ]
+    },
+    "src.core.Game2": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.core.GameSpeed": {
+      "occurrences": 9,
+      "files": 5,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/gen2/OptionsMenu.lua"
+      ]
+    },
+    "src.core.GameVersion": {
+      "occurrences": 44,
+      "files": 33,
+      "paths": [
+        "main.lua",
+        "src/battle/BattleState.lua",
+        "src/core/ChipAudio.lua",
+        "src/core/Data.lua",
+        "src/core/Game.lua",
+        "src/core/LaunchOptions.lua",
+        "src/core/NxAssetOverlay.lua",
+        "src/core/SaveData.lua",
+        "src/core/Sound.lua",
+        "src/core/gen2/Save.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/import/CacheFs.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/import/RomManifest.lua",
+        "src/import/SaveFileIO.lua",
+        "src/inventory/ItemEffects.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/ModProfile.lua",
+        "src/mods/ModTargets.lua",
+        "src/render/PaletteFX.lua",
+        "src/script/Commands.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/Credits.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/TitleState.lua",
+        "src/world/OverworldController.lua",
+        "src/world/PikachuFollower.lua",
+        "src/world/Player.lua"
+      ]
+    },
+    "src.core.GamepadMap": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Input.lua",
+        "src/import/RomImporter.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "src.core.HostDisplay": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.core.HostShell": {
+      "occurrences": 10,
+      "files": 6,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/ModIndex.lua",
+        "src/mods/ModUpdate.lua"
+      ]
+    },
+    "src.core.Input": {
+      "occurrences": 6,
+      "files": 5,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/core/TouchControls.lua",
+        "src/ui/BindingsMenu.lua"
+      ]
+    },
+    "src.core.LaunchOptions": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.core.Logger": {
+      "occurrences": 61,
+      "files": 58,
+      "paths": [
+        "src/battle/AnimPlayer.lua",
+        "src/battle/BattleState.lua",
+        "src/battle/Damage.lua",
+        "src/battle/MoveEffects.lua",
+        "src/core/ChipAudio.lua",
+        "src/core/Data.lua",
+        "src/core/DiscordPresence.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/core/Music.lua",
+        "src/core/Printer.lua",
+        "src/core/SaveData.lua",
+        "src/core/Sound.lua",
+        "src/core/Strings.lua",
+        "src/core/gen2/Save.lua",
+        "src/dev/HotReload.lua",
+        "src/import/RomImporter.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/Net.lua",
+        "src/mods/AssetTransform.lua",
+        "src/mods/Builtins.lua",
+        "src/mods/Events.lua",
+        "src/mods/Gen2Compat.lua",
+        "src/mods/Hooks.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/mods/Loader.lua",
+        "src/mods/Manifest.lua",
+        "src/mods/Merge.lua",
+        "src/pokemon/Growth.lua",
+        "src/render/Font.lua",
+        "src/render/Pipelines.lua",
+        "src/render/SecondScreen.lua",
+        "src/script/Commands.lua",
+        "src/script/MapScripts.lua",
+        "src/script/ScriptRunner.lua",
+        "src/script/Tokens.lua",
+        "src/script/gen2/Vm.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/Screens.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/ItemPcMenu.lua",
+        "src/ui/gen2/MainMenu.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/ui/gen2/StartMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/WorldAPI.lua",
+        "src/world/gen2/Follower.lua",
+        "src/world/gen2/Map.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.core.Music": {
+      "occurrences": 68,
+      "files": 36,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/core/Sound.lua",
+        "src/pokemon/Evolution.lua",
+        "src/script/Commands.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/Credits.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/CardFlip.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/GameFreakPresents.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/ui/gen2/MainMenu.lua",
+        "src/ui/gen2/MapRadio.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/ui/gen2/SlotMachine.lua",
+        "src/ui/gen2/TitleState.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/world/ElevatorShake.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.NxAssetOverlay": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.core.NxDisplay": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.core.Orientation": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "src.core.Performance": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/Game.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "src.core.Platform": {
+      "occurrences": 8,
+      "files": 8,
+      "paths": [
+        "main.lua",
+        "src/core/ChipAudio.lua",
+        "src/core/Game.lua",
+        "src/core/NxDisplay.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/import/CacheFs.lua",
+        "src/import/RomImporter.lua",
+        "src/update/Check.lua"
+      ]
+    },
+    "src.core.PlatformHooks": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.core.Printer": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/ui/BoxMenu.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/gen2/PokedexMenu.lua"
+      ]
+    },
+    "src.core.RomText": {
+      "occurrences": 10,
+      "files": 10,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/EffectRegistry.lua",
+        "src/battle/MoveEffects.lua",
+        "src/battle/Status.lua",
+        "src/battle/TrainerAI.lua",
+        "src/inventory/ItemEffects.lua",
+        "src/pokemon/Evolution.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/MoveLearnMenu.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.core.SafeArea": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/import/RomImporter.lua",
+        "src/ui/PadCursor.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/kit/Layout.lua"
+      ]
+    },
+    "src.core.SaveData": {
+      "occurrences": 42,
+      "files": 21,
+      "paths": [
+        "main.lua",
+        "src/core/Checkpoint.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/import/CacheFs.lua",
+        "src/import/LauncherSettings.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/import/SaveFileIO.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/ModIndex.lua",
+        "src/mods/ModProfile.lua",
+        "src/mods/ModUpdate.lua",
+        "src/mods/Storage.lua",
+        "src/script/Commands.lua",
+        "src/ui/QuarantineReport.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.core.SaveSerializer": {
+      "occurrences": 6,
+      "files": 6,
+      "paths": [
+        "src/core/Checkpoint.lua",
+        "src/core/SaveData.lua",
+        "src/core/gen2/Save.lua",
+        "src/mods/ModProfile.lua",
+        "src/mods/Storage.lua",
+        "src/script/ScriptRunner.lua"
+      ]
+    },
+    "src.core.Sound": {
+      "occurrences": 169,
+      "files": 66,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/inventory/ItemEffects.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/mods/ManagerState.lua",
+        "src/render/TextBox.lua",
+        "src/script/Commands.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/ChoiceBox.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/Menu.lua",
+        "src/ui/MoveLearnMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PlayerPC.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/ShopMenu.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/gen2/BankOfMom.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/CardFlip.lua",
+        "src/ui/gen2/CenterPcMenu.lua",
+        "src/ui/gen2/DayCareMenu.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/ElevatorMenu.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/GameFreakPresents.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/ItemPcMenu.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/ui/gen2/MartMenu.lua",
+        "src/ui/gen2/MoveDeleter.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/PrizeMenu.lua",
+        "src/ui/gen2/SaveMenu.lua",
+        "src/ui/gen2/ScriptMenu.lua",
+        "src/ui/gen2/SlotMachine.lua",
+        "src/ui/gen2/StartMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/TradeMenu.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/ElevatorShake.lua",
+        "src/world/OverworldController.lua",
+        "src/world/PikachuFollower.lua",
+        "src/world/WorldAPI.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.StateStack": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua"
+      ]
+    },
+    "src.core.Strings": {
+      "occurrences": 81,
+      "files": 81,
+      "paths": [
+        "main.lua",
+        "src/battle/BattleState.lua",
+        "src/battle/EffectRegistry.lua",
+        "src/battle/MoveEffects.lua",
+        "src/battle/Status.lua",
+        "src/battle/StatusRegistry.lua",
+        "src/battle/TrainerAI.lua",
+        "src/battle/WideBattle.lua",
+        "src/battle/gen2/Battle.lua",
+        "src/battle/gen2/Prize.lua",
+        "src/core/DiscordPresence.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/core/RomText.lua",
+        "src/core/gen2/Decorations.lua",
+        "src/core/gen2/MomShopping.lua",
+        "src/core/gen2/PhoneRing.lua",
+        "src/import/LauncherSettings.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/inventory/ItemEffects.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Net.lua",
+        "src/link/Tournament.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/ModUpdate.lua",
+        "src/pokemon/Evolution.lua",
+        "src/script/Commands.lua",
+        "src/script/MapScripts.lua",
+        "src/script/ScriptRunner.lua",
+        "src/script/gen2/Specials.lua",
+        "src/script/gen2/Vm.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/BindingsMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/ChoiceBox.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/Diploma.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/MoveLearnMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PlayerPC.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/QuarantineReport.lua",
+        "src/ui/ShopMenu.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/CenterPcMenu.lua",
+        "src/ui/gen2/DecorationMenu.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/ElevatorMenu.lua",
+        "src/ui/gen2/InitClock.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/PackMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/ui/gen2/PhotoStudio.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/TradeMenu.lua",
+        "src/ui/gen2/UnownPrinter.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/Bike.lua",
+        "src/world/gen2/CmdQueue.lua",
+        "src/world/gen2/FieldMoves.lua",
+        "src/world/gen2/HiddenItems.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.Timing": {
+      "occurrences": 8,
+      "files": 8,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/EffectRegistry.lua",
+        "src/battle/WideBattle.lua",
+        "src/core/BattleCheckpoint.lua",
+        "src/render/TextBox.lua",
+        "src/render/Transition.lua",
+        "src/ui/ChoiceBox.lua",
+        "src/ui/IntroMovie.lua"
+      ]
+    },
+    "src.core.TouchControls": {
+      "occurrences": 9,
+      "files": 5,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/TouchControlsEditor.lua",
+        "src/ui/gen2/OptionsMenu.lua"
+      ]
+    },
+    "src.core.Version": {
+      "occurrences": 14,
+      "files": 14,
+      "paths": [
+        "main.lua",
+        "src/core/Checkpoint.lua",
+        "src/core/SaveData.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/link/Handshake.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/Manifest.lua",
+        "src/mods/ModTargets.lua",
+        "src/mods/Storage.lua",
+        "src/update/Boot.lua",
+        "src/update/PatchNotes.lua"
+      ]
+    },
+    "src.core.VideoMode": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/Game.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "src.core.gen2.Apricorns": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/script/gen2/Specials.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.AutoInput": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/core/gen2/CatchTutorial.lua"
+      ]
+    },
+    "src.core.gen2.Boxes": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/core/gen2/BugContest.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.Breeding": {
+      "occurrences": 13,
+      "files": 5,
+      "paths": [
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/DayCareMenu.lua",
+        "src/ui/gen2/MailboxMenu.lua",
+        "src/world/gen2/StepEvents.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.BugContest": {
+      "occurrences": 6,
+      "files": 6,
+      "paths": [
+        "src/core/gen2/Apricorns.lua",
+        "src/core/gen2/Pokerus.lua",
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/ContestMenu.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.CatchTutorial": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/ui/gen2/BattleState.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.Clock": {
+      "occurrences": 7,
+      "files": 6,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/InitClock.lua",
+        "src/ui/gen2/MainMenu.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.CoinCase": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/ui/gen2/CardFlip.lua",
+        "src/ui/gen2/PrizeMenu.lua",
+        "src/ui/gen2/ScriptMenu.lua",
+        "src/ui/gen2/SlotMachine.lua"
+      ]
+    },
+    "src.core.gen2.CommonText": {
+      "occurrences": 7,
+      "files": 7,
+      "paths": [
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/DayCareMenu.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/HeldItemMenu.lua",
+        "src/ui/gen2/MailMenu.lua",
+        "src/ui/gen2/MailboxMenu.lua",
+        "src/ui/gen2/MartMenu.lua"
+      ]
+    },
+    "src.core.gen2.Decorations": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/core/gen2/MomShopping.lua",
+        "src/ui/gen2/DecorationMenu.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.Evolution": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/core/gen2/ItemEffects.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/EvolutionAnim.lua"
+      ]
+    },
+    "src.core.gen2.HallOfFame": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/gen2/Save.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.Happiness": {
+      "occurrences": 7,
+      "files": 7,
+      "paths": [
+        "src/battle/gen2/Battle.lua",
+        "src/core/Game2.lua",
+        "src/core/gen2/ItemEffects.lua",
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/PackMenu.lua",
+        "src/world/gen2/StepEvents.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.ItemEffects": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/ui/gen2/BattleState.lua"
+      ]
+    },
+    "src.core.gen2.MagnetTrain": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/MagnetTrainRide.lua"
+      ]
+    },
+    "src.core.gen2.Mail": {
+      "occurrences": 13,
+      "files": 13,
+      "paths": [
+        "src/core/gen2/Boxes.lua",
+        "src/core/gen2/Breeding.lua",
+        "src/core/gen2/NpcTrade.lua",
+        "src/core/gen2/Save.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/HeldItemMenu.lua",
+        "src/ui/gen2/MailCompose.lua",
+        "src/ui/gen2/MailMenu.lua",
+        "src/ui/gen2/MailRead.lua",
+        "src/ui/gen2/MailboxMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.MomShopping": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/gen2/Save.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.Nests": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/ui/gen2/MapRadio.lua",
+        "src/ui/gen2/PokedexMenu.lua"
+      ]
+    },
+    "src.core.gen2.NpcTrade": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/TradeMenu.lua"
+      ]
+    },
+    "src.core.gen2.Phone": {
+      "occurrences": 15,
+      "files": 6,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/script/gen2/CallAsm.lua",
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/world/gen2/StepEvents.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.PhoneRing": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "src/ui/gen2/CallerBox.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.Pokerus": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/battle/gen2/Battle.lua",
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.Roamers": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/battle/gen2/Battle.lua",
+        "src/core/gen2/Nests.lua",
+        "src/script/gen2/Specials.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.Save": {
+      "occurrences": 9,
+      "files": 9,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/core/gen2/Boxes.lua",
+        "src/core/gen2/CoinCase.lua",
+        "src/ui/gen2/MainMenu.lua",
+        "src/ui/gen2/MartMenu.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PrizeMenu.lua",
+        "src/ui/gen2/SaveMenu.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.core.gen2.TradeAnim": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/TradeAnim.lua"
+      ]
+    },
+    "src.core.gen2.Unown": {
+      "occurrences": 11,
+      "files": 11,
+      "paths": [
+        "src/battle/gen2/Mon.lua",
+        "src/link/Protocol.lua",
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/UnownPrinter.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.debug.SwitchDiagnostics": {
+      "occurrences": 4,
+      "files": 2,
+      "paths": [
+        "main.lua",
+        "src/core/Game.lua"
+      ]
+    },
+    "src.dev.Console": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/Game.lua"
+      ]
+    },
+    "src.dev.HotReload": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/Game.lua",
+        "src/dev/Console.lua"
+      ]
+    },
+    "src.import.CacheFs": {
+      "occurrences": 22,
+      "files": 10,
+      "paths": [
+        "main.lua",
+        "src/core/Data.lua",
+        "src/import/ExtractThread.lua",
+        "src/import/ImageWriter.lua",
+        "src/import/LuaWriter.lua",
+        "src/import/RomExtractor.lua",
+        "src/import/RomExtractorGen2.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/RequiredImports.lua"
+      ]
+    },
+    "src.import.ImageWriter": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/import/RomExtractor.lua",
+        "src/import/RomExtractorGen2.lua",
+        "src/mods/AssetTransform.lua"
+      ]
+    },
+    "src.import.LauncherSettings": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "src.import.LauncherView": {
+      "occurrences": 14,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "src.import.LuaWriter": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/RomExtractor.lua",
+        "src/import/RomExtractorGen2.lua"
+      ]
+    },
+    "src.import.Rom": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/RomExtractor.lua",
+        "src/import/RomExtractorGen2.lua"
+      ]
+    },
+    "src.import.RomExtractor": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/ExtractThread.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "src.import.RomExtractorGen2": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/ExtractThread.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "src.import.RomImporter": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.import.RomManifest": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/ExtractThread.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "src.import.SaveFileIO": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "src.inventory.Badges": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/core/SaveData.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TrainerCard.lua"
+      ]
+    },
+    "src.inventory.Bag": {
+      "occurrences": 19,
+      "files": 15,
+      "paths": [
+        "src/core/SaveData.lua",
+        "src/dev/Console.lua",
+        "src/script/Commands.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/PlayerPC.lua",
+        "src/ui/ShopMenu.lua",
+        "src/ui/gen2/HeldItemMenu.lua",
+        "src/ui/gen2/ItemPcMenu.lua",
+        "src/ui/gen2/MailMenu.lua",
+        "src/ui/gen2/MailboxMenu.lua",
+        "src/ui/gen2/MartMenu.lua",
+        "src/ui/gen2/PackMenu.lua",
+        "src/ui/gen2/PrizeMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.inventory.ItemEffects": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/battle/BattleAPI.lua",
+        "src/ui/BagMenu.lua"
+      ]
+    },
+    "src.link.CodeEntry": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua"
+      ]
+    },
+    "src.link.Fingerprint": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/link/Handshake.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/Protocol.lua"
+      ]
+    },
+    "src.link.Handshake": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Protocol.lua",
+        "src/link/Tournament.lua"
+      ]
+    },
+    "src.link.Json": {
+      "occurrences": 13,
+      "files": 13,
+      "paths": [
+        "src/core/DiscordPresence.lua",
+        "src/import/RomManifest.lua",
+        "src/link/Net.lua",
+        "src/mods/Job.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ModIndex.lua",
+        "src/mods/ModUpdate.lua",
+        "src/mods/Net.lua",
+        "src/mods/Steps.lua",
+        "src/mods/job_worker.lua",
+        "src/update/Check.lua",
+        "src/update/PatchNotes.lua"
+      ]
+    },
+    "src.link.LinkBattle": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua"
+      ]
+    },
+    "src.link.LinkState": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/StartMenu.lua"
+      ]
+    },
+    "src.link.Net": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua"
+      ]
+    },
+    "src.link.Protocol": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua"
+      ]
+    },
+    "src.link.Session": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua"
+      ]
+    },
+    "src.link.Tournament": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/link/LinkState.lua"
+      ]
+    },
+    "src.mods.AssetTransform": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Builtins": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Events": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Gen2Compat": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/mods/Loader.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.mods.Hooks": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Job": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.LauncherMods": {
+      "occurrences": 19,
+      "files": 3,
+      "paths": [
+        "main.lua",
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "src.mods.LegacyCompat": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Loader": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/dev/HotReload.lua"
+      ]
+    },
+    "src.mods.ManagerState": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LauncherMods.lua"
+      ]
+    },
+    "src.mods.Manifest": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/mods/LauncherMods.lua",
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Merge": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/mods/Builtins.lua",
+        "src/mods/Loader.lua",
+        "src/mods/Registry.lua",
+        "src/mods/Schemas.lua",
+        "src/ui/Theme.lua"
+      ]
+    },
+    "src.mods.ModIndex": {
+      "occurrences": 14,
+      "files": 3,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LauncherMods.lua"
+      ]
+    },
+    "src.mods.ModProfile": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/mods/LauncherMods.lua",
+        "src/mods/ManagerState.lua"
+      ]
+    },
+    "src.mods.ModTargets": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/mods/LauncherMods.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/Manifest.lua"
+      ]
+    },
+    "src.mods.ModUpdate": {
+      "occurrences": 20,
+      "files": 4,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/ModIndex.lua"
+      ]
+    },
+    "src.mods.Net": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Registry": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.RequiredImports": {
+      "occurrences": 7,
+      "files": 3,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Runtime": {
+      "occurrences": 89,
+      "files": 88,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/Damage.lua",
+        "src/battle/EffectRegistry.lua",
+        "src/battle/Experience.lua",
+        "src/battle/StatusRegistry.lua",
+        "src/battle/UIVisibility.lua",
+        "src/battle/WideBattle.lua",
+        "src/battle/gen2/Battle.lua",
+        "src/battle/gen2/Catching.lua",
+        "src/battle/gen2/Mon.lua",
+        "src/core/Checkpoint.lua",
+        "src/core/DiscordPresence.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/core/Music.lua",
+        "src/core/PlatformHooks.lua",
+        "src/core/SaveData.lua",
+        "src/core/Sound.lua",
+        "src/core/StateStack.lua",
+        "src/core/gen2/Apricorns.lua",
+        "src/core/gen2/Breeding.lua",
+        "src/core/gen2/BugContest.lua",
+        "src/core/gen2/Clock.lua",
+        "src/core/gen2/Evolution.lua",
+        "src/core/gen2/Happiness.lua",
+        "src/core/gen2/Mail.lua",
+        "src/core/gen2/Phone.lua",
+        "src/core/gen2/PhoneRing.lua",
+        "src/core/gen2/Pokerus.lua",
+        "src/core/gen2/Roamers.lua",
+        "src/core/gen2/Save.lua",
+        "src/core/gen2/Unown.lua",
+        "src/dev/Console.lua",
+        "src/dev/HotReload.lua",
+        "src/link/Fingerprint.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Protocol.lua",
+        "src/link/Tournament.lua",
+        "src/mods/AssetTransform.lua",
+        "src/mods/Gen2Compat.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/Sandbox.lua",
+        "src/pokemon/Evolution.lua",
+        "src/pokemon/Sprites.lua",
+        "src/render/BattleTransition.lua",
+        "src/render/Pipelines.lua",
+        "src/render/Renderer.lua",
+        "src/render/Zoom.lua",
+        "src/script/Flags.lua",
+        "src/script/MapScripts.lua",
+        "src/script/ScriptRunner.lua",
+        "src/script/gen2/Vm.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/CopyrightSplash.lua",
+        "src/ui/gen2/GameFreakPresents.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/ItemPcMenu.lua",
+        "src/ui/gen2/MainMenu.lua",
+        "src/ui/gen2/MapRadio.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/ui/gen2/ScriptMenu.lua",
+        "src/ui/gen2/StartMenu.lua",
+        "src/ui/gen2/TitleState.lua",
+        "src/world/Collision.lua",
+        "src/world/OverworldController.lua",
+        "src/world/Player.lua",
+        "src/world/Warp.lua",
+        "src/world/WorldAPI.lua",
+        "src/world/gen2/Events.lua",
+        "src/world/gen2/FieldMoves.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/Player.lua",
+        "src/world/gen2/World.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.mods.SafePath": {
+      "occurrences": 7,
+      "files": 7,
+      "paths": [
+        "src/mods/AssetTransform.lua",
+        "src/mods/Job.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/Manifest.lua",
+        "src/mods/Sandbox.lua"
+      ]
+    },
+    "src.mods.Sandbox": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/mods/Loader.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/job_worker.lua"
+      ]
+    },
+    "src.mods.Schemas": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/link/Handshake.lua",
+        "src/mods/Builtins.lua",
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.mods.Semver": {
+      "occurrences": 7,
+      "files": 7,
+      "paths": [
+        "src/core/SaveData.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/Loader.lua",
+        "src/mods/ManagerState.lua",
+        "src/mods/Manifest.lua",
+        "src/mods/ModTargets.lua",
+        "src/mods/ModUpdate.lua"
+      ]
+    },
+    "src.mods.Steps": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.net.Fetch": {
+      "occurrences": 7,
+      "files": 4,
+      "paths": [
+        "src/import/RomImporter.lua",
+        "src/mods/ModIndex.lua",
+        "src/mods/ModUpdate.lua",
+        "src/mods/Net.lua"
+      ]
+    },
+    "src.net.Gen1Tls": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.pokemon.Boxes": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/SaveData.lua",
+        "src/dev/Console.lua",
+        "src/script/Commands.lua",
+        "src/ui/BoxMenu.lua"
+      ]
+    },
+    "src.pokemon.Evolution": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "src/link/LinkState.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/EvolutionState.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.pokemon.Growth": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/battle/Experience.lua",
+        "src/inventory/ItemEffects.lua",
+        "src/link/Protocol.lua",
+        "src/pokemon/Pokemon.lua",
+        "src/ui/SummaryMenu.lua"
+      ]
+    },
+    "src.pokemon.Party": {
+      "occurrences": 7,
+      "files": 7,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/dev/Console.lua",
+        "src/link/LinkBattle.lua",
+        "src/script/Commands.lua",
+        "src/ui/BoxMenu.lua",
+        "src/world/WorldAPI.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.pokemon.Pokemon": {
+      "occurrences": 10,
+      "files": 5,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/dev/Console.lua",
+        "src/script/Commands.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.pokemon.Sprites": {
+      "occurrences": 26,
+      "files": 17,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/world/PikachuFollower.lua"
+      ]
+    },
+    "src.pokemon.Stats": {
+      "occurrences": 12,
+      "files": 11,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/Damage.lua",
+        "src/battle/Experience.lua",
+        "src/battle/TurnOrder.lua",
+        "src/core/SaveData.lua",
+        "src/inventory/ItemEffects.lua",
+        "src/link/Protocol.lua",
+        "src/pokemon/Evolution.lua",
+        "src/pokemon/Pokemon.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/SummaryMenu.lua"
+      ]
+    },
+    "src.render.Assets": {
+      "occurrences": 49,
+      "files": 48,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/ChipAudio.lua",
+        "src/core/Sound.lua",
+        "src/debug/SwitchDiagnostics.lua",
+        "src/dev/HotReload.lua",
+        "src/mods/Loader.lua",
+        "src/pokemon/Sprites.lua",
+        "src/render/Font.lua",
+        "src/render/HudTiles.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/Screens.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/gen2/BattleAnimView.lua",
+        "src/ui/gen2/BattleHud.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/CopyrightSplash.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/ui/gen2/MailCompose.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/PackGfx.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PhotoStudio.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TileSheet.lua",
+        "src/ui/gen2/TitleState.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/UnownPrinter.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/MapLoader.lua",
+        "src/world/MapOverview.lua",
+        "src/world/OverworldController.lua",
+        "src/world/PikachuFollower.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.render.BattleTransition": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/render/Renderer.lua",
+        "src/world/OverworldController.lua",
+        "src/world/WorldAPI.lua"
+      ]
+    },
+    "src.render.Camera": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.render.Font": {
+      "occurrences": 58,
+      "files": 56,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/dev/Console.lua",
+        "src/link/LinkBattle.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/mods/ManagerState.lua",
+        "src/render/TextBox.lua",
+        "src/ui/BindingsMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/ChoiceBox.lua",
+        "src/ui/Credits.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/Diploma.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/Menu.lua",
+        "src/ui/MoveLearnMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionRows.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PicBox.lua",
+        "src/ui/QuantityBox.lua",
+        "src/ui/QuarantineReport.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/Theme.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/Chrome.lua",
+        "src/ui/gen2/CopyrightSplash.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/MailCompose.lua",
+        "src/ui/gen2/NamePick.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PhotoStudio.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.render.GBCFX": {
+      "occurrences": 10,
+      "files": 5,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/render/Renderer.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/gen2/OptionsMenu.lua"
+      ]
+    },
+    "src.render.GbcPalette": {
+      "occurrences": 39,
+      "files": 35,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/script/gen2/Specials.lua",
+        "src/ui/gen2/BattleAnimView.lua",
+        "src/ui/gen2/BattleHud.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/Chrome.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/GameFreakPresents.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/ui/gen2/NamePick.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PackGfx.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PhotoStudio.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TileSheet.lua",
+        "src/ui/gen2/TitleState.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/TrainerCard.lua",
+        "src/ui/gen2/UnownPrinter.lua",
+        "src/ui/gen2/UnownPuzzle.lua",
+        "src/world/gen2/BorderFill.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.render.HudTiles": {
+      "occurrences": 6,
+      "files": 4,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/SummaryMenu.lua"
+      ]
+    },
+    "src.render.PaletteFX": {
+      "occurrences": 55,
+      "files": 28,
+      "paths": [
+        "src/battle/AnimPlayer.lua",
+        "src/battle/BattleState.lua",
+        "src/battle/WideBattle.lua",
+        "src/core/Game.lua",
+        "src/mods/ManagerState.lua",
+        "src/render/HudTiles.lua",
+        "src/render/Renderer.lua",
+        "src/render/SpriteRenderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/ui/DexEntryMenu.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/IntroMovie.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/SlotMachine.lua",
+        "src/ui/SummaryMenu.lua",
+        "src/ui/SurfingMinigame.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/TownMap.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/TrainerCard.lua",
+        "src/ui/YellowIntro.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.render.Pipelines": {
+      "occurrences": 13,
+      "files": 6,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/render/Renderer.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.render.PixelCanvas": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua",
+        "src/world/gen2/BorderFill.lua"
+      ]
+    },
+    "src.render.Renderer": {
+      "occurrences": 5,
+      "files": 5,
+      "paths": [
+        "src/core/Game.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/Theme.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.render.SecondScreen": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "src.render.SpriteRenderer": {
+      "occurrences": 8,
+      "files": 8,
+      "paths": [
+        "src/render/PaletteFX.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/world/NPC.lua",
+        "src/world/OverworldController.lua",
+        "src/world/Player.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/Player.lua"
+      ]
+    },
+    "src.render.TextBox": {
+      "occurrences": 42,
+      "files": 23,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game2.lua",
+        "src/link/LinkState.lua",
+        "src/link/Tournament.lua",
+        "src/pokemon/Evolution.lua",
+        "src/script/Commands.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/EvolutionState.lua",
+        "src/ui/HallOfFame.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/MoveLearnMenu.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PicBox.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/TradeAnim.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/TradeMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.render.TileRenderer": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "src/core/Game.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/world/MapLoader.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.render.Tilt": {
+      "occurrences": 19,
+      "files": 9,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/render/Pipelines.lua",
+        "src/render/Renderer.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.render.Transition": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/render/BattleTransition.lua",
+        "src/ui/PartyMenu.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.render.Zoom": {
+      "occurrences": 16,
+      "files": 9,
+      "paths": [
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/render/Pipelines.lua",
+        "src/render/Renderer.lua",
+        "src/render/Tilt.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.save_convert.GenSave": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/save_convert/SaveConvert.lua"
+      ]
+    },
+    "src.save_convert.MapContext": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/save_convert/GenSave.lua"
+      ]
+    },
+    "src.save_convert.SaveConvert": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/SaveFileIO.lua"
+      ]
+    },
+    "src.script.Commands": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/script/ScriptRunner.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.script.Flags": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/inventory/ItemEffects.lua",
+        "src/script/Commands.lua"
+      ]
+    },
+    "src.script.MapScripts": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.script.ScriptRunner": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/core/BattleCheckpoint.lua",
+        "src/script/MapScripts.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.script.Tokens": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/render/TextBox.lua"
+      ]
+    },
+    "src.script.gen2.CallAsm": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.script.gen2.Movement": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/script/gen2/Vm.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/World.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.script.gen2.Opcodes": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/import/RomExtractorGen2.lua",
+        "src/script/gen2/Vm.lua"
+      ]
+    },
+    "src.script.gen2.Specials": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/script/gen2/Vm.lua",
+        "src/ui/gen2/CenterPcMenu.lua"
+      ]
+    },
+    "src.script.gen2.Vm": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.ui.": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/BattleState.lua"
+      ]
+    },
+    "src.ui.ChoiceBox": {
+      "occurrences": 9,
+      "files": 8,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/render/TextBox.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/BindingsMenu.lua",
+        "src/ui/PlayerPC.lua",
+        "src/ui/ShopMenu.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.ui.DexEntryMenu": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/PokedexMenu.lua"
+      ]
+    },
+    "src.ui.IntroMovie": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/YellowIntro.lua"
+      ]
+    },
+    "src.ui.ListMenu": {
+      "occurrences": 8,
+      "files": 8,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/BindingsMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/FlyMenu.lua",
+        "src/ui/PlayerPC.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/ShopMenu.lua"
+      ]
+    },
+    "src.ui.Menu": {
+      "occurrences": 12,
+      "files": 11,
+      "paths": [
+        "src/script/Commands.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/PlayerPC.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/ShopMenu.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/TitleState.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.ui.ModUI": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Loader.lua"
+      ]
+    },
+    "src.ui.NamingScreen": {
+      "occurrences": 3,
+      "files": 1,
+      "paths": [
+        "src/mods/ManagerState.lua"
+      ]
+    },
+    "src.ui.OptionRows": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/mods/ManagerState.lua",
+        "src/ui/OptionsMenu.lua"
+      ]
+    },
+    "src.ui.PadCursor": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/TouchControlsEditor.lua"
+      ]
+    },
+    "src.ui.PartyMenu": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/ui/PokemonIcon.lua",
+        "src/ui/TradeAnim.lua"
+      ]
+    },
+    "src.ui.QuantityBox": {
+      "occurrences": 5,
+      "files": 4,
+      "paths": [
+        "src/mods/ManagerState.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/PlayerPC.lua",
+        "src/ui/ShopMenu.lua"
+      ]
+    },
+    "src.ui.Screens": {
+      "occurrences": 37,
+      "files": 33,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/core/Game.lua",
+        "src/core/Game2.lua",
+        "src/link/LinkState.lua",
+        "src/pokemon/Evolution.lua",
+        "src/script/Commands.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/ModUI.lua",
+        "src/ui/OakSpeech.lua",
+        "src/ui/OptionsMenu.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/PokedexMenu.lua",
+        "src/ui/StartMenu.lua",
+        "src/ui/TitleState.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/CenterPcMenu.lua",
+        "src/ui/gen2/DayCareMenu.lua",
+        "src/ui/gen2/HeldItemMenu.lua",
+        "src/ui/gen2/ItemPcMenu.lua",
+        "src/ui/gen2/MailMenu.lua",
+        "src/ui/gen2/MailboxMenu.lua",
+        "src/ui/gen2/MartMenu.lua",
+        "src/ui/gen2/NamePick.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PackMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/ui/gen2/TradeMenu.lua",
+        "src/world/OverworldController.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.ui.Theme": {
+      "occurrences": 10,
+      "files": 10,
+      "paths": [
+        "src/core/Game.lua",
+        "src/mods/ManagerState.lua",
+        "src/render/TextBox.lua",
+        "src/ui/ChoiceBox.lua",
+        "src/ui/ListMenu.lua",
+        "src/ui/Menu.lua",
+        "src/ui/NamingScreen.lua",
+        "src/ui/OptionRows.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/QuarantineReport.lua"
+      ]
+    },
+    "src.ui.TouchControlsEditor": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "main.lua",
+        "src/ui/gen2/OptionsMenu.lua"
+      ]
+    },
+    "src.ui.gen2.BattleAnimView": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/BattleState.lua"
+      ]
+    },
+    "src.ui.gen2.BattleHud": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua"
+      ]
+    },
+    "src.ui.gen2.CallerBox": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/script/gen2/CallAsm.lua"
+      ]
+    },
+    "src.ui.gen2.Chrome": {
+      "occurrences": 53,
+      "files": 53,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/ui/gen2/BankOfMom.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/CallerBox.lua",
+        "src/ui/gen2/CardFlip.lua",
+        "src/ui/gen2/CenterPcMenu.lua",
+        "src/ui/gen2/ContestMenu.lua",
+        "src/ui/gen2/CopyrightSplash.lua",
+        "src/ui/gen2/Credits.lua",
+        "src/ui/gen2/DayCareMenu.lua",
+        "src/ui/gen2/DecorationMenu.lua",
+        "src/ui/gen2/Diploma.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/ElevatorMenu.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/GameFreakPresents.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/HeldItemMenu.lua",
+        "src/ui/gen2/InitClock.lua",
+        "src/ui/gen2/ItemPcMenu.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/ui/gen2/MailCompose.lua",
+        "src/ui/gen2/MailMenu.lua",
+        "src/ui/gen2/MailRead.lua",
+        "src/ui/gen2/MailboxMenu.lua",
+        "src/ui/gen2/MainMenu.lua",
+        "src/ui/gen2/MapRadio.lua",
+        "src/ui/gen2/MartMenu.lua",
+        "src/ui/gen2/MoveDeleter.lua",
+        "src/ui/gen2/NamePick.lua",
+        "src/ui/gen2/NamingScreen.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/OptionsMenu.lua",
+        "src/ui/gen2/PackMenu.lua",
+        "src/ui/gen2/PartyMenu.lua",
+        "src/ui/gen2/PcMenu.lua",
+        "src/ui/gen2/PhotoStudio.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/ui/gen2/PrizeMenu.lua",
+        "src/ui/gen2/SaveMenu.lua",
+        "src/ui/gen2/ScriptMenu.lua",
+        "src/ui/gen2/SlotMachine.lua",
+        "src/ui/gen2/StartMenu.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TitleState.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/TradeMenu.lua",
+        "src/ui/gen2/TrainerCard.lua",
+        "src/ui/gen2/UnownPrinter.lua",
+        "src/ui/gen2/UnownPuzzle.lua"
+      ]
+    },
+    "src.ui.gen2.NamePick": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/OakSpeech.lua"
+      ]
+    },
+    "src.ui.gen2.PackGfx": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/PackMenu.lua"
+      ]
+    },
+    "src.ui.gen2.Pokegear": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/MapRadio.lua"
+      ]
+    },
+    "src.ui.gen2.SpriteAnims": {
+      "occurrences": 7,
+      "files": 7,
+      "paths": [
+        "src/battle/gen2/AnimObjects.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/GameFreakPresents.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/TitleState.lua"
+      ]
+    },
+    "src.ui.gen2.TileSheet": {
+      "occurrences": 7,
+      "files": 7,
+      "paths": [
+        "src/ui/gen2/GameFreakPresents.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/ui/gen2/SlotMachine.lua",
+        "src/ui/gen2/TrainerCard.lua",
+        "src/ui/gen2/UnownPuzzle.lua"
+      ]
+    },
+    "src.ui.gen2.TradeMenu": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/TradeAnim.lua"
+      ]
+    },
+    "src.ui.kit.Kit": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/ui/kit/Layout.lua",
+        "src/ui/kit/Loader.lua"
+      ]
+    },
+    "src.ui.kit.Layout": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "src.ui.kit.Loader": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "src.ui.kit.Theme": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/import/LauncherView.lua",
+        "src/ui/kit/Kit.lua",
+        "src/ui/kit/Layout.lua",
+        "src/ui/kit/Loader.lua"
+      ]
+    },
+    "src.update.Boot": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "src.update.PatchNotes": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherView.lua"
+      ]
+    },
+    "src.update.Semver": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/update/Boot.lua",
+        "src/update/check_worker.lua"
+      ]
+    },
+    "src.world.Collision": {
+      "occurrences": 7,
+      "files": 6,
+      "paths": [
+        "src/script/Commands.lua",
+        "src/world/NPC.lua",
+        "src/world/OverworldController.lua",
+        "src/world/PikachuFollower.lua",
+        "src/world/Player.lua",
+        "src/world/Warp.lua"
+      ]
+    },
+    "src.world.Encounter": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.world.FieldDefaults": {
+      "occurrences": 7,
+      "files": 7,
+      "paths": [
+        "src/core/Data.lua",
+        "src/pokemon/Sprites.lua",
+        "src/ui/PartyMenu.lua",
+        "src/world/Encounter.lua",
+        "src/world/OverworldController.lua",
+        "src/world/Player.lua",
+        "src/world/WorldAPI.lua"
+      ]
+    },
+    "src.world.Map": {
+      "occurrences": 8,
+      "files": 7,
+      "paths": [
+        "src/mods/Gen2Compat.lua",
+        "src/ui/FlyMenu.lua",
+        "src/ui/PartyMenu.lua",
+        "src/ui/TownMap.lua",
+        "src/world/MapLoader.lua",
+        "src/world/OverworldController.lua",
+        "src/world/WorldAPI.lua"
+      ]
+    },
+    "src.world.MapLoader": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/render/PaletteFX.lua",
+        "src/world/OverworldController.lua",
+        "src/world/WorldAPI.lua"
+      ]
+    },
+    "src.world.MapOverview": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/world/WorldAPI.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.world.NPC": {
+      "occurrences": 4,
+      "files": 4,
+      "paths": [
+        "src/script/Commands.lua",
+        "src/world/OverworldController.lua",
+        "src/world/PikachuFollower.lua",
+        "src/world/gen2/Npc.lua"
+      ]
+    },
+    "src.world.OverworldController": {
+      "occurrences": 3,
+      "files": 2,
+      "paths": [
+        "src/core/Game.lua",
+        "src/dev/Console.lua"
+      ]
+    },
+    "src.world.PikachuFollower": {
+      "occurrences": 24,
+      "files": 8,
+      "paths": [
+        "src/battle/BattleState.lua",
+        "src/inventory/ItemEffects.lua",
+        "src/link/Protocol.lua",
+        "src/script/Commands.lua",
+        "src/ui/BagMenu.lua",
+        "src/ui/BoxMenu.lua",
+        "src/ui/PartyMenu.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.world.Player": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.world.SsAnneLayout": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/Data.lua"
+      ]
+    },
+    "src.world.Warp": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.world.gen2.Bike": {
+      "occurrences": 3,
+      "files": 3,
+      "paths": [
+        "src/world/gen2/StepEvents.lua",
+        "src/world/gen2/World.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.world.gen2.BorderFill": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.CmdQueue": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.Events": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.FieldMoves": {
+      "occurrences": 6,
+      "files": 4,
+      "paths": [
+        "src/script/gen2/CallAsm.lua",
+        "src/world/gen2/Bike.lua",
+        "src/world/gen2/World.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.world.gen2.Follower": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.HiddenItems": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/world/gen2/World.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.world.gen2.Map": {
+      "occurrences": 6,
+      "files": 6,
+      "paths": [
+        "src/script/gen2/CallAsm.lua",
+        "src/world/gen2/Follower.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/Player.lua",
+        "src/world/gen2/Trainers.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.Npc": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/world/gen2/Follower.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.Palettes": {
+      "occurrences": 21,
+      "files": 21,
+      "paths": [
+        "src/core/Game2.lua",
+        "src/ui/gen2/BattleAnimView.lua",
+        "src/ui/gen2/BattleState.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/BoxMenu.lua",
+        "src/ui/gen2/EggHatchAnim.lua",
+        "src/ui/gen2/EvolutionAnim.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/HallOfFame.lua",
+        "src/ui/gen2/InitClock.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/ui/gen2/NamePick.lua",
+        "src/ui/gen2/OakSpeech.lua",
+        "src/ui/gen2/PhotoStudio.lua",
+        "src/ui/gen2/PokedexMenu.lua",
+        "src/ui/gen2/Pokegear.lua",
+        "src/ui/gen2/SummaryMenu.lua",
+        "src/ui/gen2/TradeAnim.lua",
+        "src/ui/gen2/UnownPrinter.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.Permissions": {
+      "occurrences": 6,
+      "files": 6,
+      "paths": [
+        "src/world/gen2/Bike.lua",
+        "src/world/gen2/FieldMoves.lua",
+        "src/world/gen2/Map.lua",
+        "src/world/gen2/Npc.lua",
+        "src/world/gen2/World.lua",
+        "src/world/gen2/WorldAPI.lua"
+      ]
+    },
+    "src.world.gen2.Player": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.StepEvents": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/script/gen2/CallAsm.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.TrainerHouse": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/script/gen2/Specials.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.Trainers": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/world/gen2/TrainerHouse.lua",
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.world.gen2.World": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/Game2.lua"
+      ]
+    },
+    "tests.autopilot": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    }
+  },
+  "guardedRequires": {
+    "App": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "main.lua"
+      ]
+    },
+    "data.generated.": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/Data.lua",
+        "src/world/gen2/MapPreview.lua"
+      ]
+    },
+    "data.palettes_gbc": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/render/PaletteFX.lua"
+      ]
+    },
+    "data.palettes_yellow": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/render/PaletteFX.lua"
+      ]
+    },
+    "enet": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/link/Net.lua"
+      ]
+    },
+    "ffi": {
+      "occurrences": 11,
+      "files": 7,
+      "paths": [
+        "src/core/DiscordPresence.lua",
+        "src/core/HostShell.lua",
+        "src/core/NxDisplay.lua",
+        "src/core/Orientation.lua",
+        "src/import/CacheFs.lua",
+        "src/net/Gen1Tls.lua",
+        "src/render/SecondScreen.lua"
+      ]
+    },
+    "io": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/Sandbox.lua"
+      ]
+    },
+    "socket": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/link/Net.lua"
+      ]
+    },
+    "src.battle.AnimPlayer": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/battle/BattleState.lua"
+      ]
+    },
+    "src.core.FaithfulRes": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.core.FrameCap": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.core.Game": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/Music.lua",
+        "src/render/Renderer.lua"
+      ]
+    },
+    "src.core.GameSpeed": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.core.GameVersion": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/TouchControls.lua",
+        "src/save_convert/SaveConvert.lua"
+      ]
+    },
+    "src.core.LaunchOptions": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    },
+    "src.core.Orientation": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.core.Performance": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.core.Platform": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/update/Boot.lua"
+      ]
+    },
+    "src.core.SaveData": {
+      "occurrences": 7,
+      "files": 3,
+      "paths": [
+        "src/core/LaunchOptions.lua",
+        "src/core/gen2/Save.lua",
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "src.core.Sound": {
+      "occurrences": 3,
+      "files": 1,
+      "paths": [
+        "src/ui/gen2/SummaryMenu.lua"
+      ]
+    },
+    "src.core.TouchControls": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.core.Version": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "conf.lua"
+      ]
+    },
+    "src.core.VideoMode": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.core.gen2.Breeding": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/gen2/HallOfFame.lua"
+      ]
+    },
+    "src.import.CacheFs": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/save_convert/SaveConvert.lua"
+      ]
+    },
+    "src.link.Json": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.link.LinkState": {
+      "occurrences": 2,
+      "files": 2,
+      "paths": [
+        "src/core/DiscordPresence.lua",
+        "src/world/OverworldController.lua"
+      ]
+    },
+    "src.link.Tournament": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/core/DiscordPresence.lua"
+      ]
+    },
+    "src.mods.Manifest": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.mods.ModIndex": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LauncherMods.lua"
+      ]
+    },
+    "src.mods.Semver": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/ModIndex.lua"
+      ]
+    },
+    "src.mods.Storage": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/mods/LegacyCompat.lua"
+      ]
+    },
+    "src.render.GBCFX": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.render.GbcPalette": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.render.PaletteFX": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.render.TileRenderer": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.render.Tilt": {
+      "occurrences": 2,
+      "files": 1,
+      "paths": [
+        "src/import/LauncherSettings.lua"
+      ]
+    },
+    "src.render.UiFont": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/ui/kit/Theme.lua"
+      ]
+    },
+    "src.ui.Theme": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/dev/HotReload.lua"
+      ]
+    },
+    "src.ui.gen2.Pokegear": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/world/gen2/World.lua"
+      ]
+    },
+    "src.update.Check": {
+      "occurrences": 1,
+      "files": 1,
+      "paths": [
+        "src/import/RomImporter.lua"
+      ]
+    }
+  },
+  "lua51Symbols": {
+    "loadstring": {
+      "occurrences": 9,
+      "files": 7,
+      "paths": [
+        "src/core/Data.lua",
+        "src/dev/Console.lua",
+        "src/mods/AssetTransform.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/Sandbox.lua",
+        "src/save_convert/SaveConvert.lua",
+        "src/update/Boot.lua"
+      ]
+    },
+    "setfenv": {
+      "occurrences": 6,
+      "files": 4,
+      "paths": [
+        "src/dev/Console.lua",
+        "src/mods/AssetTransform.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/Sandbox.lua"
+      ]
+    },
+    "unpack": {
+      "occurrences": 16,
+      "files": 6,
+      "paths": [
+        "src/import/RomExtractor.lua",
+        "src/mods/Hooks.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/render/GbcPalette.lua",
+        "src/script/ScriptRunner.lua",
+        "src/script/gen2/Vm.lua"
+      ]
+    }
+  },
+  "dynamicLoveIndexFiles": [
+    "src/core/NxAssetOverlay.lua",
+    "src/mods/Sandbox.lua",
+    "src/update/Boot.lua"
+  ],
+  "probePriority": {
+    "love.audio.newQueueableSource": {
+      "occurrences": 2,
+      "files": [
+        "src/core/ChipAudio.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.audio.newSource": {
+      "occurrences": 7,
+      "files": [
+        "src/core/ChipAudio.lua",
+        "src/core/Music.lua",
+        "src/core/Sound.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.filesystem.mount": {
+      "occurrences": 11,
+      "files": [
+        "src/import/CacheFs.lua",
+        "src/mods/LauncherMods.lua",
+        "src/mods/LegacyCompat.lua",
+        "src/update/Boot.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.filesystem.unmount": {
+      "occurrences": 4,
+      "files": [
+        "src/import/CacheFs.lua",
+        "src/update/Boot.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.graphics.newCanvas": {
+      "occurrences": 15,
+      "files": [
+        "src/core/Game2.lua",
+        "src/core/Printer.lua",
+        "src/render/Pipelines.lua",
+        "src/render/PixelCanvas.lua",
+        "src/render/Renderer.lua",
+        "src/ui/YellowIntro.lua",
+        "src/ui/gen2/BattleTransition.lua",
+        "src/ui/gen2/GoldSilverIntro.lua",
+        "src/ui/gen2/MagnetTrainRide.lua",
+        "src/world/gen2/MapPreview.lua",
+        "src/world/gen2/World.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.graphics.newShader": {
+      "occurrences": 12,
+      "files": [
+        "src/import/LauncherView.lua",
+        "src/render/GBCFX.lua",
+        "src/render/GbcPalette.lua",
+        "src/render/PaletteFX.lua",
+        "src/render/Renderer.lua",
+        "src/render/TileRenderer.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.joystick.getJoystickCount": {
+      "occurrences": 6,
+      "files": [
+        "src/core/TouchControls.lua",
+        "src/import/RomImporter.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.sound.newSoundData": {
+      "occurrences": 7,
+      "files": [
+        "src/core/ChipAudio.lua",
+        "src/core/ChipSynth.lua",
+        "src/core/Sound.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.system.openURL": {
+      "occurrences": 11,
+      "files": [
+        "src/import/LauncherView.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/LegacyCompat.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.thread.getChannel": {
+      "occurrences": 26,
+      "files": [
+        "src/core/ChipAudio.lua",
+        "src/core/HostShell.lua",
+        "src/core/chip_worker.lua",
+        "src/import/ExtractThread.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/Job.lua",
+        "src/mods/job_worker.lua",
+        "src/net/Fetch.lua",
+        "src/net/fetch_worker.lua",
+        "src/update/Check.lua",
+        "src/update/check_worker.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.thread.newThread": {
+      "occurrences": 10,
+      "files": [
+        "src/core/ChipAudio.lua",
+        "src/import/RomImporter.lua",
+        "src/mods/Job.lua",
+        "src/net/Fetch.lua",
+        "src/update/Check.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.touch.getPosition": {
+      "occurrences": 5,
+      "files": [
+        "src/import/RomImporter.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    },
+    "love.touch.getTouches": {
+      "occurrences": 3,
+      "files": [
+        "src/import/RomImporter.lua",
+        "src/ui/TouchControlsEditor.lua"
+      ],
+      "reason": "web/runtime behavior requires execution evidence"
+    }
+  },
+  "totals": {
+    "distinctLoveMembers": 126,
+    "loveMemberReferences": 1867,
+    "distinctLoveCalls": 105,
+    "loveCallOccurrences": 1490,
+    "distinctCallbacks": 30,
+    "distinctRequires": 270,
+    "distinctGuardedRequires": 41,
+    "priorityMembers": 13
+  }
+}

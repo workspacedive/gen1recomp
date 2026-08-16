@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gen1recomp.local/schemas/host-message.schema.json",
+  "title": "Gen1Recomp Host Protocol Message",
+  "$defs": {
+    "requestId": { "type": "string", "minLength": 1 },
+    "method": {
+      "enum": [
+        "host.capabilities",
+        "storage.read",
+        "storage.write",
+        "storage.list",
+        "storage.remove",
+        "import.request",
+        "crypto.digest",
+        "network.fetch",
+        "haptics.play",
+        "lifecycle.ready",
+        "lifecycle.suspend",
+        "lifecycle.resume",
+        "lifecycle.exit",
+        "diagnostics.emit",
+        "diagnostics.export"
+      ]
+    },
+    "event": {
+      "enum": [
+        "lifecycle.suspend",
+        "lifecycle.resume",
+        "lifecycle.memoryWarning",
+        "input.changed",
+        "host.capabilitiesChanged"
+      ]
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "retryable"],
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_request",
+            "unsupported_protocol",
+            "unsupported_method",
+            "capability_denied",
+            "not_found",
+            "integrity_failed",
+            "cancelled",
+            "unavailable",
+            "internal"
+          ]
+        },
+        "message": { "type": "string", "minLength": 1 },
+        "retryable": { "type": "boolean" },
+        "details": true
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "protocol", "requestId", "method", "payload"],
+      "properties": {
+        "kind": { "const": "request" },
+        "protocol": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/requestId" },
+        "method": { "$ref": "#/$defs/method" },
+        "payload": true
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "protocol", "requestId", "ok", "payload"],
+      "properties": {
+        "kind": { "const": "response" },
+        "protocol": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/requestId" },
+        "ok": { "const": true },
+        "payload": true
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "protocol", "requestId", "ok", "error"],
+      "properties": {
+        "kind": { "const": "response" },
+        "protocol": { "const": 1 },
+        "requestId": { "$ref": "#/$defs/requestId" },
+        "ok": { "const": false },
+        "error": { "$ref": "#/$defs/error" }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "protocol", "event", "payload"],
+      "properties": {
+        "kind": { "const": "event" },
+        "protocol": { "const": 1 },
+        "event": { "$ref": "#/$defs/event" },
+        "payload": true
+      }
+    }
+  ]
+}

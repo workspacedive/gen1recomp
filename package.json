@@ -1,0 +1,26 @@
+{
+  "name": "gen1recomp-scripting-architecture",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Architecture contracts and forensic tooling for a Gen1Recomp Scripting/iOS feasibility port.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:contracts": "tsc --outDir .tmp/ts",
+    "test:contracts": "npm run build:contracts && node --test .tmp/ts/tests/contracts/*.test.js .tmp/ts/tests/updates/*.test.js",
+    "test:tools": "python3 -m unittest discover -s tests/tools -p 'test_*.py'",
+    "verify": "npm run typecheck && npm run test:contracts && npm run test:tools"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "@types/semver": "7.8.0",
+    "ajv": "8.18.0",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "semver": "7.8.5"
+  }
+}

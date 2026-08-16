@@ -1,0 +1,13 @@
+# Downloaded upstream research. Reproduce with tools/sync_references.py.
+# Some collections have no asserted license, so they are never committed.
+research/downloads/
+
+# Local Scripting CLI synchronization and generated declarations/config.
+.scripting-cache/
+node_modules/
+
+# Local tooling output.
+.tmp/
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gen1recomp.local/schemas/activation-journal.schema.json",
+  "title": "Gen1Recomp Component Activation Journal",
+  "$defs": {
+    "activationSet": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "transactionId", "phase", "previous", "candidate"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "transactionId": { "type": "string", "minLength": 1 },
+    "phase": {
+      "enum": [
+        "prepared",
+        "verified",
+        "tested",
+        "activating",
+        "activated",
+        "rollingBack"
+      ]
+    },
+    "previous": { "$ref": "#/$defs/activationSet" },
+    "candidate": { "$ref": "#/$defs/activationSet" }
+  }
+}

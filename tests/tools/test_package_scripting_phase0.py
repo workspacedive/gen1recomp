@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 import zipfile
@@ -12,6 +13,12 @@ SPEC = importlib.util.spec_from_file_location("package_scripting_phase0_probe", 
 assert SPEC is not None and SPEC.loader is not None
 package_probe = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(package_probe)
+sys.modules["package_scripting_phase0_probe"] = package_probe
+PREVIEW_PATH = ROOT / "tools" / "package_scripting_preview.py"
+PREVIEW_SPEC = importlib.util.spec_from_file_location("package_scripting_preview", PREVIEW_PATH)
+assert PREVIEW_SPEC is not None and PREVIEW_SPEC.loader is not None
+package_preview = importlib.util.module_from_spec(PREVIEW_SPEC)
+PREVIEW_SPEC.loader.exec_module(package_preview)
 
 
 class PackageScriptingPhase0Tests(unittest.TestCase):
@@ -54,6 +61,16 @@ class PackageScriptingPhase0Tests(unittest.TestCase):
                     root / "launcher",
                     root / "lock.json",
                 )
+            with self.assertRaisesRegex(RuntimeError, "missing"):
+                package_preview.collect_entries(
+                    root / "source",
+                    root / "compiled",
+                    root / "launcher",
+                    root / "lock.json",
+                )
+
+    def test_preview_output_name_matches_project_identity(self) -> None:
+        self.assertEqual(package_preview.DEFAULT_OUTPUT.name, "Gen1Recomp Preview.scripting")
 
 
 if __name__ == "__main__":

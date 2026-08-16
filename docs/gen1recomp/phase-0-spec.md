@@ -29,7 +29,7 @@ Determine a technically honest path that can run the original hand-written Gen1R
 - Scripting explicitly does **not** allow scripts to execute arbitrary bundled native binaries.
 - No Scripting documentation was found for embedding a native library, Lua/LuaJIT, LÖVE, Metal/CAMetalLayer, GameController, raw multi-touch identifiers, PCM output, `os_signpost`, or process CPU/memory metrics.
 - The ROM-free source-built v0.1.96 launcher payload now boots outside Scripting through pinned love.js plus the BitOp overlay: a visible launcher rendered with no page/runtime/request errors. The compiled runtime/persistence/browser-surface stack also passed boot, suspend/flush, resume and stop/flush/dispose.
-- A deterministic 7,600,008-byte, 19-entry, ROM-free `Gen1Recomp Phase 0.scripting` probe now packages that exact stack and passes after extraction in Chromium. It has not yet compiled or run in Scripting and is not the product application.
+- Deterministic 19-entry ROM-free `.scripting` artifacts now package that exact stack: an automatic Phase-0 lifecycle gate and an interactive 0.1.0 Preview with Scripting-console bridging, diagnostics and controlled shutdown. Both pass after extraction in Chromium; neither has yet imported or run in Scripting and the Preview is not the complete product application.
 
 ## Feasibility hypotheses
 

@@ -1,4 +1,4 @@
-# Scripting physical-device runs 001–009
+# Scripting physical-device runs 001–010
 
 - **Evidence level:** user-reported installed Scripting host on a physical iOS device
 - **Scripting app version/build:** not yet supplied
@@ -91,6 +91,14 @@ Native 0.4.3 adds a narrow love.js host guard. It lazily wraps the shared Source
 
 The independent Scripting `t.__type__` component-build event recurred again at 02:13:15 and remains open.
 
+## Run 010 — Native 0.4.3 reaches Yellow title and audible music
+
+Native 0.4.3 passed the queue-loop regression physically. The device reached the Pokémon Yellow title/intro and music was audible immediately, which is the expected timing. No generic pre-window modal or queue-loop exception was reported. This is the first physical evidence of canonical extraction through game/title rendering plus audible audio in the Scripting-hosted runtime.
+
+No on-screen touch controls appeared. Attribution is architectural rather than cosmetic: upstream `TouchControls.wantsOverlay()` enables controls only when `love.system.getOS()` is Android/iOS (or `POKEPORT_TOUCH=1`), while love.js reports `Web` inside WKWebView. Native 0.4.4 sets the upstream-documented `POKEPORT_TOUCH=1` only for game sessions. LÖVE's own touch callbacks remain the input transport; no second JavaScript control implementation or emulator input layer is introduced.
+
+Native 0.4.4 also keeps the stable native card tree mounted during WebView presentation instead of rendering a transient `working` branch immediately before the modal. That exact transition preceded every recurring Scripting `t.__type__` component-build event and is removed as the smallest evidence-driven UI correction.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -105,6 +113,7 @@ The independent Scripting `t.__type__` component-build event recurred again at 0
 10. Native 0.4.1 installs the parity-tested `bit` compatibility module into `_G.bit` before upstream main loads, matching the LuaJIT global used by ROM picture extraction and several Gen 2 paths.
 11. Native 0.4.2 captures the WebView console and alert channel into bounded native logs, because love.js overwrites `Module.warn` and otherwise hides the actionable pre-window exception from Scripting.
 12. Native 0.4.3 guards only invalid queueable-source `setLooping` calls in the love.js adapter, preserves static looping, and suppresses only the already-logged generic pre-window modal.
+13. Native 0.4.4 sets upstream's documented `POKEPORT_TOUCH=1` for Web game sessions and avoids the Scripting modal-adjacent transient UI rebuild associated with `t.__type__`.
 
 ## Replacement artifact
 
@@ -119,4 +128,4 @@ The independent Scripting `t.__type__` component-build event recurred again at 0
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's Settings-to-runtime diagnostic passed as Run 006. Runs 007–009 then proved canonical Yellow identity/retention/extraction, corrected global BitOp, generated-data loading, game loading, display setup, and exact queueable-audio failure attribution. Native 0.4.3 is the immediate queue-loop regression candidate. Completed game-window initialization, cache-ready transition, App Group relaunch durability, direct boot, saves, input/audio/fidelity, manual system catalog/package installation, and updated-generation materialization remain untested. Native 0.3.0's component/mod/GitHub operations also still require physical validation.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–010 proved canonical Yellow identity/retention/extraction, generated-data/game/display loading, corrected BitOp and queue-audio compatibility, visible Yellow title/intro, and immediate audible music. Native 0.4.4 is the immediate touch/UI-transition candidate. Cache-ready card state, App Group relaunch durability, direct boot, actual touch behavior, saves, broader audio/fidelity, manual system packages, updated generations, Native 0.3.0 component/mod/GitHub operations, and the wider iPhone/iPad matrix remain untested.

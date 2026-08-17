@@ -210,7 +210,9 @@ function GamesScreen({
   }, [])
 
   const launch = async (game: InstalledGame, previous: GameLibrarySnapshot) => {
-    setState({ status: "working", previous, stage: "launching", gameTitle: game.title })
+    // Keep the stable card tree mounted while WebViewController presents.
+    // Rebuilding the conditional working tree immediately before modal
+    // presentation triggered Scripting 3.2.0's intermittent t.__type__ error.
     try {
       const result = await runtime.launch(game)
       onSnapshot(result.snapshot)
@@ -260,7 +262,10 @@ function GamesScreen({
     } finally {
       DocumentPicker.stopAcessingSecurityScopedResources()
     }
-    if (imported != null) await launch(imported, importedSnapshot)
+    if (imported != null) {
+      setState({ status: "content", snapshot: importedSnapshot })
+      await launch(imported, importedSnapshot)
+    }
   }
 
   const remove = async (game: InstalledGame) => {

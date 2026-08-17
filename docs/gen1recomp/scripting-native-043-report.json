@@ -39,8 +39,17 @@
   },
   "automatedVerification": {
     "typescriptTargets": 2,
-    "nodeTests": { "total": 104, "passed": 104, "failed": 0 },
-    "pythonTests": { "total": 33, "passed": 30, "skipped": 3, "failed": 0 },
+    "nodeTests": {
+      "total": 104,
+      "passed": 104,
+      "failed": 0
+    },
+    "pythonTests": {
+      "total": 33,
+      "passed": 30,
+      "skipped": 3,
+      "failed": 0
+    },
     "npmAuditVulnerabilities": 0,
     "deterministicRebuild": "pass",
     "zipIntegrity": "pass",
@@ -50,8 +59,14 @@
     "runtime": "pinned love.js 11.5",
     "guardInstalled": true,
     "bitGlobalInstalled": true,
-    "queueSetLoopingTrue": { "threw": false, "isLooping": false },
-    "staticSetLoopingTrue": { "threw": false, "isLooping": true }
+    "queueSetLoopingTrue": {
+      "threw": false,
+      "isLooping": false
+    },
+    "staticSetLoopingTrue": {
+      "threw": false,
+      "isLooping": true
+    }
   },
   "browserVerification": {
     "browser": "Chromium 149.0.7827.0 headless with SwiftShader",
@@ -69,17 +84,32 @@
     }
   },
   "physicalVerificationRequired": [
-    "tap Finish Import on the retained canonical Yellow card",
-    "pass queueable-audio initialization and reach game window/title",
-    "transition card to Ready to Play",
-    "validate audio behavior rather than only absence of exception",
-    "then validate direct boot, relaunch cache, saves, lifecycle, input, fidelity and device matrix",
-    "isolate recurring Scripting t.__type__ native component-build error"
+    "run Native 0.4.4 and verify visible D-pad/A/B/Start/Select",
+    "verify multi-touch movement plus A/B and release/reset behavior",
+    "report native card Ready state after dismissal",
+    "validate direct boot, relaunch cache, saves, lifecycle, broader audio/fidelity and device matrix",
+    "confirm recurring Scripting t.__type__ event is removed by stable-tree presentation"
   ],
   "copyrightBoundary": {
     "romIncluded": false,
     "romDerivedCacheIncluded": false,
     "saveIncluded": false,
     "userRomCopiedToRepositoryOrArtifact": false
+  },
+  "physicalVerification": {
+    "status": "passed-title-intro-and-audible-music",
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "yellowTitleIntroVisible": true,
+    "musicAudible": true,
+    "musicTiming": "immediate, expected",
+    "queueLoopFailureRecurred": false,
+    "genericAlertModalRecurred": false,
+    "touchControlsVisible": false,
+    "touchAttribution": "love.js reports Web; upstream mobile overlay requires Android/iOS or POKEPORT_TOUCH=1",
+    "nextCandidate": "Native 0.4.4 / 044 with documented touch override"
   }
 }

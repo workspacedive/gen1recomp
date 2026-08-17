@@ -82,6 +82,10 @@ Native 0.4.0's first canonical Yellow run reached `Rom.decompressPic` and failed
 
 After the BitOp correction, Native 0.4.2 physically completed Yellow generated-data loading and entered game/display setup, then LÖVE raised `Queueable Sources can not be looped.` LÖVE's OpenAL `Source::setLooping` rejects every queue source. Upstream chip music already implements loop behavior in `ChipSynth`, but the generic music/source path still attempts Source looping. Native 0.4.3 therefore installs a lazy adapter guard on the shared Source method table when the first queue source is constructed: queue `setLooping` becomes a no-op, while static/stream calls delegate unchanged. A pinned love.js probe verified both branches. No upstream or LÖVE source is patched.
 
+## Physical touch-host correction
+
+Native 0.4.3 physically reached Yellow title/intro with audible music but no overlay. Upstream `TouchControls.wantsOverlay()` keys on Android/iOS or `POKEPORT_TOUCH=1`; love.js correctly reports its own host as `Web`, even inside iOS WKWebView. Native 0.4.4 sets that existing override in the game-session environment. Rendering, hit testing, multi-touch ownership, Input overlay sources and reset behavior remain upstream code and LÖVE touch callbacks—no browser-side controller or emulator key layer is added.
+
 ## Evidence limits
 
 Chromium 149 proves the ROM-free session, the transfer/unlink ordering with a noncopyrighted all-zero fixture, and selective IDBFS maintenance. It cannot prove native Scripting file access, WebKit IDBFS durability, canonical extraction, title fidelity, saves, input, audio, or physical lifecycle behavior. Those remain the Native 0.4.0 device plan.

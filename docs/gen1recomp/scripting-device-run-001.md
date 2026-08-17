@@ -107,6 +107,16 @@ The stable-card-tree change did **not** eliminate `t.__type__`; that causal hypo
 
 Physical presentation exposed three new defects: controls were too small, the rendered game showed less field and occupied much less of the screen than the native `.ipa`, and strong stutter was visible during Oak's introduction, name selection, early overworld movement and battles. Native 0.4.5 therefore does not stretch the 160×144 composition. Instead, a host `conf.lua` adapter gives upstream Renderer a backing surface with the WebView's aspect ratio, keeps the constrained game edge at integer scale 4 on phones or 5 on tablets, leaves the long edge available to upstream expanded-world drawing, and uniformly scales that bounded surface into the WebView. The same geometry materially enlarges upstream controls without a second input implementation. Ten-second raw RAF-gap and Long Tasks telemetry windows were added so performance work can follow device measurements rather than symptom-based guesses.
 
+## Run 012 — Native 0.4.5 exposes pre-presentation geometry and periodic stalls
+
+Native 0.4.5 still appeared as a centered square and still stuttered. Its new logs made both outcomes actionable. Scripting evaluated the game bundle before presenting the WebView, at which point `window.innerWidth` and `innerHeight` were both `1`. The adapter therefore selected a square `640×640` backing surface; once presented, CSS uniformly contained that surface as `440×440`. LÖVE correctly reported the resulting `640×640`, fit scale 4. The implementation did not stretch, but it faithfully preserved the wrong placeholder aspect. Native 0.4.6 now accepts the host session first, waits for a non-placeholder viewport that remains stable for 250 ms after presentation, and only then loads the bundle and creates the LÖVE window.
+
+Eleven raw timing windows confirmed severe main-thread starvation. Representative steady windows reported p95 intervals of 81, 105, 75, 91 and 96 ms, with 39–52 intervals over 50 ms per ten seconds. One gameplay window rendered only 153 animation frames in 10.044 seconds and reached a 2.3-second maximum gap. WebKit accepted a Long Tasks observer but emitted zero entries even across those multi-second RAF gaps, so RAF remains the trustworthy symptom metric.
+
+The steady 4–5 gaps over 50 ms per second closely match the no-worker music path consuming one 8192-sample block every `8192 / 44100 = 0.186` seconds, or 5.38 times per second. Native 0.4.6 preserves the same ChipSynth programs, 44.1 kHz sample rate and sequential PCM state but changes queue hand-off to 1024-sample slices. A minimal two-line integration seam makes the no-worker fill one slice per update instead of three; 128 queued slices retain about three seconds of tolerance. Direct aggregate music-synthesis and per-effect CPU logs were added to confirm attribution physically. This is scheduling granularity, not lower sample rate, skipped audio or reduced game fidelity.
+
+The independent `t.__type__` event again occurred five seconds before successful runtime startup and remains open.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -124,6 +134,8 @@ Physical presentation exposed three new defects: controls were too small, the re
 13. Native 0.4.4 sets upstream's documented `POKEPORT_TOUCH=1` for Web game sessions; its stable-tree experiment did not eliminate the separate Scripting `t.__type__` event.
 14. Native 0.4.5 supplies an aspect-matched, fill-rate-bounded WebView backing surface through a generated host `conf.lua` wrapper, preserving upstream rendering and expanded-world behavior instead of stretching the game image.
 15. Native 0.4.5 records WebView/CSS/backing/DPR geometry plus raw ten-second animation-frame gap distributions and Long Tasks data when the browser exposes it.
+16. Native 0.4.6 defers bundle/LÖVE startup until Scripting's presented WebView reports stable visible geometry, instead of consuming the pre-presentation `1×1` placeholder.
+17. Native 0.4.6 slices unchanged synchronous 44.1 kHz music synthesis from 8192 to 1024 samples per hand-off, fills one per update, and logs direct music/effect synthesis CPU cost.
 
 ## Replacement artifact
 
@@ -138,4 +150,4 @@ Physical presentation exposed three new defects: controls were too small, the re
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's diagnostic passed as Run 006. Runs 007–011 proved canonical Yellow identity/retention/extraction, generated-data/game/display loading, corrected BitOp and queue-audio compatibility, title/audio, and ordinary touch-controlled play into Oak's Lab. Native 0.4.5 is the adaptive-viewport and performance-measurement candidate. Cache-ready card state, App Group relaunch durability, direct boot, exact multi-touch/release behavior, saves, corrected measured stutter, broader audio/fidelity, manual system packages, updated generations, Native 0.3.0 component/mod/GitHub operations, and the wider iPhone/iPad matrix remain untested.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–012 proved canonical Yellow identity/retention/extraction, game/audio startup, ordinary touch play, the pre-presentation `1×1` viewport cause, and severe periodic main-thread stalls. Native 0.4.6 is the visible-viewport and bounded-audio-slice correction candidate. Cache-ready card state, App Group relaunch durability, direct boot, exact multi-touch/release behavior, saves, residual one-shot synthesis stalls, broader fidelity, manual system packages, updated generations, component/mod/GitHub operations, and the wider iPhone/iPad matrix remain untested.

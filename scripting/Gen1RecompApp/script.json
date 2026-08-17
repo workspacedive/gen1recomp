@@ -1,8 +1,8 @@
 {
-  "name": "Gen1Recomp Native 045",
+  "name": "Gen1Recomp Native 046",
   "icon": "gamecontroller.fill",
   "color": "systemYellow",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "entry": "index.tsx",
   "runInApp": false,
   "description": "Native Gen1Recomp library with verified ROM extraction, iOS touch controls, audio compatibility, updates, and manual mods."

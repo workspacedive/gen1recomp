@@ -28,6 +28,10 @@ class LauncherPreparationTests(unittest.TestCase):
                 archive.writestr("main.lua", b"return true")
                 archive.writestr("conf.lua", b"function love.conf(t) t.window.width = 1024 end")
                 archive.writestr("src/core.lua", b"return {}")
+                archive.writestr(
+                    "src/core/ChipAudio.lua",
+                    b"local MUSIC_FILL_INITIAL = 4\nlocal MUSIC_FILL_PER_CALL = 3\n",
+                )
             report = launcher.add_compatibility_overlay(source, output)
             with zipfile.ZipFile(output) as archive:
                 self.assertEqual(archive.read("gen1recomp-main.lua"), b"return true")
@@ -42,7 +46,15 @@ class LauncherPreparationTests(unittest.TestCase):
                     archive.read("love-web-bootstrap.lua"),
                     (ROOT / "compatibility" / "love-web" / "bootstrap.lua").read_bytes(),
                 )
-            self.assertEqual(report["entries"], 7)
+                self.assertEqual(
+                    archive.read("love-web-audio.lua"),
+                    (ROOT / "compatibility" / "love-web" / "audio.lua").read_bytes(),
+                )
+                self.assertIn(
+                    b"ChipSynth.MUSIC_FILL_PER_CALL or 3",
+                    archive.read("src/core/ChipAudio.lua"),
+                )
+            self.assertEqual(report["entries"], 9)
 
     def test_overlay_rejects_traversal_and_existing_bit_module(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -57,6 +69,13 @@ class LauncherPreparationTests(unittest.TestCase):
                 archive.writestr("main.lua", b"")
                 archive.writestr("bit.lua", b"untrusted")
             with self.assertRaisesRegex(RuntimeError, "reserved overlay paths"):
+                launcher.add_compatibility_overlay(source, output)
+
+            with zipfile.ZipFile(source, "w") as archive:
+                archive.writestr("main.lua", b"")
+                archive.writestr("conf.lua", b"")
+                archive.writestr("src/core/ChipAudio.lua", b"changed upstream")
+            with self.assertRaisesRegex(RuntimeError, "fill constants changed"):
                 launcher.add_compatibility_overlay(source, output)
 
     def test_overlay_rejects_symbolic_links(self) -> None:

@@ -27,8 +27,8 @@ Versions below are contract starting points, not claims of completed artifacts.
 |---|---:|---:|---|
 | Host protocol | 0.1.0 | 1.0.0 | strict types, parser and JSON Schema implemented; no host transport yet |
 | Component/update contracts | 0.2.0 | manifest/catalog schema 1 | strict catalog trust, archive preflight, dependency/API planner, manual orchestrator, activation journal and recovery implemented host-independently |
-| Scripting host | 0.4.5-native | 1.0.0 | persistent verified game library, direct game session, cache maintenance, adaptive game surface, timing telemetry, component/mod management; Native 0.4.4 physically reached ordinary touch play into Oak's Lab; 0.4.5 scaling/performance evidence and 0.3.0 file/GitHub paths pending |
-| iOS/Scripting platform adapter | 0.4.5-spike | 1.0.0 | physical local-file WebView path passed; current DocumentPicker/Crypto.sha1/Data/WebView evaluate contracts implemented; canonical import/play proven; App Group relaunch/cache durability, adaptive geometry, timing and file/GitHub behavior pending device proof |
+| Scripting host | 0.4.6-native | 1.0.0 | persistent verified game library, deferred visible-viewport game session, cache maintenance, bounded no-worker audio slices, timing telemetry, component/mod management; Native 0.4.4 touch play and 0.4.5 geometry/stall evidence proven; 0.4.6 correction pending |
+| iOS/Scripting platform adapter | 0.4.6-spike | 1.0.0 | physical local-file WebView path and canonical import/play proven; pre-presentation `1×1` viewport measured; 0.4.6 waits for stable presented geometry; App Group/cache durability and file/GitHub behavior pending |
 | Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
 | Lua runtime adapter | love.js PUC Lua 5.1 | 1.0.0 | physical Scripting startup passed; no LuaJIT/FFI; complete touch/audio/persistence live-activation profile remains blocked |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
@@ -37,7 +37,7 @@ Versions below are contract starting points, not claims of completed artifacts.
 | Kernel façade | 0.1.0 | 1.0.0 | façade/characterization work pending |
 | Gen1Recomp core payload | 0.1.96 | upstream internal contract | pinned ROM-free source-built payload; outside-browser launcher boot passed |
 | Mod API adapter | 0.2.0 | 2.0.0 | strict API-1/2 manifest/GitHub/archive package management and scoped capability policy implemented; native consent/profile/runtime injection and Lua façade validation pending |
-| Platform UI | 0.4.5-native | 1.0.0 | five-tab navigation, dynamic native game cards/import states/save counts/cache deletion, adaptive game viewport, manual components and inactive mods implemented; broad-device validation pending |
+| Platform UI | 0.4.6-native | 1.0.0 | five-tab navigation, dynamic native game cards/import states/save counts/cache deletion, presented-viewport-aware game startup, manual components and inactive mods implemented; broad-device validation pending |
 | Individual mods | own semver | manifest API 1/2 | install only after runtime parity |
 
 Component/API versions use canonical `X.Y.Z` semantic versions in target manifests. This is separate from compact upstream integers (shell/Mod API/link) and the HostProtocol envelope discriminator `protocol: 1`.
@@ -50,7 +50,7 @@ Component/API versions use canonical `X.Y.Z` semantic versions in target manifes
 | native iOS shell | LuaJIT interpreter semantics | 12.0 development | Gen1Recomp 0.1.96 | 1/2 | **released upstream IPA exists; reproducibility risk** |
 | Scripting main JS runtime | none documented | none | Gen1Recomp 0.1.96 | none | **incompatible** |
 | Scripting TimelineCanvas | no Lua runtime yet | custom incomplete façade | Gen1Recomp 0.1.96 | none | **diagnostic only** |
-| Scripting WebView | love.js PUC Lua 5.1 + BitOp shim | pinned love.js 11.5 | Gen1Recomp 0.1.96 | target 1/2 | **physical canonical Yellow extraction/title/audio and Native 0.4.4 ordinary upstream-touch play into Oak's Lab passed; Native 0.4.5 aspect-matched viewport/timing candidate; exact multitouch, saves, scaling, performance and fidelity parity unverified** |
+| Scripting WebView | love.js PUC Lua 5.1 + BitOp/audio adapter | pinned love.js 11.5 | Gen1Recomp 0.1.96 | target 1/2 | **canonical Yellow/title/audio/touch play passed; Native 0.4.5 measured wrong pre-presentation `1×1` geometry and severe 50–105 ms periodic stalls; Native 0.4.6 defers viewport startup and slices unchanged 44.1 kHz synthesis; physical correction unverified** |
 | Scripting WebView | Wasmoon Lua 5.4 | custom LÖVE façade | Gen1Recomp 0.1.96 | unknown | **not recommended: semantic mismatch/high effort** |
 | Scripting + external native IPA | native upstream | native upstream | Gen1Recomp 0.1.96 | 1/2 | **runtime works separately; not hosted inside Scripting** |
 
@@ -102,7 +102,7 @@ No component is independently updateable merely because it has a directory. It b
 
 1. No connected Scripting app/version-specific declarations or reported Scripting app build.
 2. Runtime startup is verified, but real ROM extraction/game boot, audible audio, simultaneous input, save persistence and pre-dismiss flush are not.
-3. Native 0.4.0–0.4.4 physically proved DocumentPicker, canonical Yellow SHA-1, registry/retry, extraction, title/audio, visible controls and ordinary touch play; Native 0.4.5 scaling/timing, cache-ready completion, App Group relaunch and IDBFS durability remain unverified, as do Native 0.3.0 component/mod/GitHub paths.
+3. Native 0.4.0–0.4.5 physically proved canonical import/play plus the `1×1` pre-presentation geometry and severe periodic stalls; Native 0.4.6 visible viewport/audio slicing, cache-ready completion, App Group relaunch and IDBFS durability remain unverified, as do component/mod/GitHub paths.
 4. No controller API in reviewed Scripting docs.
 5. No direct Metal API in reviewed Scripting docs.
 6. Heavy upstream cross-component/direct-LÖVE coupling.

@@ -33,10 +33,14 @@ PROBE_SOURCE = REPO_ROOT / "probes" / "lovejs-launcher"
 COMPATIBILITY_ROOT = REPO_ROOT / "compatibility" / "love-web"
 BIT_SHIM = COMPATIBILITY_ROOT / "bit.lua"
 BOOTSTRAP = COMPATIBILITY_ROOT / "bootstrap.lua"
+AUDIO_SHIM = COMPATIBILITY_ROOT / "audio.lua"
 PROBE_FILES = ("index.html", "launcher-probe.js", "launcher-probe.css")
 ORIGINAL_MAIN = "gen1recomp-main.lua"
 ORIGINAL_CONF = "gen1recomp-conf.lua"
-MAIN_WRAPPER = b'''-- Generated host wrapper; original upstream main.lua is gen1recomp-main.lua.\nlocal Bootstrap = require("love-web-bootstrap")\nBootstrap.install(love, {\n  disableThreadWorkers = true,\n  threadReason = "love.js 11.5 worker construction probe failed",\n})\nlocal main, loadError = love.filesystem.load("gen1recomp-main.lua")\nassert(main, loadError)\nreturn main()\n'''
+CHIP_AUDIO_PATH = "src/core/ChipAudio.lua"
+CHIP_AUDIO_FILL_ORIGINAL = b'''local MUSIC_FILL_INITIAL = 4\nlocal MUSIC_FILL_PER_CALL = 3\n'''
+CHIP_AUDIO_FILL_ADAPTER = b'''local MUSIC_FILL_INITIAL = ChipSynth.MUSIC_FILL_INITIAL or 4\nlocal MUSIC_FILL_PER_CALL = ChipSynth.MUSIC_FILL_PER_CALL or 3\n'''
+MAIN_WRAPPER = b'''-- Generated host wrapper; original upstream main.lua is gen1recomp-main.lua.\nlocal Bootstrap = require("love-web-bootstrap")\nBootstrap.install(love, {\n  disableThreadWorkers = true,\n  threadReason = "love.js 11.5 worker construction probe failed",\n})\nif os.getenv("POKEPORT_AUDIO_SLICE") == "1" then\n  require("love-web-audio").install(love)\nend\nlocal main, loadError = love.filesystem.load("gen1recomp-main.lua")\nassert(main, loadError)\nreturn main()\n'''
 CONF_WRAPPER = b'''-- Generated host display wrapper; upstream conf.lua is gen1recomp-conf.lua.\nlocal conf, loadError = love.filesystem.load("gen1recomp-conf.lua")\nassert(conf, loadError)\nconf()\nlocal upstreamConf = assert(love.conf, "upstream love.conf missing")\nfunction love.conf(t)\n  upstreamConf(t)\n  local width = tonumber(os.getenv("POKEPORT_VIEW_WIDTH"))\n  local height = tonumber(os.getenv("POKEPORT_VIEW_HEIGHT"))\n  if width and height and width >= 320 and height >= 288\n      and width <= 2048 and height <= 2048 then\n    t.window.width = math.floor(width)\n    t.window.height = math.floor(height)\n    t.window.fullscreen = false\n    t.window.resizable = true\n    t.window.highdpi = false\n  end\nend\n'''
 
 
@@ -69,6 +73,7 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
         reserved = {
             "bit.lua",
             "love-web-bootstrap.lua",
+            "love-web-audio.lua",
             ORIGINAL_MAIN,
             ORIGINAL_CONF,
         }
@@ -78,15 +83,28 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
                 f"source payload already contains reserved overlay paths: {conflicts}"
             )
         with zipfile.ZipFile(destination, "w") as output:
+            chip_audio_adapted = False
             for info in original.infolist():
                 target_info = info
+                data = original.read(info.filename)
                 if info.filename == "main.lua":
                     target_info = copy.copy(info)
                     target_info.filename = ORIGINAL_MAIN
                 elif info.filename == "conf.lua":
                     target_info = copy.copy(info)
                     target_info.filename = ORIGINAL_CONF
-                output.writestr(target_info, original.read(info.filename))
+                elif info.filename == CHIP_AUDIO_PATH:
+                    if data.count(CHIP_AUDIO_FILL_ORIGINAL) != 1:
+                        raise RuntimeError("upstream ChipAudio fill constants changed")
+                    data = data.replace(
+                        CHIP_AUDIO_FILL_ORIGINAL,
+                        CHIP_AUDIO_FILL_ADAPTER,
+                        1,
+                    )
+                    chip_audio_adapted = True
+                output.writestr(target_info, data)
+            if not chip_audio_adapted:
+                raise RuntimeError("upstream ChipAudio module is missing")
 
             def overlay(path: str, data: bytes) -> None:
                 overlay_info = zipfile.ZipInfo(path, (1980, 1, 1, 0, 0, 0))
@@ -98,6 +116,7 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             overlay("conf.lua", CONF_WRAPPER)
             overlay("bit.lua", BIT_SHIM.read_bytes())
             overlay("love-web-bootstrap.lua", BOOTSTRAP.read_bytes())
+            overlay("love-web-audio.lua", AUDIO_SHIM.read_bytes())
 
     with zipfile.ZipFile(destination) as result:
         if result.testzip() is not None:
@@ -116,6 +135,18 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
                     "path": "love-web-bootstrap.lua",
                     "source": BOOTSTRAP.relative_to(REPO_ROOT).as_posix(),
                     "sha256": sha256(BOOTSTRAP),
+                },
+                {
+                    "path": "love-web-audio.lua",
+                    "source": AUDIO_SHIM.relative_to(REPO_ROOT).as_posix(),
+                    "sha256": sha256(AUDIO_SHIM),
+                },
+                {
+                    "path": CHIP_AUDIO_PATH,
+                    "source": "upstream plus generated host-configurable fill seam",
+                    "sha256": hashlib.sha256(
+                        result.read(CHIP_AUDIO_PATH)
+                    ).hexdigest(),
                 },
                 {
                     "path": "main.lua",

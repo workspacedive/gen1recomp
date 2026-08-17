@@ -3,7 +3,7 @@
   "catalogId": "org.gen1recomp.system",
   "channel": "stable",
   "domain": "system",
-  "generatedAt": "2026-08-17T01:06:56.000Z",
+  "generatedAt": "2026-08-17T01:27:00.000Z",
   "releases": [
     {
       "manifest": {
@@ -11,10 +11,10 @@
         "artifact": {
           "integrity": {
             "algorithm": "sha256",
-            "digest": "d1d4169d1b9720b182c9705ef3df3b6d8381f00349f5ba53fc3734910058ceae"
+            "digest": "b14ecae14c27590545e0590bf785a0da20149b9ab1e021aecd5701578060c2d7"
           },
-          "path": "org.gen1recomp.core-0.2.0.zip",
-          "size": 5874966
+          "path": "org.gen1recomp.core-0.3.0.zip",
+          "size": 5876420
         },
         "capabilities": [],
         "compatibility": {
@@ -34,13 +34,13 @@
         "migrations": [],
         "schemaVersion": 1,
         "selfTests": [],
-        "version": "0.2.0"
+        "version": "0.3.0"
       },
       "notes": {
-        "de": "Gen1Recomp-0.1.96-Integrationspaket mit den verifizierten love.js-Kompatibilit\u00e4ts- und adaptiven Viewport-Overlays.",
-        "en": "Gen1Recomp 0.1.96 integration bundle with the verified love.js compatibility and adaptive viewport overlays."
+        "de": "Gen1Recomp-0.1.96-Integrationspaket mit sichtbarkeitsverz\u00f6gertem Viewport-Start und begrenzten Musik-Synthese-Slices ohne Worker.",
+        "en": "Gen1Recomp 0.1.96 integration bundle with visible-viewport startup and bounded no-worker music synthesis slices."
       },
-      "publishedAt": "2026-08-17T01:06:56.000Z"
+      "publishedAt": "2026-08-17T01:27:00.000Z"
     },
     {
       "manifest": {
@@ -74,5 +74,5 @@
     }
   ],
   "schemaVersion": 1,
-  "sequence": 2
+  "sequence": 3
 }

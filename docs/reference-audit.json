@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-16T18:02:00+00:00",
+  "status": "passed",
+  "errors": [],
+  "warnings": [
+    "research/downloads/community/Colorful Clouds.scripting: script.json field 'version' is empty"
+  ],
+  "metrics": {
+    "research/downloads/community/Health Center.scripting": {
+      "entries": 16,
+      "typescriptFiles": 12
+    },
+    "research/downloads/community/RSS.scripting": {
+      "entries": 32,
+      "typescriptFiles": 21
+    },
+    "research/downloads/community/Script Launchpad.scripting": {
+      "entries": 13,
+      "typescriptFiles": 8
+    },
+    "research/downloads/community/Widget Animation Demo.scripting": {
+      "entries": 5,
+      "typescriptFiles": 4
+    },
+    "research/downloads/community/Colorful Clouds.scripting": {
+      "entries": 21,
+      "typescriptFiles": 15
+    },
+    "research/downloads/official/Scripting Documentation.zip": {
+      "entries": 1314,
+      "typescriptFiles": 136,
+      "markdownFiles": 760,
+      "uncompressedBytes": 4376720
+    }
+  }
+}

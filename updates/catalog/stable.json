@@ -1,0 +1,78 @@
+{
+  "artifactBaseURL": "https://raw.githubusercontent.com/workspacedive/gen1recomp/main/updates/artifacts/",
+  "catalogId": "org.gen1recomp.system",
+  "channel": "stable",
+  "domain": "system",
+  "generatedAt": "2026-08-17T08:02:51.000Z",
+  "releases": [
+    {
+      "manifest": {
+        "apiVersion": "1.0.0",
+        "artifact": {
+          "integrity": {
+            "algorithm": "sha256",
+            "digest": "3ecfcce10b78a9eea782fbcfdbba1b1b4a5420c645ec3df19adb2222b9eb4f72"
+          },
+          "path": "org.gen1recomp.core-0.5.0.zip",
+          "size": 5880388
+        },
+        "capabilities": [],
+        "compatibility": {
+          "hostProtocol": "^1.0.0",
+          "kernelApi": "^1.0.0",
+          "loveApi": "11.5.x",
+          "modApi": "^2.0.0"
+        },
+        "dependencies": [
+          {
+            "id": "org.gen1recomp.runtime.lovejs",
+            "range": "^0.1.0"
+          }
+        ],
+        "id": "org.gen1recomp.core",
+        "kind": "core",
+        "migrations": [],
+        "schemaVersion": 1,
+        "selfTests": [],
+        "version": "0.5.0"
+      },
+      "notes": {
+        "de": "Gen1Recomp-0.1.96-Integrationspaket mit nativer Retina-Ausgabe, Vektor-Touchdarstellung, Unterbrechungs-Recovery und privatem Effektcache.",
+        "en": "Gen1Recomp 0.1.96 integration bundle with Retina-native output, vector touch visuals, interruption recovery, and private effect cache."
+      },
+      "publishedAt": "2026-08-17T08:02:51.000Z"
+    },
+    {
+      "manifest": {
+        "apiVersion": "11.5.0",
+        "artifact": {
+          "integrity": {
+            "algorithm": "sha256",
+            "digest": "612ae7fe1415210ed58d678322b083db6720418d62faae90ba593074049e6313"
+          },
+          "path": "org.gen1recomp.runtime.lovejs-0.1.0.zip",
+          "size": 1713624
+        },
+        "capabilities": [],
+        "compatibility": {
+          "hostProtocol": "^1.0.0",
+          "platformApi": "^1.0.0"
+        },
+        "dependencies": [],
+        "id": "org.gen1recomp.runtime.lovejs",
+        "kind": "runtime",
+        "migrations": [],
+        "schemaVersion": 1,
+        "selfTests": [],
+        "version": "0.1.0"
+      },
+      "notes": {
+        "de": "Gepinnte love.js-L\u00d6VE-11.5-/Lua-Laufzeit f\u00fcr den iOS-Pfad ohne Worker.",
+        "en": "Pinned love.js L\u00d6VE 11.5 and Lua runtime for the no-worker iOS path."
+      },
+      "publishedAt": "2026-08-11T19:51:49.000Z"
+    }
+  ],
+  "schemaVersion": 1,
+  "sequence": 5
+}

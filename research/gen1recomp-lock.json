@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-16T17:44:02Z",
+  "upstream": {
+    "repository": "https://github.com/bryanthaboi/gen1recomp.git",
+    "devRevision": "9469e399262e4e989902b61b449dd353c1fded3b",
+    "releaseTag": "v0.1.96",
+    "releaseRevision": "73fbaaa25093338585923b8b9809f2fea7fc59dc",
+    "license": "MIT",
+    "wikiRepository": "https://github.com/bryanthaboi/gen1recomp.wiki.git",
+    "wikiRevision": "6fd19ee11802fd1930ebe4d07d26badc39f108f3"
+  },
+  "releaseAssets": [
+    {
+      "name": "gen1recomp-0.1.96-android.apk",
+      "size": 24620835,
+      "sha256": "fc9220acc2e199aa5bea91cc8f173b90fbec1d5cc5a32cc3e262374339bcef21",
+      "githubAssetId": 516391829
+    },
+    {
+      "name": "gen1recomp++-0.1.96-ios.ipa",
+      "size": 11375356,
+      "sha256": "29ee8512f6ddf8da98ba88abe43d2f26731380d097ede915265a64d0bc356d90",
+      "githubAssetId": 516391993
+    },
+    {
+      "name": "gen1recomp-0.1.96.love",
+      "size": 5942186,
+      "sha256": "eea83b7f73300994429d70fa4b1003dd9a1c1e524d70842380ef595bcc1a8249",
+      "githubAssetId": 516392190
+    },
+    {
+      "name": "sha256sums.txt",
+      "size": 980,
+      "sha256": "6e8645fda677f3fd2d88040f040eca47ec774bbda88122166a43e0619b930091",
+      "githubAssetId": 516392202
+    }
+  ],
+  "runtimeCandidates": {
+    "lovejs11_5": {
+      "repository": "https://github.com/2dengine/love.js.git",
+      "revision": "9355186de22db13bd88bf2a0db75d2925647d036",
+      "commitDate": "2026-08-11T19:51:49Z",
+      "licenseFile": "license.txt",
+      "files": {
+        "player.js": { "size": 13015, "sha256": "fd8c0391855467307ae92abcdd31a814a60a3ec049e3113fdc1f78b824d356cf" },
+        "11.5/love.js": { "size": 448544, "sha256": "34b300f06ecb44d92edb1183c11a38c1cc324ba10a9f7af96b8efa1d1df15147" },
+        "11.5/love.wasm": { "size": 4720510, "sha256": "304f195f36d163f3bb2127e7c232fd1fd0791ee2ab61ba003d47096003b53bf1" },
+        "lua/normalize1.lua": { "size": 2832, "sha256": "76a3002bf521add045973022be3318f74d0836f2ff9e90a505a08afabeb82a9e" },
+        "lua/normalize2.lua": { "size": 4095, "sha256": "64e70ede76e301bb4adc3358a14c640c5c291e489a8a5607d38785875b655eef" }
+      },
+      "compatibilityOverlays": {
+        "bit": {
+          "path": "compatibility/love-web/bit.lua",
+          "size": 4261,
+          "sha256": "07f3ba40f298bb776e06fb514718bbc82a93cec7b977c8b42fd5e5b002ce3348",
+          "luaJitBitOpComparisons": 9492,
+          "parityStatus": "passed"
+        },
+        "threadCapabilityBootstrap": {
+          "path": "compatibility/love-web/bootstrap.lua",
+          "sha256": "6dc66d27447fdde6739d0c47f6320baa631bf1813229083d9fb8daed383ace6b",
+          "behavior": "hide measured-unusable love.thread.newThread while preserving Channels",
+          "fallbackCharacterization": "passed"
+        }
+      },
+      "outsideBrowserSmoke": {
+        "report": "docs/gen1recomp/lovejs-smoke-report.json",
+        "initialStatus": "failed: required bit module absent",
+        "finalStatus": "passed: 23 checks, 0 failures",
+        "browser": "HeadlessChromium/149.0.7827.0",
+        "renderer": "Google SwiftShader",
+        "evidenceScope": "outside Scripting only"
+      },
+      "outsideLauncherBoot": {
+        "report": "docs/gen1recomp/lovejs-launcher-report.json",
+        "preparedPayloadSha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a",
+        "status": "passed: deterministic/bootstrap-wrapped ROM-free 1024x768 launcher visible for 10 seconds with no page/runtime/request errors",
+        "evidenceScope": "outside Scripting launcher shell only"
+      },
+      "status": "Pinned candidate passed the isolated outside-browser smoke test and ROM-free Gen1Recomp launcher-shell boot with a separately parity-tested BitOp overlay. Scripting WKWebView, physical iOS behavior, performance, audible audio, simultaneous input, lifecycle persistence and game/title/mod compatibility remain unverified."
+    }
+  },
+  "nativeIosDependencies": {
+    "releaseWorkflowRunId": 31924312648,
+    "releaseJobId": 95109713326,
+    "buildStepWindow": {
+      "startedAt": "2026-08-16T03:34:13Z",
+      "completedAt": "2026-08-16T03:35:48Z"
+    },
+    "love": {
+      "repository": "https://github.com/love2d/love.git",
+      "requestedRef": "main",
+      "revisionAtBuildStart": "853f1cad4bb65d63f02dbcd3fa31b0c622d3abbc",
+      "commitDate": "2026-08-08T14:09:20Z"
+    },
+    "appleDependencies": {
+      "repository": "https://github.com/love2d/love-apple-dependencies.git",
+      "requestedRef": "main",
+      "revisionAtBuildStart": "a5522634f1e581a1ebab73bf3ab4bd7a853b7a3e",
+      "commitDate": "2026-07-24T00:17:38Z"
+    },
+    "evidence": "The release script clones both main refs during the recorded Build iOS step. GitHub's commit API reports these as the respective main histories' latest commits at the exact step start, and both remained the branch tips at 2026-08-16T09:47:14Z. The Actions log archive could not be transferred, so these revisions are high-confidence time reconstruction rather than commit IDs printed by the build log or extracted from the IPA."
+  },
+  "androidAnalysis": {
+    "officialApkDownloaded": false,
+    "downloadBlocker": "The sandbox established TLS to GitHub but every redirected release-assets.githubusercontent.com transfer terminated before payload bytes. GitHub API metadata and digest were retrieved successfully. The same release was independently listed by the SourceForge mirror, but direct binary transfer was blocked by the same sandbox network policy.",
+    "deterministicPayload": {
+      "basedOnRevision": "73fbaaa25093338585923b8b9809f2fea7fc59dc",
+      "command": "python3 tools/package_gen1recomp_payload.py --version 0.1.96",
+      "sha256": "a415960eb07f937e616287f40cc84bbe545c8a5fa677d3efd6ca846b3749e33d",
+      "size": 5936613,
+      "fileEntries": 483,
+      "uncompressedBytes": 15936729,
+      "timestampPolicy": "all entries 1980-01-01T00:00:00",
+      "note": "Reproducible ROM-free research payload generated from pinned source; not an official release artifact."
+    },
+    "sourceBuiltPayload": {
+      "basedOnRevision": "73fbaaa25093338585923b8b9809f2fea7fc59dc",
+      "command": "scripts/build_android.sh --version 0.1.96 --package-only",
+      "sha256": "ac7eace7af964834df9f235d0f82dfe35e31de3599c305596f860765b0c920d3",
+      "size": 5933391,
+      "note": "This is a locally rebuilt game.love payload, not the official APK and not byte-identical to the official release .love. ZIP timestamps/order can change the archive digest."
+    }
+  }
+}

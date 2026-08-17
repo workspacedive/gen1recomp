@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "evidence": "outside-scripting-headless-browser",
+  "runtimeCandidate": {
+    "repository": "https://github.com/2dengine/love.js.git",
+    "revision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "loveVersion": "11.5",
+    "luaRuntime": "PUC Lua 5.1",
+    "luaJit": false,
+    "ffi": false
+  },
+  "browserEnvironment": {
+    "browser": "HeadlessChromium/149.0.7827.0",
+    "automation": "playwright-core 1.62.1",
+    "browserPackage": "@sparticuz/chromium 149.0.0",
+    "graphics": "ANGLE Vulkan / Google SwiftShader software renderer",
+    "crossOriginIsolated": true,
+    "notes": [
+      "The browser binary was pinned and delivered through npm because the sandbox had no system browser and Playwright CDN transfers were blocked.",
+      "The result is not a hardware performance result and is not evidence about Scripting WKWebView or physical iOS graphics."
+    ],
+    "launchPolicy": "COOP/COEP server headers with no disable-web-security flag"
+  },
+  "initialRun": {
+    "observedAt": "2026-08-16T10:47:28.084Z",
+    "status": "fail",
+    "checks": 16,
+    "failures": 1,
+    "failure": {
+      "id": "lua.bit",
+      "observed": "module 'bit' not found",
+      "impact": "Gen1Recomp has 11 literal bit-module imports and hundreds of bit operations; unmodified love.js cannot boot all required paths."
+    },
+    "browser": "HeadlessChrome/92.0.4512.0"
+  },
+  "compatibilityShim": {
+    "path": "compatibility/love-web/bit.lua",
+    "sha256": "07f3ba40f298bb776e06fb514718bbc82a93cec7b977c8b42fd5e5b002ce3348",
+    "bytes": 4261,
+    "scope": [
+      "tobit",
+      "tohex",
+      "bnot",
+      "band",
+      "bor",
+      "bxor",
+      "lshift",
+      "rshift",
+      "arshift",
+      "rol",
+      "ror",
+      "bswap"
+    ],
+    "integration": "Packaged as a root-level bit.lua compatibility overlay; no Gen1Recomp core or L\u00d6VE source was modified.",
+    "parity": {
+      "reference": "vendored LuaJIT 2.1 BitOp",
+      "comparisons": 9492,
+      "status": "pass",
+      "coverage": "boundary values, signed/unsigned conversion, all shift counts modulo 32, rotates, byte swap, hex width/case, variadic operations, 2,000 deterministic random triples, fractional tie-to-even conversion, infinities, NaN and empty-argument errors"
+    }
+  },
+  "finalRun": {
+    "observedAt": "2026-08-16T11:22:42.019Z",
+    "status": "pass",
+    "checks": 23,
+    "failures": 0,
+    "package": {
+      "sha256": "84dd5bbc44622cd592187c421c198f88edcbb1a162cb18c1a9e0619e7d61504d",
+      "bytes": 4144,
+      "entries": [
+        "main.lua",
+        "conf.lua",
+        "worker.lua",
+        "bit.lua"
+      ]
+    },
+    "results": {
+      "love.version": "pass: 11.5.0 Mysterious Mysteries",
+      "lua.version": "pass: Lua 5.1",
+      "lua.setfenv": "pass",
+      "lua.loadstring": "pass",
+      "lua.bit": "pass through compatibility shim",
+      "luajit.moduleAbsent": "pass: expected absence",
+      "ffi.moduleAbsent": "pass: expected absence",
+      "graphics.canvas": "pass: 160x144 render target",
+      "graphics.imageData": "pass",
+      "graphics.shader": "pass: minimal shader compile",
+      "filesystem.sessionWrite": "pass: same-session only",
+      "data.sha256": "pass",
+      "timer.monotonic": "pass",
+      "audio.module": "pass: namespace presence only",
+      "touch.module": "pass: namespace presence only",
+      "joystick.module": "pass: namespace presence only",
+      "filesystem.previousSession": "pass: marker state reported for reload tests",
+      "loop.fixedStep": "pass: accumulator advanced deterministic 1/60 ticks and state",
+      "lua.coroutine": "pass: create/resume/yield roundtrip",
+      "audio.queueableBuffer": "pass: generated buffer queued; audible output not tested",
+      "thread.channel": "pass: same-state push/pop roundtrip",
+      "thread.newThreadCapability": "symbol present but worker creation failed in love.js normalization layer",
+      "thread.workerFallback": "pass: unavailability detected without crashing; upstream no-thread fallbacks required"
+    },
+    "webPlatform": {
+      "webAssembly": true,
+      "webgl1": true,
+      "webgl2": true,
+      "webgl1Version": "WebGL 1.0 (OpenGL ES 2.0 Chromium)",
+      "webgl2Version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "renderer": "ANGLE Vulkan / Google SwiftShader",
+      "maximumTextureSize": 8192,
+      "canvasPixels": [
+        160,
+        144
+      ],
+      "crossOriginIsolated": true,
+      "sharedArrayBuffer": true
+    },
+    "runtimeErrors": [],
+    "persistence": {
+      "chrome92ImmediateReloadWithoutAwaitingSync": "marker not recovered in one forced-reload trial",
+      "chromium149ImmediateReload": "marker recovered in the current isolated trial",
+      "explicitModuleFsSyncBeforeReload": "marker recovered",
+      "conclusion": "Automatic durability is timing/environment sensitive; lifecycle-safe saves still require a serialized explicit sync/flush barrier."
+    },
+    "browser": "HeadlessChromium/149.0.7827.0"
+  },
+  "notProven": [
+    "Scripting main runtime or WKWebView execution",
+    "physical iOS WebGL/WASM behavior",
+    "hardware-accelerated rendering or performance",
+    "audible audio after a user gesture",
+    "audio queue scheduling and interruption recovery",
+    "simultaneous touch, controller support or cancellation recovery",
+    "durable persistence under Scripting suspend/termination; only browser reload with an explicit/settled sync was demonstrated",
+    "physical performance of the characterized no-thread fallback paths; love.thread.newThread remains unusable",
+    "Gen1Recomp imported-title or in-game payload boot (the ROM-free launcher shell passed separately)",
+    "ROM import, saves, mods, in-game visual parity or sustained memory"
+  ]
+}

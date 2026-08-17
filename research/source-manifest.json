@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-15T19:37:51Z",
+  "repositories": [
+    {
+      "id": "community-scripts",
+      "url": "https://github.com/ScriptingApp/Community-Scripts.git",
+      "webUrl": "https://github.com/ScriptingApp/Community-Scripts",
+      "revision": "1eb87838d2fc60635cfdff762cc88502966f1e99",
+      "license": "NOASSERTION",
+      "destination": "research/downloads/community",
+      "files": [
+        "Health Center.scripting",
+        "RSS.scripting",
+        "Script Launchpad.scripting",
+        "Widget Animation Demo.scripting",
+        "Colorful Clouds.scripting"
+      ]
+    },
+    {
+      "id": "official-scripts",
+      "url": "https://github.com/ScriptingApp/scripts.git",
+      "webUrl": "https://github.com/ScriptingApp/scripts",
+      "revision": "69115b32e48497e18c114f9c40b9ab89f9364847",
+      "license": "MIT (declared in upstream README; no separate LICENSE file at audited revision)",
+      "destination": "research/downloads/official/Video to Live Photo",
+      "files": [
+        "Video to Live Photo"
+      ]
+    },
+    {
+      "id": "development-skill",
+      "url": "https://github.com/ScriptingApp/scripting-app-development.git",
+      "webUrl": "https://github.com/ScriptingApp/scripting-app-development",
+      "revision": "2991c41f42be9e50d3080c5af34315e68ebb3d86",
+      "license": "MIT (declared in upstream README; no separate LICENSE file at audited revision)",
+      "destination": "research/downloads/official/scripting-app-development",
+      "files": [
+        "."
+      ]
+    },
+    {
+      "id": "official-skills",
+      "url": "https://github.com/ScriptingApp/skills.git",
+      "webUrl": "https://github.com/ScriptingApp/skills",
+      "revision": "749a52a8946a1e9397412fadd89226ecb51eb87d",
+      "license": "NOASSERTION",
+      "destination": "research/downloads/official-skills",
+      "files": [
+        "design-scripting-custom-gradient-background",
+        "rich-charts",
+        "rich-maps"
+      ]
+    }
+  ],
+  "githubFiles": [
+    {
+      "id": "scripting-documentation-app-store",
+      "repository": "ScriptingApp/ScriptingApp.github.io",
+      "revision": "34c59e98dd2c203edca66a8418e93d90e7ecee22",
+      "repoPath": "scripting/App Store/Scripting Documentation.zip",
+      "destination": "research/downloads/official/Scripting Documentation.zip",
+      "license": "NOASSERTION"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "research/downloads/community/Health Center.scripting",
+      "sha256": "57ebf807b185d14022bae39e1e950641c5935142b57aa2aecfb6195e71aaf794"
+    },
+    {
+      "path": "research/downloads/community/RSS.scripting",
+      "sha256": "eb9d4d64f4840aeceb40071b7d6430f80c238040131da267c60e76983c9ab7eb"
+    },
+    {
+      "path": "research/downloads/community/Script Launchpad.scripting",
+      "sha256": "723e3020ed102a1a6acfd8d00cca9bdfe1e7a176156cfe8ccc8f9f6d9a2da879"
+    },
+    {
+      "path": "research/downloads/community/Widget Animation Demo.scripting",
+      "sha256": "b38ba8ac0db3734b1f74c267945cbbdde26c15b7f0a69d66e12d381095157cfe"
+    },
+    {
+      "path": "research/downloads/community/Colorful Clouds.scripting",
+      "sha256": "efa16328edc99bfea8132d44e9671e7c54c0d126d65994f53bddd2f8820003ec"
+    },
+    {
+      "path": "research/downloads/official/Scripting Documentation.zip",
+      "sha256": "4d2ce839faba78aa5407f2a5fa6b9d65b4b4282ca2c45ab2d72994f836a7b15b"
+    },
+    {
+      "path": "research/downloads/official/Video to Live Photo/index.tsx",
+      "sha256": "5abd5dd4bc887c4e7270aeb2123d16a4d07e5622022f6782465a3fef41217a6a"
+    },
+    {
+      "path": "research/downloads/official/scripting-app-development/SKILL.md",
+      "sha256": "35a3fefc030e13f241bc1497790018fe51c2bc18d6605ee15592c5b855378166"
+    },
+    {
+      "path": "references/official/video-to-live-photo/index.tsx",
+      "sha256": "5abd5dd4bc887c4e7270aeb2123d16a4d07e5622022f6782465a3fef41217a6a"
+    },
+    {
+      "path": "references/official/scripting-app-development/SKILL.md",
+      "sha256": "35a3fefc030e13f241bc1497790018fe51c2bc18d6605ee15592c5b855378166"
+    }
+  ]
+}

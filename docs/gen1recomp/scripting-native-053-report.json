@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T20:48:52.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-053.scripting",
+    "project": "Gen1Recomp Native 053",
+    "version": "0.5.3",
+    "build": "053",
+    "bytes": 8346167,
+    "entries": 33,
+    "sha256": "3cdef5e264e236ed70705ceac041fae48b3c3489e7f0e50341c5adc9daf7b0a4",
+    "payloadSha256": "6ab3a495ecf6619831732eb9022d8da43a4473c958848adffc3a8c39de939943",
+    "payloadBytes": 5945550,
+    "payloadEntries": 490,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "coreIntegrationVersion": "0.5.0"
+  },
+  "native052PhysicalInput": {
+    "environment": "Scripting 3.2.0 / iOS 26.6 / iPhone 16 Pro Max",
+    "runtimeIdentity": "0.5.2 / 052",
+    "modernTabsVisible": ["home", "games", "updates", "mods", "settings"],
+    "componentBuildError": "t.__type__ occurred once before successful runtime startup",
+    "modernTabFixComplete": false,
+    "titleReveal": "readiness-bound 5500ms reveal before ready frame 8",
+    "gameLoaded": true,
+    "retinaGeometry": "440x956 CSS -> 1320x2868 canvas; DPR 3; fit scale 8",
+    "vectorTouchInstalled": true,
+    "performanceWindows": [
+      { "frames": 425, "durationMs": 10009, "p50Ms": 18, "p95Ms": 34, "p99Ms": 116, "maxMs": 472, "gapsOver50Ms": 9 },
+      { "frames": 412, "durationMs": 10006, "p50Ms": 20, "p95Ms": 48, "p99Ms": 77, "maxMs": 94, "gapsOver50Ms": 18 },
+      { "frames": 491, "durationMs": 10008, "p50Ms": 17, "p95Ms": 39, "p99Ms": 51, "maxMs": 65, "gapsOver50Ms": 5 }
+    ],
+    "lateDrawAverageMs": "0.11-0.27",
+    "effectCache": "store only",
+    "saveOperationsExercised": false
+  },
+  "homeStatusCorrection": {
+    "observedMisleadingText": "Noch kein Spiel importiert",
+    "rootCause": "Home counted only status=ready and treated zero ready games, null/loading, error, pendingExtraction, needsReimport, and a genuinely empty registry identically",
+    "yellowDataLost": false,
+    "evidenceYellowRemained": "same session loaded generated Yellow data and game",
+    "newStateUnion": ["loading", "content", "error"],
+    "contentSummaries": ["empty", "ready", "imported-not-ready", "pendingExtraction", "needsReimport"],
+    "emptyTextGate": "content snapshot with games.length === 0 only",
+    "rootInitializationErrorVisible": true,
+    "gamesScreenSnapshotsFeedHome": true
+  },
+  "toolbarIsolation": {
+    "oldBoundary": "five Navigation.useDismiss hooks plus five toolbar.cancellationAction dictionaries",
+    "newBoundary": "one root Navigation.useDismiss hook plus five ordinary in-content native Buttons",
+    "toolbarOccurrences": 0,
+    "dismissHookOccurrences": 1,
+    "closeButtonOccurrences": 5,
+    "closeSymbol": "xmark.circle.fill",
+    "explicitCloseRetainedEveryTab": true,
+    "physicalFixClaimed": false
+  },
+  "retainedFeatures": {
+    "modernFiveTabs": true,
+    "postReadyTitleHoldMs": 5500,
+    "titleFadeMs": 900,
+    "topRevealHoldMs": 3200,
+    "nativeGameDismiss": true,
+    "saveRefreshSlotLaunchBackupRestoreDelete": true,
+    "retinaVectorControls": true,
+    "interruptionRecovery": true,
+    "manualComponentsAndMods": true
+  },
+  "automatedVerification": {
+    "typescriptTargets": 2,
+    "packageIdentityAndStaticContracts": "pass",
+    "toolbarIsolationContracts": "zero toolbar, one root dismiss hook, five in-content close Buttons",
+    "homeStateContracts": "explicit loading/error and empty text gated by loaded empty content",
+    "homeSummaryDomainTest": "empty and mixed ready/pending/reimport counts pass",
+    "nodeTests": { "total": 123, "passed": 123, "failed": 0 },
+    "pythonTests": { "total": 35, "passed": 30, "skipped": 5, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchWavEntries": []
+  },
+  "physicalVerificationRequired": [
+    "runtime identity 0.5.3 / 053",
+    "whether t.__type__ recurs with no toolbar descriptors",
+    "Home initially shows loading rather than no imported game",
+    "Home shows Yellow as ready, imported pending, or reimport required according to actual registry state",
+    "five in-content close Buttons dismiss the native app",
+    "modern tab, game launch, title and Retina regressions",
+    "save operations, cache hit and phone recovery"
+  ],
+  "permissionsAndSideEffects": {
+    "newPermissions": [],
+    "newNetworkTargets": [],
+    "newExternalSideEffects": [],
+    "privateStorageSchemaChanged": false
+  },
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "renderedAudioIncluded": false,
+    "saveIncluded": false,
+    "userBackupIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

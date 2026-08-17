@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T08:02:51.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-048.scripting",
+    "project": "Gen1Recomp Native 048",
+    "version": "0.4.8",
+    "build": "048",
+    "bytes": 8333969,
+    "entries": 32,
+    "sha256": "de7fbce88a51c9e843277a2a142ec310e8dcbe8a4d6ba04fa76379872580413c",
+    "payloadSha256": "6ab3a495ecf6619831732eb9022d8da43a4473c958848adffc3a8c39de939943",
+    "payloadBytes": 5945550,
+    "payloadEntries": 490,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "upstreamSourceVersion": "0.1.96",
+    "coreIntegrationVersion": "0.5.0"
+  },
+  "native047Evidence": {
+    "subjectiveSmoothness": "much smoother and more even",
+    "bestWindow": { "frames": 601, "durationMs": 10017, "p95Ms": 20, "p99Ms": 23, "maxMs": 24 },
+    "steadyP95MsRange": [18, 23],
+    "lateUpdateAverageCpuMsRange": [1.79, 3.31],
+    "lateDrawAverageCpuMsRange": [0.15, 0.33],
+    "firstUseEffectCpuMsExamples": [95, 358, 227, 101, 257, 163, 254],
+    "cacheStoresObserved": true,
+    "cacheHitsObserved": false,
+    "incomingCall": "an earlier attempt completely froze during a concurrent phone call; no lifecycle log was available",
+    "touchVisualQuality": "A/B/Start/Select and related controls were reported pixelated and dirty",
+    "componentBuildError": "t.__type__ occurred once before successful startup"
+  },
+  "retinaNativeSurface": {
+    "qualityMode": "native-pixels",
+    "formula": "round(CSS viewport times devicePixelRatio) per axis",
+    "primaryExpectedCss": "440x956",
+    "primaryExpectedDpr": 3,
+    "primaryExpectedBacking": "1320x2868",
+    "primaryExpectedRendererFitScale": 8,
+    "primaryMapping": "one canvas pixel per physical display pixel",
+    "aspectPreserved": true,
+    "gamePixelPolicy": "upstream Renderer still selects integer physical GB-pixel scale",
+    "maximumDimension": 4096,
+    "performanceClaimed": false,
+    "reason": "physical framebuffer increases fill area; Native 047 draw CPU was negligible but GPU/WebView performance requires device evidence"
+  },
+  "vectorTouchVisuals": {
+    "module": "love-web-touch.lua",
+    "replaced": "TouchControls.draw only",
+    "preservedUpstream": [
+      "layout orientation and persisted positions",
+      "touch hit testing and slop",
+      "multi-touch ownership",
+      "Input overlay press/release",
+      "focus/visibility reset",
+      "haptics"
+    ],
+    "visuals": ["smooth d-pad cross and directional highlights", "A/B discs", "Start/Select capsules", "Retina text and outlines"],
+    "sizeSeam": "one fail-closed TouchControls formula multiplies the historical 180-pixel cap by host physical pixel scale",
+    "secondInputImplementationAdded": false
+  },
+  "interruptionRecovery": {
+    "module": "runtime/adapters/lovejs/interruption.ts",
+    "onHiddenOrBlur": ["flush private IDBFS", "pause Emscripten main loop", "log lifecycle frame"],
+    "onVisibleFocusOrPageShow": ["resume paired main loop", "log hidden duration", "schedule 750ms frame-advance verification"],
+    "watchdog": "restarts a visible main loop that did not advance",
+    "pageHide": "persisted pages suspend; terminal dismissal disables recovery",
+    "limitation": "cannot preserve a WebView process if iOS or Scripting terminates it; physical phone-call recovery is required"
+  },
+  "privateEffectCache": {
+    "namespaceUnchangedFrom047": true,
+    "expectedReuse": "Native 047 stored effects can be cache hits in Native 048",
+    "artifactContainsRenderedAudio": false
+  },
+  "automatedVerification": {
+    "lua54Syntax": "pass for bootstrap/audio/frame/touch adapters",
+    "touchFakeRuntime": "pass",
+    "nativePixelViewportUnitCases": "pass",
+    "interruptionUnitCases": "pass: paired pause/resume and visible stalled-loop watchdog",
+    "typescriptTargets": 2,
+    "nodeTests": { "total": 112, "passed": 112, "failed": 0 },
+    "pythonTests": { "total": 35, "passed": 32, "skipped": 3, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchWavEntries": []
+  },
+  "physicalVerification": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "visibleViewport": "440x956",
+    "backingAndDisplay": "1320x2868 units and pixels",
+    "rendererFitScale": 8,
+    "cssSurface": "440x956",
+    "vectorAdapterInstalled": true,
+    "retinaGeometryPassed": true,
+    "bestSteadyWindow": { "frames": 587, "durationMs": 10008, "p95Ms": 23, "p99Ms": 33, "maxMs": 35 },
+    "lateStableWindow": { "frames": 579, "durationMs": 10008, "p95Ms": 23, "p99Ms": 25, "maxMs": 29 },
+    "drawAverageCpuMsRange": [0.09, 0.37],
+    "retinaFillConclusion": "physical-pixel surface did not make draw callback CPU a bottleneck; GPU quality remains subjective",
+    "effectCacheStoresObserved": true,
+    "effectCacheHitsObserved": false,
+    "lifecycleInterruptionRetested": false,
+    "componentBuildError": "t.__type__ occurred once ten seconds before successful runtime startup",
+    "newRequest": "fade the Pokémon Yellow native title and black top gradient over time"
+  },
+  "remainingPhysicalVerification": [
+    "Native 049 custom title fade and explicit close behavior",
+    "Native 049 direct native toolbar component correction and t.__type__ recurrence",
+    "subjective vector control quality",
+    "incoming-call lifecycle recovery",
+    "same-artifact second-run effect cache hits",
+    "Ready card, saves and exact multitouch/release behavior"
+  ],
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "renderedAudioIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

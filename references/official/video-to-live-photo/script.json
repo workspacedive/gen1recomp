@@ -1,0 +1,14 @@
+{
+  "name": "Video to Live Photo",
+  "localizedNames": {
+    "zh": "视频转实况照片"
+  },
+  "icon": "livephoto",
+  "color": "#FF375F",
+  "version": "1.0.0",
+  "runInApp": true,
+  "description": "Select a video, choose its cover frame and duration, then save it as a Live Photo.",
+  "localizedDescriptions": {
+    "zh": "选择视频、调整封面和时长，然后直接保存为实况照片。"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-16T23:53:08.346Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-041.scripting",
+    "project": "Gen1Recomp Native 041",
+    "version": "0.4.1",
+    "build": "041",
+    "bytes": 8320895,
+    "entries": 32,
+    "sha256": "15cd150c81479071cf9a2b9453c38531f13c6e8708cebec43434b62a7176d1d0",
+    "payloadSha256": "a8a370be1c86606cb679b57134fdab9c21c615b21e668ddc559151a860f3e276",
+    "payloadEntries": 486,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036"
+  },
+  "physicalPredecessorEvidence": {
+    "artifact": "Native 0.4.0 / 040",
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "canonicalYellowAccepted": true,
+    "pendingRegistrationAndRetryObserved": true,
+    "upstreamExtractorReached": true,
+    "runtimeReadyFrames": [
+      17,
+      2,
+      2
+    ],
+    "failure": "src/import/Rom.lua:198: attempt to index global bit (a nil value)"
+  },
+  "correction": {
+    "layer": "compatibility/love-web bootstrap",
+    "cause": "LuaJIT exposes BitOp as global bit; the PUC-Lua adapter previously supplied only require(\"bit\")",
+    "change": "install the existing parity-tested BitOp module into _G.bit before upstream main.lua loads",
+    "coreChanged": false,
+    "loveChanged": false,
+    "bitDifferentialComparisonsPreviouslyPassed": 9492
+  },
+  "automatedVerification": {
+    "typescriptTargets": 2,
+    "nodeTests": {
+      "total": 104,
+      "passed": 104,
+      "failed": 0
+    },
+    "pythonTests": {
+      "total": 33,
+      "passed": 30,
+      "skipped": 3,
+      "failed": 0
+    },
+    "npmAuditVulnerabilities": 0,
+    "deterministicRebuild": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchEntries": []
+  },
+  "browserVerification": {
+    "browser": "Chromium 149.0.7827.0 headless with SwiftShader",
+    "exactArtifactRuntime": true,
+    "ready": true,
+    "frame": 97,
+    "pageErrors": [],
+    "failedRequests": [],
+    "httpErrors": [],
+    "meaning": "The corrected bootstrap loaded the BitOp module, installed its global, and completed upstream ROM-free startup. This is not canonical-ROM extraction evidence."
+  },
+  "uiAdjustment": {
+    "change": "game-card status moved to a dedicated row",
+    "reason": "reduce text compression observed on the physical iPhone screenshot",
+    "unresolvedObservation": "Native 0.4.0 logged one intermittent Scripting t.__type__ component-build error before the screen later rendered; recurrence must be checked"
+  },
+  "physicalVerificationRequired": [
+    "run Native 0.4.2 Finish Import and return newly forwarded console error/stack",
+    "complete extraction after attribution and correction",
+    "transition card to Ready to Play",
+    "direct Yellow boot without the upstream launcher",
+    "cache persistence across full script/app relaunch",
+    "save creation, discovery, lifecycle persistence, audio, input, fidelity, iPad and other iPhone layouts"
+  ],
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  },
+  "physicalVerification": {
+    "status": "failed-with-generic-pre-window-alert",
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "pendingYellowReusedWithoutPicker": true,
+    "payloadSha256Observed": "a8a370be1c86606cb679b57134fdab9c21c615b21e668ddc559151a860f3e276",
+    "readyFrame": 1,
+    "priorGlobalBitFailureRecurred": false,
+    "alert": "An error occurred before the game window could be initialised. Please check the console!",
+    "underlyingCauseCaptured": false,
+    "reasonHidden": "pinned love.js overwrites Module.warn with WebView console.warn; 0.4.1 did not bridge browser console",
+    "cardStatusAfterDismissal": "pendingExtraction",
+    "intermittentNativeComponentErrorRecurred": true,
+    "nextCandidate": "Native 0.4.2 / 042 with bounded WebView console and alert forwarding"
+  }
+}

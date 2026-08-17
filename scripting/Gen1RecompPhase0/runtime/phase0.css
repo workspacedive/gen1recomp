@@ -1,0 +1,37 @@
+html, body {
+  box-sizing: border-box;
+  margin: 0;
+  min-height: 100%;
+  background: #0e1117;
+  color: #f2f4f8;
+  font: 16px -apple-system, system-ui, sans-serif;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+
+canvas {
+  display: none;
+  max-width: 100%;
+  max-height: 78vh;
+  image-rendering: pixelated;
+}
+
+#status {
+  position: fixed;
+  inset-inline: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: grid;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgb(24 29 38 / 92%);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 35%);
+}
+
+#status[data-result="pass"] strong { color: #5ee38f; }
+#status[data-result="fail"] strong { color: #ff7b72; }
+#status-detail { color: #c5cbd6; font-size: 13px; }

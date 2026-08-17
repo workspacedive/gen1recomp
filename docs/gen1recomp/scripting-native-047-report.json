@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T01:51:38.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-047.scripting",
+    "project": "Gen1Recomp Native 047",
+    "version": "0.4.7",
+    "build": "047",
+    "bytes": 8330715,
+    "entries": 32,
+    "sha256": "68077463086b37df5cc82bb3829b3a33fca444ed093bceeb6f194de14491620a",
+    "payloadSha256": "f6a11c06cc68485481764942070c468c7597e2f6bddb649489cbddc9c59c64dd",
+    "payloadBytes": 5943885,
+    "payloadEntries": 489,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "upstreamSourceVersion": "0.1.96",
+    "coreIntegrationVersion": "0.4.0"
+  },
+  "native046PhysicalEvidence": {
+    "viewportCorrectionPassed": true,
+    "visibleViewport": "440x956",
+    "surface": "640x1391 canvas -> 439.84375x956 CSS",
+    "gameSmoothness": "materially improved; smaller intermittent hitches remain",
+    "audioPlaybackProblemReported": false,
+    "bestSteadyP95MsRange": [23, 25],
+    "bestSteadyMaxMsRange": [31, 37],
+    "bestSteadyOver50Ms": 0,
+    "residualWorstWindow": { "frames": 336, "durationMs": 10057, "p95Ms": 64, "maxMs": 194 },
+    "musicCpuPerFiveSecondsMsRange": [632, 2918],
+    "musicMaximumCallMsRange": [7, 23],
+    "effectCpuMsExamples": [106, 412, 223, 267, 174, 250],
+    "effectRafCorrelation": "223/267/250 ms effect generation aligns with nearby 236/278/262 ms RAF maxima",
+    "componentBuildError": "t.__type__ occurred twice before successful runtime startup"
+  },
+  "interpretation": {
+    "audibleSoundVsCpu": "continuous correct audio does not exclude synthesis as render-thread CPU pressure",
+    "severePeriodicCadence": "corrected by Native 046",
+    "remainingSteadyPacing": "1024-sample calls occur about 43 times per second, alternating synthesis-heavy and synthesis-light display frames",
+    "remainingLargeHitches": "first-use static SFX/cry synthesis blocks the same main thread for up to hundreds of milliseconds"
+  },
+  "evenMusicScheduling": {
+    "sampleRateHz": 44100,
+    "oldSliceSamples": 1024,
+    "oldBuffers": 128,
+    "oldFillPerUpdate": 1,
+    "newSliceSamples": 512,
+    "newBuffers": 256,
+    "newFillPerUpdate": 2,
+    "maximumSamplesPerUpdate": 1024,
+    "nominalCallsPerSecond": 86.13,
+    "nominalQueueSeconds": 2.972,
+    "synthesisAlgorithmChanged": false,
+    "expectedEffect": "spread average synthesis cost across nearly every 60 Hz frame while keeping the same maximum samples generated per update; physical result not claimed"
+  },
+  "privateEffectCache": {
+    "enabledOnlyForGameSessions": true,
+    "root": "<game>/audio-render-cache-gen1recomp-0.1.96-chip-v1",
+    "format": "PCM WAV plus canonical-signature sidecar",
+    "signatureIncludes": [
+      "game and synthesis namespace",
+      "audio generation and program file",
+      "complete effect header and options",
+      "channel volumes and pitches",
+      "stereo setting"
+    ],
+    "collisionPolicy": "hashed filename is accepted only when the full sidecar signature matches exactly",
+    "corruptionPolicy": "decode failure removes both cache records and synthesizes normally",
+    "firstUse": "synthesizes synchronously, writes private cache and remains measurable",
+    "laterSession": "decodes cached PCM without executing ChipSynth effect generation",
+    "deletion": "game removal deletes the entire game prefix including rendered effects",
+    "persistence": "existing ten-second IDBFS lifecycle flush",
+    "copyrightBoundary": "ROM-derived rendered audio remains private runtime cache and is not packaged, committed or uploaded"
+  },
+  "frameTelemetry": {
+    "module": "love-web-frame.lua",
+    "intervalSeconds": 5,
+    "records": [
+      "love.update calls, aggregate/average/maximum CPU",
+      "love.draw calls, aggregate/average/maximum CPU",
+      "Lua heap kilobytes"
+    ]
+  },
+  "automatedVerification": {
+    "lua54Syntax": "pass for audio/frame/bootstrap adapters",
+    "audioFakeRuntime": "pass: store then signature-verified hit without second synth",
+    "launcherOverlayTests": "pass",
+    "typescriptTargets": 2,
+    "nodeTests": { "total": 109, "passed": 109, "failed": 0 },
+    "pythonTests": { "total": 34, "passed": 31, "skipped": 3, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchEntries": []
+  },
+  "physicalVerification": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "subjectiveSmoothness": "much smoother and more even",
+    "bestWindow": { "frames": 601, "durationMs": 10017, "p95Ms": 20, "p99Ms": 23, "maxMs": 24, "over25Ms": 0 },
+    "otherSteadyP95MsRange": [18, 23],
+    "musicSliceMaximumCpuMsRange": [2, 11],
+    "lateUpdateAverageCpuMsRange": [1.79, 3.31],
+    "lateDrawAverageCpuMsRange": [0.15, 0.33],
+    "renderingCpuConclusion": "draw callback CPU was negligible; residual large first-run stalls occurred inside update",
+    "storedEffects": {
+      "Intro_Crash": 95,
+      "Intro_Whoosh": 358,
+      "Press_AB": 13,
+      "Shrink": 227,
+      "Collision": 20,
+      "Go_Inside": 101,
+      "Go_Outside": 257,
+      "Ball_Toss": 36,
+      "Ball_Poof": 163,
+      "Tink": 15,
+      "Caught_Mon": 254
+    },
+    "cacheHitsObserved": false,
+    "cacheHitReason": "supplied log covers the first store run; second-run evidence was not supplied",
+    "interruption": "an incoming phone call during an earlier attempt left the game completely frozen; no lifecycle lines from that interrupted attempt were available",
+    "touchVisualQuality": "A/B/Start/Select and related controls were reported pixelated and visually dirty",
+    "componentBuildError": "t.__type__ occurred once before successful startup"
+  },
+  "remainingPhysicalVerification": [
+    "Native 048 Retina-native framebuffer and vector control quality",
+    "incoming-call/background pause, resume and watchdog lifecycle lines",
+    "effect cache hits carried forward into Native 048",
+    "performance at 1320x2868 framebuffer resolution",
+    "Ready card, cached relaunch, saves and exact multitouch/release behavior"
+  ],
+  "artifactCopyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

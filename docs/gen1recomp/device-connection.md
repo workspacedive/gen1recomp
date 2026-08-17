@@ -1,0 +1,75 @@
+# Trusted Scripting Device Connection
+
+**Purpose:** retrieve declarations from the exact installed Scripting app and run Phase-0 probes without publicly exposing the unauthenticated local sync service.
+
+## Why this cannot be completed from Arena alone
+
+The reviewed `scripting-cli@1.5.0` starts a LAN HTTP/Socket.IO service and advertises `http://<local-ip>:<port>`. No authentication or pairing-token check was found in the inspected server/router paths. Arena preview URLs are public proxy endpoints, not the phone's trusted local network. Publishing the sync service there could allow unintended file synchronization, so this repository deliberately does not do it.
+
+## Local workstation procedure
+
+Use a Mac/PC and iPhone/iPad on a trusted private network:
+
+1. Install/update Scripting on the device and record app version/build, iOS/iPadOS version and device model.
+2. Create a new empty directory containing no repositories, credentials, ROMs, saves or personal files.
+3. Verify Node.js 20 or newer.
+4. Start the pinned reviewed CLI without automatic editor launch:
+
+   ```bash
+   npx --yes scripting-cli@1.5.0 start --editor=none --no-auto-open --port=3000
+   ```
+
+5. In Scripting, connect to the displayed local service and select/create a dedicated synthetic probe project only.
+6. Confirm one harmless text edit synchronizes both directions.
+7. Locate all app-synchronized `.d.ts` files. Do not edit them.
+8. Stop the CLI when finished; do not leave the LAN service running.
+
+Do not use hotel/public Wi-Fi. Do not port-forward the service. Do not add ROMs, saves, credentials or unrelated Scripting projects to the sync directory.
+
+## Declaration evidence bundle
+
+Return only non-personal declaration/config evidence:
+
+```text
+environment.json                 # app/iOS/device versions; no device identifier
+file-manifest.json               # relative declaration path, byte size, SHA-256
+*.d.ts                           # exact generated declarations
+scripting.config.json            # only after removing machine-specific editor commands/paths
+```
+
+`environment.json` should use:
+
+```json
+{
+  "scriptingAppVersion": "exact visible version/build",
+  "osVersion": "exact iOS/iPadOS version",
+  "deviceModel": "model family only",
+  "capturedAt": "ISO-8601",
+  "notes": []
+}
+```
+
+Before sharing, search the bundle for home-directory paths, account names, tokens, URLs, project content and personal identifiers.
+
+## Repository intake
+
+Place the returned bundle under `.scripting-cache/device/<capture-id>/` (Git-ignored). Record only hashes, version facts and declaration-backed conclusions in versioned research documents. Generated declarations remain evidence, not application source.
+
+The implementation may then add only APIs whose exact signatures exist in that capture. Documentation still controls behavioral/security requirements; declarations control compile-time names and overloads.
+
+## First connected probes
+
+Run in this order with synthetic data:
+
+1. main-runtime `WebAssembly` and bounded allocation checks;
+2. local WebView file loading and tiny WASM instantiation;
+3. WebGL1/WebGL2 context creation and 160×144 nearest-neighbor surface;
+4. user-gesture Web Audio;
+5. simultaneous touch and cancellation;
+6. lifecycle/background/resume;
+7. private storage persistence across exit/relaunch;
+8. the pinned ROM-free love.js smoke bundle.
+
+Two deterministic ROM-free artifacts are available. `Gen1Recomp Phase 0.scripting` runs and closes the lifecycle gate automatically. `Gen1Recomp Preview.scripting` leaves the launcher interactive, mirrors WebView/runtime events to the Scripting console, then flushes and exports diagnostics when dismissed. Import either only after recording the app/iOS/device versions. Both write synthetic reports to `Documents/Gen1Recomp Diagnostics`; return that JSON together with console output and the declaration evidence bundle. Exact metadata is recorded in [`scripting-phase0-package-report.json`](scripting-phase0-package-report.json) and [`scripting-preview-report.json`](scripting-preview-report.json).
+
+Only after these pass should a minimal Gen1Recomp fixture—not a user ROM—be introduced.

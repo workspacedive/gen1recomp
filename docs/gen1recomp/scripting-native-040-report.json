@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-16T23:25:35.387Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-040.scripting",
+    "project": "Gen1Recomp Native 040",
+    "version": "0.4.0",
+    "build": "040",
+    "bytes": 8320470,
+    "entries": 32,
+    "sha256": "2d6ae25c8e8f6dab55c242270b042d14e1d70a76f8cdb0dbd4d3b829fdaf2c96",
+    "payloadSha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a",
+    "payloadEntries": 486,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036"
+  },
+  "automatedVerification": {
+    "typescript": {
+      "architectureTarget": "pass",
+      "scriptingDeclarationTarget": "pass"
+    },
+    "nodeTests": {
+      "total": 104,
+      "passed": 104,
+      "failed": 0
+    },
+    "pythonTests": {
+      "total": 33,
+      "passed": 30,
+      "skipped": 3,
+      "failed": 0
+    },
+    "npmAuditVulnerabilities": 0,
+    "archive": {
+      "zipIntegrity": "pass",
+      "deterministicSecondBuild": "pass",
+      "sortedUniqueEntries": "pass",
+      "romLikeEntries": [],
+      "externalResearchEntries": []
+    }
+  },
+  "browserVerification": {
+    "browser": "Chromium 149.0.7827.0 headless with SwiftShader",
+    "exactArtifactRuntime": true,
+    "diagnostic": {
+      "accepted": true,
+      "ready": true,
+      "failed": false,
+      "frame": 104,
+      "canvas": {
+        "width": 1024,
+        "height": 768,
+        "visible": true
+      },
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": []
+    },
+    "syntheticRomTransfer": {
+      "fixture": "1 MiB all-zero ROM-free fixture with Yellow-sized host metadata; deliberately not a canonical ROM",
+      "acceptedByHostBridge": true,
+      "runtimeReady": true,
+      "upstreamCacheMarkerCreated": false,
+      "temporaryRomFilePresentAfterBoot": false,
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "claim": "This verifies transfer setup and cleanup only. It does not verify ROM identity or extraction."
+    },
+    "maintenance": {
+      "absentDatabaseWasNotCreated": true,
+      "selectedCacheEntriesDeleted": 2,
+      "otherGameCachePreserved": true,
+      "selectedGameSavePreserved": true,
+      "pageErrors": []
+    }
+  },
+  "implemented": [
+    "exact canonical Red, Blue, Yellow, and Gold size/SHA-1 identification",
+    "strict recoverable private game registry with no external source paths",
+    "reverified private pending source and interruption recovery",
+    "one-use in-memory native-to-WebView ROM handoff",
+    "upstream POKEPORT_IMPORT_ROM extraction boundary with no emulator core",
+    "complete v10 marker and required-cache-file readiness checks",
+    "direct --game=<id> launch after a ready import",
+    "native game cards and save-file metadata discovery",
+    "selected-game cache deletion preserving saves and other games",
+    "periodic, visibility, pagehide, and pinned-runtime exit persistence layers"
+  ],
+  "notYetPhysicallyVerified": [
+    "completed canonical Yellow extraction after the Native 0.4.1 global-BitOp correction",
+    "App Group persistence across full script/app relaunch; same-session pending registration is proven",
+    "game-only startup from a physically extracted cache",
+    "save discovery after real gameplay and lifecycle interruption",
+    "cache deletion in WKWebView persistent storage",
+    "input, audio, performance, fidelity, iPad layout, Dynamic Type, and VoiceOver",
+    "Native 0.3.0 component and mod operations"
+  ],
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "saveIncluded": false,
+    "romUsedForAutomatedVerification": false
+  },
+  "physicalVerification": {
+    "status": "partial-failed-at-extraction-compatibility",
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "canonicalYellowIdentityAccepted": true,
+    "privatePendingRegistrationObserved": true,
+    "retryWithoutPickerObserved": true,
+    "runtimeReadyFrames": [
+      17,
+      2,
+      2
+    ],
+    "extractionCompleted": false,
+    "failure": "src/import/Rom.lua:198: attempt to index global bit (a nil value)",
+    "attribution": "love.js PUC-Lua adapter provided require(\"bit\") but not LuaJIT-compatible _G.bit",
+    "fixedInCandidate": "Native 0.4.1 / 041",
+    "intermittentUIObservation": "Failed to build component: t.__type__; screen later rendered and remained actionable"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T00:37:23.676Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-044.scripting",
+    "project": "Gen1Recomp Native 044",
+    "version": "0.4.4",
+    "build": "044",
+    "bytes": 8322573,
+    "entries": 32,
+    "sha256": "a718337d58493fb12f4578eec7a85037b6824893da05996b99d8f068b3501feb",
+    "payloadSha256": "89de911ef5118be90c9df0385abf6f76949573f1d424c377efe5362aa46e9043",
+    "payloadEntries": 486,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036"
+  },
+  "physicalPredecessorEvidence": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "native043": {
+      "canonicalYellowTitleIntroVisible": true,
+      "musicAudibleImmediately": true,
+      "queueLoopFailureRecurred": false,
+      "genericAlertModalRecurred": false,
+      "touchControlsVisible": false,
+      "intermittentNativeComponentErrorRecurred": true
+    }
+  },
+  "touchCorrection": {
+    "cause": "love.js reports Web, while upstream TouchControls activates for Android/iOS or POKEPORT_TOUCH=1",
+    "change": "set upstream-documented POKEPORT_TOUCH=1 in game-session Module.env",
+    "inputTransport": "existing LÖVE touchpressed/touchmoved/touchreleased callbacks",
+    "coreChanged": false,
+    "secondControlImplementationAdded": false
+  },
+  "nativeUiCorrection": {
+    "causeHypothesis": "every prior t.__type__ event immediately preceded WebView presentation after rendering the transient working branch",
+    "change": "keep stable content/card tree mounted while presenting the game WebView; normalize first-import state to content before launch",
+    "physicalResult": "t.__type__ still occurred before runtime startup; the stable-tree change did not eliminate it",
+    "runtimeImpact": "non-blocking in this run",
+    "evidenceLevel": "hypothesis disproved as a complete fix"
+  },
+  "automatedVerification": {
+    "typescriptTargets": 2,
+    "nodeTests": { "total": 104, "passed": 104, "failed": 0 },
+    "pythonTests": { "total": 33, "passed": 30, "skipped": 3, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "deterministicRebuild": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchEntries": []
+  },
+  "browserVerification": {
+    "browser": "Chromium 149.0.7827.0 headless with SwiftShader",
+    "exactArtifactRuntime": true,
+    "gameSessionAccepted": true,
+    "ready": true,
+    "frameObserved": 53,
+    "moduleEnv": {
+      "POKEPORT_TOUCH": "1",
+      "POKEPORT_GAME": "yellow"
+    },
+    "expectedNoCacheEvent": "game.cacheMissing",
+    "pageErrors": []
+  },
+  "physicalVerification": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "runtimeStartedAfterComponentError": true,
+    "readyFrame": 2,
+    "generatedData": { "maps": 223, "species": 151, "moves": 165 },
+    "display": {
+      "logical": "1024x768",
+      "pixels": "1024x768",
+      "integerFitScale": 5
+    },
+    "touchControlsVisible": true,
+    "ordinaryTouchPlayFunctional": true,
+    "progressedMaps": [
+      "REDS_HOUSE_2F",
+      "REDS_HOUSE_1F",
+      "PALLET_TOWN",
+      "OAKS_LAB"
+    ],
+    "defects": [
+      "controls too small",
+      "game presentation too small and less expansive than the native IPA",
+      "strong stutter during Oak introduction, naming, early overworld and battles",
+      "t.__type__ component-build error persisted before runtime startup"
+    ]
+  },
+  "physicalVerificationRequired": [
+    "single and simultaneous touch behavior plus release/reset and stuck-input absence",
+    "native Ready card after dismissal and direct cached boot",
+    "save persistence and management",
+    "adaptive iPhone/iPad layouts",
+    "broader audio/fidelity and measured performance"
+  ],
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

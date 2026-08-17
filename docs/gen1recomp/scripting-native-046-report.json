@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T01:27:00.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-046.scripting",
+    "project": "Gen1Recomp Native 046",
+    "version": "0.4.6",
+    "build": "046",
+    "bytes": 8328280,
+    "entries": 32,
+    "sha256": "82ff76ce5beacce9075fb4f5388fbe19b760d9f5504e8783d582c12a4ec88a96",
+    "payloadSha256": "0e120c4f45bd4ed6134318b55b6cf7e23987bee5977c8f32edd381100ba55050",
+    "payloadBytes": 5941617,
+    "payloadEntries": 488,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "upstreamSourceVersion": "0.1.96",
+    "coreIntegrationVersion": "0.3.0"
+  },
+  "native045Evidence": {
+    "reportedViewport": "1x1 CSS -> 640x640 canvas",
+    "reportedSurface": "640x640 canvas -> 440x440 CSS",
+    "reportedDisplay": "640x640 units and pixels; fit scale 4",
+    "rootCause": "runtime bundle evaluated before WebView presentation while Scripting exposed a 1x1 placeholder layout viewport",
+    "stutterStillVisible": true,
+    "steadyP95RangeMs": [67, 105],
+    "steadyOver50MsPerTenSecondsRange": [26, 52],
+    "worstMeasuredGapMs": 2968,
+    "worstGameplayWindow": {
+      "durationMs": 10044,
+      "animationFrames": 153,
+      "p95Ms": 144,
+      "p99Ms": 1350,
+      "maxMs": 2300
+    },
+    "longTasks": "observer accepted but emitted zero entries despite multi-second RAF gaps",
+    "componentBuildError": "t.__type__ recurred five seconds before successful runtime startup"
+  },
+  "visibleViewportCorrection": {
+    "sessionAcceptedBeforePresentation": true,
+    "bundleDeferred": true,
+    "minimumVisibleShortEdgeCssPixels": 240,
+    "minimumVisibleLongEdgeCssPixels": 320,
+    "stableForMs": 250,
+    "timeoutMs": 15000,
+    "failureMode": "explicit viewport-timeout; no fallback to placeholder geometry",
+    "rendererChanged": false,
+    "stretchingAdded": false
+  },
+  "audioSchedulingCorrection": {
+    "evidence": "steady severe-gap frequency is close to 44100/8192 = 5.38 synchronous music blocks per second",
+    "workerAvailable": false,
+    "sampleRateHz": 44100,
+    "programsChanged": false,
+    "synthEngineChanged": false,
+    "synthesisSampleAlgorithmChanged": false,
+    "chunkSemantics": "the same mutable engine continues sequentially across smaller SoundData blocks",
+    "oldBufferSamples": 8192,
+    "oldBufferCount": 32,
+    "oldFillPerCall": 3,
+    "newBufferSamples": 1024,
+    "newBufferCount": 128,
+    "newInitialFill": 4,
+    "newFillPerCall": 1,
+    "newQueueDurationSeconds": 2.972,
+    "integrationCoreChange": "two ChipAudio constants read optional ChipSynth host fields; all tuning and instrumentation remain in love-web-audio adapter",
+    "expectedEffect": "bound each steady music synthesis hand-off to one eighth of the prior sample count; physical smoothness and audio continuity remain unverified"
+  },
+  "directAudioTelemetry": [
+    "music synthesis call count",
+    "samples synthesized",
+    "aggregate CPU milliseconds",
+    "maximum call CPU milliseconds",
+    "active slice size",
+    "one-shot effect samples and CPU milliseconds"
+  ],
+  "automatedVerification": {
+    "stableVisibleViewportLoaderTest": "pass",
+    "viewportFormFactorTests": "pass",
+    "launcherAudioOverlayAndFillSeamTests": "pass",
+    "typescriptTargets": 2,
+    "nodeTests": { "total": 109, "passed": 109, "failed": 0 },
+    "pythonTests": { "total": 33, "passed": 30, "skipped": 3, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchEntries": []
+  },
+  "browserVerification": {
+    "exactArtifactExtracted": true,
+    "staticBundleAndPayloadAssertions": "pass",
+    "interactiveRuntime": "not rerun because no browser executable is installed and the prior Playwright download remained network-blocked",
+    "notClaimed": ["Lua audio adapter execution", "rendered full-viewport surface", "smoothness", "audio continuity"]
+  },
+  "physicalVerification": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "visibleViewport": "440x956",
+    "plannedBacking": "640x1391",
+    "cssSurface": "439.84375x956",
+    "loveDisplay": "640x1391 units and pixels; fit scale 4",
+    "viewportCorrectionPassed": true,
+    "soundAudiblyProblematic": false,
+    "gameSmoothness": "materially improved but intermittent smaller hitches remain",
+    "steadyBestWindows": [
+      { "frames": 582, "durationMs": 10003, "p95Ms": 23, "p99Ms": 27, "maxMs": 31, "over50Ms": 0 },
+      { "frames": 567, "durationMs": 10005, "p95Ms": 25, "p99Ms": 34, "maxMs": 37, "over50Ms": 0 },
+      { "frames": 586, "durationMs": 10003, "p95Ms": 23, "p99Ms": 27, "maxMs": 34, "over50Ms": 0 }
+    ],
+    "residualWorstWindow": {
+      "frames": 336,
+      "durationMs": 10057,
+      "p50Ms": 24,
+      "p95Ms": 64,
+      "p99Ms": 95,
+      "maxMs": 194,
+      "over50Ms": 38
+    },
+    "musicSynthesis": {
+      "sliceSamples": 1024,
+      "maximumCallCpuMsRange": [7, 23],
+      "aggregateCpuMsPerFiveSecondsRange": [632, 2918],
+      "interpretation": "audio playback was continuous, but synchronous synthesis still consumes main-thread frame budget"
+    },
+    "effectSynthesisCpuMs": [106, 412, 12, 223, 95, 18, 267, 37, 174, 16, 250],
+    "effectCorrelation": "223/267/250 ms first-use effect synthesis aligns with 236/278/262 ms RAF maxima in nearby windows",
+    "componentBuildError": "t.__type__ occurred twice before successful runtime startup"
+  },
+  "remainingPhysicalVerification": [
+    "Native 047 even 512-sample scheduling and update/draw timing",
+    "first-run effect cache stores and second-run cache hits",
+    "residual hitches after cache warm-up",
+    "ordinary and simultaneous/slide/release input regression",
+    "Ready card, cached relaunch and save state"
+  ],
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

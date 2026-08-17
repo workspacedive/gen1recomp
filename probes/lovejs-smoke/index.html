@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gen1Recomp LÖVE Web Probe</title>
+  <link rel="stylesheet" href="probe.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">GEN1RECOMP · PHASE 0</p>
+      <h1>LÖVE 11.5 web-runtime smoke test</h1>
+      <p>This is an isolated runtime probe, not the game and not a Scripting capability result.</p>
+    </header>
+    <section class="status-card" aria-live="polite">
+      <span id="status-dot" class="status-dot pending"></span>
+      <div>
+        <strong id="status-title">Starting WebAssembly runtime…</strong>
+        <p id="status-detail">Waiting for structured Lua probe output.</p>
+      </div>
+    </section>
+    <section class="surface-card">
+      <div id="surface"><canvas id="canvas" width="160" height="144"></canvas></div>
+      <p>A 160 × 144 checkerboard confirms the off-screen canvas was drawn with nearest-neighbor presentation.</p>
+    </section>
+    <section>
+      <div class="section-heading">
+        <h2>Probe log</h2>
+        <button id="copy-log" type="button">Copy</button>
+      </div>
+      <ol id="probe-results"></ol>
+      <pre id="raw-log"></pre>
+    </section>
+    <footer>
+      Browser success does not prove Scripting WebView success. WASM, WebGL, audio, input, persistence and lifecycle still require the physical-device matrix.
+    </footer>
+  </main>
+  <script src="probe-ui.js"></script>
+  <script src="player.js?g=smoke.love&v=11.5&n=1"></script>
+</body>
+</html>

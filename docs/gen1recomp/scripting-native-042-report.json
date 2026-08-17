@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T00:07:20.094Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-042.scripting",
+    "project": "Gen1Recomp Native 042",
+    "version": "0.4.2",
+    "build": "042",
+    "bytes": 8321442,
+    "entries": 32,
+    "sha256": "b111e878c8dfd93065ceeb6f3dcee1e467e7b398ce598d607b0d1763a8d293f5",
+    "payloadSha256": "a8a370be1c86606cb679b57134fdab9c21c615b21e668ddc559151a860f3e276",
+    "payloadEntries": 486,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036"
+  },
+  "physicalPredecessorEvidence": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "native040": "canonical Yellow identity, pending registration/retry, handoff and upstream extractor reached; global BitOp failure",
+    "native041": "global BitOp failure removed; generic pre-window love.js alert remained; underlying WebView-console cause was not forwarded",
+    "nativeComponentObservation": "intermittent Scripting t.__type__ build error recurred while the screen later rendered"
+  },
+  "diagnosticChange": {
+    "scope": "host runtime bootstrap only",
+    "consoleMethods": [
+      "log",
+      "warn",
+      "error"
+    ],
+    "capturesErrorStack": true,
+    "capturesWindowAlert": true,
+    "maximumCharactersPerMessage": 8000,
+    "purpose": "surface the exact Lua/WASM exception hidden by love.js replacing Module.warn with console.warn",
+    "coreChanged": false,
+    "loveChanged": false
+  },
+  "automatedVerification": {
+    "typescriptTargets": 2,
+    "nodeTests": {
+      "total": 104,
+      "passed": 104,
+      "failed": 0
+    },
+    "pythonTests": {
+      "total": 33,
+      "passed": 30,
+      "skipped": 3,
+      "failed": 0
+    },
+    "npmAuditVulnerabilities": 0,
+    "deterministicRebuild": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchEntries": []
+  },
+  "browserVerification": {
+    "browser": "Chromium 149.0.7827.0 headless with SwiftShader",
+    "exactArtifactRuntime": true,
+    "ready": true,
+    "readyEventFrame": 18,
+    "pageErrors": [],
+    "failedRequests": [],
+    "httpErrors": [],
+    "nativeMessageBridge": {
+      "runtimeMessagesObserved": 13,
+      "consoleWarningForwarded": "disabling cache",
+      "consoleErrorFixtureForwarded": "fixture console detail",
+      "alertFixtureForwarded": "Web alert: fixture alert detail"
+    }
+  },
+  "physicalVerificationRequired": [
+    "run Native 0.4.3 Finish Import from the retained Yellow source",
+    "pass game-window initialization without queue-loop exception or generic modal",
+    "transition card to Ready to Play",
+    "then validate direct boot, relaunch cache, saves, lifecycle, audio, input, fidelity and device matrix"
+  ],
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  },
+  "physicalVerification": {
+    "status": "failed-at-queueable-source-looping",
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "readyFrame": 1,
+    "generatedDataLoaded": {
+      "maps": 223,
+      "species": 151,
+      "moves": 165
+    },
+    "gameLoaded": true,
+    "display": "1024x768 units, 1024x768 px, fit scale 5 px/GB px",
+    "error": "Queueable Sources can not be looped.",
+    "genericAlertCaptured": true,
+    "cardStatusAfterDismissal": "pendingExtraction",
+    "intermittentNativeComponentErrorRecurred": true,
+    "attribution": "LÖVE Source::setLooping rejects queueable sources; chip looping is engine-owned and the generic call is redundant",
+    "nextCandidate": "Native 0.4.3 / 043 queue-only looping guard"
+  }
+}

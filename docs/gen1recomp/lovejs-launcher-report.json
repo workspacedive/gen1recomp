@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "evidence": "outside-scripting-rom-free-launcher-boot",
+  "observedAt": "2026-08-16T17:37:50.337Z",
+  "sourcePayload": {
+    "provenance": "deterministic ROM-free package from pinned v0.1.96 source",
+    "revision": "73fbaaa25093338585923b8b9809f2fea7fc59dc",
+    "size": 5936613,
+    "sha256": "a415960eb07f937e616287f40cc84bbe545c8a5fa677d3efd6ca846b3749e33d",
+    "fileEntries": 483,
+    "totalZipEntriesIncludingDirectories": 483,
+    "uncompressedBytes": 15936729,
+    "timestampPolicy": "all entries 1980-01-01T00:00:00",
+    "romOrCacheEntries": []
+  },
+  "preparedPayload": {
+    "size": 5938923,
+    "sha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a",
+    "totalZipEntriesIncludingDirectories": 486,
+    "overlays": [
+      {
+        "archivePath": "bit.lua",
+        "source": "compatibility/love-web/bit.lua",
+        "sha256": "07f3ba40f298bb776e06fb514718bbc82a93cec7b977c8b42fd5e5b002ce3348"
+      },
+      {
+        "archivePath": "love-web-bootstrap.lua",
+        "source": "compatibility/love-web/bootstrap.lua",
+        "sha256": "6dc66d27447fdde6739d0c47f6320baa631bf1813229083d9fb8daed383ace6b"
+      },
+      {
+        "archivePath": "main.lua",
+        "source": "generated host wrapper",
+        "upstreamMain": "gen1recomp-main.lua",
+        "sha256": "d351a6626de4f68964da5df7315a9a3354bc3c49db6c66895ac72641fe03a5b9"
+      }
+    ],
+    "capabilityNormalization": "love.thread.newThread hidden; love.thread Channels preserved",
+    "coreOrLoveSourceChanges": false
+  },
+  "runtime": {
+    "loveJsRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "loveVersion": "11.5",
+    "browser": "HeadlessChromium/149.0.7827.0",
+    "renderer": "ANGLE Vulkan / Google SwiftShader",
+    "serverHeaders": [
+      "Cross-Origin-Opener-Policy: same-origin",
+      "Cross-Origin-Embedder-Policy: require-corp",
+      "Content-Security-Policy",
+      "application/wasm"
+    ]
+  },
+  "result": {
+    "status": "pass",
+    "observationSeconds": 10,
+    "httpStatus": 200,
+    "canvas": {
+      "width": 1024,
+      "height": 768,
+      "visible": true
+    },
+    "spinner": "complete",
+    "loveFactory": "function",
+    "pageErrors": [],
+    "failedRequests": [],
+    "runtimeErrorLines": [],
+    "screenshot": {
+      "tracked": false,
+      "sha256": "aa332c9ee4b584a1bc5a7a17e719e971541d561ac41ad19c40b2d8b61038821a",
+      "bytes": 53202,
+      "pixels": [
+        1280,
+        900
+      ],
+      "uniqueRgbColors": 2015,
+      "nonWhitePixels": 783538
+    },
+    "visualInspection": [
+      "Gen1Recomp++ launcher logo rendered",
+      "Red, Blue, Yellow and Gold tabs rendered",
+      "Red tab displayed ROM REQUIRED and No ROM imported",
+      "Import ROM and save-slot controls rendered",
+      "No ROM-derived game content was present"
+    ],
+    "tabInteraction": {
+      "input": "browser mouse click mapped to L\u00d6VE launcher canvas",
+      "canvasPixels": [
+        1024,
+        768
+      ],
+      "snapshots": {
+        "red": {
+          "sha256": "64545a30a4c97f8e86013fe01e9752228f045818d361d17078a69f468cba6ed3",
+          "bytes": 51533,
+          "uniqueRgbColors": 2034
+        },
+        "blue": {
+          "sha256": "83546479e12e19f33b37546fa84457131662d02bada0e4898347b12f8e3e56d7",
+          "bytes": 51026,
+          "uniqueRgbColors": 2013
+        },
+        "yellow": {
+          "sha256": "d759952d401ca5faa39372dbf7c0f6d5b089e6b9a298194864843618e9dc98fc",
+          "bytes": 51032,
+          "uniqueRgbColors": 2014
+        },
+        "gold": {
+          "sha256": "c7e8cffb4c1a4c48ab56da8be0ff593bdca09bf340d65880b3f4ce7a7ad8adc2",
+          "bytes": 51109,
+          "uniqueRgbColors": 2015
+        }
+      },
+      "consecutivePixelDiffs": {
+        "redToBlue": [
+          82,
+          102,
+          136,
+          156
+        ],
+        "blueToYellow": [
+          82,
+          102,
+          195,
+          156
+        ],
+        "yellowToGold": [
+          141,
+          102,
+          254,
+          156
+        ]
+      },
+      "status": "pass: each tab click produced a distinct rendered canvas state"
+    }
+  },
+  "notProven": [
+    "Scripting or WKWebView execution",
+    "physical iOS rendering, input, audio, lifecycle, persistence or performance",
+    "ROM file-picker bridge or ROM import/extraction",
+    "160x144 in-game rendering",
+    "music, sound effects or chip-audio scheduling",
+    "simultaneous touch or controller input",
+    "save creation/editing/persistence",
+    "mods, network, updates, threads or fallback behavior",
+    "visual parity beyond the observed ROM-free launcher frame"
+  ]
+}

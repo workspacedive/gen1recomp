@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "package": {
+    "name": "Gen1Recomp Preview 014.scripting",
+    "version": "0.1.4",
+    "bytes": 8263309,
+    "entries": 11,
+    "sha256": "70a2cb7febc106f42c5bfbba55636879c560bd24b438ba03871cfcec02242184",
+    "romFree": true
+  },
+  "runtime": {
+    "revision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "payloadSha256": "3112c0d5a8f37f4b584a7cb62cd5d969c2bbda55a88926399d7a588f10d5677a"
+  },
+  "outsideBrowserCharacterization": {
+    "observedAt": "2026-08-16T20:47:23Z",
+    "browser": "HeadlessChrome/149.0.7827.0",
+    "crossOriginIsolated": true,
+    "launcherVisible": true,
+    "canvas": {
+      "width": 1024,
+      "height": 768
+    },
+    "readyFrame": 24,
+    "embeddedPackages": {
+      "gen1recomp.love": 5938923,
+      "lua/normalize1.lua": 2832,
+      "lua/normalize2.lua": 4095,
+      "11.5/love.wasm": 4720510
+    },
+    "shutdown": "pass",
+    "moduleDone": true,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "requestFailures": []
+  },
+  "scriptingDeviceStatus": "not-run",
+  "scope": "Interactive ROM-free first preview; ROM import and full product UI are not implemented"
+}

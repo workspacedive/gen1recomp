@@ -1,0 +1,1228 @@
+{
+  "schemaVersion": 1,
+  "analyzedAt": "2026-08-16T09:27:42+00:00",
+  "source": {
+    "path": "research/downloads/gen1recomp/source-v0.1.96",
+    "revision": "73fbaaa25093338585923b8b9809f2fea7fc59dc",
+    "commitDate": "2026-08-15T23:28:08-04:00",
+    "license": "MIT"
+  },
+  "inventory": {
+    "totalFilesIncludingVendored": 7808,
+    "totalBytesIncludingVendored": 207696353,
+    "projectFilesExcludingMajorVendoredTrees": 1744,
+    "projectBytesExcludingMajorVendoredTrees": 31477048,
+    "extensions": {
+      ".h": 1823,
+      ".lua": 1486,
+      ".c": 1146,
+      ".cpp": 627,
+      ".png": 229,
+      "[none]": 220,
+      ".md": 186,
+      ".html": 153,
+      ".xml": 151,
+      ".hpp": 141,
+      ".txt": 123,
+      ".mk": 116,
+      ".inl": 114,
+      ".java": 93,
+      ".js": 86,
+      ".sh": 82,
+      ".in": 75,
+      ".bmp": 64,
+      ".s": 60,
+      ".py": 57,
+      ".vcxproj": 42,
+      ".m": 41,
+      ".vqs": 39,
+      ".m4": 36,
+      ".cmake": 35,
+      ".am": 33,
+      ".gradle": 26,
+      ".lo": 24,
+      ".yml": 23,
+      ".json": 22,
+      ".properties": 20,
+      ".cc": 19,
+      ".dll": 19,
+      ".bat": 17,
+      ".vcproj": 17,
+      ".config": 15,
+      ".sln": 14,
+      ".plist": 14,
+      ".pl": 12,
+      ".ps1": 12,
+      ".pro": 10,
+      ".filters": 10,
+      ".kt": 9,
+      ".card": 9,
+      ".pbxproj": 8,
+      ".jar": 7,
+      ".dasc": 7,
+      ".rc": 7,
+      ".cs": 7,
+      ".css": 6,
+      ".ac": 6,
+      ".def": 6,
+      ".cg": 6,
+      ".actions": 6,
+      ".parameters": 6,
+      ".mcp": 6,
+      ".ambdec": 6,
+      ".wav": 5,
+      ".a": 4,
+      ".guess": 4,
+      ".sub": 4,
+      ".install": 4,
+      ".csproj": 4,
+      ".jpg": 4,
+      ".lib": 4,
+      ".1": 3,
+      ".pc": 3,
+      ".yaml": 3,
+      ".strings": 3,
+      ".icns": 3,
+      ".dat": 3,
+      ".spec": 3,
+      ".exp": 3,
+      ".ico": 3,
+      ".ttf": 2,
+      ".os2": 2,
+      ".w32": 2,
+      ".xcconfig": 2,
+      ".xcscheme": 2,
+      ".pdf": 2,
+      ".freebsd": 2,
+      ".linux": 2,
+      ".mac": 2,
+      ".mingw": 2,
+      ".inf": 2,
+      ".mmp": 2,
+      ".dsp": 2,
+      ".dsw": 2,
+      ".log": 2,
+      ".status": 2,
+      ".la": 2,
+      ".svg": 2,
+      ".docs": 2,
+      ".manpages": 2,
+      ".xcworkspacedata": 2,
+      ".entitlements": 2,
+      ".mm": 2,
+      ".patch": 2,
+      ".swift": 2,
+      ".command": 1,
+      ".webp": 1,
+      ".dep": 1,
+      ".minimal": 1,
+      ".pandora": 1,
+      ".storyboard": 1,
+      ".info": 1,
+      ".lbc": 1,
+      ".exports": 1,
+      ".rules": 1,
+      ".cur": 1,
+      ".metal": 1,
+      ".xbm": 1,
+      ".markdown": 1,
+      ".hex": 1,
+      ".mif": 1,
+      ".cmd": 1,
+      ".20": 1,
+      ".21": 1,
+      ".22": 1,
+      ".23": 1,
+      ".24": 1,
+      ".25": 1,
+      ".26": 1,
+      ".git": 1,
+      ".os4": 1,
+      ".sic": 1,
+      ".prj": 1,
+      ".awk": 1,
+      ".raw": 1,
+      ".props": 1,
+      ".any": 1,
+      ".cross": 1,
+      ".gnu": 1,
+      ".unix": 1,
+      ".vms": 1,
+      ".cfg": 1,
+      ".cin": 1,
+      ".hin": 1,
+      ".sed": 1,
+      ".com": 1,
+      ".pch": 1,
+      ".6": 1,
+      ".xib": 1,
+      ".pbxuser": 1,
+      ".xcsettings": 1,
+      ".rtf": 1,
+      ".modified": 1,
+      ".libmpg123": 1,
+      ".3dnow": 1,
+      ".gain": 1,
+      ".remote": 1,
+      ".conf": 1,
+      ".xhtml": 1,
+      ".psp": 1,
+      ".pas": 1,
+      ".pom": 1,
+      ".sample": 1,
+      ".mhr": 1,
+      ".ui": 1,
+      ".rgba": 1,
+      ".image": 1,
+      ".sha256": 1,
+      ".manifest": 1
+    },
+    "codeLines": {
+      ".c": 625050,
+      ".h": 577188,
+      ".lua": 452446,
+      ".cpp": 259867,
+      ".hpp": 36303,
+      ".sh": 29846,
+      ".py": 28602,
+      ".java": 20105,
+      ".m": 18528,
+      ".cc": 3831,
+      ".js": 2967,
+      ".kt": 1251,
+      ".mm": 616,
+      ".swift": 513
+    },
+    "largestProjectFiles": [
+      {
+        "path": "assets/fonts/plainpixel/PlainPixel-Regular.ttf",
+        "bytes": 1701336
+      },
+      {
+        "path": "tools/rom_manifest_yellow.json",
+        "bytes": 1152646
+      },
+      {
+        "path": "tools/rom_manifest.json",
+        "bytes": 1061899
+      },
+      {
+        "path": "tools/rom_manifest_blue.json",
+        "bytes": 1061465
+      },
+      {
+        "path": "assets/logo/gen1recomp_cover.png",
+        "bytes": 770821
+      },
+      {
+        "path": ".github/resources/sidestore-badge.png",
+        "bytes": 747487
+      },
+      {
+        "path": ".github/resources/altstore-badge.png",
+        "bytes": 640748
+      },
+      {
+        "path": ".github/resources/feather-badge.png",
+        "bytes": 595455
+      },
+      {
+        "path": ".github/resources/github-badge.png",
+        "bytes": 483189
+      },
+      {
+        "path": "src/world/gen2/World.lua",
+        "bytes": 442758
+      },
+      {
+        "path": "tests/drivers/route.lua",
+        "bytes": 362299
+      },
+      {
+        "path": "tools/rom_manifest_gold.json",
+        "bytes": 347729
+      },
+      {
+        "path": "src/battle/BattleState.lua",
+        "bytes": 265727
+      },
+      {
+        "path": "assets/labels/yellow.png",
+        "bytes": 257215
+      },
+      {
+        "path": "src/import/RomExtractorGen2.lua",
+        "bytes": 254036
+      },
+      {
+        "path": "assets/labels/blue.png",
+        "bytes": 248627
+      },
+      {
+        "path": "assets/labels/red.png",
+        "bytes": 248350
+      },
+      {
+        "path": "assets/labels/gold.png",
+        "bytes": 241127
+      },
+      {
+        "path": "src/world/OverworldController.lua",
+        "bytes": 234234
+      },
+      {
+        "path": "assets/labels/crystal.png",
+        "bytes": 222121
+      },
+      {
+        "path": "src/battle/gen2/Battle.lua",
+        "bytes": 204192
+      },
+      {
+        "path": "src/import/RomImporter.lua",
+        "bytes": 177575
+      },
+      {
+        "path": "assets/labels/silver.png",
+        "bytes": 169473
+      },
+      {
+        "path": "tests/run_tests.lua",
+        "bytes": 166869
+      },
+      {
+        "path": "src/import/LauncherView.lua",
+        "bytes": 165920
+      },
+      {
+        "path": "tests/gen2_world_test.lua",
+        "bytes": 155132
+      },
+      {
+        "path": "docs/gold-walkthrough/asm-walk/README.md",
+        "bytes": 151479
+      },
+      {
+        "path": "src/ui/gen2/BattleState.lua",
+        "bytes": 150997
+      },
+      {
+        "path": "tools/modkit.py",
+        "bytes": 149000
+      },
+      {
+        "path": "tests/drivers/gold/map_regions.lua",
+        "bytes": 148528
+      }
+    ]
+  },
+  "versions": {
+    "engine": "0.0.0-dev",
+    "shell": 1,
+    "payloadHost": "love",
+    "minShell": 1,
+    "modApi": 2,
+    "linkProtocol": 2,
+    "saveFormat": 4,
+    "cache": "rom-cache-v5",
+    "loveConfig": {
+      "ios": "12.0",
+      "other": "11.5"
+    },
+    "iosLoveVersionFile": "12.0",
+    "androidGradle": {
+      "app.application_id": "com.theboisclub.pokemonred",
+      "app.version_name": "0.1.96",
+      "app.version_code": "196",
+      "app.orientation": "fullUser"
+    }
+  },
+  "luaArchitecture": {
+    "components": {
+      "audio": {
+        "files": 1,
+        "lines": 408,
+        "loveReferences": 0,
+        "loveFiles": 0
+      },
+      "battle": {
+        "files": 33,
+        "lines": 22923,
+        "loveReferences": 153,
+        "loveFiles": 15
+      },
+      "core": {
+        "files": 67,
+        "lines": 26653,
+        "loveReferences": 304,
+        "loveFiles": 33
+      },
+      "debug": {
+        "files": 1,
+        "lines": 261,
+        "loveReferences": 9,
+        "loveFiles": 1
+      },
+      "dev": {
+        "files": 2,
+        "lines": 464,
+        "loveReferences": 10,
+        "loveFiles": 2
+      },
+      "entry": {
+        "files": 1,
+        "lines": 1038,
+        "loveReferences": 118,
+        "loveFiles": 1
+      },
+      "import": {
+        "files": 12,
+        "lines": 18517,
+        "loveReferences": 384,
+        "loveFiles": 9
+      },
+      "inventory": {
+        "files": 3,
+        "lines": 776,
+        "loveReferences": 0,
+        "loveFiles": 0
+      },
+      "link": {
+        "files": 10,
+        "lines": 4910,
+        "loveReferences": 19,
+        "loveFiles": 4
+      },
+      "mods": {
+        "files": 27,
+        "lines": 14691,
+        "loveReferences": 139,
+        "loveFiles": 16
+      },
+      "net": {
+        "files": 3,
+        "lines": 463,
+        "loveReferences": 39,
+        "loveFiles": 3
+      },
+      "pokemon": {
+        "files": 7,
+        "lines": 690,
+        "loveReferences": 3,
+        "loveFiles": 2
+      },
+      "render": {
+        "files": 19,
+        "lines": 6989,
+        "loveReferences": 262,
+        "loveFiles": 15
+      },
+      "save_convert": {
+        "files": 9,
+        "lines": 4668,
+        "loveReferences": 7,
+        "loveFiles": 1
+      },
+      "script": {
+        "files": 10,
+        "lines": 8384,
+        "loveReferences": 7,
+        "loveFiles": 2
+      },
+      "ui": {
+        "files": 103,
+        "lines": 46813,
+        "loveReferences": 799,
+        "loveFiles": 92
+      },
+      "update": {
+        "files": 6,
+        "lines": 1275,
+        "loveReferences": 79,
+        "loveFiles": 4
+      },
+      "world": {
+        "files": 32,
+        "lines": 23881,
+        "loveReferences": 170,
+        "loveFiles": 10
+      }
+    },
+    "crossComponentRequireEdges": [
+      {
+        "from": "ui",
+        "to": "core",
+        "requires": 255,
+        "files": 82
+      },
+      {
+        "from": "ui",
+        "to": "render",
+        "requires": 188,
+        "files": 66
+      },
+      {
+        "from": "world",
+        "to": "core",
+        "requires": 117,
+        "files": 15
+      },
+      {
+        "from": "battle",
+        "to": "core",
+        "requires": 67,
+        "files": 12
+      },
+      {
+        "from": "import",
+        "to": "mods",
+        "requires": 54,
+        "files": 2
+      },
+      {
+        "from": "core",
+        "to": "render",
+        "requires": 48,
+        "files": 4
+      },
+      {
+        "from": "mods",
+        "to": "core",
+        "requires": 47,
+        "files": 16
+      },
+      {
+        "from": "script",
+        "to": "core",
+        "requires": 41,
+        "files": 7
+      },
+      {
+        "from": "world",
+        "to": "render",
+        "requires": 39,
+        "files": 12
+      },
+      {
+        "from": "import",
+        "to": "core",
+        "requires": 35,
+        "files": 6
+      },
+      {
+        "from": "ui",
+        "to": "pokemon",
+        "requires": 28,
+        "files": 17
+      },
+      {
+        "from": "ui",
+        "to": "world",
+        "requires": 27,
+        "files": 23
+      },
+      {
+        "from": "battle",
+        "to": "render",
+        "requires": 25,
+        "files": 3
+      },
+      {
+        "from": "core",
+        "to": "mods",
+        "requires": 25,
+        "files": 22
+      },
+      {
+        "from": "entry",
+        "to": "core",
+        "requires": 25,
+        "files": 1
+      },
+      {
+        "from": "ui",
+        "to": "battle",
+        "requires": 24,
+        "files": 12
+      },
+      {
+        "from": "ui",
+        "to": "mods",
+        "requires": 24,
+        "files": 24
+      },
+      {
+        "from": "core",
+        "to": "battle",
+        "requires": 19,
+        "files": 11
+      },
+      {
+        "from": "link",
+        "to": "core",
+        "requires": 16,
+        "files": 6
+      },
+      {
+        "from": "ui",
+        "to": "inventory",
+        "requires": 16,
+        "files": 13
+      },
+      {
+        "from": "render",
+        "to": "core",
+        "requires": 14,
+        "files": 8
+      },
+      {
+        "from": "battle",
+        "to": "pokemon",
+        "requires": 12,
+        "files": 4
+      },
+      {
+        "from": "world",
+        "to": "mods",
+        "requires": 12,
+        "files": 11
+      },
+      {
+        "from": "inventory",
+        "to": "core",
+        "requires": 11,
+        "files": 2
+      },
+      {
+        "from": "world",
+        "to": "battle",
+        "requires": 11,
+        "files": 5
+      },
+      {
+        "from": "battle",
+        "to": "mods",
+        "requires": 10,
+        "files": 10
+      },
+      {
+        "from": "script",
+        "to": "world",
+        "requires": 10,
+        "files": 3
+      },
+      {
+        "from": "world",
+        "to": "script",
+        "requires": 9,
+        "files": 4
+      },
+      {
+        "from": "mods",
+        "to": "link",
+        "requires": 8,
+        "files": 8
+      },
+      {
+        "from": "world",
+        "to": "pokemon",
+        "requires": 8,
+        "files": 4
+      },
+      {
+        "from": "entry",
+        "to": "import",
+        "requires": 7,
+        "files": 1
+      },
+      {
+        "from": "mods",
+        "to": "ui",
+        "requires": 7,
+        "files": 2
+      },
+      {
+        "from": "battle",
+        "to": "ui",
+        "requires": 6,
+        "files": 2
+      },
+      {
+        "from": "core",
+        "to": "world",
+        "requires": 6,
+        "files": 3
+      },
+      {
+        "from": "link",
+        "to": "mods",
+        "requires": 6,
+        "files": 6
+      },
+      {
+        "from": "script",
+        "to": "pokemon",
+        "requires": 6,
+        "files": 1
+      },
+      {
+        "from": "link",
+        "to": "battle",
+        "requires": 5,
+        "files": 2
+      },
+      {
+        "from": "link",
+        "to": "render",
+        "requires": 5,
+        "files": 3
+      },
+      {
+        "from": "mods",
+        "to": "net",
+        "requires": 5,
+        "files": 3
+      },
+      {
+        "from": "pokemon",
+        "to": "core",
+        "requires": 5,
+        "files": 3
+      },
+      {
+        "from": "world",
+        "to": "ui",
+        "requires": 5,
+        "files": 2
+      },
+      {
+        "from": "core",
+        "to": "ui",
+        "requires": 4,
+        "files": 2
+      },
+      {
+        "from": "dev",
+        "to": "mods",
+        "requires": 4,
+        "files": 2
+      },
+      {
+        "from": "import",
+        "to": "ui",
+        "requires": 4,
+        "files": 1
+      },
+      {
+        "from": "inventory",
+        "to": "world",
+        "requires": 4,
+        "files": 1
+      },
+      {
+        "from": "link",
+        "to": "pokemon",
+        "requires": 4,
+        "files": 3
+      },
+      {
+        "from": "render",
+        "to": "mods",
+        "requires": 4,
+        "files": 4
+      },
+      {
+        "from": "script",
+        "to": "battle",
+        "requires": 4,
+        "files": 2
+      },
+      {
+        "from": "script",
+        "to": "mods",
+        "requires": 4,
+        "files": 4
+      },
+      {
+        "from": "world",
+        "to": "inventory",
+        "requires": 4,
+        "files": 2
+      },
+      {
+        "from": "battle",
+        "to": "world",
+        "requires": 3,
+        "files": 1
+      },
+      {
+        "from": "core",
+        "to": "pokemon",
+        "requires": 3,
+        "files": 2
+      },
+      {
+        "from": "dev",
+        "to": "pokemon",
+        "requires": 3,
+        "files": 1
+      },
+      {
+        "from": "inventory",
+        "to": "pokemon",
+        "requires": 3,
+        "files": 1
+      },
+      {
+        "from": "mods",
+        "to": "import",
+        "requires": 3,
+        "files": 3
+      },
+      {
+        "from": "mods",
+        "to": "render",
+        "requires": 3,
+        "files": 2
+      },
+      {
+        "from": "script",
+        "to": "render",
+        "requires": 3,
+        "files": 2
+      },
+      {
+        "from": "script",
+        "to": "ui",
+        "requires": 3,
+        "files": 2
+      },
+      {
+        "from": "update",
+        "to": "core",
+        "requires": 3,
+        "files": 3
+      },
+      {
+        "from": "core",
+        "to": "debug",
+        "requires": 2,
+        "files": 1
+      },
+      {
+        "from": "core",
+        "to": "dev",
+        "requires": 2,
+        "files": 1
+      },
+      {
+        "from": "core",
+        "to": "inventory",
+        "requires": 2,
+        "files": 1
+      },
+      {
+        "from": "debug",
+        "to": "core",
+        "requires": 2,
+        "files": 1
+      },
+      {
+        "from": "dev",
+        "to": "render",
+        "requires": 2,
+        "files": 2
+      },
+      {
+        "from": "entry",
+        "to": "debug",
+        "requires": 2,
+        "files": 1
+      },
+      {
+        "from": "import",
+        "to": "net",
+        "requires": 2,
+        "files": 1
+      },
+      {
+        "from": "pokemon",
+        "to": "mods",
+        "requires": 2,
+        "files": 2
+      },
+      {
+        "from": "pokemon",
+        "to": "render",
+        "requires": 2,
+        "files": 2
+      },
+      {
+        "from": "render",
+        "to": "battle",
+        "requires": 2,
+        "files": 2
+      },
+      {
+        "from": "render",
+        "to": "ui",
+        "requires": 2,
+        "files": 1
+      },
+      {
+        "from": "update",
+        "to": "link",
+        "requires": 2,
+        "files": 2
+      },
+      {
+        "from": "battle",
+        "to": "inventory",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "core",
+        "to": "import",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "core",
+        "to": "link",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "core",
+        "to": "script",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "debug",
+        "to": "render",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "dev",
+        "to": "core",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "dev",
+        "to": "inventory",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "dev",
+        "to": "world",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "entry",
+        "to": "mods",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "entry",
+        "to": "net",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "entry",
+        "to": "ui",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "entry",
+        "to": "update",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "import",
+        "to": "link",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "import",
+        "to": "save_convert",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "import",
+        "to": "script",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "import",
+        "to": "update",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "inventory",
+        "to": "script",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "link",
+        "to": "ui",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "link",
+        "to": "world",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "mods",
+        "to": "world",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "pokemon",
+        "to": "battle",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "pokemon",
+        "to": "ui",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "pokemon",
+        "to": "world",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "render",
+        "to": "script",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "render",
+        "to": "world",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "script",
+        "to": "inventory",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "ui",
+        "to": "link",
+        "requires": 1,
+        "files": 1
+      },
+      {
+        "from": "ui",
+        "to": "script",
+        "requires": 1,
+        "files": 1
+      }
+    ],
+    "loveModules": {
+      "graphics": 1350,
+      "filesystem": 356,
+      "system": 185,
+      "math": 116,
+      "thread": 69,
+      "timer": 60,
+      "image": 49,
+      "window": 46,
+      "mouse": 44,
+      "event": 38,
+      "keyboard": 26,
+      "audio": 17,
+      "touch": 15,
+      "load": 14,
+      "sound": 11,
+      "joystick": 10,
+      "data": 10,
+      "quit": 9,
+      "run": 8,
+      "wheelmoved": 6,
+      "draw": 5,
+      "focus": 5,
+      "update": 4,
+      "touchpressed": 4,
+      "textinput": 4,
+      "errorhandler": 3,
+      "gamepadpressed": 3,
+      "conf": 3,
+      "getVersion": 3,
+      "joystickpressed": 2,
+      "visible": 2,
+      "mousemoved": 2,
+      "filedropped": 2,
+      "dll": 2,
+      "keypressed": 1,
+      "keyreleased": 1,
+      "gamepadreleased": 1,
+      "gamepadaxis": 1,
+      "joystickreleased": 1,
+      "joystickaxis": 1,
+      "joystickhat": 1,
+      "joystickadded": 1,
+      "joystickremoved": 1,
+      "lowmemory": 1,
+      "touchmoved": 1,
+      "touchreleased": 1,
+      "mousepressed": 1,
+      "mousereleased": 1,
+      "arg": 1,
+      "handlers": 1,
+      "resize": 1,
+      "_os": 1,
+      "cpp": 1
+    },
+    "ffiFiles": [
+      "src/core/DiscordPresence.lua",
+      "src/core/HostShell.lua",
+      "src/core/NxDisplay.lua",
+      "src/core/Orientation.lua",
+      "src/import/CacheFs.lua",
+      "src/net/Gen1Tls.lua",
+      "src/render/SecondScreen.lua"
+    ],
+    "jitFiles": [
+      "src/core/Performance.lua",
+      "src/core/SaveSerializer.lua"
+    ],
+    "lua51SpecificFiles": [
+      "src/battle/gen2/AnimObjects.lua",
+      "src/battle/gen2/AnimRunner.lua",
+      "src/battle/gen2/Battle.lua",
+      "src/battle/gen2/BgEffects.lua",
+      "src/core/ChipSynth.lua",
+      "src/core/Data.lua",
+      "src/core/gen2/Breeding.lua",
+      "src/core/gen2/Phone.lua",
+      "src/dev/Console.lua",
+      "src/import/Rom.lua",
+      "src/import/RomExtractor.lua",
+      "src/import/RomExtractorGen2.lua",
+      "src/link/Fingerprint.lua",
+      "src/link/LinkBattle.lua",
+      "src/mods/AssetTransform.lua",
+      "src/mods/Hooks.lua",
+      "src/mods/LauncherMods.lua",
+      "src/mods/LegacyCompat.lua",
+      "src/mods/Sandbox.lua",
+      "src/mods/Schemas.lua",
+      "src/mods/job_worker.lua",
+      "src/render/GbcPalette.lua",
+      "src/save_convert/GenSave.lua",
+      "src/save_convert/SaveConvert.lua",
+      "src/script/ScriptRunner.lua",
+      "src/script/gen2/Movement.lua",
+      "src/script/gen2/Specials.lua",
+      "src/script/gen2/Vm.lua",
+      "src/ui/gen2/BattleAnimView.lua",
+      "src/ui/gen2/BattleState.lua",
+      "src/ui/gen2/Credits.lua",
+      "src/ui/gen2/SpriteAnims.lua",
+      "src/update/Boot.lua",
+      "src/world/gen2/FieldMoves.lua",
+      "src/world/gen2/World.lua"
+    ],
+    "nonSrcRequires": {
+      "bit": 11,
+      "love.timer": 5,
+      "love.filesystem": 5,
+      "love.thread": 4,
+      "love.system": 3,
+      "io": 3,
+      "data.scripts.victories": 2,
+      "ffi": 2,
+      "data.generated.*": 2,
+      "data.scripts.init": 2,
+      "Kit": 1,
+      "Party": 1,
+      "tests.autopilot": 1,
+      "App": 1,
+      "data.generated.battle_anims": 1,
+      "data.scripts.ai_classes": 1,
+      "love.sound": 1,
+      "love.image": 1,
+      "love.math": 1,
+      "socket": 1,
+      "%s": 1,
+      "os": 1,
+      "love.data": 1,
+      "data.scripts.gyms": 1
+    }
+  },
+  "tests": {
+    "files": 883,
+    "groups": {
+      "drivers": 348,
+      "root": 298,
+      "engine": 172,
+      "modkit": 31,
+      "fixture_data": 26,
+      "content_red": 4,
+      "goldens": 2,
+      "integration": 2
+    }
+  },
+  "artifacts": [
+    {
+      "path": "research/downloads/gen1recomp/android-v0.1.96/source-built/game.love",
+      "size": 5933391,
+      "sha256": "ac7eace7af964834df9f235d0f82dfe35e31de3599c305596f860765b0c920d3",
+      "zipIntegrity": "passed",
+      "unsafePaths": [],
+      "entries": 483,
+      "compressedBytes": 5840167,
+      "uncompressedBytes": 15936729,
+      "extensions": {
+        ".lua": 451,
+        ".png": 23,
+        ".json": 4,
+        ".md": 3,
+        ".ttf": 1,
+        ".webp": 1
+      },
+      "topLevels": {
+        "src": 345,
+        "data": 85,
+        "assets": 27,
+        "tools": 24,
+        "main.lua": 1,
+        "conf.lua": 1
+      },
+      "romCacheLikeEntries": [],
+      "nativeAbis": []
+    },
+    {
+      "path": "research/downloads/gen1recomp/release-v0.1.96/gen1recomp-0.1.96-android.apk",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "error": "empty artifact"
+    }
+  ]
+}

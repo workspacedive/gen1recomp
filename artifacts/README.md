@@ -1,23 +1,25 @@
 # Importable Scripting packages
 
-## Current: Gen1Recomp Native 044
+## Current: Gen1Recomp Native 045
 
-- [`Gen1Recomp-Native-044.scripting`](Gen1Recomp-Native-044.scripting)
-- Project: `Gen1Recomp Native 044`
-- Version: 0.4.4
-- Build: 044
-- Size: 8,322,573 bytes
-- SHA-256: `a718337d58493fb12f4578eec7a85037b6824893da05996b99d8f068b3501feb`
+- [`Gen1Recomp-Native-045.scripting`](Gen1Recomp-Native-045.scripting)
+- Project: `Gen1Recomp Native 045`
+- Version: 0.4.5
+- Build: 045
+- Size: 8,325,762 bytes
+- SHA-256: `f0f73aa281c506bdd070651d88cdce996f1050a2812adb439e8c9504c58bef10`
 - Entries: 32
+- Embedded payload: 5,940,145 bytes / 487 entries / SHA-256 `da5390b392b5b005abf36872920d119f5b15265867b71100e826691a62f55cd9`
 
-Native 0.4.3 physically reached the canonical Yellow title/intro with immediately audible music and no queue-loop error or generic modal. On-screen controls were absent because love.js reports `Web`, while upstream enables its overlay only on Android/iOS or through `POKEPORT_TOUCH=1`.
+Native 0.4.4 physically proved visible and functional upstream D-pad/A/B/Start/Select controls through ordinary Yellow play into Oak's Lab. That run also established the next defects: the fixed 1024×768 canvas made the game and controls too small, showed less field than the `.ipa`, and stuttered strongly in Oak's introduction, naming, overworld and battles. The separate Scripting `t.__type__` event recurred before successful runtime startup, so it is not claimed fixed.
 
-Native 0.4.4 sets that upstream-documented override for game sessions, retaining LÖVE's existing touch callbacks and upstream D-pad/A/B/Start/Select implementation. No browser-side duplicate controls or emulator input layer is added. A browser game-session probe confirmed the exact artifact supplies `POKEPORT_TOUCH=1` and `POKEPORT_GAME=yellow` to the runtime.
+Native 0.4.5 keeps the upstream renderer and touch controls. A generated host `conf.lua` wrapper supplies an aspect-matched, bounded backing surface before window creation: integer game scale 4 on phone viewports and 5 on tablet viewports, with the long edge left to Gen1Recomp's expanded-world renderer. The canvas is uniformly contained by the WebView rather than stretched. This geometry is intended to enlarge the existing controls and fill the available view without multiplying fill rate by Retina DPR.
 
-Native 0.4.4 also avoids rebuilding the transient native working tree immediately before WebView presentation, the transition correlated with every physical `t.__type__` component-build event.
+Raw ten-second RAF interval distributions, gap counts, Long Tasks data when supported, visibility, runtime frame, CSS viewport, backing dimensions and DPR are logged. Native 0.4.5 is therefore a physical adaptive-viewport and measurement candidate; it does **not** claim that stutter is already corrected.
 
 ## Previous evidence packages
 
+- [`Gen1Recomp-Native-044.scripting`](Gen1Recomp-Native-044.scripting) — physically proved ordinary touch-controlled play into Oak's Lab and exposed scaling/stutter defects.
 - [`Gen1Recomp-Native-043.scripting`](Gen1Recomp-Native-043.scripting) — physically reached Yellow title/intro and immediately audible music.
 - [`Gen1Recomp-Native-042.scripting`](Gen1Recomp-Native-042.scripting) — physically generated/loaded Yellow data and attributed queueable-source looping.
 - [`Gen1Recomp-Native-041.scripting`](Gen1Recomp-Native-041.scripting) — removed the global-BitOp error.

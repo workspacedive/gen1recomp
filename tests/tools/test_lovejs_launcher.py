@@ -26,11 +26,14 @@ class LauncherPreparationTests(unittest.TestCase):
             output = Path(directory) / "overlaid.love"
             with zipfile.ZipFile(source, "w") as archive:
                 archive.writestr("main.lua", b"return true")
+                archive.writestr("conf.lua", b"function love.conf(t) t.window.width = 1024 end")
                 archive.writestr("src/core.lua", b"return {}")
             report = launcher.add_compatibility_overlay(source, output)
             with zipfile.ZipFile(output) as archive:
                 self.assertEqual(archive.read("gen1recomp-main.lua"), b"return true")
                 self.assertIn(b"love-web-bootstrap", archive.read("main.lua"))
+                self.assertIn(b"t.window.width = 1024", archive.read("gen1recomp-conf.lua"))
+                self.assertIn(b"POKEPORT_VIEW_WIDTH", archive.read("conf.lua"))
                 self.assertEqual(
                     archive.read("bit.lua"),
                     (ROOT / "compatibility" / "love-web" / "bit.lua").read_bytes(),
@@ -39,7 +42,7 @@ class LauncherPreparationTests(unittest.TestCase):
                     archive.read("love-web-bootstrap.lua"),
                     (ROOT / "compatibility" / "love-web" / "bootstrap.lua").read_bytes(),
                 )
-            self.assertEqual(report["entries"], 5)
+            self.assertEqual(report["entries"], 7)
 
     def test_overlay_rejects_traversal_and_existing_bit_module(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -33,7 +33,7 @@ class PackageSystemUpdatesTests(unittest.TestCase):
 
             catalog = json.loads((first / "catalog" / "stable.json").read_text(encoding="utf-8"))
             self.assertEqual(catalog["domain"], "system")
-            self.assertEqual(catalog["sequence"], 1)
+            self.assertEqual(catalog["sequence"], 2)
             self.assertEqual(
                 {release["manifest"]["id"] for release in catalog["releases"]},
                 {packager.RUNTIME_COMPONENT_ID, packager.CORE_COMPONENT_ID},

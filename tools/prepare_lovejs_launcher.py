@@ -35,7 +35,9 @@ BIT_SHIM = COMPATIBILITY_ROOT / "bit.lua"
 BOOTSTRAP = COMPATIBILITY_ROOT / "bootstrap.lua"
 PROBE_FILES = ("index.html", "launcher-probe.js", "launcher-probe.css")
 ORIGINAL_MAIN = "gen1recomp-main.lua"
+ORIGINAL_CONF = "gen1recomp-conf.lua"
 MAIN_WRAPPER = b'''-- Generated host wrapper; original upstream main.lua is gen1recomp-main.lua.\nlocal Bootstrap = require("love-web-bootstrap")\nBootstrap.install(love, {\n  disableThreadWorkers = true,\n  threadReason = "love.js 11.5 worker construction probe failed",\n})\nlocal main, loadError = love.filesystem.load("gen1recomp-main.lua")\nassert(main, loadError)\nreturn main()\n'''
+CONF_WRAPPER = b'''-- Generated host display wrapper; upstream conf.lua is gen1recomp-conf.lua.\nlocal conf, loadError = love.filesystem.load("gen1recomp-conf.lua")\nassert(conf, loadError)\nconf()\nlocal upstreamConf = assert(love.conf, "upstream love.conf missing")\nfunction love.conf(t)\n  upstreamConf(t)\n  local width = tonumber(os.getenv("POKEPORT_VIEW_WIDTH"))\n  local height = tonumber(os.getenv("POKEPORT_VIEW_HEIGHT"))\n  if width and height and width >= 320 and height >= 288\n      and width <= 2048 and height <= 2048 then\n    t.window.width = math.floor(width)\n    t.window.height = math.floor(height)\n    t.window.fullscreen = false\n    t.window.resizable = true\n    t.window.highdpi = false\n  end\nend\n'''
 
 
 def safe_archive_path(name: str) -> bool:
@@ -64,7 +66,12 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             raise RuntimeError(f"source payload contains unsafe paths: {unsafe[:3]}")
         if symlinks:
             raise RuntimeError(f"source payload contains symbolic links: {symlinks[:3]}")
-        reserved = {"bit.lua", "love-web-bootstrap.lua", ORIGINAL_MAIN}
+        reserved = {
+            "bit.lua",
+            "love-web-bootstrap.lua",
+            ORIGINAL_MAIN,
+            ORIGINAL_CONF,
+        }
         conflicts = sorted(reserved.intersection(names))
         if conflicts:
             raise RuntimeError(
@@ -76,6 +83,9 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
                 if info.filename == "main.lua":
                     target_info = copy.copy(info)
                     target_info.filename = ORIGINAL_MAIN
+                elif info.filename == "conf.lua":
+                    target_info = copy.copy(info)
+                    target_info.filename = ORIGINAL_CONF
                 output.writestr(target_info, original.read(info.filename))
 
             def overlay(path: str, data: bytes) -> None:
@@ -85,6 +95,7 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
                 output.writestr(overlay_info, data)
 
             overlay("main.lua", MAIN_WRAPPER)
+            overlay("conf.lua", CONF_WRAPPER)
             overlay("bit.lua", BIT_SHIM.read_bytes())
             overlay("love-web-bootstrap.lua", BOOTSTRAP.read_bytes())
 
@@ -111,6 +122,12 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
                     "source": "generated host wrapper",
                     "upstreamMain": ORIGINAL_MAIN,
                     "sha256": hashlib.sha256(MAIN_WRAPPER).hexdigest(),
+                },
+                {
+                    "path": "conf.lua",
+                    "source": "generated host display wrapper",
+                    "upstreamConf": ORIGINAL_CONF,
+                    "sha256": hashlib.sha256(CONF_WRAPPER).hexdigest(),
                 },
             ],
         }

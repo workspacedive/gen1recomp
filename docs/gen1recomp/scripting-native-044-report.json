@@ -36,9 +36,11 @@
     "secondControlImplementationAdded": false
   },
   "nativeUiCorrection": {
-    "causeHypothesis": "every t.__type__ event immediately preceded WebView presentation after rendering the transient working branch",
+    "causeHypothesis": "every prior t.__type__ event immediately preceded WebView presentation after rendering the transient working branch",
     "change": "keep stable content/card tree mounted while presenting the game WebView; normalize first-import state to content before launch",
-    "evidenceLevel": "targeted physical regression required"
+    "physicalResult": "t.__type__ still occurred before runtime startup; the stable-tree change did not eliminate it",
+    "runtimeImpact": "non-blocking in this run",
+    "evidenceLevel": "hypothesis disproved as a complete fix"
   },
   "automatedVerification": {
     "typescriptTargets": 2,
@@ -62,12 +64,41 @@
     "expectedNoCacheEvent": "game.cacheMissing",
     "pageErrors": []
   },
+  "physicalVerification": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "runtimeStartedAfterComponentError": true,
+    "readyFrame": 2,
+    "generatedData": { "maps": 223, "species": 151, "moves": 165 },
+    "display": {
+      "logical": "1024x768",
+      "pixels": "1024x768",
+      "integerFitScale": 5
+    },
+    "touchControlsVisible": true,
+    "ordinaryTouchPlayFunctional": true,
+    "progressedMaps": [
+      "REDS_HOUSE_2F",
+      "REDS_HOUSE_1F",
+      "PALLET_TOWN",
+      "OAKS_LAB"
+    ],
+    "defects": [
+      "controls too small",
+      "game presentation too small and less expansive than the native IPA",
+      "strong stutter during Oak introduction, naming, early overworld and battles",
+      "t.__type__ component-build error persisted before runtime startup"
+    ]
+  },
   "physicalVerificationRequired": [
-    "visible D-pad, A, B, Start and Select on Yellow title/game",
-    "single and simultaneous touch behavior plus release/reset",
-    "native Ready card after dismissal",
-    "no recurring t.__type__ launch-transition error",
-    "then direct boot, relaunch cache, saves, lifecycle, broader audio/fidelity and device matrix"
+    "single and simultaneous touch behavior plus release/reset and stuck-input absence",
+    "native Ready card after dismissal and direct cached boot",
+    "save persistence and management",
+    "adaptive iPhone/iPad layouts",
+    "broader audio/fidelity and measured performance"
   ],
   "copyrightBoundary": {
     "romIncluded": false,

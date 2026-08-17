@@ -99,6 +99,14 @@ No on-screen touch controls appeared. Attribution is architectural rather than c
 
 Native 0.4.4 also keeps the stable native card tree mounted during WebView presentation instead of rendering a transient `working` branch immediately before the modal. That exact transition preceded every recurring Scripting `t.__type__` component-build event and is removed as the smallest evidence-driven UI correction.
 
+## Run 011 — Native 0.4.4 proves touch play and exposes viewport/performance defects
+
+On iPhone 16 Pro Max / iOS 26.6 / Scripting 3.2.0, Native 0.4.4 started after the `t.__type__` component-build event recurred. It reached ready frame 2, loaded 223 maps, 151 species and 165 moves, and reported a fixed 1024×768 logical/pixel display at fit scale 5. The D-pad, A, B, Start and Select controls appeared and worked for ordinary play. The user moved from Red's upstairs room through the ground floor and Pallet Town into Oak's Lab. This closes the absent-controls defect and proves the basic upstream touch path; it does not by itself prove sliding, simultaneous ownership, every release path or absence of stuck input.
+
+The stable-card-tree change did **not** eliminate `t.__type__`; that causal hypothesis is disproved as a complete fix. The event remained non-blocking in this run because runtime startup and gameplay followed.
+
+Physical presentation exposed three new defects: controls were too small, the rendered game showed less field and occupied much less of the screen than the native `.ipa`, and strong stutter was visible during Oak's introduction, name selection, early overworld movement and battles. Native 0.4.5 therefore does not stretch the 160×144 composition. Instead, a host `conf.lua` adapter gives upstream Renderer a backing surface with the WebView's aspect ratio, keeps the constrained game edge at integer scale 4 on phones or 5 on tablets, leaves the long edge available to upstream expanded-world drawing, and uniformly scales that bounded surface into the WebView. The same geometry materially enlarges upstream controls without a second input implementation. Ten-second raw RAF-gap and Long Tasks telemetry windows were added so performance work can follow device measurements rather than symptom-based guesses.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -113,7 +121,9 @@ Native 0.4.4 also keeps the stable native card tree mounted during WebView prese
 10. Native 0.4.1 installs the parity-tested `bit` compatibility module into `_G.bit` before upstream main loads, matching the LuaJIT global used by ROM picture extraction and several Gen 2 paths.
 11. Native 0.4.2 captures the WebView console and alert channel into bounded native logs, because love.js overwrites `Module.warn` and otherwise hides the actionable pre-window exception from Scripting.
 12. Native 0.4.3 guards only invalid queueable-source `setLooping` calls in the love.js adapter, preserves static looping, and suppresses only the already-logged generic pre-window modal.
-13. Native 0.4.4 sets upstream's documented `POKEPORT_TOUCH=1` for Web game sessions and avoids the Scripting modal-adjacent transient UI rebuild associated with `t.__type__`.
+13. Native 0.4.4 sets upstream's documented `POKEPORT_TOUCH=1` for Web game sessions; its stable-tree experiment did not eliminate the separate Scripting `t.__type__` event.
+14. Native 0.4.5 supplies an aspect-matched, fill-rate-bounded WebView backing surface through a generated host `conf.lua` wrapper, preserving upstream rendering and expanded-world behavior instead of stretching the game image.
+15. Native 0.4.5 records WebView/CSS/backing/DPR geometry plus raw ten-second animation-frame gap distributions and Long Tasks data when the browser exposes it.
 
 ## Replacement artifact
 
@@ -128,4 +138,4 @@ Native 0.4.4 also keeps the stable native card tree mounted during WebView prese
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's diagnostic passed as Run 006. Runs 007–010 proved canonical Yellow identity/retention/extraction, generated-data/game/display loading, corrected BitOp and queue-audio compatibility, visible Yellow title/intro, and immediate audible music. Native 0.4.4 is the immediate touch/UI-transition candidate. Cache-ready card state, App Group relaunch durability, direct boot, actual touch behavior, saves, broader audio/fidelity, manual system packages, updated generations, Native 0.3.0 component/mod/GitHub operations, and the wider iPhone/iPad matrix remain untested.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–011 proved canonical Yellow identity/retention/extraction, generated-data/game/display loading, corrected BitOp and queue-audio compatibility, title/audio, and ordinary touch-controlled play into Oak's Lab. Native 0.4.5 is the adaptive-viewport and performance-measurement candidate. Cache-ready card state, App Group relaunch durability, direct boot, exact multi-touch/release behavior, saves, corrected measured stutter, broader audio/fidelity, manual system packages, updated generations, Native 0.3.0 component/mod/GitHub operations, and the wider iPhone/iPad matrix remain untested.

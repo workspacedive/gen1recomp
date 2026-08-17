@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T01:06:56.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-045.scripting",
+    "project": "Gen1Recomp Native 045",
+    "version": "0.4.5",
+    "build": "045",
+    "bytes": 8325762,
+    "entries": 32,
+    "sha256": "f0f73aa281c506bdd070651d88cdce996f1050a2812adb439e8c9504c58bef10",
+    "payloadSha256": "da5390b392b5b005abf36872920d119f5b15265867b71100e826691a62f55cd9",
+    "payloadEntries": 487,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "upstreamSourceVersion": "0.1.96",
+    "coreIntegrationVersion": "0.2.0"
+  },
+  "physicalPredecessorEvidence": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "native044": {
+      "touchControlsVisible": true,
+      "ordinaryTouchPlayFunctional": true,
+      "progressedIntoOaksLab": true,
+      "fixedSurface": "1024x768",
+      "fitScale": 5,
+      "controlsTooSmall": true,
+      "presentationTooSmall": true,
+      "lessVisibleFieldThanNativeIpa": true,
+      "strongStutterReported": [
+        "Oak introduction",
+        "name selection",
+        "early overworld",
+        "battles"
+      ],
+      "componentBuildErrorRecurredBeforeRuntime": true
+    }
+  },
+  "adaptiveViewport": {
+    "coreRendererChanged": false,
+    "imageStretchingAdded": false,
+    "hostMechanism": "generated conf.lua wrapper reads POKEPORT_VIEW_WIDTH and POKEPORT_VIEW_HEIGHT before window creation",
+    "geometry": "backing aspect follows WebView; constrained 160x144 edge uses integer scale 4 on phones and 5 on tablets",
+    "retinaPolicy": "DPR is recorded but does not multiply the backing surface; this bounds fill rate and does not add game information",
+    "expandedWorld": "the long surface edge is available to upstream Renderer expanded-world drawing",
+    "cssPolicy": "existing auto-sized canvas is uniformly max-bounded by 100vw and 100vh",
+    "expectedPrimaryPortraitPlan": {
+      "exampleCssViewport": "430x800",
+      "backingSurface": "640x1191",
+      "gameScale": 4
+    },
+    "expectedPrimaryLandscapePlan": {
+      "exampleCssViewport": "932x430",
+      "backingSurface": "1248x576",
+      "gameScale": 4
+    }
+  },
+  "touchSizing": {
+    "secondControlImplementationAdded": false,
+    "inputTransport": "existing LÖVE touch callbacks",
+    "controls": "upstream TouchControls",
+    "change": "adaptive surface/CSS ratio enlarges the existing controls"
+  },
+  "performanceMeasurement": {
+    "optimizationClaimed": false,
+    "windowSeconds": 10,
+    "records": [
+      "CSS viewport",
+      "canvas backing and CSS bounds",
+      "DPR",
+      "orientation and selected game scale",
+      "RAF interval p50/p95/p99/max",
+      "counts above 25/50/100/250 ms",
+      "Long Tasks count/total/max when supported",
+      "document visibility",
+      "Emscripten runtime frame"
+    ],
+    "purpose": "attribute physical stutter before changing synthesis, timing or rendering fidelity"
+  },
+  "automatedVerification": {
+    "viewportUnitCases": [
+      "iPhone portrait",
+      "iPhone landscape",
+      "iPad portrait",
+      "iPad landscape",
+      "invalid and extreme geometry"
+    ],
+    "typescriptTargets": 2,
+    "nodeTests": { "total": 108, "passed": 108, "failed": 0 },
+    "pythonTests": { "total": 33, "passed": 30, "skipped": 3, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "launcherOverlayTests": "pass",
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchEntries": []
+  },
+  "browserVerification": {
+    "exactArtifactExtracted": true,
+    "status": "blocked in this environment",
+    "reason": "Playwright Chromium download failed repeatedly with network ECONNRESET before a browser executable was installed",
+    "notClaimed": [
+      "runtime-ready result",
+      "rendered canvas dimensions"
+    ]
+  },
+  "physicalVerificationRequired": [
+    "reported viewport line and display dimensions",
+    "full-viewport aspect preservation and increased visible world",
+    "materially larger controls in portrait and landscape if rotation is available",
+    "ten-second performance JSON windows during Oak speech, naming, overworld and battle",
+    "ordinary input regression plus simultaneous, sliding, release and stuck-input checks",
+    "native Ready card, cached relaunch, saves and lifecycle"
+  ],
+  "knownOpenIssue": {
+    "scriptingComponentBuildError": "t.__type__ remained non-blocking and is not claimed fixed"
+  },
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

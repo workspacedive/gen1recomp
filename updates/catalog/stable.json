@@ -3,7 +3,7 @@
   "catalogId": "org.gen1recomp.system",
   "channel": "stable",
   "domain": "system",
-  "generatedAt": "2026-08-16T20:00:00.000Z",
+  "generatedAt": "2026-08-17T01:06:56.000Z",
   "releases": [
     {
       "manifest": {
@@ -11,10 +11,10 @@
         "artifact": {
           "integrity": {
             "algorithm": "sha256",
-            "digest": "0f3645d57748652457b541f82dd0548e99758ccaa9fdf3c4f545d95434ace265"
+            "digest": "d1d4169d1b9720b182c9705ef3df3b6d8381f00349f5ba53fc3734910058ceae"
           },
-          "path": "org.gen1recomp.core-0.1.96.zip",
-          "size": 5873738
+          "path": "org.gen1recomp.core-0.2.0.zip",
+          "size": 5874966
         },
         "capabilities": [],
         "compatibility": {
@@ -34,13 +34,13 @@
         "migrations": [],
         "schemaVersion": 1,
         "selfTests": [],
-        "version": "0.1.96"
+        "version": "0.2.0"
       },
       "notes": {
-        "de": "Gepinnter ROM-freier Gen1Recomp-0.1.96-Core-Payload.",
-        "en": "Pinned ROM-free Gen1Recomp 0.1.96 core payload."
+        "de": "Gen1Recomp-0.1.96-Integrationspaket mit den verifizierten love.js-Kompatibilit\u00e4ts- und adaptiven Viewport-Overlays.",
+        "en": "Gen1Recomp 0.1.96 integration bundle with the verified love.js compatibility and adaptive viewport overlays."
       },
-      "publishedAt": "2026-08-16T18:00:00.000Z"
+      "publishedAt": "2026-08-17T01:06:56.000Z"
     },
     {
       "manifest": {
@@ -74,5 +74,5 @@
     }
   ],
   "schemaVersion": 1,
-  "sequence": 1
+  "sequence": 2
 }

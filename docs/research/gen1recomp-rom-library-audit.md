@@ -84,7 +84,7 @@ After the BitOp correction, Native 0.4.2 physically completed Yellow generated-d
 
 ## Physical touch-host correction
 
-Native 0.4.3 physically reached Yellow title/intro with audible music but no overlay. Upstream `TouchControls.wantsOverlay()` keys on Android/iOS or `POKEPORT_TOUCH=1`; love.js correctly reports its own host as `Web`, even inside iOS WKWebView. Native 0.4.4 sets that existing override in the game-session environment. Rendering, hit testing, multi-touch ownership, Input overlay sources and reset behavior remain upstream code and LÖVE touch callbacks—no browser-side controller or emulator key layer is added.
+Native 0.4.3 physically reached Yellow title/intro with audible music but no overlay. Upstream `TouchControls.wantsOverlay()` keys on Android/iOS or `POKEPORT_TOUCH=1`; love.js correctly reports its own host as `Web`, even inside iOS WKWebView. Native 0.4.4 set that existing override and physically proved ordinary touch play into Oak's Lab. Native 0.4.5 changes only host surface geometry to enlarge the same controls and expose upstream expanded-world drawing. Rendering, hit testing, multi-touch ownership, Input overlay sources and reset behavior remain upstream code and LÖVE touch callbacks—no browser-side controller or emulator key layer is added.
 
 ## Evidence limits
 

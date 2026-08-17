@@ -20,8 +20,10 @@ ARTIFACT_BASE_URL = (
 RUNTIME_COMPONENT_ID = "org.gen1recomp.runtime.lovejs"
 RUNTIME_COMPONENT_VERSION = "0.1.0"
 CORE_COMPONENT_ID = "org.gen1recomp.core"
-CORE_COMPONENT_VERSION = "0.1.96"
-CORE_PAYLOAD_SHA256 = "89de911ef5118be90c9df0385abf6f76949573f1d424c377efe5362aa46e9043"
+# Integration-bundle version. The independently recorded upstream source
+# revision remains Gen1Recomp 0.1.96; this version also covers host overlays.
+CORE_COMPONENT_VERSION = "0.2.0"
+CORE_PAYLOAD_SHA256 = "da5390b392b5b005abf36872920d119f5b15265867b71100e826691a62f55cd9"
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 RUNTIME_FILES = (
     "player.js",
@@ -169,16 +171,16 @@ def build(launcher: Path, lock_path: Path, output: Path) -> dict[str, object]:
         "catalogId": "org.gen1recomp.system",
         "domain": "system",
         "channel": "stable",
-        "sequence": 1,
-        "generatedAt": "2026-08-16T20:00:00.000Z",
+        "sequence": 2,
+        "generatedAt": "2026-08-17T01:06:56.000Z",
         "artifactBaseURL": ARTIFACT_BASE_URL,
         "releases": [
             {
                 "manifest": core_manifest,
-                "publishedAt": "2026-08-16T18:00:00.000Z",
+                "publishedAt": "2026-08-17T01:06:56.000Z",
                 "notes": {
-                    "en": "Pinned ROM-free Gen1Recomp 0.1.96 core payload.",
-                    "de": "Gepinnter ROM-freier Gen1Recomp-0.1.96-Core-Payload.",
+                    "en": "Gen1Recomp 0.1.96 integration bundle with the verified love.js compatibility and adaptive viewport overlays.",
+                    "de": "Gen1Recomp-0.1.96-Integrationspaket mit den verifizierten love.js-Kompatibilitäts- und adaptiven Viewport-Overlays.",
                 },
             },
             {
@@ -202,7 +204,7 @@ def build(launcher: Path, lock_path: Path, output: Path) -> dict[str, object]:
     return {
         "catalog": catalog_report_path,
         "catalogSha256": sha256(catalog_bytes),
-        "catalogSequence": 1,
+        "catalogSequence": 2,
         "artifacts": [runtime_artifact, core_artifact],
         "romFree": True,
     }

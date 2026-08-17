@@ -97,7 +97,7 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - `components/updates/src/`: geschlossener Katalogparser/Trust-Policy, Update-Inventar und -Planung, SemVer-/Dependency-/API-Kompatibilität, Archivrichtlinie, manueller Transaktionsorchestrator, Aktivierungsjournal und Recovery;
 - `updates/`: deterministische ROM-freie aktuelle LÖVE/Lua- und Gen1Recomp-Komponentenpakete plus sequenzierter Stable-Systemkatalog;
 - `scripting/Gen1RecompPreview/`: physisch validierter Preview-0.1.4-Runtime-Fallback;
-- `scripting/Gen1RecompApp/`: nativer 0.4.4-Produktshell mit persistentem verifiziertem Spieleimport, privater Registry/Recovery, dynamischen Karten, ROM-zu-Extractor-Handoff, korrigierter globaler BitOp-Kompatibilität, direktem Game-Start, Save-Metadaten und Cachelöschung sowie den getrennten Komponenten-/Modpfaden aus 0.3.0;
+- `scripting/Gen1RecompApp/`: nativer 0.4.5-Produktshell mit persistentem verifiziertem Spieleimport, privater Registry/Recovery, dynamischen Karten, ROM-zu-Extractor-Handoff, korrigierter love.js-Kompatibilität, adaptivem aspect-treuem Vollflächen-Viewport, Performance-Telemetrie, direktem Game-Start, Save-Metadaten und Cachelöschung sowie getrennten Komponenten-/Modpfaden;
 - `runtime/adapters/lovejs/` und `runtime/manager/`: serialisierte Persistenz, funktionale Capability-Evidenz und geordnete Lifecycle-/Concurrency-Grenzen;
 - `compatibility/love-web/`: vollständiger BitOp-Hostshim plus No-Worker-Normalisierung;
 - `schemas/`: geschlossene JSON-Schemas einschließlich Updatekatalog;
@@ -126,4 +126,4 @@ python3 tools/audit_references.py --report docs/reference-audit.json
 
 Weitere Produktpfade werden nur nach ihrem jeweiligen Declaration-/Gerätegate aktiviert. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
 
-Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 und Native 0.2.0 belegen den physischen Runtimepfad; Native 0.4.4 ist der aktuelle Touch-/Native-UI-Regressionskandidat; Native 0.4.3 erreichte physisch den Yellow-Titel mit sofort hörbarer Musik ohne Queue-Fehler oder generisches Modal. Native 0.3.0 bleibt der noch physisch zu prüfende Komponenten-/Modverwaltungsvorgänger.
+Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 und Native 0.2.0 belegen den physischen Runtimepfad; Native 0.4.4 erreichte physisch mit sichtbaren Upstream-Controls Oak's Lab. Native 0.4.5 ist der aktuelle adaptive Viewport-/Messkandidat für die zu kleine Darstellung und das gemeldete Stottern. Native 0.3.0 bleibt der noch physisch zu prüfende Komponenten-/Modverwaltungsvorgänger.

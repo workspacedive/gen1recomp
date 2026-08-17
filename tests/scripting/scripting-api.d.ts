@@ -136,5 +136,6 @@ declare class WebViewController {
   waitForLoad(): Promise<boolean>
   evaluateJavaScript<T = unknown>(javascript: string): Promise<T>
   present(options?: { fullscreen?: boolean; navigationTitle?: string }): Promise<void>
+  dismiss(): void
   dispose(): void
 }

@@ -27,9 +27,9 @@ from package_scripting_phase0_probe import (
 )
 
 DEFAULT_SOURCE = REPO_ROOT / "scripting" / "Gen1RecompApp"
-DEFAULT_OUTPUT = REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Native 048.scripting"
-PACKAGED_RUNTIME = "runtime-v048"
-RUNTIME_SHELL = "runtime-shell-v048"
+DEFAULT_OUTPUT = REPO_ROOT / "research" / "downloads" / "gen1recomp" / "Gen1Recomp Native 049.scripting"
+PACKAGED_RUNTIME = "runtime-v049"
+RUNTIME_SHELL = "runtime-shell-v049"
 STATIC_RUNTIME_FILES = (
     "index.html",
     "preview.css",
@@ -78,7 +78,7 @@ def collect_entries(source: Path, launcher: Path, lock_path: Path) -> dict[str, 
     for required in ("name", "icon", "color", "version", "entry"):
         if not isinstance(metadata.get(required), str) or not metadata[required]:
             raise RuntimeError(f"script.json field is required: {required}")
-    if metadata["name"] != "Gen1Recomp Native 048" or metadata["version"] != "0.4.8":
+    if metadata["name"] != "Gen1Recomp Native 049" or metadata["version"] != "0.4.9":
         raise RuntimeError("native Scripting product identity is invalid")
     if any(not safe_path(name) for name in entries):
         raise RuntimeError("native Scripting package contains an unsafe path")
@@ -92,7 +92,7 @@ def package(source: Path, launcher: Path, lock_path: Path, output: Path) -> dict
         "runtimeRevision": RUNTIME_REVISION,
         "payloadSha256": PAYLOAD_SHA256,
         "payloadEntries": PAYLOAD_ENTRIES,
-        "scope": "native verified-ROM library, Retina-native rendering, vector upstream-touch visuals, interruption recovery, private effect cache, manual components and mods; physical 0.4.8 verification pending",
+        "scope": "native verified-ROM library, Retina/vector game runtime, fading in-web title, explicit dismiss, native component-tree correction, interruption recovery, updates and mods; physical 0.4.9 verification pending",
     }
 
 

@@ -84,14 +84,35 @@
     "zipIntegrity": "pass",
     "romSavePatchWavEntries": []
   },
-  "physicalVerificationRequired": [
-    "1320x2868 backing and fit scale 8 on the primary device",
-    "subjective and screenshot-level vector control quality",
-    "frame timing at Retina fill rate",
-    "cache=hit reuse of Native 047 stored effects",
-    "incoming-call hidden/resumed or watchdog lifecycle evidence",
-    "continuous game/input/audio after returning from interruption",
-    "t.__type__, Ready card, saves and exact multitouch/release behavior"
+  "physicalVerification": {
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "visibleViewport": "440x956",
+    "backingAndDisplay": "1320x2868 units and pixels",
+    "rendererFitScale": 8,
+    "cssSurface": "440x956",
+    "vectorAdapterInstalled": true,
+    "retinaGeometryPassed": true,
+    "bestSteadyWindow": { "frames": 587, "durationMs": 10008, "p95Ms": 23, "p99Ms": 33, "maxMs": 35 },
+    "lateStableWindow": { "frames": 579, "durationMs": 10008, "p95Ms": 23, "p99Ms": 25, "maxMs": 29 },
+    "drawAverageCpuMsRange": [0.09, 0.37],
+    "retinaFillConclusion": "physical-pixel surface did not make draw callback CPU a bottleneck; GPU quality remains subjective",
+    "effectCacheStoresObserved": true,
+    "effectCacheHitsObserved": false,
+    "lifecycleInterruptionRetested": false,
+    "componentBuildError": "t.__type__ occurred once ten seconds before successful runtime startup",
+    "newRequest": "fade the Pokémon Yellow native title and black top gradient over time"
+  },
+  "remainingPhysicalVerification": [
+    "Native 049 custom title fade and explicit close behavior",
+    "Native 049 direct native toolbar component correction and t.__type__ recurrence",
+    "subjective vector control quality",
+    "incoming-call lifecycle recovery",
+    "same-artifact second-run effect cache hits",
+    "Ready card, saves and exact multitouch/release behavior"
   ],
   "copyrightBoundary": {
     "romIncluded": false,

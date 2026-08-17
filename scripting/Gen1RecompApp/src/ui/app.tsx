@@ -36,11 +36,6 @@ import { runRuntimeDiagnostic } from "../platform/runtime-diagnostic"
 const enabledTabs = PRODUCT_TABS.filter(({ enabled }) => enabled)
 const tabIndex = (id: "home" | "games" | "updates" | "mods" | "settings") => enabledTabs.findIndex((tab) => tab.id === id)
 
-function ScreenToolbar() {
-  const dismiss = Navigation.useDismiss()
-  return <Button title={t("close")} action={dismiss} />
-}
-
 function HomeScreen({
   openGames,
   versions,
@@ -50,13 +45,14 @@ function HomeScreen({
   versions: Readonly<Record<ProductComponentId, string>>
   library: GameLibrarySnapshot | null
 }) {
+  const dismiss = Navigation.useDismiss()
   const readyGames = library?.games.filter(({ status }) => status === "ready") ?? []
   return (
     <NavigationStack>
       <List
         navigationTitle={t("homeTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <ScreenToolbar /> }}
+        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section>
           <VStack alignment="leading" spacing={10}>
@@ -191,6 +187,7 @@ function GamesScreen({
   runtime: GameRuntimeService
   onSnapshot: (snapshot: GameLibrarySnapshot) => void
 }) {
+  const dismiss = Navigation.useDismiss()
   const empty: GameLibrarySnapshot = { games: [], updatedAt: new Date().toISOString() }
   const [state, setState] = useState<GameLibraryViewState>({ status: "loading" })
   const current = state.status === "content" ? state.snapshot : state.status === "loading" ? null : state.previous
@@ -292,7 +289,7 @@ function GamesScreen({
       <List
         navigationTitle={t("gamesTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <ScreenToolbar /> }}
+        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section footer={<Text>{t("romPrivacy")}</Text>}>
           <Button title={t("importGame")} systemImage="doc.badge.plus" action={importRom} disabled={busy} />
@@ -395,6 +392,7 @@ function UpdatesScreen({
   updates: SystemUpdateService
   onSnapshot: (snapshot: UpdateSnapshot) => void
 }) {
+  const dismiss = Navigation.useDismiss()
   const [state, setState] = useState<UpdateViewState>({ status: "loading" })
 
   useEffect(() => {
@@ -492,7 +490,7 @@ function UpdatesScreen({
       <List
         navigationTitle={t("updatesTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <ScreenToolbar /> }}
+        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section footer={<Text>{t("updateIntro")}</Text>}>
           <Button
@@ -620,6 +618,7 @@ function ModRow({
 }
 
 function ModsScreen({ mods }: { mods: ModService }) {
+  const dismiss = Navigation.useDismiss()
   const [state, setState] = useState<ModViewState>({ status: "loading" })
 
   useEffect(() => {
@@ -755,7 +754,7 @@ function ModsScreen({ mods }: { mods: ModService }) {
       <List
         navigationTitle={t("modsTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <ScreenToolbar /> }}
+        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section footer={<Text>{t("modsIntro")}</Text>}>
           <Button title={t("importModZip")} systemImage="doc.zipper" action={importZip} disabled={busy} />
@@ -817,6 +816,7 @@ function ModsScreen({ mods }: { mods: ModService }) {
 }
 
 function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
+  const dismiss = Navigation.useDismiss()
   const [running, setRunning] = useState(false)
   const runDiagnostic = async () => {
     if (running) return
@@ -839,7 +839,7 @@ function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
       <List
         navigationTitle={t("settingsTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <ScreenToolbar /> }}
+        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section footer={<Text>{t("runtimeDiagnosticHint")}</Text>}>
           {running

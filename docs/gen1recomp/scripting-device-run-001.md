@@ -143,6 +143,16 @@ The `640×1391` backing surface was uniformly enlarged to `440×956` CSS and the
 
 `t.__type__` occurred once before successful Native 0.4.7 startup and remains open.
 
+## Run 015 — Native 0.4.8 proves Retina geometry without a draw bottleneck
+
+Native 0.4.8 reached the exact intended primary geometry: `440×956 CSS -> 1320×2868 canvas`, one backing pixel per physical display pixel, and Renderer fit scale 8. The vector touch adapter installed. Draw averages stayed only 0.09–0.37 ms, so the 4.3× larger framebuffer did not turn callback submission into a CPU bottleneck. Steady windows still reached 579–587 frames per roughly ten seconds at p95 23 ms. Complex intro/music sections remained update-bound, not draw-bound.
+
+The supplied run again stored rather than hit named effect entries; cross-artifact cache reuse is therefore not proven. A second launch of the same artifact remains the relevant hit test. No incoming-call interruption was repeated, so lifecycle recovery remains unverified.
+
+The user requested that the persistent native `Pokémon Yellow` title and black top gradient fade away. Official `WebViewController.present` exposes only initial `fullscreen` and optional `navigationTitle`; it exposes no runtime navigation-bar animation. Native 0.4.9 therefore omits `navigationTitle` and supplies a WebView-owned title/gradient that fades after 3.2 seconds. A top-edge tap reveals it again. Its close button sends an authenticated session event to native code and calls the documented controller `dismiss()` method.
+
+The recurring `t.__type__` event was finally narrowed to an exact contract mismatch: all five toolbar dictionaries contained a custom `<ScreenToolbar />` component, while Scripting's official finished example places the native `<Button>` directly in `toolbar.cancellationAction`. Nested toolbar values are inspected as native component descriptors and the custom wrapper has no `__type__` at that boundary. Native 0.4.9 removes the wrapper and places direct native Buttons in all five toolbars. Physical non-recurrence remains required before declaring the defect closed.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -168,6 +178,8 @@ The `640×1391` backing surface was uniformly enlarged to `440×956` CSS and the
 21. Native 0.4.8 maps CSS viewport points through DPR to a one-to-one physical framebuffer while retaining integer Gen1Recomp pixels and aspect.
 22. Native 0.4.8 replaces only upstream control drawing with Retina vector visuals; upstream input ownership/hit testing/release/haptics remain authoritative.
 23. Native 0.4.8 explicitly pauses, flushes, resumes and watchdog-verifies the Emscripten loop across visibility/focus interruptions.
+24. Native 0.4.9 replaces persistent native navigation title chrome with a WebView-owned timed fade/reveal title and explicit native dismiss event.
+25. Native 0.4.9 replaces all custom toolbar wrapper values with direct native Buttons matching Scripting's documented toolbar descriptor contract.
 
 ## Replacement artifact
 
@@ -182,4 +194,4 @@ The `640×1391` backing surface was uniformly enlarged to `440×956` CSS and the
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's diagnostic passed as Run 006. Runs 007–014 prove canonical Yellow import/play, full portrait geometry and near-60 Hz steady motion. Native 0.4.7 isolated first-use named effects while exposing low-resolution control visuals and an incoming-call freeze. Native 0.4.8 is the Retina-vector/lifecycle-recovery candidate. Warm-cache reuse, phone-call recovery, cache-ready UI, App Group durability, exact multitouch/release, saves, component/mod/GitHub operations and the wider iPhone/iPad matrix remain untested.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–015 prove canonical play, physical Retina geometry and near-60 Hz steady motion. Native 0.4.9 is the transient-title and direct-toolbar-descriptor correction candidate. `t.__type__` non-recurrence, title/close behavior, warm-cache reuse, phone-call recovery, cache-ready UI, saves, exact multitouch/release, components/mods and wider devices remain untested.

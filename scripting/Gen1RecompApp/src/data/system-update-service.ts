@@ -645,7 +645,7 @@ export class SystemUpdateService {
   }
 
   async #materializeRuntime(transactionRoot: string, active: ActiveComponents): Promise<string> {
-    const name = `runtime-v048-r${active[COMPONENTS.runtime.id]}-c${active[COMPONENTS.core.id]}`
+    const name = `runtime-v049-r${active[COMPONENTS.runtime.id]}-c${active[COMPONENTS.core.id]}`
     const destination = `${this.#privateRoot}/runtimes/${name}`
     if (await FileManager.exists(destination)) {
       try {

@@ -120,6 +120,8 @@ export class GameRuntimeService {
         const operation = eventTail.then(async () => {
           if (event?.type === "preview.ready") {
             runtimeReady = true
+          } else if (event?.type === "preview.dismiss") {
+            controller.dismiss()
           } else if (event?.type === "game.cacheReady" && event.gameId === game.id) {
             currentSnapshot = await this.library.markReady(game.id)
             cacheReady = true
@@ -148,7 +150,10 @@ export class GameRuntimeService {
       if (session.rom != null) session.rom.base64 = ""
       rom = null
       if (started !== true) throw new Error("runtime_session_rejected")
-      await controller.present({ fullscreen: true, navigationTitle: game.title })
+      // Scripting exposes no API to animate native navigation chrome. Present
+      // without its persistent title/gradient; the WebView supplies a brief,
+      // fading game title plus an explicit dismiss button instead.
+      await controller.present({ fullscreen: true })
     } catch (error) {
       errors.push(String(error))
     } finally {

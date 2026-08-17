@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T10:55:00.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-049.scripting",
+    "project": "Gen1Recomp Native 049",
+    "version": "0.4.9",
+    "build": "049",
+    "bytes": 8335740,
+    "entries": 32,
+    "sha256": "7127e47a49f894d95aeafaf0a3d02288eabf8f132fbe66b3b5aa81a172b98b64",
+    "payloadSha256": "6ab3a495ecf6619831732eb9022d8da43a4473c958848adffc3a8c39de939943",
+    "payloadBytes": 5945550,
+    "payloadEntries": 490,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "coreIntegrationVersion": "0.5.0"
+  },
+  "native048PhysicalEvidence": {
+    "retinaGeometry": "440x956 CSS -> 1320x2868 backing/display; fit scale 8",
+    "vectorAdapterInstalled": true,
+    "bestSteadyP95Ms": 23,
+    "lateDrawAverageCpuMsRange": [0.09, 0.37],
+    "retinaDrawBottleneck": false,
+    "effectCacheStoresObserved": true,
+    "effectCacheHitsObserved": false,
+    "interruptionRetested": false,
+    "componentBuildError": "t.__type__ occurred once before successful runtime startup",
+    "requestedUx": "Pokémon Yellow title and black gradient should fade over time"
+  },
+  "transientGameChrome": {
+    "nativeNavigationTitleRemoved": true,
+    "reason": "WebViewController present exposes only an initial optional navigationTitle and no native chrome animation",
+    "titleSource": "validated host game session identity",
+    "fadeDelayMs": 3200,
+    "fadeDurationMs": 700,
+    "reveal": "pointer press in top 48 CSS points",
+    "close": "in-web button posts preview.dismiss with session token; native handler calls WebViewController.dismiss",
+    "accessibility": "semantic header, strong title and close button label",
+    "diagnosticMode": "no game chrome"
+  },
+  "componentBuilderCorrection": {
+    "observedFailure": "TypeError while evaluating t.__type__ before runtime startup",
+    "rootCauseHypothesis": "toolbar.cancellationAction contained custom ScreenToolbar function components where Scripting inspects a native component descriptor",
+    "primaryReference": "official finished Scripting example places native Button directly in toolbar.cancellationAction",
+    "changes": [
+      "remove ScreenToolbar custom component",
+      "call Navigation.useDismiss unconditionally in each of five screens",
+      "place native Button directly in each toolbar dictionary"
+    ],
+    "staticAssertion": "exactly five direct toolbar Buttons and no ScreenToolbar JSX",
+    "physicalFixClaimed": false
+  },
+  "systemComponentChange": {
+    "corePayloadChanged": false,
+    "runtimePayloadChanged": false,
+    "reason": "title/chrome and toolbar work are host-shell changes",
+    "retainedCoreIntegrationVersion": "0.5.0",
+    "retainedCatalogSequence": 5
+  },
+  "automatedVerification": {
+    "typescriptTargets": 2,
+    "nativeToolbarStaticContract": "pass",
+    "fadingChromeStaticContract": "pass",
+    "documentedDismissApiDeclaration": "pass",
+    "nodeTests": { "total": 112, "passed": 112, "failed": 0 },
+    "pythonTests": { "total": 35, "passed": 32, "skipped": 3, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchWavEntries": []
+  },
+  "physicalVerificationRequired": [
+    "t.__type__ must not occur during initial component build",
+    "custom title and gradient appear then fade after about four seconds",
+    "top-edge press reveals title/close again",
+    "close button dismisses cleanly and flushes persistence",
+    "no persistent native Pokémon Yellow title remains",
+    "Retina/vector controls and near-60 Hz performance regressions",
+    "same-artifact second-run cache hits and phone interruption recovery"
+  ],
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "renderedAudioIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

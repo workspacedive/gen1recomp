@@ -151,7 +151,13 @@ The supplied run again stored rather than hit named effect entries; cross-artifa
 
 The user requested that the persistent native `Pokémon Yellow` title and black top gradient fade away. Official `WebViewController.present` exposes only initial `fullscreen` and optional `navigationTitle`; it exposes no runtime navigation-bar animation. Native 0.4.9 therefore omits `navigationTitle` and supplies a WebView-owned title/gradient that fades after 3.2 seconds. A top-edge tap reveals it again. Its close button sends an authenticated session event to native code and calls the documented controller `dismiss()` method.
 
-The recurring `t.__type__` event was finally narrowed to an exact contract mismatch: all five toolbar dictionaries contained a custom `<ScreenToolbar />` component, while Scripting's official finished example places the native `<Button>` directly in `toolbar.cancellationAction`. Nested toolbar values are inspected as native component descriptors and the custom wrapper has no `__type__` at that boundary. Native 0.4.9 removes the wrapper and places direct native Buttons in all five toolbars. Physical non-recurrence remains required before declaring the defect closed.
+The recurring `t.__type__` event was narrowed to a toolbar contract candidate: all five toolbar dictionaries contained a custom `<ScreenToolbar />` component, while Scripting's official finished example places the native `<Button>` directly in `toolbar.cancellationAction`. Native 0.4.9 removed that wrapper, but physical evidence below disproved it as the complete cause.
+
+## Run 016 — Native 0.4.9 removes native title but starts custom fade too early
+
+Native 0.4.9 removed the permanent native game title as intended and logged `transient game title installed`, but the user saw no replacement title. The 3.2-second timer began at bundle evaluation (`11:31:28`) while embedded/WASM/game startup continued through `11:31:32`; the custom chrome had already faded by the time gameplay became visible. Native 0.5.0 keeps the chrome hidden during startup, reveals it only after the runtime-ready frame, holds it for 5.5 seconds, then fades opacity/translation/blur over 0.9 seconds. A top-edge reveal uses a shorter 3.2-second hold.
+
+`t.__type__` still occurred before startup, proving direct toolbar Buttons were insufficient. The next structural mismatch is stronger: all five direct children of root `TabView` were custom screen function components carrying `tag`/`tabItem` props they did not forward. A native TabView consumes its immediate children as native descriptors. Native 0.5.0 makes five native `NavigationStack` descriptors the direct TabView children and moves each custom screen inside as ordinary content. Tests assert five direct tagged native stacks and no custom toolbar wrappers. Physical non-recurrence remains required.
 
 ## Attributed corrections
 
@@ -179,7 +185,9 @@ The recurring `t.__type__` event was finally narrowed to an exact contract misma
 22. Native 0.4.8 replaces only upstream control drawing with Retina vector visuals; upstream input ownership/hit testing/release/haptics remain authoritative.
 23. Native 0.4.8 explicitly pauses, flushes, resumes and watchdog-verifies the Emscripten loop across visibility/focus interruptions.
 24. Native 0.4.9 replaces persistent native navigation title chrome with a WebView-owned timed fade/reveal title and explicit native dismiss event.
-25. Native 0.4.9 replaces all custom toolbar wrapper values with direct native Buttons matching Scripting's documented toolbar descriptor contract.
+25. Native 0.4.9 replaces all custom toolbar wrapper values with direct native Buttons; physical recurrence proved that correction incomplete.
+26. Native 0.5.0 reveals custom game chrome only after runtime readiness, holds 5.5 seconds, then fades opacity/translation/blur over 0.9 seconds.
+27. Native 0.5.0 makes native tagged NavigationStacks the five immediate TabView children and nests custom screen content beneath them.
 
 ## Replacement artifact
 
@@ -194,4 +202,4 @@ The recurring `t.__type__` event was finally narrowed to an exact contract misma
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's diagnostic passed as Run 006. Runs 007–015 prove canonical play, physical Retina geometry and near-60 Hz steady motion. Native 0.4.9 is the transient-title and direct-toolbar-descriptor correction candidate. `t.__type__` non-recurrence, title/close behavior, warm-cache reuse, phone-call recovery, cache-ready UI, saves, exact multitouch/release, components/mods and wider devices remain untested.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–016 prove canonical play, Retina geometry and near-60 Hz motion while narrowing title/component-builder defects. Native 0.5.0 is the post-ready chrome/native-TabView-tree candidate. `t.__type__` non-recurrence, visible fade/reveal/close, warm cache, phone recovery, cache-ready UI, saves, multitouch, components/mods and wider devices remain untested.

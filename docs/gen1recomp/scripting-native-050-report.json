@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T11:40:00.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-050.scripting",
+    "project": "Gen1Recomp Native 050",
+    "version": "0.5.0",
+    "build": "050",
+    "bytes": 8336003,
+    "entries": 32,
+    "sha256": "dba920d60b0ccb50e68a14d1007afa207c5234dbffb82257b21e4d403783a62b",
+    "payloadSha256": "6ab3a495ecf6619831732eb9022d8da43a4473c958848adffc3a8c39de939943",
+    "payloadBytes": 5945550,
+    "payloadEntries": 490,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "coreIntegrationVersion": "0.5.0"
+  },
+  "native049PhysicalEvidence": {
+    "componentBuildError": "t.__type__ still occurred once before runtime startup",
+    "directToolbarCorrectionComplete": false,
+    "transientChromeInstalled": true,
+    "customTitleSeen": false,
+    "persistentNativeTitleRemoved": true,
+    "fadeRootCause": "timer ran during embedded/WASM/game startup and completed before gameplay was visible",
+    "retinaGeometry": "1320x2868; fit scale 8",
+    "phoneInterruptionRetested": false,
+    "cacheHitsObserved": false
+  },
+  "postReadyGameChrome": {
+    "initialState": "hidden and faded during runtime startup",
+    "trigger": "after BrowserLoveJs surface boot plus 500ms readiness delay",
+    "initialHoldMs": 5500,
+    "topRevealHoldMs": 3200,
+    "fadeDurationMs": 900,
+    "animation": ["opacity to zero", "translateY -12px", "blur 3px"],
+    "topRevealAreaCssPoints": 48,
+    "nativeDismiss": "unchanged token-bound preview.dismiss to WebViewController.dismiss"
+  },
+  "nativeComponentTreeCorrection": {
+    "disprovedCandidate": "custom ScreenToolbar inside toolbar.cancellationAction was not the complete cause",
+    "newRootCauseHypothesis": "root TabView immediate children were custom screen function components carrying unforwarded tag/tabItem props instead of native descriptors",
+    "oldTree": "TabView -> HomeScreen/GamesScreen/UpdatesScreen/ModsScreen/SettingsScreen -> NavigationStack",
+    "newTree": "TabView -> five tagged native NavigationStacks -> custom screen content Lists",
+    "toolbarState": "five direct native cancellation Buttons retained",
+    "staticAssertions": [
+      "five direct tagged NavigationStack children",
+      "five direct native toolbar Buttons",
+      "no ScreenToolbar JSX"
+    ],
+    "physicalFixClaimed": false
+  },
+  "systemComponentChange": {
+    "corePayloadChanged": false,
+    "runtimePayloadChanged": false,
+    "retainedCoreIntegrationVersion": "0.5.0",
+    "retainedCatalogSequence": 5,
+    "reason": "component tree and game chrome are host-shell changes"
+  },
+  "automatedVerification": {
+    "typescriptTargets": 2,
+    "packageIdentityAndStaticContracts": "pass",
+    "nodeTests": { "total": 112, "passed": 112, "failed": 0 },
+    "pythonTests": { "total": 35, "passed": 30, "skipped": 5, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchWavEntries": []
+  },
+  "physicalVerificationRequired": [
+    "no t.__type__ before runtime startup",
+    "title appears only after runtime ready and remains visible through game load",
+    "aesthetic 5.5-second hold and 0.9-second fade",
+    "top-edge reveal and native close",
+    "no persistent native title/gradient",
+    "Retina/performance/input regression",
+    "same-artifact cache hits and phone interruption recovery"
+  ],
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "renderedAudioIncluded": false,
+    "saveIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

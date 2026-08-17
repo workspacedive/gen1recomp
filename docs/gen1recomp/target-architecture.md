@@ -453,7 +453,7 @@ The runtime gate is passed, so production directories now follow actual vertical
 - `schemas/` includes closed wire, manifest, game/mod registry, activation-journal, runtime-capability and update-catalog schemas;
 - `tests/contracts/`, `tests/games/`, `tests/runtime/`, `tests/updates/`, `tests/scripting/` and `tests/tools/` exercise host-independent logic, declaration-subset compatibility and deterministic packages.
 
-Physical runs through Native 0.4.8 prove canonical play, Retina `1320×2868`/Scale 8 and near-60 Hz steady motion with negligible draw CPU. Native 0.4.9 removes persistent native title chrome in favor of fading in-web chrome/native dismiss and corrects all toolbar descriptor boundaries to direct native Buttons, targeting `t.__type__`. Title/toolbar regression, phone-call recovery, warm-cache reuse, cache-ready state, exact multitouch/release, saves, mods and broad-device validation remain active.
+Physical runs through Native 0.4.8 prove canonical play, Retina `1320×2868`/Scale 8 and near-60 Hz steady motion with negligible draw CPU. Native 0.4.9 removed native title but faded too early and toolbar correction did not stop `t.__type__`; Native 0.5.0 reveals chrome post-ready and makes native tagged NavigationStacks the direct TabView descriptor children. Title/toolbar regression, phone-call recovery, warm-cache reuse, cache-ready state, exact multitouch/release, saves, mods and broad-device validation remain active.
 
 ## 13. Core-change exception process
 

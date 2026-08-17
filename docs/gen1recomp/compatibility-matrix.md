@@ -27,8 +27,8 @@ Versions below are contract starting points, not claims of completed artifacts.
 |---|---:|---:|---|
 | Host protocol | 0.1.0 | 1.0.0 | strict types, parser and JSON Schema implemented; no host transport yet |
 | Component/update contracts | 0.2.0 | manifest/catalog schema 1 | strict catalog trust, archive preflight, dependency/API planner, manual orchestrator, activation journal and recovery implemented host-independently |
-| Scripting host | 0.4.9-native | 1.0.0 | verified library, Retina/vector game plane, timed in-web title/native dismiss, direct toolbar descriptors, interruption recovery, cache, updates/mods; title/`t.__type__` physical regression pending |
-| iOS/Scripting platform adapter | 0.4.9-spike | 1.0.0 | canonical play/Retina/near-60 Hz physically proven; documented title-less present/dismiss used; phone-call recovery pending |
+| Scripting host | 0.5.0-native | 1.0.0 | Retina/vector game plane, post-ready animated title/native dismiss, native TabView descriptor tree, interruption recovery, cache, updates/mods; physical regression pending |
+| iOS/Scripting platform adapter | 0.5.0-spike | 1.0.0 | canonical play/Retina/near-60 Hz physically proven; title-less present/dismiss implemented; phone-call recovery pending |
 | Runtime manager | 0.0.1-spike | 1.0.0 | host-independent lifecycle/concurrency manager implemented over injected evidence verifier and `LuaRuntimePort`; no Scripting transport/backend |
 | Lua runtime adapter | love.js PUC Lua 5.1 | 1.0.0 | physical Scripting startup passed; no LuaJIT/FFI; complete touch/audio/persistence live-activation profile remains blocked |
 | Renderer port | 0.1.0 | 1.0.0 | strict interface and viewport helper; no Scripting backend |
@@ -37,7 +37,7 @@ Versions below are contract starting points, not claims of completed artifacts.
 | Kernel façade | 0.1.0 | 1.0.0 | façade/characterization work pending |
 | Gen1Recomp core payload | 0.1.96 | upstream internal contract | pinned ROM-free source-built payload; outside-browser launcher boot passed |
 | Mod API adapter | 0.2.0 | 2.0.0 | strict API-1/2 manifest/GitHub/archive package management and scoped capability policy implemented; native consent/profile/runtime injection and Lua façade validation pending |
-| Platform UI | 0.4.9-native | 1.0.0 | native tabs/cards/import/save/cache, direct native toolbar descriptors, fading game chrome, Retina vectors, interruption recovery, manual components/mods; broad validation pending |
+| Platform UI | 0.5.0-native | 1.0.0 | native tabs/cards/import/save/cache, direct native toolbar descriptors, fading game chrome, Retina vectors, interruption recovery, manual components/mods; broad validation pending |
 | Individual mods | own semver | manifest API 1/2 | install only after runtime parity |
 
 Component/API versions use canonical `X.Y.Z` semantic versions in target manifests. This is separate from compact upstream integers (shell/Mod API/link) and the HostProtocol envelope discriminator `protocol: 1`.

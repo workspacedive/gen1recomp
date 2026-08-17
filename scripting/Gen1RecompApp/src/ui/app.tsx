@@ -48,8 +48,7 @@ function HomeScreen({
   const dismiss = Navigation.useDismiss()
   const readyGames = library?.games.filter(({ status }) => status === "ready") ?? []
   return (
-    <NavigationStack>
-      <List
+    <List
         navigationTitle={t("homeTitle")}
         navigationBarTitleDisplayMode="large"
         toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
@@ -89,8 +88,7 @@ function HomeScreen({
             <Text foregroundStyle="secondaryLabel">{versions[COMPONENTS.core.id]}</Text>
           </HStack>
         </Section>
-      </List>
-    </NavigationStack>
+    </List>
   )
 }
 
@@ -285,8 +283,7 @@ function GamesScreen({
   }
 
   return (
-    <NavigationStack>
-      <List
+    <List
         navigationTitle={t("gamesTitle")}
         navigationBarTitleDisplayMode="large"
         toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
@@ -337,8 +334,7 @@ function GamesScreen({
             />
           </Section>
         ))}
-      </List>
-    </NavigationStack>
+    </List>
   )
 }
 
@@ -486,8 +482,7 @@ function UpdatesScreen({
   }
 
   return (
-    <NavigationStack>
-      <List
+    <List
         navigationTitle={t("updatesTitle")}
         navigationBarTitleDisplayMode="large"
         toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
@@ -564,8 +559,7 @@ function UpdatesScreen({
             </Text>
           </HStack>
         </Section>
-      </List>
-    </NavigationStack>
+    </List>
   )
 }
 
@@ -750,8 +744,7 @@ function ModsScreen({ mods }: { mods: ModService }) {
   }
 
   return (
-    <NavigationStack>
-      <List
+    <List
         navigationTitle={t("modsTitle")}
         navigationBarTitleDisplayMode="large"
         toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
@@ -810,8 +803,7 @@ function ModsScreen({ mods }: { mods: ModService }) {
             ))}
           </Section>
         )}
-      </List>
-    </NavigationStack>
+    </List>
   )
 }
 
@@ -835,8 +827,7 @@ function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
     }
   }
   return (
-    <NavigationStack>
-      <List
+    <List
         navigationTitle={t("settingsTitle")}
         navigationBarTitleDisplayMode="large"
         toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
@@ -856,8 +847,7 @@ function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
         <Section>
           <HStack><Text>{t("version")}</Text><Spacer /><Text foregroundStyle="secondaryLabel">{`${PRODUCT.version} (${PRODUCT.build})`}</Text></HStack>
         </Section>
-      </List>
-    </NavigationStack>
+    </List>
   )
 }
 
@@ -890,36 +880,40 @@ export default function App() {
   }, [])
   return (
     <TabView tabIndex={selectedTab} onTabIndexChanged={setSelectedTab}>
-      <HomeScreen
-        openGames={() => setSelectedTab(tabIndex("games"))}
-        versions={versions}
-        library={gameSnapshot}
+      <NavigationStack
         tag={tabIndex("home")}
         tabItem={<Label title={t("tabHome")} systemImage="house.fill" />}
-      />
-      <GamesScreen
-        library={library}
-        runtime={runtime}
-        onSnapshot={setGameSnapshot}
+      >
+        <HomeScreen
+          openGames={() => setSelectedTab(tabIndex("games"))}
+          versions={versions}
+          library={gameSnapshot}
+        />
+      </NavigationStack>
+      <NavigationStack
         tag={tabIndex("games")}
         tabItem={<Label title={t("tabGames")} systemImage="square.grid.2x2.fill" />}
-      />
-      <UpdatesScreen
-        updates={updates}
-        onSnapshot={acceptSnapshot}
+      >
+        <GamesScreen library={library} runtime={runtime} onSnapshot={setGameSnapshot} />
+      </NavigationStack>
+      <NavigationStack
         tag={tabIndex("updates")}
         tabItem={<Label title={t("tabUpdates")} systemImage="arrow.down.circle.fill" />}
-      />
-      <ModsScreen
-        mods={mods}
+      >
+        <UpdatesScreen updates={updates} onSnapshot={acceptSnapshot} />
+      </NavigationStack>
+      <NavigationStack
         tag={tabIndex("mods")}
         tabItem={<Label title={t("tabMods")} systemImage="puzzlepiece.extension.fill" />}
-      />
-      <SettingsScreen
-        updates={updates}
+      >
+        <ModsScreen mods={mods} />
+      </NavigationStack>
+      <NavigationStack
         tag={tabIndex("settings")}
         tabItem={<Label title={t("tabSettings")} systemImage="gearshape.fill" />}
-      />
+      >
+        <SettingsScreen updates={updates} />
+      </NavigationStack>
     </TabView>
   )
 }

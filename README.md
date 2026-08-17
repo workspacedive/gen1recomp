@@ -97,7 +97,7 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - `components/updates/src/`: geschlossener Katalogparser/Trust-Policy, Update-Inventar und -Planung, SemVer-/Dependency-/API-Kompatibilität, Archivrichtlinie, manueller Transaktionsorchestrator, Aktivierungsjournal und Recovery;
 - `updates/`: deterministische ROM-freie aktuelle LÖVE/Lua- und Gen1Recomp-Komponentenpakete plus sequenzierter Stable-Systemkatalog;
 - `scripting/Gen1RecompPreview/`: physisch validierter Preview-0.1.4-Runtime-Fallback;
-- `scripting/Gen1RecompApp/`: nativer 0.4.9-Produktshell mit verifiziertem Spieleimport, Retina-/Vektor-Gameplane, ausblendbarem In-WebView-Spieltitel, explizitem nativen Dismiss, korrigierten Toolbar-Komponentendeskriptoren, Unterbrechungs-Recovery, privatem Effektcache, Saves, Updates und Mods;
+- `scripting/Gen1RecompApp/`: nativer 0.5.0-Produktshell mit verifiziertem Spieleimport, Retina-/Vektor-Gameplane, ausblendbarem In-WebView-Spieltitel, explizitem nativen Dismiss, korrigierten Toolbar-Komponentendeskriptoren, Unterbrechungs-Recovery, privatem Effektcache, Saves, Updates und Mods;
 - `runtime/adapters/lovejs/` und `runtime/manager/`: serialisierte Persistenz, funktionale Capability-Evidenz und geordnete Lifecycle-/Concurrency-Grenzen;
 - `compatibility/love-web/`: vollständiger BitOp-Hostshim plus No-Worker-Normalisierung;
 - `schemas/`: geschlossene JSON-Schemas einschließlich Updatekatalog;
@@ -126,4 +126,4 @@ python3 tools/audit_references.py --report docs/reference-audit.json
 
 Weitere Produktpfade werden nur nach ihrem jeweiligen Declaration-/Gerätegate aktiviert. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
 
-Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Native 0.4.8 bestätigte physisch Retina `1320×2868`/Scale 8 ohne Draw-Bottleneck. Native 0.4.9 ist der aktuelle ausblendende Titel-/`t.__type__`-Toolbar-Kandidat.
+Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Native 0.4.8 bestätigte physisch Retina `1320×2868`/Scale 8 ohne Draw-Bottleneck. Native 0.5.0 ist der aktuelle Post-Ready-Titel-/native-TabView-Baum-Kandidat.

@@ -69,14 +69,23 @@
     "zipIntegrity": "pass",
     "romSavePatchWavEntries": []
   },
-  "physicalVerificationRequired": [
-    "t.__type__ must not occur during initial component build",
-    "custom title and gradient appear then fade after about four seconds",
-    "top-edge press reveals title/close again",
-    "close button dismisses cleanly and flushes persistence",
-    "no persistent native Pokémon Yellow title remains",
-    "Retina/vector controls and near-60 Hz performance regressions",
-    "same-artifact second-run cache hits and phone interruption recovery"
+  "physicalVerification": {
+    "componentBuildError": "t.__type__ still occurred once before successful runtime startup; direct toolbar buttons were insufficient",
+    "transientChromeInstalledLog": true,
+    "titleVisibleToUser": false,
+    "titleCause": "the 3.2-second fade timer started at bundle evaluation and expired while WASM/game startup still covered the WebView",
+    "nativePersistentTitleRemoved": true,
+    "retinaGeometryRetained": "440x956 CSS -> 1320x2868, fit scale 8",
+    "drawCpuStillNegligible": true,
+    "effectStoresObserved": true,
+    "cacheHitsObserved": false,
+    "phoneInterruptionRetested": false
+  },
+  "remainingPhysicalVerification": [
+    "Native 050 post-ready title show/hold/fade and top reveal",
+    "Native 050 native NavigationStack direct TabView child correction and t.__type__ recurrence",
+    "close button/native dismiss",
+    "same-artifact cache hits and phone interruption recovery"
   ],
   "copyrightBoundary": {
     "romIncluded": false,

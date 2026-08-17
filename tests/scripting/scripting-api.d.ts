@@ -68,13 +68,20 @@ declare const DocumentPicker: {
     shouldShowFileExtensions?: boolean
     allowsMultipleSelection?: boolean
   }): Promise<string[]>
+  exportFiles(options: {
+    initialDirectory?: string
+    files: Array<{ data: Data; name: string }>
+  }): Promise<string[]>
   stopAcessingSecurityScopedResources(): void
 }
 
 declare class Data {
   readonly size: number
+  static fromBase64String(value: string): Data | null
+  static fromRawString(value: string, encoding?: string): Data | null
   toBase64String(): string
   toHexString(): string
+  toRawString(encoding?: string): string | null
 }
 
 declare const Crypto: {

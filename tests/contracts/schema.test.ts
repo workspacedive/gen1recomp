@@ -23,6 +23,9 @@ const modRegistry = ajv.compile(
 const gameRegistry = ajv.compile(
   schema("../../../../schemas/game-registry.schema.json"),
 )
+const saveBackup = ajv.compile(
+  schema("../../../../schemas/save-backup.schema.json"),
+)
 const hostMessage = ajv.compile(
   schema("../../../../schemas/host-message.schema.json"),
 )
@@ -118,6 +121,27 @@ test("game registry schema binds canonical identity and pending-source state", (
   assert.equal(gameRegistry({ ...registry, games: [{ ...registry.games[0], retainedSource: false }] }), false)
   assert.equal(gameRegistry({ ...registry, games: [{ ...registry.games[0], romSha1: "0".repeat(40) }] }), false)
   assert.equal(gameRegistry({ ...registry, sourcePath: "/private/rom.gb" }), false)
+})
+
+test("save backup schema closes identity, integrity, and payload bounds", () => {
+  const backup = {
+    schemaVersion: 1,
+    kind: "org.gen1recomp.save-backup",
+    gameId: "yellow",
+    saveId: "slot2",
+    exportedAt: "2026-08-17T10:12:59.000Z",
+    payload: {
+      encoding: "base64",
+      bytes: 4,
+      sha256: "a".repeat(64),
+      base64: "c2F2ZQ==",
+    },
+  }
+  assert.equal(saveBackup(backup), true, JSON.stringify(saveBackup.errors))
+  assert.equal(saveBackup({ ...backup, saveId: "../slot2" }), false)
+  assert.equal(saveBackup({ ...backup, payload: { ...backup.payload, sha256: "bad" } }), false)
+  assert.equal(saveBackup({ ...backup, payload: { ...backup.payload, bytes: 8_388_609 } }), false)
+  assert.equal(saveBackup({ ...backup, path: "/private/save.lua" }), false)
 })
 
 test("component schema rejects unknown fields and non-SHA-256 integrity", () => {

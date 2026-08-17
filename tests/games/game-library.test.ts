@@ -4,8 +4,10 @@ import test from "node:test"
 import {
   GAME_CATALOG,
   GAME_ORDER,
+  compareSaveSlots,
   emptyGameRegistry,
   identifyCanonicalRom,
+  isSaveSlotId,
   parseGameRegistry,
   pendingGame,
   replaceGame,
@@ -60,6 +62,19 @@ test("replacement preserves original import time and save summaries", () => {
   assert.equal(next.importedAt, instant)
   assert.equal(next.updatedAt, nextTime)
   assert.deepEqual(next.saves, prior.saves)
+})
+
+test("save slot identities are closed and sort numerically", () => {
+  assert.equal(isSaveSlotId("legacy"), true)
+  assert.equal(isSaveSlotId("slot1"), true)
+  assert.equal(isSaveSlotId("slot01"), false)
+  assert.equal(isSaveSlotId("../slot1"), false)
+  const saves = [
+    { id: "slot10", bytes: 1, modifiedAt: instant },
+    { id: "slot2", bytes: 1, modifiedAt: instant },
+    { id: "legacy", bytes: 1, modifiedAt: instant },
+  ].sort(compareSaveSlots)
+  assert.deepEqual(saves.map(({ id }) => id), ["legacy", "slot2", "slot10"])
 })
 
 test("registry parser rejects executable-looking or malformed save metadata", () => {

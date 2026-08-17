@@ -2,6 +2,7 @@ import { PRODUCT } from "../config/product"
 import {
   GAME_CATALOG,
   GAME_ORDER,
+  compareSaveSlots,
   emptyGameRegistry,
   identifyCanonicalRom,
   parseGameRegistry,
@@ -220,7 +221,7 @@ export class GameLibraryService {
     const registry = await this.#loadRegistry()
     const game = registry.games.find((candidate) => candidate.id === id)
     if (game == null) return snapshot(registry)
-    const normalized = [...saves].sort((left, right) => left.id.localeCompare(right.id))
+    const normalized = [...saves].sort(compareSaveSlots)
     if (JSON.stringify(normalized) === JSON.stringify(game.saves)) return snapshot(registry)
     const timestamp = now()
     const next = replaceGame(registry, { ...game, saves: normalized, updatedAt: timestamp }, timestamp)

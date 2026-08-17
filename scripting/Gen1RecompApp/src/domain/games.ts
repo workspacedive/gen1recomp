@@ -93,6 +93,17 @@ export type SaveSlotSummary = {
   readonly modifiedAt: string | null
 }
 
+export function isSaveSlotId(value: unknown): value is string {
+  return value === "legacy" || (typeof value === "string" && /^slot[1-9][0-9]*$/.test(value))
+}
+
+export function compareSaveSlots(left: SaveSlotSummary, right: SaveSlotSummary): number {
+  if (left.id === right.id) return 0
+  if (left.id === "legacy") return -1
+  if (right.id === "legacy") return 1
+  return Number(left.id.slice(4)) - Number(right.id.slice(4))
+}
+
 export type InstalledGame = {
   readonly id: GameId
   readonly title: string
@@ -130,7 +141,7 @@ function exactKeys(value: Record<string, unknown>, expected: readonly string[]):
 
 function parseSave(value: unknown): SaveSlotSummary | null {
   if (!isObject(value) || !exactKeys(value, ["id", "bytes", "modifiedAt"])) return null
-  if (typeof value["id"] !== "string" || !/^(slot[1-9][0-9]*|legacy)$/.test(value["id"])) return null
+  if (!isSaveSlotId(value["id"])) return null
   if (!Number.isSafeInteger(value["bytes"]) || (value["bytes"] as number) < 0) return null
   if (value["modifiedAt"] !== null && (typeof value["modifiedAt"] !== "string" || !isIsoDate(value["modifiedAt"]))) return null
   return {
@@ -174,7 +185,7 @@ function parseGame(value: unknown): InstalledGame | null {
     saves.push(save)
     saveIds.add(save.id)
   }
-  saves.sort((left, right) => left.id.localeCompare(right.id))
+  saves.sort(compareSaveSlots)
   return {
     id: identity.id,
     title: identity.title,

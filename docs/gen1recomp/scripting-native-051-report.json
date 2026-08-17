@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T10:22:20.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-051.scripting",
+    "project": "Gen1Recomp Native 051",
+    "version": "0.5.1",
+    "build": "051",
+    "bytes": 8345651,
+    "entries": 33,
+    "sha256": "6ab5468aac85c3e125e708dfb0b9c19dd361943add5008c95463e0172180e9cc",
+    "payloadSha256": "6ab3a495ecf6619831732eb9022d8da43a4473c958848adffc3a8c39de939943",
+    "payloadBytes": 5945550,
+    "payloadEntries": 490,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "coreIntegrationVersion": "0.5.0"
+  },
+  "scope": {
+    "hostRelease": true,
+    "corePayloadChanged": false,
+    "loveRuntimeChanged": false,
+    "catalogSequenceChanged": false,
+    "newNetworkTargets": [],
+    "newPermissions": [],
+    "userInitiatedFileSideEffects": [
+      "system Files export for one selected save backup",
+      "system Files selection for one save backup restore"
+    ]
+  },
+  "saveManagement": {
+    "slotLaunch": {
+      "numbered": "--game=<id> plus --slot=<slotId>",
+      "legacy": "existing default/legacy migration path",
+      "acceptedIds": "legacy or slot[1-9][0-9]*"
+    },
+    "backupEnvelope": {
+      "schemaVersion": 1,
+      "kind": "org.gen1recomp.save-backup",
+      "closedShape": true,
+      "maximumPayloadBytes": 8388608,
+      "maximumEnvelopeBytes": 12582912,
+      "integrity": "byte-transport SHA-256 checked in WebKit and native Scripting code; not a semantic Lua-save-validity claim",
+      "recordSelection": "first physically available main, then .tmp, then .bak record",
+      "transport": "DocumentPicker.exportFiles",
+      "containsRomOrCache": false
+    },
+    "restore": {
+      "nativeValidation": ["UTF-8 JSON", "closed envelope", "canonical game and slot", "size", "Base64", "SHA-256"],
+      "webValidation": ["canonical maintenance session", "size", "Base64", "SHA-256"],
+      "transaction": "one IndexedDB readwrite transaction",
+      "recovery": "existing .bak never overwritten; current main copied there only when .bak is absent; stale .tmp removed",
+      "readback": "byte count and SHA-256 must match before native summary update",
+      "semanticOwner": "Gen1Recomp SaveSerializer/SaveData on next load"
+    },
+    "delete": {
+      "confirmation": true,
+      "scope": "selected main/.bak/.tmp only",
+      "preserves": ["slot registry", "other saves", "ROM-derived cache", "game registration", "mods"]
+    },
+    "refresh": {
+      "maximumSaves": 128,
+      "ordering": "legacy then numeric slot order",
+      "nativeMetadataOnly": ["id", "bytes", "modifiedAt"]
+    }
+  },
+  "retainedNative050Changes": {
+    "postReadyTitleHoldMs": 5500,
+    "titleFadeMs": 900,
+    "topRevealHoldMs": 3200,
+    "nativeDismiss": true,
+    "rootTree": "TabView -> five tagged native NavigationStacks -> custom screen content",
+    "native050PhysicalResultKnown": false
+  },
+  "sourceEvidence": {
+    "packagedGen1Recomp": [
+      "src/core/SaveData.lua numbered paths, .tmp/.bak recovery and slot registry",
+      "src/core/LaunchOptions.lua canonical --slot selection"
+    ],
+    "packagedLoveJs": "IDBFS database /home/web_user, version 21, FILE_DATA timestamp/mode/contents records",
+    "scriptingDocs": [
+      "DocumentPicker.pickFiles/exportFiles/stopAcessingSecurityScopedResources",
+      "Data.fromBase64String/fromRawString/toRawString",
+      "Crypto.sha256",
+      "WebViewController load/evaluate/dispose"
+    ],
+    "appleHig": "File management and preservation unless explicitly deleted"
+  },
+  "automatedVerification": {
+    "typescriptTargets": 2,
+    "packageIdentityAndStaticContracts": "pass",
+    "nodeTests": { "total": 122, "passed": 122, "failed": 0 },
+    "saveMaintenanceRuntimeTests": {
+      "total": 5,
+      "passed": 4,
+      "coverage": ["numeric listing", "read/digest", "unsafe id rejection", "restore backup creation", "existing recovery-copy preservation", "save/cache deletion scope"]
+    },
+    "saveBackupDomainTests": { "total": 3, "passed": 3 },
+    "pythonTests": { "total": 35, "passed": 30, "skipped": 5, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchWavEntries": []
+  },
+  "physicalVerificationRequired": [
+    "runtime identity 0.5.1 / 051",
+    "no t.__type__ before runtime startup",
+    "post-ready title visibility/fade/top-edge reveal/native close",
+    "refresh discovers existing saves without presenting game UI",
+    "numbered save action launches the selected playthrough",
+    "Files export creates one .gen1save.json backup",
+    "restore confirmation and transaction preserve/reload the selected save",
+    "delete confirmation scopes deletion to one save and backup restore recovers it",
+    "iPhone/iPad layout, Dynamic Type and VoiceOver",
+    "phone interruption and cache-hit regressions"
+  ],
+  "upstreamUpdateObservation": {
+    "latestReleaseDetected": "v0.1.99",
+    "publishedAt": "2026-08-17T02:37:20Z",
+    "loveAssetSha256": "035c5ad884b80bcae9c5b4837bc06826e373e5c280c69518d66b88e72a3dcabc",
+    "integratedHere": false,
+    "reason": "component updates remain separately versioned, compatibility-tested and manually activated"
+  },
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "renderedAudioIncluded": false,
+    "saveIncluded": false,
+    "userBackupIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

@@ -131,6 +131,8 @@ Actions:
 
 Migration always stages a new copy, validates it and preserves the previous copy until the new one has loaded successfully.
 
+Native 0.5.1 implements the first safe host slice: numeric slot selection through upstream `--slot`, metadata refresh, a closed SHA-256-bound backup envelope exported/selected through the system Files UI, transactional restore with prior-main `.bak` preservation and readback, and explicitly confirmed per-save deletion. The host intentionally does not parse player name/play time or imitate raw cartridge `.sav` conversion; those fields/actions appear only after a core-owned validated interface supplies them. Rename, duplicate, raw `.sav` conversion, profile fingerprints and known-good history UI remain later slices rather than inferred data.
+
 ## 6. Mod Manager
 
 ### Sections

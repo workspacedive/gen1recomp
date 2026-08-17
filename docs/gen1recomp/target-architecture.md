@@ -388,6 +388,23 @@ The adapter changes no upstream Lua. It uses the upstream scripted import and la
 
 Runtime storage remains the game plane's private IDBFS. Native code receives cache-ready/missing and save-file summary events only. A separate maintenance document removes known per-game cache-prefix records while preserving `saves/<game>/`, flat legacy saves, shared options, and other games. Browser evidence covers the ROM-free session, a deliberately noncanonical all-zero transfer/cleanup fixture, and maintenance behavior; real Scripting/WebKit extraction remains a physical gate. The periodic/visibility/pagehide flush layers reduce lifecycle risk but do not become a proven clean-close claim until device interruption tests pass.
 
+### Native 0.5.1 save-management boundary
+
+The native control plane still does not parse or edit gameplay state. It adds a narrow, allowlisted maintenance protocol over the exact love.js IDBFS schema:
+
+```text
+canonical game + slot ID
+→ known flat/numbered save path
+→ first physically available IDBFS main, then .tmp, then .bak record
+→ bounded bytes + transport SHA-256
+→ closed org.gen1recomp.save-backup JSON envelope
+→ explicit iOS Files export/selection
+```
+
+A restore validates envelope identity, size, Base64 and SHA-256 natively and again in WebKit. One IndexedDB transaction never overwrites an existing `.bak`; only if none exists does it preserve current main there. It then writes replacement main and removes stale `.tmp`; a subsequent readback must match before native metadata is updated. Gen1Recomp's restricted `SaveSerializer` and `SaveData` remain the semantic validator on next load. The selected slot launches only through upstream's existing `--slot=<id>` option. Delete is explicitly confirmed and can remove only that slot's main/backup/temporary records; game cache, options/slot registry, other games and mods are outside its path set.
+
+This is lossless host backup/recovery, not cartridge `.sav` conversion. Raw `.sav` import/export remains upstream core behavior and must be integrated as a separately versioned adapter rather than reimplemented in TypeScript.
+
 ## 11. Compatibility/deprecation
 
 - APIs use major/minor versions; only major breaks semantics.

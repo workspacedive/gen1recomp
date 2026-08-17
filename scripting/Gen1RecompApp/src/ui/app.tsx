@@ -26,11 +26,11 @@ import {
 } from "../data/game-library-service"
 import { ModService, ModServiceError } from "../data/mod-service"
 import { SystemUpdateService, UpdateServiceError } from "../data/system-update-service"
-import type { InstalledGame } from "../domain/games"
+import type { InstalledGame, SaveSlotSummary } from "../domain/games"
 import type { InstalledMod, ModOperationStage, ModSnapshot, ModViewState } from "../domain/mods"
 import { PRODUCT_TABS, type UpdateMutationStage, type UpdateSnapshot, type UpdateViewState } from "../domain/models"
 import { formatDate, t } from "../i18n/strings"
-import { GameRuntimeService } from "../platform/game-runtime"
+import { GameRuntimeService, SaveManagementError } from "../platform/game-runtime"
 import { runRuntimeDiagnostic } from "../platform/runtime-diagnostic"
 
 const enabledTabs = PRODUCT_TABS.filter(({ enabled }) => enabled)
@@ -98,7 +98,7 @@ type GameLibraryViewState =
   | {
       readonly status: "working"
       readonly previous: GameLibrarySnapshot
-      readonly stage: RomImportStage | "launching" | "deleting"
+      readonly stage: RomImportStage | "launching" | "deleting" | "refreshingSaves" | "exportingSave" | "restoringSave" | "deletingSave"
       readonly gameTitle: string | null
     }
   | { readonly status: "error"; readonly previous: GameLibrarySnapshot; readonly message: string }
@@ -109,24 +109,51 @@ function gameStatus(game: InstalledGame): { readonly title: string; readonly ima
   return { title: t("reimportRequired"), image: "exclamationmark.triangle.fill", color: "systemOrange" }
 }
 
-function gameWorkText(stage: RomImportStage | "launching" | "deleting"): string {
+function gameWorkText(stage: RomImportStage | "launching" | "deleting" | "refreshingSaves" | "exportingSave" | "restoringSave" | "deletingSave"): string {
   if (stage === "reading") return t("readingRom")
   if (stage === "identity") return t("verifyingRom")
   if (stage === "staging") return t("stagingRom")
   if (stage === "registry") return t("registeringGame")
   if (stage === "deleting") return t("deletingGame")
+  if (stage === "refreshingSaves") return t("refreshingSaves")
+  if (stage === "exportingSave") return t("exportingSave")
+  if (stage === "restoringSave") return t("restoringSave")
+  if (stage === "deletingSave") return t("deletingSave")
   return t("startingGame")
+}
+
+function saveTitle(save: SaveSlotSummary): string {
+  return save.id === "legacy" ? t("legacySave") : `${t("numberedSave")} ${Number(save.id.slice(4))}`
+}
+
+function saveErrorMessage(error: unknown): string {
+  if (!(error instanceof SaveManagementError)) return t("saveStorageError")
+  if (error.code === "missing") return t("saveMissingError")
+  if (error.code === "format") return t("saveFormatError")
+  if (error.code === "identity") return t("saveIdentityError")
+  if (error.code === "integrity") return t("saveIntegrityError")
+  return t("saveStorageError")
 }
 
 function GameCard({
   game,
   disabled,
   play,
+  playSave,
+  exportSave,
+  restoreSave,
+  refreshSaves,
+  deleteSave,
   remove,
 }: {
   game: InstalledGame
   disabled: boolean
   play: () => void
+  playSave: (save: SaveSlotSummary) => void
+  exportSave: (save: SaveSlotSummary) => void
+  restoreSave: () => void
+  refreshSaves: () => void
+  deleteSave: (save: SaveSlotSummary) => void
   remove: () => void
 }) {
   const status = gameStatus(game)
@@ -150,18 +177,27 @@ function GameCard({
         <Spacer />
         <Text foregroundStyle="secondaryLabel">{`SHA-1 ${game.romSha1.slice(0, 8)}…`}</Text>
       </HStack>
-      {game.saves.slice(0, 3).map((save) => (
-        <HStack>
-          <Label title={save.id === "legacy" ? t("legacySave") : save.id} systemImage="doc.fill" />
-          <Spacer />
-          <Text foregroundStyle="secondaryLabel">
-            {save.modifiedAt == null ? `${save.bytes} B` : formatDate(save.modifiedAt)}
-          </Text>
-        </HStack>
+      {game.saves.map((save) => (
+        <VStack alignment="leading" spacing={6}>
+          <HStack>
+            <Label title={saveTitle(save)} systemImage="doc.fill" />
+            <Spacer />
+            <Text foregroundStyle="secondaryLabel">
+              {save.modifiedAt == null ? `${save.bytes} B` : formatDate(save.modifiedAt)}
+            </Text>
+          </HStack>
+          <HStack spacing={10}>
+            <Button title={t("playSave")} systemImage="play.fill" action={() => playSave(save)} disabled={disabled || game.status !== "ready"} />
+            <Button title={t("exportSaveBackup")} systemImage="square.and.arrow.up" action={() => exportSave(save)} disabled={disabled} />
+            <Button title={t("deleteSave")} systemImage="trash" action={() => deleteSave(save)} disabled={disabled} />
+          </HStack>
+        </VStack>
       ))}
-      {game.saves.length > 3
-        ? <Text foregroundStyle="secondaryLabel">{`+${game.saves.length - 3} ${t("moreSaves")}`}</Text>
-        : null}
+      <HStack spacing={10}>
+        <Button title={t("restoreSaveBackup")} systemImage="arrow.down.doc.fill" action={restoreSave} disabled={disabled} />
+        <Button title={t("refreshSaves")} systemImage="arrow.clockwise" action={refreshSaves} disabled={disabled} />
+      </HStack>
+      <Text foregroundStyle="secondaryLabel">{t("saveBackupHint")}</Text>
       <HStack spacing={12}>
         <Button
           title={game.status === "ready" ? t("play") : game.status === "pendingExtraction" ? t("finishImport") : t("importAgain")}
@@ -204,12 +240,12 @@ function GamesScreen({
     return () => { active = false }
   }, [])
 
-  const launch = async (game: InstalledGame, previous: GameLibrarySnapshot) => {
+  const launch = async (game: InstalledGame, previous: GameLibrarySnapshot, saveId?: string) => {
     // Keep the stable card tree mounted while WebViewController presents.
     // Rebuilding the conditional working tree immediately before modal
     // presentation triggered Scripting 3.2.0's intermittent t.__type__ error.
     try {
-      const result = await runtime.launch(game)
+      const result = await runtime.launch(game, saveId)
       onSnapshot(result.snapshot)
       if (result.errors.length > 0) {
         setState({ status: "error", previous: result.snapshot, message: result.errors.join("\n") })
@@ -260,6 +296,89 @@ function GamesScreen({
     if (imported != null) {
       setState({ status: "content", snapshot: importedSnapshot })
       await launch(imported, importedSnapshot)
+    }
+  }
+
+  const refreshSaves = async (game: InstalledGame) => {
+    if (busy || current == null) return
+    const previous = current
+    setState({ status: "working", previous, stage: "refreshingSaves", gameTitle: game.title })
+    try {
+      const next = await runtime.refreshSaves(game)
+      onSnapshot(next)
+      setState({ status: "content", snapshot: next })
+    } catch (error) {
+      setState({ status: "error", previous, message: saveErrorMessage(error) })
+    }
+  }
+
+  const exportSave = async (game: InstalledGame, save: SaveSlotSummary) => {
+    if (busy || current == null) return
+    const previous = current
+    setState({ status: "working", previous, stage: "exportingSave", gameTitle: `${game.title} · ${saveTitle(save)}` })
+    try {
+      const backup = await runtime.createSaveBackup(game, save)
+      await DocumentPicker.exportFiles({ files: [{ data: backup.data, name: backup.name }] })
+      setState({ status: "content", snapshot: previous })
+    } catch (error) {
+      setState({ status: "error", previous, message: saveErrorMessage(error) })
+    }
+  }
+
+  const restoreSave = async (game: InstalledGame) => {
+    if (busy || current == null) return
+    const previous = current
+    let path: string | null = null
+    try {
+      const paths = await DocumentPicker.pickFiles({
+        allowsMultipleSelection: false,
+        shouldShowFileExtensions: true,
+        types: ["public.json", "public.data"],
+      })
+      path = paths[0] ?? null
+      if (path == null) return
+      setState({ status: "working", previous, stage: "restoringSave", gameTitle: game.title })
+      const backup = await runtime.inspectSaveBackup(game, path)
+      DocumentPicker.stopAcessingSecurityScopedResources()
+      path = null
+      const slot = backup.saveId === "legacy" ? t("legacySave") : `${t("numberedSave")} ${Number(backup.saveId.slice(4))}`
+      const confirmed = await Dialog.confirm({
+        title: t("restoreSaveTitle"),
+        message: `${slot}\n\n${t("restoreSaveMessage")}`,
+        cancelLabel: t("cancel"),
+        confirmLabel: t("restoreSaveBackup"),
+      })
+      if (!confirmed) {
+        setState({ status: "content", snapshot: previous })
+        return
+      }
+      const next = await runtime.restoreSaveBackup(game, backup)
+      onSnapshot(next)
+      setState({ status: "content", snapshot: next })
+    } catch (error) {
+      setState({ status: "error", previous, message: saveErrorMessage(error) })
+    } finally {
+      if (path != null) DocumentPicker.stopAcessingSecurityScopedResources()
+    }
+  }
+
+  const deleteSave = async (game: InstalledGame, save: SaveSlotSummary) => {
+    if (busy || current == null) return
+    const previous = current
+    const confirmed = await Dialog.confirm({
+      title: t("deleteSaveTitle"),
+      message: `${saveTitle(save)}\n\n${t("deleteSaveMessage")}`,
+      cancelLabel: t("cancel"),
+      confirmLabel: t("delete"),
+    })
+    if (!confirmed) return
+    setState({ status: "working", previous, stage: "deletingSave", gameTitle: `${game.title} · ${saveTitle(save)}` })
+    try {
+      const next = await runtime.deleteSave(game, save)
+      onSnapshot(next)
+      setState({ status: "content", snapshot: next })
+    } catch (error) {
+      setState({ status: "error", previous, message: saveErrorMessage(error) })
     }
   }
 
@@ -330,6 +449,11 @@ function GamesScreen({
                 if (game.status === "needsReimport") void importRom()
                 else if (current != null) void launch(game, current)
               }}
+              playSave={(save) => { if (current != null) void launch(game, current, save.id) }}
+              exportSave={(save) => { void exportSave(game, save) }}
+              restoreSave={() => { void restoreSave(game) }}
+              refreshSaves={() => { void refreshSaves(game) }}
+              deleteSave={(save) => { void deleteSave(game, save) }}
               remove={() => { void remove(game) }}
             />
           </Section>

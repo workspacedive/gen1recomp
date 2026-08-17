@@ -4,6 +4,8 @@
 
 **SHA-256:** `e86c6b908c24bae7541d329430e092db269ab75ec40611feacf01ba3a25f67c0`
 
+**Status:** Teilweise als Run 018 ausgeführt. Moderne fünf Tabs, Runtime, Titel, Yellow und Retina bestanden; `t.__type__` trat erneut auf; Home zeigte einen irreführenden Leerstatus. Fortsetzung: `scripting-native-053-device-plan.md`.
+
 ## Warum dieser Lauf nötig ist
 
 Native 051 hat den Titel-Timer korrigiert, aber `t.__type__` trat weiterhin einmal auf. Damit ist die Native-050-Hypothese widerlegt, dass direkte legacy-`NavigationStack`-Kinder allein den Fehler beheben.

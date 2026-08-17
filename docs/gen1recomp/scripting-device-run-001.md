@@ -174,6 +174,23 @@ Late draw CPU remained negligible (0.13–0.20 ms average), while update CPU and
 
 The newly synchronized official App Store Scripting documentation contains two distinct Tab APIs. Its legacy badge example explicitly places custom function components directly under `TabView`, so Native 050's claim that such children were structurally invalid was unsupported and is now retracted. The current iOS-18+ API instead provides explicit native `Tab` descriptors with observable `selection`. Native 0.5.2 migrates only this root navigation boundary to the documented modern API while retaining the independently valid toolbar structure. Physical non-recurrence is still required before attributing the exception.
 
+## Run 018 — Native 0.5.2 renders modern tabs; `t.__type__` persists and Home conflates readiness with registration
+
+Native 0.5.2 physically rendered all five modern native tabs on the primary iPhone, including the documented selected Home state. The screenshot shows Start, Spiele, Updates, Mods and Einstellungen with correct icons and labels. The exact `runtime identity 0.5.2 / 052` then reached ready frame 8, Yellow game load, Retina `1320×2868`, scale 8 and vector touch installation.
+
+The component-builder exception still occurred once at 22:35:13. This disproves the modern-versus-legacy Tab descriptor boundary as the complete cause. Because the screenshot also shows a correctly built modern root, Native 053 leaves `Tab`/Observable navigation intact and isolates the next shared descriptor boundary: five per-screen toolbar dictionaries and five independently acquired `Navigation.useDismiss()` callbacks.
+
+The Home screenshot exposed a separate semantic UI defect. `HomeScreen` derived its headline only from `games.filter(status === "ready")` and used “Noch kein Spiel importiert” whenever that filtered array was empty. Consequently all of these distinct states were rendered identically:
+
+- the root library snapshot was still loading or failed to load;
+- Yellow was registered as `pendingExtraction`;
+- Yellow needed reimport because its cache marker was absent;
+- the library was genuinely empty.
+
+The screenshot therefore does not prove Yellow registration was lost. The same session launched Yellow and loaded its generated data, directly proving private game data remained available. Native 053 introduces an explicit Home loading/content/error state and separately reports empty, imported-but-not-ready, pending extraction, reimport required and ready counts.
+
+Three supplied performance windows rendered 425, 412 and 491 frames over approximately ten seconds, with p95 34, 48 and 39 ms and maxima 472, 94 and 65 ms. Late draw remained 0.11–0.27 ms average. Named effects remained `cache=store`; save actions, phone recovery and same-artifact cache hits remained untested.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -204,7 +221,9 @@ The newly synchronized official App Store Scripting documentation contains two d
 26. Native 0.5.0 reveals custom game chrome only after runtime readiness, holds 5.5 seconds, then fades opacity/translation/blur over 0.9 seconds.
 27. Native 0.5.0 makes native tagged NavigationStacks the five immediate legacy TabView children; Native 0.5.1 physical recurrence disproves that layout as a complete `t.__type__` correction.
 28. Native 0.5.1 binds the title reveal to runtime readiness; physical ordering and user acceptance pass while exact fade/close visuals remain only partially evidenced.
-29. Native 0.5.2 adopts the current official iOS-18+ `TabView` + `Tab` + observable-selection API instead of making another unsupported claim about valid legacy child shapes.
+29. Native 0.5.2 adopts the current official iOS-18+ `TabView` + `Tab` + observable-selection API instead of making another unsupported claim about valid legacy child shapes; physical recurrence disproves this boundary as the complete fix.
+30. Native 0.5.3 removes all toolbar descriptors from the five screen trees, acquires one root dismiss callback and exposes five ordinary in-content native close Buttons.
+31. Native 0.5.3 models Home library loading/content/error explicitly and never labels a pending/reimport/loading state as “no game imported.”
 
 ## Replacement artifact
 
@@ -219,4 +238,4 @@ The newly synchronized official App Store Scripting documentation contains two d
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's diagnostic passed as Run 006. Runs 007–017 prove canonical play, Retina geometry, near-60 Hz windows and readiness-bound title timing. Native 0.5.1 disproves the flattened legacy TabView tree as the complete `t.__type__` fix. Native 0.5.2 is the documented modern-Tab descriptor candidate. `t.__type__` non-recurrence, exact fade/reveal/close visuals, warm cache, phone recovery, save operations, multitouch, components/mods and wider devices remain untested.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–018 prove canonical play, Retina geometry, readiness-bound title timing and correct modern Tab rendering while disproving both legacy and modern Tab trees as the complete `t.__type__` fix. Native 0.5.3 isolates per-screen toolbar/dismiss descriptors and corrects Home library semantics. `t.__type__` non-recurrence, exact fade/reveal/close visuals, warm cache, phone recovery, save operations, multitouch, components/mods and wider devices remain untested.

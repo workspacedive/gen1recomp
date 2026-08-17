@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-17T20:23:04.000Z",
+  "observedAt": "2026-08-17T20:48:52.000Z",
   "artifact": {
     "name": "Gen1Recomp-Native-052.scripting",
     "project": "Gen1Recomp Native 052",
@@ -36,7 +36,21 @@
     "navigationContext": "one NavigationStack inside each Tab",
     "legacyPropsRemaining": [],
     "toolbarChanged": false,
-    "physicalFixClaimed": false
+    "physicalFixClaimed": false,
+    "physicalResult": "all five modern tabs rendered correctly but t.__type__ recurred once; not a complete fix"
+  },
+  "native052PhysicalEvidence": {
+    "observedLocalWindow": "2026-08-17 22:35:13-22:36:11 Europe/Berlin",
+    "runtimeIdentity": "0.5.2 / 052",
+    "componentBuildError": "one t.__type__ occurrence before successful runtime startup",
+    "modernTabsRendered": true,
+    "homeScreenshotCaptured": true,
+    "homeEmptyTextMisleading": true,
+    "yellowDataStillAvailable": "same session loaded generated data and game",
+    "readyFrame": 8,
+    "retinaGeometry": "440x956 CSS -> 1320x2868 canvas; DPR 3; scale 8",
+    "effectCache": "store only",
+    "saveOperationsExercised": false
   },
   "sourceEvidence": {
     "officialRepository": "https://github.com/ScriptingApp/ScriptingApp.github.io",
@@ -80,9 +94,7 @@
     "romSavePatchWavEntries": []
   },
   "physicalVerificationRequired": [
-    "runtime identity 0.5.2 / 052",
-    "whether t.__type__ recurs before runtime startup",
-    "five visible tabs and Home to Games programmatic switch",
+    "Home to Games programmatic switch",
     "post-ready title and native close regression",
     "game launch and Retina/vector control regression",
     "save refresh/backup/restore/slot/delete operations",

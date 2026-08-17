@@ -87,7 +87,8 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - [`docs/gen1recomp/scripting-native-030-report.json`](docs/gen1recomp/scripting-native-030-report.json) — Paket-, Sicherheits- und Runtime-Bericht der 0.3.0-Komponenten-/Modverwaltung
 - [`docs/gen1recomp/scripting-native-040-report.json`](docs/gen1recomp/scripting-native-040-report.json) / [`scripting-native-041-report.json`](docs/gen1recomp/scripting-native-041-report.json) / [`scripting-native-042-report.json`](docs/gen1recomp/scripting-native-042-report.json) / [`scripting-native-043-report.json`](docs/gen1recomp/scripting-native-043-report.json) / [`scripting-native-044-report.json`](docs/gen1recomp/scripting-native-044-report.json) — physischer Yellow-Import-, Adapter- und Spielstartbefund
 - [`docs/gen1recomp/scripting-native-051-report.json`](docs/gen1recomp/scripting-native-051-report.json) — physischer Post-Ready-Titel-Pass, Save-Management-Bericht und widerlegte Legacy-Tab-Hypothese
-- [`docs/gen1recomp/scripting-native-052-report.json`](docs/gen1recomp/scripting-native-052-report.json) / [`scripting-native-052-device-plan.md`](docs/gen1recomp/scripting-native-052-device-plan.md) — aktueller moderner Tab-/Observable-Kandidat und Geräteplan
+- [`docs/gen1recomp/scripting-native-052-report.json`](docs/gen1recomp/scripting-native-052-report.json) — physischer moderner Tab-Pass mit fortbestehendem Komponentenfehler
+- [`docs/gen1recomp/scripting-native-053-report.json`](docs/gen1recomp/scripting-native-053-report.json) / [`scripting-native-053-device-plan.md`](docs/gen1recomp/scripting-native-053-device-plan.md) — aktueller Toolbar-Isolations-/Home-Status-Kandidat und Geräteplan
 - [`docs/gen1recomp/scripting-capability-probes.md`](docs/gen1recomp/scripting-capability-probes.md) — physischer Geräteprüfplan
 - [`docs/gen1recomp/device-connection.md`](docs/gen1recomp/device-connection.md) — sicherer lokaler `scripting-cli`-/Deklarations-Handoff
 - [`docs/gen1recomp/architecture-audit.md`](docs/gen1recomp/architecture-audit.md) — dokumentübergreifender Konsistenz- und Evidenzaudit
@@ -99,7 +100,7 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - `components/updates/src/`: geschlossener Katalogparser/Trust-Policy, Update-Inventar und -Planung, SemVer-/Dependency-/API-Kompatibilität, Archivrichtlinie, manueller Transaktionsorchestrator, Aktivierungsjournal und Recovery;
 - `updates/`: deterministische ROM-freie aktuelle LÖVE/Lua- und Gen1Recomp-Komponentenpakete plus sequenzierter Stable-Systemkatalog;
 - `scripting/Gen1RecompPreview/`: physisch validierter Preview-0.1.4-Runtime-Fallback;
-- `scripting/Gen1RecompApp/`: nativer 0.5.2-Produktshell mit aktuellem offiziellem iOS-18+-Tab/Observable-Baum, verifiziertem Spieleimport, ausgewähltem Slot-Start, SHA-256-gebundenem Save-Backup/Restore/Delete, Retina-/Vektor-Gameplane, post-ready In-WebView-Spieltitel, nativem Dismiss, Unterbrechungs-Recovery, privatem Effektcache, Updates und Mods;
+- `scripting/Gen1RecompApp/`: nativer 0.5.3-Produktshell mit korrektem Home-Bibliotheksstatus, Toolbar-isolierten Close-Buttons, modernem iOS-Tab/Observable-Baum, verifiziertem Spieleimport, Slot-/Save-Management, Retina-/Vektor-Gameplane, post-ready Titel, Unterbrechungs-Recovery, Updates und Mods;
 - `runtime/adapters/lovejs/` und `runtime/manager/`: serialisierte Persistenz, funktionale Capability-Evidenz und geordnete Lifecycle-/Concurrency-Grenzen;
 - `compatibility/love-web/`: vollständiger BitOp-Hostshim plus No-Worker-Normalisierung;
 - `schemas/`: geschlossene JSON-Schemas einschließlich Updatekatalog;
@@ -128,4 +129,4 @@ python3 tools/audit_references.py --report docs/reference-audit.json
 
 Weitere Produktpfade werden nur nach ihrem jeweiligen Declaration-/Gerätegate aktiviert. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
 
-Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Native 0.5.1 bestätigte physisch Retina `1320×2868`, Spielstart und readiness-gebundenen Titel, widerlegte aber den abgeflachten Legacy-Tab-Baum als vollständigen `t.__type__`-Fix. Native 0.5.2 ist der aktuelle moderne native Tab-/Observable-Kandidat; Upstream 0.1.99 bleibt ein getrenntes manuelles Komponentenupdate.
+Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Native 0.5.2 bestätigte moderne Tabs, Yellow, Retina und readiness-gebundenen Titel, widerlegte aber auch den modernen Tab-Baum als vollständigen `t.__type__`-Fix. Native 0.5.3 isoliert Toolbars/Close und korrigiert den irreführenden Home-Leerstatus; Upstream 0.1.99 bleibt ein getrenntes manuelles Komponentenupdate.

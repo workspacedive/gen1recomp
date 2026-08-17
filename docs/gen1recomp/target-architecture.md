@@ -419,7 +419,13 @@ useObservable<ProductTabId>("home")
 → existing screen content
 ```
 
-No Tab is conditional or dynamically mapped. Legacy root properties are absent. This changes only the Scripting platform UI descriptor layer and leaves game, runtime, save, update and mod boundaries unchanged. Static conformance is not reported as a physical fix; exact non-recurrence remains the device gate.
+No Tab is conditional or dynamically mapped. Legacy root properties are absent. Native 052 physically rendered this tree but did not stop `t.__type__`, so Tab descriptors are no longer treated as the complete cause.
+
+### Native 0.5.3 toolbar and Home-state boundary
+
+Native 053 removes every `toolbar` value from product TSX, acquires one root `Navigation.useDismiss()` callback and passes it to five ordinary native List Buttons. This deliberately trades persistent top-bar placement for a smaller, directly inspectable component tree while preserving explicit close on every tab. A physical pass is required before attributing the component-builder event.
+
+Home also stops using a nullable snapshot as both “loading” and “empty.” The control plane publishes a discriminated loading/content/error state; pure domain summarization counts imported, ready, pending-extraction and reimport-required games. Only loaded content with `games.length === 0` renders the empty-library claim. These UI-state changes do not alter the strict registry, cache or ROM lifecycle.
 
 ## 11. Compatibility/deprecation
 
@@ -486,7 +492,7 @@ The runtime gate is passed, so production directories now follow actual vertical
 - `schemas/` includes closed wire, manifest, game/mod registry, activation-journal, runtime-capability and update-catalog schemas;
 - `tests/contracts/`, `tests/games/`, `tests/runtime/`, `tests/updates/`, `tests/scripting/` and `tests/tools/` exercise host-independent logic, declaration-subset compatibility and deterministic packages.
 
-Physical runs through Native 0.5.1 prove canonical play, Retina `1320×2868`/Scale 8, readiness-bound 5.5-second title reveal and negligible late draw CPU. Native 0.5.1 also proves the flattened legacy TabView tree did not stop `t.__type__`. Native 0.5.2 adopts the current official modern `Tab` descriptor API. Modern-tab non-recurrence, exact fade/reveal/close visuals, phone recovery, warm-cache reuse, exact multitouch/release, save operations, mods and broad-device validation remain active.
+Physical runs through Native 0.5.2 prove canonical play, Retina `1320×2868`/Scale 8, readiness-bound 5.5-second title reveal, modern Tab rendering and negligible late draw CPU. Both legacy and modern Tab trees failed to stop `t.__type__`. Native 0.5.3 isolates toolbar/dismiss descriptors and corrects Home readiness semantics. Toolbar-isolation non-recurrence, exact fade/reveal/close visuals, phone recovery, warm-cache reuse, exact multitouch/release, save operations, mods and broad-device validation remain active.
 
 ## 13. Core-change exception process
 

@@ -1,9 +1,9 @@
 {
-  "name": "Gen1Recomp Native 052",
+  "name": "Gen1Recomp Native 053",
   "icon": "gamecontroller.fill",
   "color": "systemYellow",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "entry": "index.tsx",
   "runInApp": false,
-  "description": "Native Gen1Recomp library with modern iOS tabs, verified ROM extraction, save backups, touch controls, updates, and manual mods."
+  "description": "Native Gen1Recomp library with truthful game status, isolated close controls, verified ROM extraction, save backups, updates, and mods."
 }

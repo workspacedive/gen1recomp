@@ -11,6 +11,7 @@ import {
   parseGameRegistry,
   pendingGame,
   replaceGame,
+  summarizeGames,
 } from "../../scripting/Gen1RecompApp/src/domain/games.js"
 
 const instant = "2026-08-17T12:00:00.000Z"
@@ -75,6 +76,24 @@ test("save slot identities are closed and sort numerically", () => {
     { id: "legacy", bytes: 1, modifiedAt: instant },
   ].sort(compareSaveSlots)
   assert.deepEqual(saves.map(({ id }) => id), ["legacy", "slot2", "slot10"])
+})
+
+test("home library summary distinguishes imported readiness states from an empty registry", () => {
+  assert.deepEqual(summarizeGames([]), {
+    imported: 0,
+    ready: 0,
+    pendingExtraction: 0,
+    needsReimport: 0,
+  })
+  const pending = pendingGame(GAME_CATALOG.yellow, undefined, instant)
+  const ready = { ...pendingGame(GAME_CATALOG.red, undefined, instant), status: "ready" as const, retainedSource: false }
+  const needsReimport = { ...pendingGame(GAME_CATALOG.blue, undefined, instant), status: "needsReimport" as const, retainedSource: false }
+  assert.deepEqual(summarizeGames([pending, ready, needsReimport]), {
+    imported: 3,
+    ready: 1,
+    pendingExtraction: 1,
+    needsReimport: 1,
+  })
 })
 
 test("registry parser rejects executable-looking or malformed save metadata", () => {

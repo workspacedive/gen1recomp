@@ -125,6 +125,25 @@ export type GameRegistry = {
   readonly updatedAt: string
 }
 
+export type GameLibrarySummary = {
+  readonly imported: number
+  readonly ready: number
+  readonly pendingExtraction: number
+  readonly needsReimport: number
+}
+
+export function summarizeGames(games: readonly InstalledGame[]): GameLibrarySummary {
+  let ready = 0
+  let pendingExtraction = 0
+  let needsReimport = 0
+  for (const game of games) {
+    if (game.status === "ready") ready += 1
+    else if (game.status === "pendingExtraction") pendingExtraction += 1
+    else needsReimport += 1
+  }
+  return { imported: games.length, ready, pendingExtraction, needsReimport }
+}
+
 export function emptyGameRegistry(now: string): GameRegistry {
   return { schemaVersion: 1, games: [], updatedAt: now }
 }

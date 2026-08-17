@@ -28,7 +28,7 @@ import {
 } from "../data/game-library-service"
 import { ModService, ModServiceError } from "../data/mod-service"
 import { SystemUpdateService, UpdateServiceError } from "../data/system-update-service"
-import type { InstalledGame, SaveSlotSummary } from "../domain/games"
+import { summarizeGames, type InstalledGame, type SaveSlotSummary } from "../domain/games"
 import type { InstalledMod, ModOperationStage, ModSnapshot, ModViewState } from "../domain/mods"
 import {
   PRODUCT_TABS,
@@ -54,24 +54,31 @@ const updatesTab = tabDefinition("updates")
 const modsTab = tabDefinition("mods")
 const settingsTab = tabDefinition("settings")
 
+type HomeLibraryState =
+  | { readonly status: "loading" }
+  | { readonly status: "content"; readonly snapshot: GameLibrarySnapshot }
+  | { readonly status: "error" }
+
 function HomeScreen({
   openGames,
+  close,
   versions,
   library,
 }: {
   openGames: () => void
+  close: () => void
   versions: Readonly<Record<ProductComponentId, string>>
-  library: GameLibrarySnapshot | null
+  library: HomeLibraryState
 }) {
-  const dismiss = Navigation.useDismiss()
-  const readyGames = library?.games.filter(({ status }) => status === "ready") ?? []
+  const games = library.status === "content" ? library.snapshot.games : []
+  const summary = summarizeGames(games)
   return (
     <List
         navigationTitle={t("homeTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section>
+          <Button title={t("close")} systemImage="xmark.circle.fill" action={close} />
           <VStack alignment="leading" spacing={10}>
             <HStack spacing={12}>
               <Image systemName="gamecontroller.fill" font={{ name: "system", size: 38 }} />
@@ -82,15 +89,43 @@ function HomeScreen({
             </HStack>
           </VStack>
         </Section>
-        <Section title={t("tabGames")} footer={<Text>{t("continueHint")}</Text>}>
+        <Section title={t("tabGames")} footer={<Text>{library.status === "content" && games.length === 0 ? t("continueHint") : t("homeLibraryHint")}</Text>}>
           <VStack alignment="leading" spacing={8}>
-            {readyGames.length === 0
+            {library.status === "loading" ? <ProgressView label={t("loadingLibrary")} /> : null}
+            {library.status === "error"
+              ? <Label title={t("libraryUnavailable")} systemImage="exclamationmark.triangle.fill" foregroundStyle="systemOrange" />
+              : null}
+            {library.status === "content" && games.length === 0
               ? <Label title={t("continueUnavailable")} systemImage="square.dashed" />
-              : <Label
-                  title={`${readyGames.length} ${readyGames.length === 1 ? t("gameReady") : t("gamesReady")}`}
+              : null}
+            {library.status === "content" && summary.ready > 0
+              ? <Label
+                  title={`${summary.ready} ${summary.ready === 1 ? t("gameReady") : t("gamesReady")}`}
                   systemImage="checkmark.seal.fill"
                   foregroundStyle="systemGreen"
-                />}
+                />
+              : null}
+            {library.status === "content" && summary.imported > 0 && summary.ready === 0
+              ? <Label
+                  title={`${summary.imported} ${summary.imported === 1 ? t("importedGame") : t("importedGames")}`}
+                  systemImage="shippingbox.fill"
+                  foregroundStyle="systemBlue"
+                />
+              : null}
+            {summary.pendingExtraction > 0
+              ? <Label
+                  title={`${summary.pendingExtraction} ${summary.pendingExtraction === 1 ? t("pendingGame") : t("pendingGames")}`}
+                  systemImage="arrow.triangle.2.circlepath"
+                  foregroundStyle="systemOrange"
+                />
+              : null}
+            {summary.needsReimport > 0
+              ? <Label
+                  title={`${summary.needsReimport} ${summary.needsReimport === 1 ? t("reimportGame") : t("reimportGames")}`}
+                  systemImage="exclamationmark.triangle.fill"
+                  foregroundStyle="systemOrange"
+                />
+              : null}
             <Button title={t("openGames")} systemImage="square.grid.2x2" action={openGames} />
           </VStack>
         </Section>
@@ -234,12 +269,13 @@ function GamesScreen({
   library,
   runtime,
   onSnapshot,
+  close,
 }: {
   library: GameLibraryService
   runtime: GameRuntimeService
   onSnapshot: (snapshot: GameLibrarySnapshot) => void
+  close: () => void
 }) {
-  const dismiss = Navigation.useDismiss()
   const empty: GameLibrarySnapshot = { games: [], updatedAt: new Date().toISOString() }
   const [state, setState] = useState<GameLibraryViewState>({ status: "loading" })
   const current = state.status === "content" ? state.snapshot : state.status === "loading" ? null : state.previous
@@ -423,9 +459,9 @@ function GamesScreen({
     <List
         navigationTitle={t("gamesTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section footer={<Text>{t("romPrivacy")}</Text>}>
+          <Button title={t("close")} systemImage="xmark.circle.fill" action={close} />
           <Button title={t("importGame")} systemImage="doc.badge.plus" action={importRom} disabled={busy} />
         </Section>
 
@@ -526,11 +562,12 @@ function UpdateRow({
 function UpdatesScreen({
   updates,
   onSnapshot,
+  close,
 }: {
   updates: SystemUpdateService
   onSnapshot: (snapshot: UpdateSnapshot) => void
+  close: () => void
 }) {
-  const dismiss = Navigation.useDismiss()
   const [state, setState] = useState<UpdateViewState>({ status: "loading" })
 
   useEffect(() => {
@@ -627,9 +664,9 @@ function UpdatesScreen({
     <List
         navigationTitle={t("updatesTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section footer={<Text>{t("updateIntro")}</Text>}>
+          <Button title={t("close")} systemImage="xmark.circle.fill" action={close} />
           <Button
             title={state.status === "checking" ? t("checking") : t("checkUpdates")}
             systemImage="arrow.clockwise"
@@ -753,8 +790,7 @@ function ModRow({
   )
 }
 
-function ModsScreen({ mods }: { mods: ModService }) {
-  const dismiss = Navigation.useDismiss()
+function ModsScreen({ mods, close }: { mods: ModService; close: () => void }) {
   const [state, setState] = useState<ModViewState>({ status: "loading" })
 
   useEffect(() => {
@@ -889,9 +925,9 @@ function ModsScreen({ mods }: { mods: ModService }) {
     <List
         navigationTitle={t("modsTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section footer={<Text>{t("modsIntro")}</Text>}>
+          <Button title={t("close")} systemImage="xmark.circle.fill" action={close} />
           <Button title={t("importModZip")} systemImage="doc.zipper" action={importZip} disabled={busy} />
           <Button title={t("installFromGitHub")} systemImage="chevron.left.forwardslash.chevron.right" action={installGitHub} disabled={busy} />
           <Button title={t("checkModUpdates")} systemImage="arrow.clockwise" action={checkUpdates} disabled={busy} />
@@ -949,8 +985,7 @@ function ModsScreen({ mods }: { mods: ModService }) {
   )
 }
 
-function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
-  const dismiss = Navigation.useDismiss()
+function SettingsScreen({ updates, close }: { updates: SystemUpdateService; close: () => void }) {
   const [running, setRunning] = useState(false)
   const runDiagnostic = async () => {
     if (running) return
@@ -972,9 +1007,9 @@ function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
     <List
         navigationTitle={t("settingsTitle")}
         navigationBarTitleDisplayMode="large"
-        toolbar={{ cancellationAction: <Button title={t("close")} action={dismiss} /> }}
       >
         <Section footer={<Text>{t("runtimeDiagnosticHint")}</Text>}>
+          <Button title={t("close")} systemImage="xmark.circle.fill" action={close} />
           {running
             ? <VStack spacing={8}><ProgressView /><Text>{t("installing")}</Text></VStack>
             : <Button title={t("runtimeDiagnostic")} systemImage="waveform.path.ecg" action={runDiagnostic} />}
@@ -994,16 +1029,20 @@ function SettingsScreen({ updates }: { updates: SystemUpdateService }) {
 }
 
 export default function App() {
+  const close = Navigation.useDismiss()
   const updates = useMemo(() => new SystemUpdateService(), [])
   const library = useMemo(() => new GameLibraryService(), [])
   const runtime = useMemo(() => new GameRuntimeService(updates, library), [])
   const mods = useMemo(() => new ModService(), [])
   const selectedTab = useObservable<ProductTabId>("home")
-  const [gameSnapshot, setGameSnapshot] = useState<GameLibrarySnapshot | null>(null)
+  const [homeLibrary, setHomeLibrary] = useState<HomeLibraryState>({ status: "loading" })
   const [versions, setVersions] = useState<Readonly<Record<ProductComponentId, string>>>({
     [COMPONENTS.runtime.id]: COMPONENTS.runtime.installedVersion,
     [COMPONENTS.core.id]: COMPONENTS.core.installedVersion,
   })
+  const acceptGameSnapshot = (snapshot: GameLibrarySnapshot) => {
+    setHomeLibrary({ status: "content", snapshot })
+  }
   const acceptSnapshot = (snapshot: UpdateSnapshot) => {
     setVersions((current) => {
       const next: Record<ProductComponentId, string> = { ...current }
@@ -1014,9 +1053,9 @@ export default function App() {
   useEffect(() => {
     let active = true
     void runtime.recoverTransientSessions().then(() => library.initialize()).then((snapshot) => {
-      if (active) setGameSnapshot(snapshot)
+      if (active) setHomeLibrary({ status: "content", snapshot })
     }).catch(() => {
-      // The Games tab presents actionable registry recovery details.
+      if (active) setHomeLibrary({ status: "error" })
     })
     return () => { active = false }
   }, [])
@@ -1026,29 +1065,30 @@ export default function App() {
         <NavigationStack>
           <HomeScreen
             openGames={() => selectedTab.setValue(gamesTab.id)}
+            close={close}
             versions={versions}
-            library={gameSnapshot}
+            library={homeLibrary}
           />
         </NavigationStack>
       </Tab>
       <Tab title={t(gamesTab.titleKey)} systemImage={gamesTab.systemImage} value={gamesTab.id}>
         <NavigationStack>
-          <GamesScreen library={library} runtime={runtime} onSnapshot={setGameSnapshot} />
+          <GamesScreen library={library} runtime={runtime} onSnapshot={acceptGameSnapshot} close={close} />
         </NavigationStack>
       </Tab>
       <Tab title={t(updatesTab.titleKey)} systemImage={updatesTab.systemImage} value={updatesTab.id}>
         <NavigationStack>
-          <UpdatesScreen updates={updates} onSnapshot={acceptSnapshot} />
+          <UpdatesScreen updates={updates} onSnapshot={acceptSnapshot} close={close} />
         </NavigationStack>
       </Tab>
       <Tab title={t(modsTab.titleKey)} systemImage={modsTab.systemImage} value={modsTab.id}>
         <NavigationStack>
-          <ModsScreen mods={mods} />
+          <ModsScreen mods={mods} close={close} />
         </NavigationStack>
       </Tab>
       <Tab title={t(settingsTab.titleKey)} systemImage={settingsTab.systemImage} value={settingsTab.id}>
         <NavigationStack>
-          <SettingsScreen updates={updates} />
+          <SettingsScreen updates={updates} close={close} />
         </NavigationStack>
       </Tab>
     </TabView>

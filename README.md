@@ -97,7 +97,7 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - `components/updates/src/`: geschlossener Katalogparser/Trust-Policy, Update-Inventar und -Planung, SemVer-/Dependency-/API-Kompatibilität, Archivrichtlinie, manueller Transaktionsorchestrator, Aktivierungsjournal und Recovery;
 - `updates/`: deterministische ROM-freie aktuelle LÖVE/Lua- und Gen1Recomp-Komponentenpakete plus sequenzierter Stable-Systemkatalog;
 - `scripting/Gen1RecompPreview/`: physisch validierter Preview-0.1.4-Runtime-Fallback;
-- `scripting/Gen1RecompApp/`: nativer 0.4.7-Produktshell mit persistentem verifiziertem Spieleimport, privater Registry/Recovery, sichtbarem Vollflächen-Viewport, gleichmäßiger Main-Thread-Audiosynthese, privatem signaturgeprüftem Effektcache, Update-/Draw-Telemetrie, direktem Game-Start, Save-Metadaten und getrennten Komponenten-/Modpfaden;
+- `scripting/Gen1RecompApp/`: nativer 0.4.8-Produktshell mit verifiziertem Spieleimport, privater Registry/Recovery, physischer Retina-Vollfläche, Vektor-Touchdarstellung bei unverändertem Upstream-Input, Unterbrechungs-Recovery, privatem Effektcache, Telemetrie, Save-Metadaten und getrennten Komponenten-/Modpfaden;
 - `runtime/adapters/lovejs/` und `runtime/manager/`: serialisierte Persistenz, funktionale Capability-Evidenz und geordnete Lifecycle-/Concurrency-Grenzen;
 - `compatibility/love-web/`: vollständiger BitOp-Hostshim plus No-Worker-Normalisierung;
 - `schemas/`: geschlossene JSON-Schemas einschließlich Updatekatalog;
@@ -126,4 +126,4 @@ python3 tools/audit_references.py --report docs/reference-audit.json
 
 Weitere Produktpfade werden nur nach ihrem jeweiligen Declaration-/Gerätegate aktiviert. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
 
-Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Native 0.4.4 erreichte physisch mit Upstream-Controls Oak's Lab; Native 0.4.5 belegte den `1×1`-Viewport und schwere Frame-Gaps; Native 0.4.6 korrigierte physisch die Vollfläche und entfernte das starke periodische Ruckeln. Native 0.4.7 ist der aktuelle gleichmäßige Scheduling-/private Effektcache-Kandidat für verbleibende kleine Hänger.
+Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Native 0.4.7 erreichte physisch nahezu 60 Hz, belegte vernachlässigbare Draw-CPU und benannte private Effektstores. Native 0.4.8 ist der aktuelle Retina-Vektor-/Telefonunterbrechungs-Kandidat.

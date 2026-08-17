@@ -131,6 +131,18 @@ Native 0.4.7 therefore uses 512-sample music blocks with up to two per update: t
 
 `t.__type__` occurred twice before successful Native 0.4.6 startup and remains a separate Scripting component-builder defect.
 
+## Run 014 — Native 0.4.7 reaches near-60 Hz steady motion and exposes quality/lifecycle defects
+
+Native 0.4.7 was subjectively much smoother and more even. The strongest steady window rendered 601 frames in 10.017 seconds with p95 20 ms, p99 23 ms, maximum 24 ms and no interval above 25 ms. Other steady windows generally held p95 18–23 ms. Music slices fell to 2–11 ms maximum. Late update averages were 1.79–3.31 ms and draw averages only 0.15–0.33 ms, proving the full-height renderer itself was not the remaining CPU bottleneck.
+
+The first run populated named private effect entries. `Intro_Whoosh`, `Shrink`, `Go_Outside`, `Ball_Poof` and `Caught_Mon` respectively took 358, 227, 257, 163 and 254 ms; nearby update/RAF maxima tracked those first-use calls. No `cache=hit` line was supplied, so persistence/reuse remains unproven despite successful `cache=store` evidence. Native 0.4.8 retains the same cache namespace so these entries can be reused.
+
+An incoming phone call during an earlier attempt left the game completely frozen. The interrupted attempt supplied no visibility/lifecycle log, so process termination versus a suspended Emscripten scheduler cannot be distinguished. Native 0.4.8 pairs `hidden`/`blur` with explicit main-loop pause and persistence flush, pairs `visible`/`focus`/`pageshow` with resume, and verifies frame advancement after 750 ms. A stalled visible loop is restarted and logged. This is a recoverable host-lifecycle adapter, not an invented claim that iOS can preserve a WebView process it terminates.
+
+The `640×1391` backing surface was uniformly enlarged to `440×956` CSS and therefore below the iPhone's `1320×2868` physical framebuffer. Pixel-art CSS preserved the game correctly but also made the 256×256 controller prompt artwork look pixelated/dirty. Native 0.4.8 maps the canvas one-to-one to physical Retina pixels, yielding `1320×2868` and renderer fit scale 8 on the primary device. It replaces only `TouchControls.draw` with high-resolution vector discs, capsules and d-pad geometry; upstream touch hit testing, ownership, GB button state, release/reset and haptics remain unchanged. A fail-closed one-line size seam lets upstream layout use the physical pixel ratio.
+
+`t.__type__` occurred once before successful Native 0.4.7 startup and remains open.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -153,6 +165,9 @@ Native 0.4.7 therefore uses 512-sample music blocks with up to two per update: t
 18. Native 0.4.7 uses 512-sample slices and up to two fills per update to spread the same aggregate music work more evenly around a 60 Hz loop.
 19. Native 0.4.7 persists rendered first-use effects as private signature-verified WAV cache entries under the removable game cache prefix; no generated audio enters the artifact or repository.
 20. Native 0.4.7 measures `love.update` and `love.draw` CPU separately so residual game/render cost is distinguishable from synthesis.
+21. Native 0.4.8 maps CSS viewport points through DPR to a one-to-one physical framebuffer while retaining integer Gen1Recomp pixels and aspect.
+22. Native 0.4.8 replaces only upstream control drawing with Retina vector visuals; upstream input ownership/hit testing/release/haptics remain authoritative.
+23. Native 0.4.8 explicitly pauses, flushes, resumes and watchdog-verifies the Emscripten loop across visibility/focus interruptions.
 
 ## Replacement artifact
 
@@ -167,4 +182,4 @@ Native 0.4.7 therefore uses 512-sample music blocks with up to two per update: t
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's diagnostic passed as Run 006. Runs 007–013 proved canonical Yellow import/play, full presented portrait geometry, and major removal of the severe periodic stalls. Native 0.4.6 direct CPU logs isolated smaller music-pacing and first-use effect costs; Native 0.4.7 is the even-scheduling/private-effect-cache candidate. Cache-ready card state, App Group relaunch durability, direct boot, exact multi-touch/release behavior, saves, warm-cache residual performance, broader fidelity, manual system packages, component/mod/GitHub operations, and the wider iPhone/iPad matrix remain untested.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–014 prove canonical Yellow import/play, full portrait geometry and near-60 Hz steady motion. Native 0.4.7 isolated first-use named effects while exposing low-resolution control visuals and an incoming-call freeze. Native 0.4.8 is the Retina-vector/lifecycle-recovery candidate. Warm-cache reuse, phone-call recovery, cache-ready UI, App Group durability, exact multitouch/release, saves, component/mod/GitHub operations and the wider iPhone/iPad matrix remain untested.

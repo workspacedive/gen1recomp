@@ -35,14 +35,18 @@ BIT_SHIM = COMPATIBILITY_ROOT / "bit.lua"
 BOOTSTRAP = COMPATIBILITY_ROOT / "bootstrap.lua"
 AUDIO_SHIM = COMPATIBILITY_ROOT / "audio.lua"
 FRAME_SHIM = COMPATIBILITY_ROOT / "frame.lua"
+TOUCH_SHIM = COMPATIBILITY_ROOT / "touch.lua"
 PROBE_FILES = ("index.html", "launcher-probe.js", "launcher-probe.css")
 ORIGINAL_MAIN = "gen1recomp-main.lua"
 ORIGINAL_CONF = "gen1recomp-conf.lua"
 CHIP_AUDIO_PATH = "src/core/ChipAudio.lua"
 CHIP_AUDIO_FILL_ORIGINAL = b'''local MUSIC_FILL_INITIAL = 4\nlocal MUSIC_FILL_PER_CALL = 3\n'''
 CHIP_AUDIO_FILL_ADAPTER = b'''local MUSIC_FILL_INITIAL = ChipSynth.MUSIC_FILL_INITIAL or 4\nlocal MUSIC_FILL_PER_CALL = ChipSynth.MUSIC_FILL_PER_CALL or 3\n'''
-MAIN_WRAPPER = b'''-- Generated host wrapper; original upstream main.lua is gen1recomp-main.lua.\nlocal Bootstrap = require("love-web-bootstrap")\nBootstrap.install(love, {\n  disableThreadWorkers = true,\n  threadReason = "love.js 11.5 worker construction probe failed",\n})\nif os.getenv("POKEPORT_AUDIO_SLICE") == "1" then\n  require("love-web-audio").install(love)\nend\nlocal main, loadError = love.filesystem.load("gen1recomp-main.lua")\nassert(main, loadError)\nlocal result = main()\nif os.getenv("POKEPORT_FRAME_TIMING") == "1" then\n  require("love-web-frame").install(love)\nend\nreturn result\n'''
-CONF_WRAPPER = b'''-- Generated host display wrapper; upstream conf.lua is gen1recomp-conf.lua.\nlocal conf, loadError = love.filesystem.load("gen1recomp-conf.lua")\nassert(conf, loadError)\nconf()\nlocal upstreamConf = assert(love.conf, "upstream love.conf missing")\nfunction love.conf(t)\n  upstreamConf(t)\n  local width = tonumber(os.getenv("POKEPORT_VIEW_WIDTH"))\n  local height = tonumber(os.getenv("POKEPORT_VIEW_HEIGHT"))\n  if width and height and width >= 320 and height >= 288\n      and width <= 2048 and height <= 2048 then\n    t.window.width = math.floor(width)\n    t.window.height = math.floor(height)\n    t.window.fullscreen = false\n    t.window.resizable = true\n    t.window.highdpi = false\n  end\nend\n'''
+TOUCH_CONTROLS_PATH = "src/core/TouchControls.lua"
+TOUCH_SIZE_ORIGINAL = b'''local dpadW = math.min(180, short * 0.34) * clampScale(scale)'''
+TOUCH_SIZE_ADAPTER = b'''local dpadW = math.min(180 * (tonumber(os.getenv("POKEPORT_TOUCH_PIXEL_SCALE")) or 1), short * 0.34) * clampScale(scale)'''
+MAIN_WRAPPER = b'''-- Generated host wrapper; original upstream main.lua is gen1recomp-main.lua.\nlocal Bootstrap = require("love-web-bootstrap")\nBootstrap.install(love, {\n  disableThreadWorkers = true,\n  threadReason = "love.js 11.5 worker construction probe failed",\n})\nif os.getenv("POKEPORT_AUDIO_SLICE") == "1" then\n  require("love-web-audio").install(love)\nend\nif os.getenv("POKEPORT_TOUCH_VECTOR") == "1" then\n  require("love-web-touch").install(love)\nend\nlocal main, loadError = love.filesystem.load("gen1recomp-main.lua")\nassert(main, loadError)\nlocal result = main()\nif os.getenv("POKEPORT_FRAME_TIMING") == "1" then\n  require("love-web-frame").install(love)\nend\nreturn result\n'''
+CONF_WRAPPER = b'''-- Generated host display wrapper; upstream conf.lua is gen1recomp-conf.lua.\nlocal conf, loadError = love.filesystem.load("gen1recomp-conf.lua")\nassert(conf, loadError)\nconf()\nlocal upstreamConf = assert(love.conf, "upstream love.conf missing")\nfunction love.conf(t)\n  upstreamConf(t)\n  local width = tonumber(os.getenv("POKEPORT_VIEW_WIDTH"))\n  local height = tonumber(os.getenv("POKEPORT_VIEW_HEIGHT"))\n  if width and height and width >= 320 and height >= 288\n      and width <= 4096 and height <= 4096 then\n    t.window.width = math.floor(width)\n    t.window.height = math.floor(height)\n    t.window.fullscreen = false\n    t.window.resizable = true\n    t.window.highdpi = false\n  end\nend\n'''
 
 
 def safe_archive_path(name: str) -> bool:
@@ -76,6 +80,7 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             "love-web-bootstrap.lua",
             "love-web-audio.lua",
             "love-web-frame.lua",
+            "love-web-touch.lua",
             ORIGINAL_MAIN,
             ORIGINAL_CONF,
         }
@@ -86,6 +91,7 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             )
         with zipfile.ZipFile(destination, "w") as output:
             chip_audio_adapted = False
+            touch_controls_adapted = False
             for info in original.infolist():
                 target_info = info
                 data = original.read(info.filename)
@@ -104,9 +110,16 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
                         1,
                     )
                     chip_audio_adapted = True
+                elif info.filename == TOUCH_CONTROLS_PATH:
+                    if data.count(TOUCH_SIZE_ORIGINAL) != 1:
+                        raise RuntimeError("upstream TouchControls size formula changed")
+                    data = data.replace(TOUCH_SIZE_ORIGINAL, TOUCH_SIZE_ADAPTER, 1)
+                    touch_controls_adapted = True
                 output.writestr(target_info, data)
             if not chip_audio_adapted:
                 raise RuntimeError("upstream ChipAudio module is missing")
+            if not touch_controls_adapted:
+                raise RuntimeError("upstream TouchControls module is missing")
 
             def overlay(path: str, data: bytes) -> None:
                 overlay_info = zipfile.ZipInfo(path, (1980, 1, 1, 0, 0, 0))
@@ -120,6 +133,7 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             overlay("love-web-bootstrap.lua", BOOTSTRAP.read_bytes())
             overlay("love-web-audio.lua", AUDIO_SHIM.read_bytes())
             overlay("love-web-frame.lua", FRAME_SHIM.read_bytes())
+            overlay("love-web-touch.lua", TOUCH_SHIM.read_bytes())
 
     with zipfile.ZipFile(destination) as result:
         if result.testzip() is not None:
@@ -150,10 +164,22 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
                     "sha256": sha256(FRAME_SHIM),
                 },
                 {
+                    "path": "love-web-touch.lua",
+                    "source": TOUCH_SHIM.relative_to(REPO_ROOT).as_posix(),
+                    "sha256": sha256(TOUCH_SHIM),
+                },
+                {
                     "path": CHIP_AUDIO_PATH,
                     "source": "upstream plus generated host-configurable fill seam",
                     "sha256": hashlib.sha256(
                         result.read(CHIP_AUDIO_PATH)
+                    ).hexdigest(),
+                },
+                {
+                    "path": TOUCH_CONTROLS_PATH,
+                    "source": "upstream plus generated physical-pixel size seam",
+                    "sha256": hashlib.sha256(
+                        result.read(TOUCH_CONTROLS_PATH)
                     ).hexdigest(),
                 },
                 {

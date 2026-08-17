@@ -48,6 +48,27 @@ test("iPad layouts use a larger bounded game scale", () => {
   })
 })
 
+test("native-pixel quality maps Retina viewports one-to-one", () => {
+  assert.deepEqual(planLoveJsViewport(440, 956, 3, "native-pixels"), {
+    cssWidth: 440,
+    cssHeight: 956,
+    width: 1320,
+    height: 2868,
+    gameScale: 8,
+    orientation: "portrait",
+    devicePixelRatio: 3,
+  })
+  assert.deepEqual(planLoveJsViewport(1024, 1366, 2, "native-pixels"), {
+    cssWidth: 1024,
+    cssHeight: 1366,
+    width: 2048,
+    height: 2732,
+    gameScale: 12,
+    orientation: "portrait",
+    devicePixelRatio: 2,
+  })
+})
+
 test("invalid or extreme host geometry fails closed", () => {
   assert.throws(() => planLoveJsViewport(1, 10_000, 1), /unsupported viewport geometry/)
   assert.equal(planLoveJsViewport(430.4, 799.7, Number.NaN).devicePixelRatio, 1)

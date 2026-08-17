@@ -32,6 +32,10 @@ class LauncherPreparationTests(unittest.TestCase):
                     "src/core/ChipAudio.lua",
                     b"local MUSIC_FILL_INITIAL = 4\nlocal MUSIC_FILL_PER_CALL = 3\n",
                 )
+                archive.writestr(
+                    "src/core/TouchControls.lua",
+                    b"local dpadW = math.min(180, short * 0.34) * clampScale(scale)",
+                )
             report = launcher.add_compatibility_overlay(source, output)
             with zipfile.ZipFile(output) as archive:
                 self.assertEqual(archive.read("gen1recomp-main.lua"), b"return true")
@@ -54,11 +58,19 @@ class LauncherPreparationTests(unittest.TestCase):
                     archive.read("love-web-frame.lua"),
                     (ROOT / "compatibility" / "love-web" / "frame.lua").read_bytes(),
                 )
+                self.assertEqual(
+                    archive.read("love-web-touch.lua"),
+                    (ROOT / "compatibility" / "love-web" / "touch.lua").read_bytes(),
+                )
                 self.assertIn(
                     b"ChipSynth.MUSIC_FILL_PER_CALL or 3",
                     archive.read("src/core/ChipAudio.lua"),
                 )
-            self.assertEqual(report["entries"], 10)
+                self.assertIn(
+                    b"POKEPORT_TOUCH_PIXEL_SCALE",
+                    archive.read("src/core/TouchControls.lua"),
+                )
+            self.assertEqual(report["entries"], 12)
 
     def test_overlay_rejects_traversal_and_existing_bit_module(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -40,3 +40,9 @@ Rendered effects are ROM-derived private cache. They must never be committed, pa
 ## `frame.lua`
 
 Installed after upstream `main.lua` defines callbacks. It reports aggregate/average/maximum CPU for `love.update` and `love.draw` plus Lua heap size every five seconds. It does not alter timing or catch/suppress callback errors.
+
+## `touch.lua`
+
+Replaces only `src.core.TouchControls.draw` with high-resolution vector d-pad, A/B discs and Start/Select capsules. Touch layout, ownership, hit testing, overlay button state, release/reset and haptics stay upstream. Packaging applies one fail-closed formula seam so upstream's historical 180-unit cap scales with physical DPR when the host uses a one-to-one Retina framebuffer.
+
+Host interruption recovery is TypeScript-side in `runtime/adapters/lovejs/interruption.ts`: persistence flush plus explicit Emscripten pause on hidden/blur, paired resume on visible/focus/pageshow, and a 750 ms visible-frame watchdog.

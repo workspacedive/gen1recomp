@@ -3,7 +3,7 @@
   "catalogId": "org.gen1recomp.system",
   "channel": "stable",
   "domain": "system",
-  "generatedAt": "2026-08-17T01:51:38.000Z",
+  "generatedAt": "2026-08-17T08:02:51.000Z",
   "releases": [
     {
       "manifest": {
@@ -11,10 +11,10 @@
         "artifact": {
           "integrity": {
             "algorithm": "sha256",
-            "digest": "de344584b32407876eb1c6acf8c207c4684fa97c5fbc45ecf6e1ac743ccfe098"
+            "digest": "3ecfcce10b78a9eea782fbcfdbba1b1b4a5420c645ec3df19adb2222b9eb4f72"
           },
-          "path": "org.gen1recomp.core-0.4.0.zip",
-          "size": 5878709
+          "path": "org.gen1recomp.core-0.5.0.zip",
+          "size": 5880388
         },
         "capabilities": [],
         "compatibility": {
@@ -34,13 +34,13 @@
         "migrations": [],
         "schemaVersion": 1,
         "selfTests": [],
-        "version": "0.4.0"
+        "version": "0.5.0"
       },
       "notes": {
-        "de": "Gen1Recomp-0.1.96-Integrationspaket mit gleichm\u00e4\u00dfigen Musik-Slices ohne Worker, privatem Effektcache und Update-/Draw-Timing.",
-        "en": "Gen1Recomp 0.1.96 integration bundle with even no-worker music slices, private rendered-effect cache, and update/draw timing."
+        "de": "Gen1Recomp-0.1.96-Integrationspaket mit nativer Retina-Ausgabe, Vektor-Touchdarstellung, Unterbrechungs-Recovery und privatem Effektcache.",
+        "en": "Gen1Recomp 0.1.96 integration bundle with Retina-native output, vector touch visuals, interruption recovery, and private effect cache."
       },
-      "publishedAt": "2026-08-17T01:51:38.000Z"
+      "publishedAt": "2026-08-17T08:02:51.000Z"
     },
     {
       "manifest": {
@@ -74,5 +74,5 @@
     }
   ],
   "schemaVersion": 1,
-  "sequence": 4
+  "sequence": 5
 }

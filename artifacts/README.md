@@ -1,32 +1,32 @@
 # Importable Scripting packages
 
-## Current: Gen1Recomp Native 047
+## Current: Gen1Recomp Native 048
 
-- [`Gen1Recomp-Native-047.scripting`](Gen1Recomp-Native-047.scripting)
-- Project: `Gen1Recomp Native 047`
-- Version/build: 0.4.7 (047)
-- Size: 8,330,715 bytes
-- SHA-256: `68077463086b37df5cc82bb3829b3a33fca444ed093bceeb6f194de14491620a`
+- [`Gen1Recomp-Native-048.scripting`](Gen1Recomp-Native-048.scripting)
+- Project/version/build: `Gen1Recomp Native 048` / 0.4.8 (048)
+- Size: 8,333,969 bytes
+- SHA-256: `de7fbce88a51c9e843277a2a142ec310e8dcbe8a4d6ba04fa76379872580413c`
 - Entries: 32
-- Embedded payload: 5,943,885 bytes / 489 entries / SHA-256 `f6a11c06cc68485481764942070c468c7597e2f6bddb649489cbddc9c59c64dd`
+- Embedded payload: 5,945,550 bytes / 490 entries / SHA-256 `6ab3a495ecf6619831732eb9022d8da43a4473c958848adffc3a8c39de939943`
 
-Native 0.4.6 physically fixed the viewport: Scripting exposed `440×956`, the host selected `640×1391`, and CSS uniformly filled `439.84375×956`. It also materially improved game motion. Three late steady windows reached p95 23–25 ms, maximum 31–37 ms and zero gaps over 50 ms, versus Native 045's p95 67–105 ms and up to 52 severe gaps per ten seconds.
+Native 0.4.7 physically ran much smoother and more evenly. Its best window rendered 601 frames in 10.017 seconds at p95 20 ms, p99 23 ms and maximum 24 ms. Draw CPU was only 0.15–0.33 ms on late windows; remaining first-run maxima followed named effect stores. Native 047's private effect cache remains compatible with Native 048.
 
-Audible sound was not defective. Direct timing nevertheless proved that synchronous synthesis shares the game/render thread: music consumed 632–2918 ms CPU per five seconds, individual 1024-sample calls reached 23 ms, and first-use static effects reached 106–412 ms. Several 223/267/250 ms effects aligned with 236/278/262 ms RAF maxima.
+Two new physical defects define Native 048. First, an incoming phone call left an earlier attempt completely frozen. Native 048 pairs hidden/blur with persistence flush and Emscripten main-loop pause, pairs visible/focus/pageshow with resume, and verifies frame progress after 750 ms. Second, the `640×1391` backing was below the iPhone's physical `1320×2868` display and made pixel-art controller prompts look dirty when enlarged.
 
-Native 0.4.7 keeps 44.1 kHz ChipSynth semantics but distributes music as 512-sample slices with at most two per update. First-use effects are stored as private PCM WAV entries under the removable game cache. Every cache filename has a sidecar containing the full canonical synthesis signature; hash collision, changed definition or decode failure falls back to synthesis. The first run can still hitch while storing; a second run should report `cache=hit` and avoid ChipSynth effect generation. Update and draw CPU are now measured separately.
+Native 048 maps CSS points through DPR to a one-to-one physical framebuffer. On the primary device this targets `1320×2868`, with upstream Renderer expected to select fit scale 8. A separate adapter replaces only `TouchControls.draw` with high-resolution vector d-pad, A/B discs and Start/Select capsules. Upstream hit testing, ownership, release/reset, haptics and GB button state are unchanged. The larger framebuffer may increase GPU fill cost, so physical quality and performance are required rather than pre-claimed.
 
-No ROM, generated cache, rendered audio, save or patch is present in the artifact. The independent Scripting `t.__type__` event occurred twice before Native 046 successfully started and remains open.
+No ROM, generated cache, rendered audio, save or patch is present. `t.__type__` remains open.
 
 ## Previous evidence packages
 
-- [`Gen1Recomp-Native-046.scripting`](Gen1Recomp-Native-046.scripting) — physically fixed full portrait geometry and removed the severe repeating frame cadence.
-- [`Gen1Recomp-Native-045.scripting`](Gen1Recomp-Native-045.scripting) — exposed the pre-presentation `1×1` viewport and quantified severe periodic frame gaps.
-- [`Gen1Recomp-Native-044.scripting`](Gen1Recomp-Native-044.scripting) — physically proved ordinary touch-controlled play into Oak's Lab.
-- [`Gen1Recomp-Native-043.scripting`](Gen1Recomp-Native-043.scripting) — physically reached Yellow title/intro and immediately audible music.
-- [`Gen1Recomp-Native-042.scripting`](Gen1Recomp-Native-042.scripting) — physically generated/loaded Yellow data and attributed queueable-source looping.
+- [`Gen1Recomp-Native-047.scripting`](Gen1Recomp-Native-047.scripting) — near-60 Hz steady motion, named private effect stores, and update/draw attribution.
+- [`Gen1Recomp-Native-046.scripting`](Gen1Recomp-Native-046.scripting) — physically fixed full portrait geometry and removed severe repeating stalls.
+- [`Gen1Recomp-Native-045.scripting`](Gen1Recomp-Native-045.scripting) — exposed the pre-presentation `1×1` viewport and severe periodic gaps.
+- [`Gen1Recomp-Native-044.scripting`](Gen1Recomp-Native-044.scripting) — physically proved ordinary touch play into Oak's Lab.
+- [`Gen1Recomp-Native-043.scripting`](Gen1Recomp-Native-043.scripting) — physically reached Yellow title/intro and audible music.
+- [`Gen1Recomp-Native-042.scripting`](Gen1Recomp-Native-042.scripting) — attributed queueable-source looping after data load.
 - [`Gen1Recomp-Native-041.scripting`](Gen1Recomp-Native-041.scripting) — removed the global-BitOp error.
-- [`Gen1Recomp-Native-040.scripting`](Gen1Recomp-Native-040.scripting) — proved canonical Yellow identification, retained retry and extractor entry.
+- [`Gen1Recomp-Native-040.scripting`](Gen1Recomp-Native-040.scripting) — proved canonical Yellow identification and extractor entry.
 - [`Gen1Recomp-Native-030.scripting`](Gen1Recomp-Native-030.scripting) — component/inactive-mod management; physical validation pending.
 - [`Gen1Recomp-Native-020.scripting`](Gen1Recomp-Native-020.scripting) and [`Gen1Recomp-Preview-014.scripting`](Gen1Recomp-Preview-014.scripting) — physically validated ROM-free runtime paths.
 

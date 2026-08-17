@@ -25,7 +25,11 @@
   },
   "diagnosticChange": {
     "scope": "host runtime bootstrap only",
-    "consoleMethods": ["log", "warn", "error"],
+    "consoleMethods": [
+      "log",
+      "warn",
+      "error"
+    ],
     "capturesErrorStack": true,
     "capturesWindowAlert": true,
     "maximumCharactersPerMessage": 8000,
@@ -35,8 +39,17 @@
   },
   "automatedVerification": {
     "typescriptTargets": 2,
-    "nodeTests": { "total": 104, "passed": 104, "failed": 0 },
-    "pythonTests": { "total": 33, "passed": 30, "skipped": 3, "failed": 0 },
+    "nodeTests": {
+      "total": 104,
+      "passed": 104,
+      "failed": 0
+    },
+    "pythonTests": {
+      "total": 33,
+      "passed": 30,
+      "skipped": 3,
+      "failed": 0
+    },
     "npmAuditVulnerabilities": 0,
     "deterministicRebuild": "pass",
     "zipIntegrity": "pass",
@@ -58,10 +71,9 @@
     }
   },
   "physicalVerificationRequired": [
-    "tap Finish Import on the existing canonical Yellow pending card",
-    "return all newly forwarded error/warn lines before the generic alert",
-    "determine and correct the actual pre-window exception",
-    "complete extraction and transition to Ready to Play",
+    "run Native 0.4.3 Finish Import from the retained Yellow source",
+    "pass game-window initialization without queue-loop exception or generic modal",
+    "transition card to Ready to Play",
     "then validate direct boot, relaunch cache, saves, lifecycle, audio, input, fidelity and device matrix"
   ],
   "copyrightBoundary": {
@@ -69,5 +81,27 @@
     "romDerivedCacheIncluded": false,
     "saveIncluded": false,
     "userRomCopiedToRepositoryOrArtifact": false
+  },
+  "physicalVerification": {
+    "status": "failed-at-queueable-source-looping",
+    "environment": {
+      "scriptingVersion": "3.2.0",
+      "os": "iOS 26.6",
+      "device": "iPhone 16 Pro Max"
+    },
+    "readyFrame": 1,
+    "generatedDataLoaded": {
+      "maps": 223,
+      "species": 151,
+      "moves": 165
+    },
+    "gameLoaded": true,
+    "display": "1024x768 units, 1024x768 px, fit scale 5 px/GB px",
+    "error": "Queueable Sources can not be looped.",
+    "genericAlertCaptured": true,
+    "cardStatusAfterDismissal": "pendingExtraction",
+    "intermittentNativeComponentErrorRecurred": true,
+    "attribution": "LÖVE Source::setLooping rejects queueable sources; chip looping is engine-owned and the generic call is redundant",
+    "nextCandidate": "Native 0.4.3 / 043 queue-only looping guard"
   }
 }

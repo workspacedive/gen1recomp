@@ -8,12 +8,27 @@ local function same(label, actual, expected)
   end
 end
 
+local loopCalls = 0
+local sourceMethods = {
+  getType = function(self) return self.kind end,
+  setLooping = function(self, enabled)
+    loopCalls = loopCalls + 1
+    self.looping = enabled
+  end,
+}
+local sourceMeta = { __index = sourceMethods }
+
 love = {
   thread = {
     newThread = function() error("measured worker construction failure") end,
     getChannel = function() error("channel should not be reached by disabled paths") end,
   },
   timer = { getTime = function() return 0 end },
+  audio = {
+    newQueueableSource = function()
+      return setmetatable({ kind = "queue", looping = false }, sourceMeta)
+    end,
+  },
 }
 
 local Bootstrap = assert(dofile(bootstrapPath))
@@ -25,6 +40,15 @@ same("bootstrap report", report.threadWorker, "disabled")
 same("bootstrap BitOp report", report.bitGlobal, "installed")
 same("global BitOp installed", type(_G.bit), "table")
 same("global BitOp functional", _G.bit.bxor(0xAA, 0x0F), 0xA5)
+same("queue loop guard report", report.queueLoopGuard, "installed")
+local queueSource = love.audio.newQueueableSource()
+queueSource:setLooping(true)
+same("queue loop request ignored", loopCalls, 0)
+same("queue loop state unchanged", queueSource.looping, false)
+local staticSource = setmetatable({ kind = "static", looping = false }, sourceMeta)
+staticSource:setLooping(true)
+same("static loop delegated", loopCalls, 1)
+same("static loop enabled", staticSource.looping, true)
 same("worker constructor hidden", love.thread.newThread, nil)
 same("channels preserved", type(love.thread.getChannel), "function")
 

@@ -78,6 +78,10 @@ This is not a Game Boy emulator: no instruction decoder, CPU, bus, PPU, memory m
 
 Native 0.4.0's first canonical Yellow run reached `Rom.decompressPic` and failed at `src/import/Rom.lua:198` because that upstream file uses LuaJIT's global `bit.bxor`. The web overlay's `bit.lua` already matched BitOp through 9,492 differential comparisons, but was only available through `require("bit")`. Native 0.4.1 corrects the host bootstrap to assign that same module to `_G.bit` before upstream main loads. This reproduces a LuaJIT host semantic in the adapter instead of editing `Rom.lua` or any other core file.
 
+## Physical audio-host correction
+
+After the BitOp correction, Native 0.4.2 physically completed Yellow generated-data loading and entered game/display setup, then LÖVE raised `Queueable Sources can not be looped.` LÖVE's OpenAL `Source::setLooping` rejects every queue source. Upstream chip music already implements loop behavior in `ChipSynth`, but the generic music/source path still attempts Source looping. Native 0.4.3 therefore installs a lazy adapter guard on the shared Source method table when the first queue source is constructed: queue `setLooping` becomes a no-op, while static/stream calls delegate unchanged. A pinned love.js probe verified both branches. No upstream or LÖVE source is patched.
+
 ## Evidence limits
 
 Chromium 149 proves the ROM-free session, the transfer/unlink ordering with a noncopyrighted all-zero fixture, and selective IDBFS maintenance. It cannot prove native Scripting file access, WebKit IDBFS durability, canonical extraction, title fidelity, saves, input, audio, or physical lifecycle behavior. Those remain the Native 0.4.0 device plan.

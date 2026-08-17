@@ -9,6 +9,7 @@ function Bootstrap.install(loveApi, options)
   local report = {
     threadWorker = "unchanged",
     bitGlobal = "unchanged",
+    queueLoopGuard = "unchanged",
     reason = options.threadReason,
   }
 
@@ -21,6 +22,36 @@ function Bootstrap.install(loveApi, options)
   assert(okBit and type(bitApi) == "table", "BitOp compatibility module unavailable")
   _G.bit = bitApi
   report.bitGlobal = "installed"
+
+  -- LÖVE forbids Source:setLooping on queueable sources. Upstream chip music
+  -- owns looping inside ChipSynth but still reaches the generic Music looping
+  -- call after constructing its queue. Desktop LuaJIT happened not to expose
+  -- this during the launcher path; love.js raises a fatal C++ exception. Patch
+  -- the shared Source method table lazily on the first queue source and ignore
+  -- only this invalid/redundant operation. Static/stream source looping still
+  -- delegates unchanged. This is a host semantic guard, not a core edit.
+  if loveApi.audio and type(loveApi.audio.newQueueableSource) == "function" then
+    local originalNewQueueableSource = loveApi.audio.newQueueableSource
+    local patched = false
+    loveApi.audio.newQueueableSource = function(...)
+      local source = originalNewQueueableSource(...)
+      if not patched then
+        local mt = getmetatable(source)
+        local methods = type(mt) == "table" and mt.__index or nil
+        local originalSetLooping = type(methods) == "table" and methods.setLooping or nil
+        if type(originalSetLooping) == "function" then
+          methods.setLooping = function(self, enabled)
+            local okType, sourceType = pcall(self.getType, self)
+            if okType and sourceType == "queue" then return end
+            return originalSetLooping(self, enabled)
+          end
+          patched = true
+        end
+      end
+      return source
+    end
+    report.queueLoopGuard = "installed"
+  end
 
   if options.disableThreadWorkers then
     if type(loveApi.thread) == "table" then

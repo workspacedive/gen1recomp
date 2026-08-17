@@ -1,22 +1,23 @@
 # Importable Scripting packages
 
-## Current: Gen1Recomp Native 042
+## Current: Gen1Recomp Native 043
 
-- [`Gen1Recomp-Native-042.scripting`](Gen1Recomp-Native-042.scripting)
-- Project: `Gen1Recomp Native 042`
-- Version: 0.4.2
-- Build: 042
-- Size: 8,321,442 bytes
-- SHA-256: `b111e878c8dfd93065ceeb6f3dcee1e467e7b398ce598d607b0d1763a8d293f5`
+- [`Gen1Recomp-Native-043.scripting`](Gen1Recomp-Native-043.scripting)
+- Project: `Gen1Recomp Native 043`
+- Version: 0.4.3
+- Build: 043
+- Size: 8,322,151 bytes
+- SHA-256: `24289a697469ca7bddc49289f6aca42fed2b19ae5f1bf7cf51fe87b5887a111c`
 - Entries: 32
 
-Native 0.4.0 physically reached canonical Yellow extraction and exposed the missing LuaJIT global BitOp semantic. Native 0.4.1 installed the tested shim globally and removed that explicit error, but love.js then showed a generic pre-window alert while its underlying browser-console error remained invisible to Scripting. Native 0.4.2 preserves the BitOp fix and forwards bounded WebView console warnings/errors, Error stacks, and alerts through the native message bridge for exact attribution. It does not guess at the hidden failure.
+Native 0.4.2 exposed the exact hidden failure after canonical Yellow extraction and generated-data/game loading: `Queueable Sources can not be looped.` Native 0.4.3 adds a narrow love.js adapter guard that ignores `setLooping` only for queueable sources, whose chip looping is already owned by ChipSynth, while delegating static/stream looping unchanged. A pinned-love.js functional probe passed both sides of this behavior. Gen1Recomp and LÖVE source remain unchanged.
 
-The exact Native 0.4.2 ROM-free runtime reached ready event frame 18 in Chromium 149 with no page/request/HTTP errors. Chromium also proved forwarding for a console warning, console-error fixture, and alert fixture. This verifies diagnostic transport, not canonical extraction completion.
+Native 0.4.3 retains WebView console/error capture and suppresses only the known generic pre-window alert modal after logging it, addressing the repeated disruptive popup. The exact artifact runtime reached ready event frame 15 in Chromium 149 without page/request/HTTP errors.
 
 ## Previous evidence packages
 
-- [`Gen1Recomp-Native-041.scripting`](Gen1Recomp-Native-041.scripting) — removed the explicit global-BitOp error physically; generic hidden pre-window failure remained.
+- [`Gen1Recomp-Native-042.scripting`](Gen1Recomp-Native-042.scripting) — physically generated and loaded Yellow data/game, then attributed the queueable-source looping failure.
+- [`Gen1Recomp-Native-041.scripting`](Gen1Recomp-Native-041.scripting) — removed the explicit global-BitOp error; generic hidden pre-window failure remained.
 - [`Gen1Recomp-Native-040.scripting`](Gen1Recomp-Native-040.scripting) — physically proved canonical Yellow identification, pending registration/retry and upstream extractor entry.
 - [`Gen1Recomp-Native-030.scripting`](Gen1Recomp-Native-030.scripting) — manual component and inactive mod package management; physical validation pending.
 - [`Gen1Recomp-Native-020.scripting`](Gen1Recomp-Native-020.scripting) — Settings → runtime reached frame 21 on physical iPhone/iOS 18.7.

@@ -1,4 +1,4 @@
-# Scripting physical-device runs 001–008
+# Scripting physical-device runs 001–009
 
 - **Evidence level:** user-reported installed Scripting host on a physical iOS device
 - **Scripting app version/build:** not yet supplied
@@ -73,6 +73,24 @@ The intermittent native `Failed to build component … t.__type__` event recurre
 
 Native 0.4.2 preserves the BitOp fix and adds bounded forwarding for WebView `console.log`, `console.warn`, `console.error`, Error stacks, and `window.alert` text. Chromium tests proved both console-error and alert forwarding into the native handler. The next physical run is diagnostic: its newly visible error detail determines the next technical correction; a generic alert alone is no longer sufficient evidence.
 
+## Run 009 — Native 0.4.2 exposes queueable-audio loop exception
+
+Native 0.4.2 forwarded the hidden WebView console as designed. On the same device/environment, the pending Yellow import reached ready frame 1, then reported:
+
+```text
+[info] generated data loaded (223 maps, 151 species, 165 moves)
+[info] game loaded
+[info] display: 1024x768 units, 1024x768 px, fit scale 5 px/GB px
+Queueable Sources can not be looped.
+Web alert: An error occurred before the game window could be initialised.
+```
+
+This proves canonical extraction generated and loaded the expected Yellow data set and advanced into game initialization. Failure is now attributed to LÖVE's documented queue-source contract: `Source::setLooping` throws for every queueable source. Upstream chip music owns looping in `ChipSynth` but still reaches a generic source-looping call after constructing its queue.
+
+Native 0.4.3 adds a narrow love.js host guard. It lazily wraps the shared Source method table when the first queueable source is created, ignores `setLooping` only when `getType() == "queue"`, and delegates static/stream looping unchanged. A real pinned-love.js probe proved: queue call succeeds and remains non-looping, while static `setLooping(true)` still produces `isLooping() == true`. The Gen1Recomp and LÖVE sources remain unchanged. Native 0.4.3 also suppresses only the known generic love.js alert modal after logging it, addressing the repeated disruptive popup without suppressing other alerts.
+
+The independent Scripting `t.__type__` component-build event recurred again at 02:13:15 and remains open.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -86,6 +104,7 @@ Native 0.4.2 preserves the BitOp fix and adds bounded forwarding for WebView `co
 9. Deterministic packaging tests assert that emitted browser bundles contain no `import`, `export`, private-field, or optional-chaining syntax and that all four embedded package keys are present.
 10. Native 0.4.1 installs the parity-tested `bit` compatibility module into `_G.bit` before upstream main loads, matching the LuaJIT global used by ROM picture extraction and several Gen 2 paths.
 11. Native 0.4.2 captures the WebView console and alert channel into bounded native logs, because love.js overwrites `Module.warn` and otherwise hides the actionable pre-window exception from Scripting.
+12. Native 0.4.3 guards only invalid queueable-source `setLooping` calls in the love.js adapter, preserves static looping, and suppresses only the already-logged generic pre-window modal.
 
 ## Replacement artifact
 
@@ -100,4 +119,4 @@ Native 0.4.2 preserves the BitOp fix and adds bounded forwarding for WebView `co
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's Settings-to-runtime diagnostic passed as Run 006. Native 0.4.0 Run 007 reached canonical Yellow extraction and exposed the corrected global-BitOp adapter defect. Native 0.4.1 Run 008 removed that explicit failure but exposed a generic love.js pre-window alert whose console cause was not bridged. Native 0.4.2 is the immediate diagnostic candidate. Completed extraction, App Group relaunch durability, direct boot, saves, input/audio/fidelity, manual system catalog/package installation, and updated-generation materialization remain untested. Native 0.3.0's component/mod/GitHub operations also still require physical validation.
+Native 0.2.0's Settings-to-runtime diagnostic passed as Run 006. Runs 007–009 then proved canonical Yellow identity/retention/extraction, corrected global BitOp, generated-data loading, game loading, display setup, and exact queueable-audio failure attribution. Native 0.4.3 is the immediate queue-loop regression candidate. Completed game-window initialization, cache-ready transition, App Group relaunch durability, direct boot, saves, input/audio/fidelity, manual system catalog/package installation, and updated-generation materialization remain untested. Native 0.3.0's component/mod/GitHub operations also still require physical validation.

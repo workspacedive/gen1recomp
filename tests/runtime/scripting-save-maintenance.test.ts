@@ -8,7 +8,7 @@ import vm from "node:vm"
 import { IDBFactory } from "fake-indexeddb"
 
 const source = readFileSync(
-  resolve(process.cwd(), "scripting/Gen1RecompApp/runtime-shell-v051/maintenance.js"),
+  resolve(process.cwd(), "scripting/Gen1RecompApp/runtime-shell-v052/maintenance.js"),
   "utf8",
 )
 const root = "/home/web_user/.local/share/love/pokemon-love2d"

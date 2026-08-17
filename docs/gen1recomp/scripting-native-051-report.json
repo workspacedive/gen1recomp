@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-17T10:22:20.000Z",
+  "observedAt": "2026-08-17T20:23:04.000Z",
   "artifact": {
     "name": "Gen1Recomp-Native-051.scripting",
     "project": "Gen1Recomp Native 051",
@@ -68,8 +68,31 @@
     "titleFadeMs": 900,
     "topRevealHoldMs": 3200,
     "nativeDismiss": true,
-    "rootTree": "TabView -> five tagged native NavigationStacks -> custom screen content",
-    "native050PhysicalResultKnown": false
+    "rootTree": "legacy TabView -> five tagged native NavigationStacks -> custom screen content",
+    "native051PhysicalResultKnown": true,
+    "rootTreePhysicalFixClaimed": false
+  },
+  "native051PhysicalEvidence": {
+    "observedLocalWindow": "2026-08-17 22:08:12-22:08:52 Europe/Berlin",
+    "environment": "Scripting 3.2.0 / iOS 26.6 / iPhone 16 Pro Max",
+    "runtimeIdentity": "0.5.1 / 051",
+    "componentBuildError": "t.__type__ occurred once at 22:08:12 before successful runtime startup",
+    "flattenedLegacyTabTreeFixComplete": false,
+    "titleInstalled": true,
+    "titleShownHoldMs": 5500,
+    "titleRevealOrdering": "shown immediately before ready frame 8 and four seconds before game loaded",
+    "userAcceptedResult": true,
+    "exactVisualFadeAndCloseLogged": false,
+    "retinaGeometry": "440x956 CSS -> 1320x2868 canvas; DPR 3; fit scale 8",
+    "vectorTouchInstalled": true,
+    "performanceWindows": [
+      { "frames": 428, "durationMs": 10001, "p50Ms": 17, "p95Ms": 37, "p99Ms": 111, "maxMs": 468, "gapsOver50Ms": 15 },
+      { "frames": 473, "durationMs": 10014, "p50Ms": 18, "p95Ms": 41, "p99Ms": 64, "maxMs": 74, "gapsOver50Ms": 8 }
+    ],
+    "lateDrawAverageMs": "0.13-0.20",
+    "namedEffectCache": "store only; no cache hit",
+    "saveManagementExercised": false,
+    "phoneInterruptionRetested": false
   },
   "sourceEvidence": {
     "packagedGen1Recomp": [
@@ -91,7 +114,7 @@
     "nodeTests": { "total": 122, "passed": 122, "failed": 0 },
     "saveMaintenanceRuntimeTests": {
       "total": 5,
-      "passed": 4,
+      "passed": 5,
       "coverage": ["numeric listing", "read/digest", "unsafe id rejection", "restore backup creation", "existing recovery-copy preservation", "save/cache deletion scope"]
     },
     "saveBackupDomainTests": { "total": 3, "passed": 3 },
@@ -102,9 +125,7 @@
     "romSavePatchWavEntries": []
   },
   "physicalVerificationRequired": [
-    "runtime identity 0.5.1 / 051",
-    "no t.__type__ before runtime startup",
-    "post-ready title visibility/fade/top-edge reveal/native close",
+    "exact visual title fade/top-edge reveal/native close",
     "refresh discovers existing saves without presenting game UI",
     "numbered save action launches the selected playthrough",
     "Files export creates one .gen1save.json backup",

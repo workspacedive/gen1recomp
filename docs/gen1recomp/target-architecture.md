@@ -405,6 +405,22 @@ A restore validates envelope identity, size, Base64 and SHA-256 natively and aga
 
 This is lossless host backup/recovery, not cartridge `.sav` conversion. Raw `.sav` import/export remains upstream core behavior and must be integrated as a separately versioned adapter rather than reimplemented in TypeScript.
 
+### Native 0.5.2 root-navigation boundary
+
+Native 0.5.1 physical recurrence disproved the flattened legacy TabView tree as a complete `t.__type__` fix. The current official App Store documentation separately proves that custom function children are valid in the legacy `tag`/`tabItem` API and defines the modern iOS-18+ API as explicit `Tab` descriptors plus an Observable selection.
+
+Native 052 therefore uses:
+
+```text
+useObservable<ProductTabId>("home")
+→ TabView(selection)
+→ five explicit Tab(title, systemImage, value)
+→ one NavigationStack per Tab
+→ existing screen content
+```
+
+No Tab is conditional or dynamically mapped. Legacy root properties are absent. This changes only the Scripting platform UI descriptor layer and leaves game, runtime, save, update and mod boundaries unchanged. Static conformance is not reported as a physical fix; exact non-recurrence remains the device gate.
+
 ## 11. Compatibility/deprecation
 
 - APIs use major/minor versions; only major breaks semantics.
@@ -470,7 +486,7 @@ The runtime gate is passed, so production directories now follow actual vertical
 - `schemas/` includes closed wire, manifest, game/mod registry, activation-journal, runtime-capability and update-catalog schemas;
 - `tests/contracts/`, `tests/games/`, `tests/runtime/`, `tests/updates/`, `tests/scripting/` and `tests/tools/` exercise host-independent logic, declaration-subset compatibility and deterministic packages.
 
-Physical runs through Native 0.4.8 prove canonical play, Retina `1320×2868`/Scale 8 and near-60 Hz steady motion with negligible draw CPU. Native 0.4.9 removed native title but faded too early and toolbar correction did not stop `t.__type__`; Native 0.5.0 reveals chrome post-ready and makes native tagged NavigationStacks the direct TabView descriptor children. Title/toolbar regression, phone-call recovery, warm-cache reuse, cache-ready state, exact multitouch/release, saves, mods and broad-device validation remain active.
+Physical runs through Native 0.5.1 prove canonical play, Retina `1320×2868`/Scale 8, readiness-bound 5.5-second title reveal and negligible late draw CPU. Native 0.5.1 also proves the flattened legacy TabView tree did not stop `t.__type__`. Native 0.5.2 adopts the current official modern `Tab` descriptor API. Modern-tab non-recurrence, exact fade/reveal/close visuals, phone recovery, warm-cache reuse, exact multitouch/release, save operations, mods and broad-device validation remain active.
 
 ## 13. Core-change exception process
 

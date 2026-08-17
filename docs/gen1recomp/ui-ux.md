@@ -76,7 +76,7 @@ No blank canvas while the runtime starts. Show the exact stage and a safe cancel
 
 ### Bottom navigation and future Mods destination
 
-The native root uses peer tabs for Home, Games, Updates, Mods, and Settings. Native 0.3.0 enabled Mods for safe inactive package management; Native 0.4.0 turns Games into a persistent library without restructuring the peer destinations.
+The native root uses peer tabs for Home, Games, Updates, Mods, and Settings. Native 0.3.0 enabled Mods for safe inactive package management; Native 0.4.0 turns Games into a persistent library without restructuring the peer destinations. Native 0.5.2 expresses these destinations through the current official iOS-18+ `TabView(selection)` plus five explicit native `Tab` descriptors, each with an independent `NavigationStack`. This replaces only legacy descriptor plumbing; information architecture is unchanged.
 
 The current Mods slice provides file/GitHub installation, update checks, individual/aggregate update actions and deletion. The later App-Store-inspired hierarchy—editorial Discover, scannable product rows, native Search, details, profiles and load order—remains modular. Its catalog, capability consent, activation journal and runtime rollback stay separate from system-component Updates. Full contract: [`mod-store-architecture.md`](mod-store-architecture.md).
 

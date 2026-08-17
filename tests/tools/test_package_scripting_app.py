@@ -44,14 +44,14 @@ class PackageScriptingAppTests(unittest.TestCase):
                 self.assertIn("src/domain/mods.ts", names)
                 self.assertIn("src/platform/game-runtime.ts", names)
                 self.assertIn("src/ui/app.tsx", names)
-                self.assertIn("runtime-v051/embedded-packages.js", names)
-                self.assertIn("runtime-v051/player.js", names)
-                self.assertIn("runtime-v051/maintenance.html", names)
-                self.assertIn("runtime-shell-v051/preview-bundle.js", names)
-                self.assertNotIn("runtime-shell-v051/embedded-packages.js", names)
+                self.assertIn("runtime-v052/embedded-packages.js", names)
+                self.assertIn("runtime-v052/player.js", names)
+                self.assertIn("runtime-v052/maintenance.html", names)
+                self.assertIn("runtime-shell-v052/preview-bundle.js", names)
+                self.assertNotIn("runtime-shell-v052/embedded-packages.js", names)
                 metadata = json.loads(archive.read("script.json"))
-                self.assertEqual(metadata["name"], "Gen1Recomp Native 051")
-                self.assertEqual(metadata["version"], "0.5.1")
+                self.assertEqual(metadata["name"], "Gen1Recomp Native 052")
+                self.assertEqual(metadata["version"], "0.5.2")
                 source_text = "\n".join(
                     archive.read(name).decode("utf-8", errors="ignore")
                     for name in names
@@ -65,30 +65,36 @@ class PackageScriptingAppTests(unittest.TestCase):
                     app_source.count('toolbar={{ cancellationAction: <Button title={t("close")}'),
                     5,
                 )
-                self.assertEqual(app_source.count("      <NavigationStack\n        tag={tabIndex("), 5)
-                self.assertNotIn("<HomeScreen\n        openGames", app_source)
-                self.assertIn(b'id="game-chrome"', archive.read("runtime-v051/index.html"))
-                self.assertIn(b'transient game title installed', archive.read("runtime-v051/preview-bundle.js"))
+                self.assertEqual(app_source.count("      <Tab title={t("), 5)
+                self.assertEqual(app_source.count("        <NavigationStack>"), 5)
+                self.assertIn('<TabView selection={selectedTab}>', app_source)
+                self.assertIn('useObservable<ProductTabId>("home")', app_source)
+                self.assertNotIn("tabIndex=", app_source)
+                self.assertNotIn("onTabIndexChanged=", app_source)
+                self.assertNotIn("tabItem=", app_source)
+                self.assertNotIn(" tag=", app_source)
+                self.assertIn(b'id="game-chrome"', archive.read("runtime-v052/index.html"))
+                self.assertIn(b'transient game title installed', archive.read("runtime-v052/preview-bundle.js"))
                 runtime_source = archive.read("src/platform/game-runtime.ts").decode("utf-8")
                 self.assertIn("controller.dismiss()", runtime_source)
                 self.assertNotIn("navigationTitle: game.title", runtime_source)
                 self.assertIn("DocumentPicker.exportFiles", app_source)
                 self.assertIn("--slot=${saveId}", runtime_source)
                 self.assertIn("Data.fromBase64String", runtime_source)
-                maintenance_source = archive.read("runtime-v051/maintenance.js").decode("utf-8")
+                maintenance_source = archive.read("runtime-v052/maintenance.js").decode("utf-8")
                 self.assertIn('"restore-save"', maintenance_source)
                 self.assertIn("backup payload integrity mismatch", maintenance_source)
                 self.assertIn("store.put(currentRecord, paths.backup)", maintenance_source)
                 self.assertIn("backupRecord == null", maintenance_source)
 
     def test_published_native_product_has_expected_identity(self) -> None:
-        artifact = ROOT / "artifacts" / "Gen1Recomp-Native-051.scripting"
+        artifact = ROOT / "artifacts" / "Gen1Recomp-Native-052.scripting"
         self.assertTrue(artifact.is_file())
         with zipfile.ZipFile(artifact) as archive:
             self.assertIsNone(archive.testzip())
             self.assertEqual(len(archive.namelist()), 33)
             self.assertIn(b"verified ROM", archive.read("script.json"))
-            self.assertIn(b"runtime identity 0.5.1 / 051", archive.read("runtime-v051/preview-loader.js"))
+            self.assertIn(b"runtime identity 0.5.2 / 052", archive.read("runtime-v052/preview-loader.js"))
 
     def test_missing_native_source_fails_closed(self) -> None:
         launcher = ROOT / "research" / "downloads" / "gen1recomp" / "lovejs-launcher"

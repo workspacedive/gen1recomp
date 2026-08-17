@@ -18,12 +18,20 @@ declare module "scripting" {
   export const ProgressView: (props: any) => JSX.Element
   export const Section: (props: any) => JSX.Element
   export const Spacer: (props: any) => JSX.Element
+  export const Tab: (props: any) => JSX.Element
   export const TabView: (props: any) => JSX.Element
   export const Text: (props: any) => JSX.Element
   export const VStack: (props: any) => JSX.Element
   export function useState<T>(initial: T): [T, (value: T | ((current: T) => T)) => void]
   export function useEffect(effect: () => void | (() => void), dependencies: readonly unknown[]): void
   export function useMemo<T>(factory: () => T, dependencies: readonly unknown[]): T
+  export type Observable<T> = {
+    readonly value: T
+    setValue(value: T): void
+    subscribe(listener: (value: T) => void): void
+    unsubscribe(listener: (value: T) => void): void
+  }
+  export function useObservable<T>(initial: T | (() => T)): Observable<T>
   export const Navigation: {
     present(options: JSX.Element | { element: JSX.Element; modalPresentationStyle?: string }): Promise<void>
     useDismiss(): () => void

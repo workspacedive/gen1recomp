@@ -9,10 +9,12 @@ import {
   ProgressView,
   Section,
   Spacer,
+  Tab,
   TabView,
   Text,
   useEffect,
   useMemo,
+  useObservable,
   useState,
   VStack,
 } from "scripting"
@@ -28,13 +30,29 @@ import { ModService, ModServiceError } from "../data/mod-service"
 import { SystemUpdateService, UpdateServiceError } from "../data/system-update-service"
 import type { InstalledGame, SaveSlotSummary } from "../domain/games"
 import type { InstalledMod, ModOperationStage, ModSnapshot, ModViewState } from "../domain/mods"
-import { PRODUCT_TABS, type UpdateMutationStage, type UpdateSnapshot, type UpdateViewState } from "../domain/models"
+import {
+  PRODUCT_TABS,
+  type ProductTabDefinition,
+  type ProductTabId,
+  type UpdateMutationStage,
+  type UpdateSnapshot,
+  type UpdateViewState,
+} from "../domain/models"
 import { formatDate, t } from "../i18n/strings"
 import { GameRuntimeService, SaveManagementError } from "../platform/game-runtime"
 import { runRuntimeDiagnostic } from "../platform/runtime-diagnostic"
 
-const enabledTabs = PRODUCT_TABS.filter(({ enabled }) => enabled)
-const tabIndex = (id: "home" | "games" | "updates" | "mods" | "settings") => enabledTabs.findIndex((tab) => tab.id === id)
+function tabDefinition(id: ProductTabId): ProductTabDefinition {
+  const tab = PRODUCT_TABS.find((candidate) => candidate.id === id && candidate.enabled)
+  if (tab == null) throw new Error(`Required product tab is unavailable: ${id}`)
+  return tab
+}
+
+const homeTab = tabDefinition("home")
+const gamesTab = tabDefinition("games")
+const updatesTab = tabDefinition("updates")
+const modsTab = tabDefinition("mods")
+const settingsTab = tabDefinition("settings")
 
 function HomeScreen({
   openGames,
@@ -980,7 +998,7 @@ export default function App() {
   const library = useMemo(() => new GameLibraryService(), [])
   const runtime = useMemo(() => new GameRuntimeService(updates, library), [])
   const mods = useMemo(() => new ModService(), [])
-  const [selectedTab, setSelectedTab] = useState(tabIndex("home"))
+  const selectedTab = useObservable<ProductTabId>("home")
   const [gameSnapshot, setGameSnapshot] = useState<GameLibrarySnapshot | null>(null)
   const [versions, setVersions] = useState<Readonly<Record<ProductComponentId, string>>>({
     [COMPONENTS.runtime.id]: COMPONENTS.runtime.installedVersion,
@@ -1003,41 +1021,36 @@ export default function App() {
     return () => { active = false }
   }, [])
   return (
-    <TabView tabIndex={selectedTab} onTabIndexChanged={setSelectedTab}>
-      <NavigationStack
-        tag={tabIndex("home")}
-        tabItem={<Label title={t("tabHome")} systemImage="house.fill" />}
-      >
-        <HomeScreen
-          openGames={() => setSelectedTab(tabIndex("games"))}
-          versions={versions}
-          library={gameSnapshot}
-        />
-      </NavigationStack>
-      <NavigationStack
-        tag={tabIndex("games")}
-        tabItem={<Label title={t("tabGames")} systemImage="square.grid.2x2.fill" />}
-      >
-        <GamesScreen library={library} runtime={runtime} onSnapshot={setGameSnapshot} />
-      </NavigationStack>
-      <NavigationStack
-        tag={tabIndex("updates")}
-        tabItem={<Label title={t("tabUpdates")} systemImage="arrow.down.circle.fill" />}
-      >
-        <UpdatesScreen updates={updates} onSnapshot={acceptSnapshot} />
-      </NavigationStack>
-      <NavigationStack
-        tag={tabIndex("mods")}
-        tabItem={<Label title={t("tabMods")} systemImage="puzzlepiece.extension.fill" />}
-      >
-        <ModsScreen mods={mods} />
-      </NavigationStack>
-      <NavigationStack
-        tag={tabIndex("settings")}
-        tabItem={<Label title={t("tabSettings")} systemImage="gearshape.fill" />}
-      >
-        <SettingsScreen updates={updates} />
-      </NavigationStack>
+    <TabView selection={selectedTab}>
+      <Tab title={t(homeTab.titleKey)} systemImage={homeTab.systemImage} value={homeTab.id}>
+        <NavigationStack>
+          <HomeScreen
+            openGames={() => selectedTab.setValue(gamesTab.id)}
+            versions={versions}
+            library={gameSnapshot}
+          />
+        </NavigationStack>
+      </Tab>
+      <Tab title={t(gamesTab.titleKey)} systemImage={gamesTab.systemImage} value={gamesTab.id}>
+        <NavigationStack>
+          <GamesScreen library={library} runtime={runtime} onSnapshot={setGameSnapshot} />
+        </NavigationStack>
+      </Tab>
+      <Tab title={t(updatesTab.titleKey)} systemImage={updatesTab.systemImage} value={updatesTab.id}>
+        <NavigationStack>
+          <UpdatesScreen updates={updates} onSnapshot={acceptSnapshot} />
+        </NavigationStack>
+      </Tab>
+      <Tab title={t(modsTab.titleKey)} systemImage={modsTab.systemImage} value={modsTab.id}>
+        <NavigationStack>
+          <ModsScreen mods={mods} />
+        </NavigationStack>
+      </Tab>
+      <Tab title={t(settingsTab.titleKey)} systemImage={settingsTab.systemImage} value={settingsTab.id}>
+        <NavigationStack>
+          <SettingsScreen updates={updates} />
+        </NavigationStack>
+      </Tab>
     </TabView>
   )
 }

@@ -4,6 +4,8 @@
 
 **SHA-256:** `6ab5468aac85c3e125e708dfb0b9c19dd361943add5008c95463e0172180e9cc`
 
+**Status:** Teilweise als physischer Run 017 ausgeführt. Runtime/Retina/post-ready-Titel bestanden; `t.__type__` trat erneut auf; Save-/Close-/Unterbrechungsabschnitte blieben offen. Fortsetzung: `scripting-native-052-device-plan.md`.
+
 Native 051 enthält alle Native-050-Korrekturen. Ein 051-Lauf kann daher die noch offene 050-Titel-/TabView-Prüfung kumulativ beantworten.
 
 ## 1. Identität und Komponentenbuilder

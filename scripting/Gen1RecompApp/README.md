@@ -1,6 +1,6 @@
-# Gen1Recomp Native 051
+# Gen1Recomp Native 052
 
-Native Scripting product iteration built on the physically validated Preview 0.1.4 runtime and the operational Native 0.4.x game path. Native 0.4.0–0.4.8 physically proved canonical Yellow play, Retina `1320×2868`/scale 8 and near-60 Hz motion. Native 0.5.0 moved animated game chrome behind runtime readiness and corrected the root TabView descriptor tree. Native 0.5.1 adds native save-slot launch plus lossless, integrity-bound backup, restore, refresh and delete operations without changing Gen1Recomp core bytes.
+Native Scripting product iteration built on the physically validated Preview 0.1.4 runtime and the operational Native 0.4.x game path. Native 0.4.0–0.4.8 physically proved canonical Yellow play, Retina `1320×2868`/scale 8 and near-60 Hz motion. Native 0.5.0 moved animated game chrome behind runtime readiness and corrected the root TabView descriptor tree. Native 0.5.1 added native save-slot launch plus lossless, integrity-bound backup, restore, refresh and delete operations. Native 0.5.2 migrates the root navigation to the current documented iOS-18+ `TabView` + native `Tab` + observable-selection API after physical evidence disproved the flattened legacy tree as the complete `t.__type__` correction.
 
 ## Native control plane
 
@@ -9,6 +9,8 @@ Native Scripting product iteration built on the physically validated Preview 0.1
 - persistent private game, component, and mod registries with recovery copies;
 - manual-only system and mod network checks;
 - non-ephemeral WebView used only for the LÖVE/Lua game plane, private IDBFS maintenance and ROM-free diagnostic.
+
+Native 052's root is five explicit native `Tab` descriptors under `TabView selection={...}`. Selection is a typed `Observable<ProductTabId>` and Home → Games uses `setValue("games")`. Each Tab owns one `NavigationStack`. The legacy `tag`/`tabItem`/callback path is absent. This matches the current official App Store documentation but remains a physical `t.__type__` hypothesis until a device run proves non-recurrence.
 
 ## Verified game import
 
@@ -29,7 +31,7 @@ Ready cards launch with upstream `--game=<id>` and skip the LÖVE launcher. A se
 
 ## Save backup and recovery
 
-Save contents remain owned by Gen1Recomp in love.js IDBFS. The native plane only performs strict, user-initiated maintenance through `runtime-v051/maintenance.js`:
+Save contents remain owned by Gen1Recomp in love.js IDBFS. The native plane only performs strict, user-initiated maintenance through `runtime-v052/maintenance.js`:
 
 - **Refresh** enumerates only canonical flat/numbered save paths and exports size/timestamp metadata.
 - **Play slot** sends the canonical slot ID through upstream's existing launch option.
@@ -41,7 +43,7 @@ The host never parses, edits or claims semantic knowledge of the Lua save table.
 
 ## Runtime boundary
 
-`runtime-v051/` is the packaged fallback. `runtime-shell-v051/` materializes updated system component sets. A strict one-use in-memory host session carries game/slot command and, only during first import, verified ROM bytes. The loader waits for stable non-placeholder WebView geometry before loading LÖVE. A separate maintenance page operates only on allowlisted IDBFS records and never presents game UI.
+`runtime-v052/` is the packaged fallback. `runtime-shell-v052/` materializes updated system component sets. A strict one-use in-memory host session carries game/slot command and, only during first import, verified ROM bytes. The loader waits for stable non-placeholder WebView geometry before loading LÖVE. A separate maintenance page operates only on allowlisted IDBFS records and never presents game UI.
 
 Before LÖVE creates its window, the host wrapper applies visible WebView aspect and DPR-native framebuffer. A visual adapter replaces only `TouchControls.draw`; input remains upstream. The game WebView has no persistent native title. A semantic in-WebView header appears after runtime readiness, holds 5.5 seconds, fades over 0.9 seconds, can be revealed from the top edge, and dismisses through a native script-message handler.
 
@@ -51,12 +53,12 @@ The implementation does not emulate Game Boy hardware. The path remains ROM → 
 
 ## Components and mods
 
-LÖVE/Lua runtime and Gen1Recomp core remain separately versioned, manually installable, verified, staged, recoverable and rollback-capable. Native 0.5.1 intentionally leaves the packaged core at integration component 0.5.0; the upstream 0.1.99 release detected on 2026-08-17 is evaluated as a separate component update, not silently folded into this host release. Mods remain a separate inactive-by-default package-management domain.
+LÖVE/Lua runtime and Gen1Recomp core remain separately versioned, manually installable, verified, staged, recoverable and rollback-capable. Native 0.5.2 intentionally leaves the packaged core at integration component 0.5.0; the upstream 0.1.99 release detected on 2026-08-17 is evaluated as a separate component update, not silently folded into this host release. Mods remain a separate inactive-by-default package-management domain.
 
 ## Evidence status
 
 - Scripting `DocumentPicker.pickFiles/exportFiles`, `Data.fromBase64String/fromRawString/toRawString`, `Crypto.sha256` and `WebViewController` contracts were checked against current official documentation;
 - fake IndexedDB tests execute list/read/restore/delete behavior against love.js schema 21 and prove numeric ordering, digest binding, `.bak` preservation and cache/save scope separation;
 - domain, package, runtime, updater, mod and tooling checks are automated;
-- Native 0.5.0 physical post-ready title and root-tree results are still pending;
-- Native 0.5.1 Files picker, backup round trip, selected slot launch and deletion require real Scripting 3.2.0/iOS device evidence. No static test is reported as host E2E proof.
+- Native 0.5.1 physically passed runtime identity, readiness-bound title reveal, frame 8, Yellow game load and Retina geometry; `t.__type__` still recurred once;
+- Native 0.5.2 modern tabs and Files picker, backup round trip, selected slot launch and deletion require real Scripting 3.2.0/iOS device evidence. No static test is reported as host E2E proof.

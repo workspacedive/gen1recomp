@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-17T20:23:04.000Z",
+  "artifact": {
+    "name": "Gen1Recomp-Native-052.scripting",
+    "project": "Gen1Recomp Native 052",
+    "version": "0.5.2",
+    "build": "052",
+    "bytes": 8345737,
+    "entries": 33,
+    "sha256": "e86c6b908c24bae7541d329430e092db269ab75ec40611feacf01ba3a25f67c0",
+    "payloadSha256": "6ab3a495ecf6619831732eb9022d8da43a4473c958848adffc3a8c39de939943",
+    "payloadBytes": 5945550,
+    "payloadEntries": 490,
+    "runtimeRevision": "9355186de22db13bd88bf2a0db75d2925647d036",
+    "coreIntegrationVersion": "0.5.0"
+  },
+  "native051PhysicalInput": {
+    "environment": "Scripting 3.2.0 / iOS 26.6 / iPhone 16 Pro Max",
+    "runtimeIdentity": "0.5.1 / 051",
+    "componentBuildError": "t.__type__ occurred once before successful runtime startup",
+    "flattenedLegacyNavigationStackHypothesis": "disproved as complete fix",
+    "titleReveal": "installed and readiness-bound 5500ms reveal logged before ready frame 8; user accepted result",
+    "retinaGeometry": "440x956 CSS -> 1320x2868 canvas; DPR 3; fit scale 8",
+    "vectorTouchInstalled": true,
+    "effectCache": "store only",
+    "saveOperationsExercised": false
+  },
+  "modernTabMigration": {
+    "oldApi": "legacy TabView tabIndex/onTabIndexChanged plus child tag/tabItem",
+    "newApi": "TabView selection Observable plus five explicit Tab descriptors",
+    "selectionType": "Observable<ProductTabId>",
+    "initialSelection": "home",
+    "programmaticSwitch": "selection.setValue(\"games\")",
+    "tabValues": ["home", "games", "updates", "mods", "settings"],
+    "navigationContext": "one NavigationStack inside each Tab",
+    "legacyPropsRemaining": [],
+    "toolbarChanged": false,
+    "physicalFixClaimed": false
+  },
+  "sourceEvidence": {
+    "officialRepository": "https://github.com/ScriptingApp/ScriptingApp.github.io",
+    "officialRevision": "34c59e98dd2c203edca66a8418e93d90e7ecee22",
+    "officialChannel": "App Store Scripting Documentation package",
+    "modernTabDocument": "views/tabview/en.md",
+    "modernContract": ["TabView", "Tab", "useObservable", "selection", "value", "setValue"],
+    "legacyCounterEvidence": "official with_badge.tsx uses custom function components as direct legacy TabView children",
+    "toolbarEvidence": "official ToolBarProps document and finished Video to Live Photo example retain direct native cancellation Button"
+  },
+  "retainedFeatures": {
+    "postReadyTitleHoldMs": 5500,
+    "titleFadeMs": 900,
+    "topRevealHoldMs": 3200,
+    "nativeDismiss": true,
+    "saveRefreshSlotLaunchBackupRestoreDelete": true,
+    "retinaVectorControls": true,
+    "interruptionRecovery": true,
+    "manualComponentsAndMods": true
+  },
+  "systemComponentChange": {
+    "corePayloadChanged": false,
+    "runtimePayloadChanged": false,
+    "catalogSequenceChanged": false,
+    "reason": "root Scripting navigation descriptor migration only"
+  },
+  "automatedVerification": {
+    "typescriptTargets": 2,
+    "packageIdentityAndStaticContracts": "pass",
+    "modernTabStaticContracts": [
+      "five immediate explicit Tab declarations",
+      "five nested NavigationStacks",
+      "typed observable selection",
+      "zero legacy tabIndex/onTabIndexChanged/tabItem/tag root properties"
+    ],
+    "nodeTests": { "total": 122, "passed": 122, "failed": 0 },
+    "pythonTests": { "total": 35, "passed": 30, "skipped": 5, "failed": 0 },
+    "npmAuditVulnerabilities": 0,
+    "packageDeterminism": "pass",
+    "zipIntegrity": "pass",
+    "romSavePatchWavEntries": []
+  },
+  "physicalVerificationRequired": [
+    "runtime identity 0.5.2 / 052",
+    "whether t.__type__ recurs before runtime startup",
+    "five visible tabs and Home to Games programmatic switch",
+    "post-ready title and native close regression",
+    "game launch and Retina/vector control regression",
+    "save refresh/backup/restore/slot/delete operations",
+    "same-artifact cache hit and phone interruption recovery",
+    "iPhone/iPad, Dynamic Type and VoiceOver"
+  ],
+  "permissionsAndSideEffects": {
+    "newPermissions": [],
+    "newNetworkTargets": [],
+    "newExternalSideEffects": [],
+    "privateStorageSchemaChanged": false
+  },
+  "copyrightBoundary": {
+    "romIncluded": false,
+    "romDerivedCacheIncluded": false,
+    "renderedAudioIncluded": false,
+    "saveIncluded": false,
+    "userBackupIncluded": false,
+    "userRomCopiedToRepositoryOrArtifact": false
+  }
+}

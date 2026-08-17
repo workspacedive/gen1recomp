@@ -159,6 +159,21 @@ Native 0.4.9 removed the permanent native game title as intended and logged `tra
 
 `t.__type__` still occurred before startup, proving direct toolbar Buttons were insufficient. The next structural mismatch is stronger: all five direct children of root `TabView` were custom screen function components carrying `tag`/`tabItem` props they did not forward. A native TabView consumes its immediate children as native descriptors. Native 0.5.0 makes five native `NavigationStack` descriptors the direct TabView children and moves each custom screen inside as ordinary content. Tests assert five direct tagged native stacks and no custom toolbar wrappers. Physical non-recurrence remains required.
 
+## Run 017 — Native 0.5.1 proves post-ready title timing; `t.__type__` survives the flattened legacy TabView tree
+
+Native 0.5.1 ran on the stated primary environment and logged the exact `runtime identity 0.5.1 / 051`. The Scripting component-builder exception occurred once at 22:08:12, two seconds before the first runtime identity, so Native 050's direct-`NavigationStack` legacy TabView-child hypothesis is physically disproved as a complete fix. Runtime startup and gameplay still followed, so the event remains non-blocking but unresolved.
+
+The title path now has direct device evidence for correct ordering: `transient game title installed` logged at 22:08:28, `transient game title shown for 5500ms` at 22:08:29, then `ready frame 8`. Generated game data and `game loaded` followed at 22:08:33. The user accepted the result as okay. This proves the reveal timer is readiness-bound rather than bundle-start-bound; no screenshot or close-event log was supplied, so exact visual fade geometry and native dismiss remain separate evidence.
+
+Retina geometry remained exact at `440×956 CSS -> 1320×2868 canvas`, DPR 3 and fit scale 8. Vector touch controls installed. Two supplied performance windows reported:
+
+- startup/game-load window: 428 frames/10.001 s, p50 17 ms, p95 37 ms, p99 111 ms, maximum 468 ms, 15 gaps over 50 ms;
+- later runtime window: 473 frames/10.014 s, p50 18 ms, p95 41 ms, p99 64 ms, maximum 74 ms, 8 gaps over 50 ms.
+
+Late draw CPU remained negligible (0.13–0.20 ms average), while update CPU and continuous synchronous music work remained the relevant main-thread cost. Named intro effects again logged `cache=store`; no same-artifact `cache=hit` evidence exists. Save refresh, backup, restore, selected-slot launch, deletion, phone interruption and multitouch were not exercised by this log.
+
+The newly synchronized official App Store Scripting documentation contains two distinct Tab APIs. Its legacy badge example explicitly places custom function components directly under `TabView`, so Native 050's claim that such children were structurally invalid was unsupported and is now retracted. The current iOS-18+ API instead provides explicit native `Tab` descriptors with observable `selection`. Native 0.5.2 migrates only this root navigation boundary to the documented modern API while retaining the independently valid toolbar structure. Physical non-recurrence is still required before attributing the exception.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -187,7 +202,9 @@ Native 0.4.9 removed the permanent native game title as intended and logged `tra
 24. Native 0.4.9 replaces persistent native navigation title chrome with a WebView-owned timed fade/reveal title and explicit native dismiss event.
 25. Native 0.4.9 replaces all custom toolbar wrapper values with direct native Buttons; physical recurrence proved that correction incomplete.
 26. Native 0.5.0 reveals custom game chrome only after runtime readiness, holds 5.5 seconds, then fades opacity/translation/blur over 0.9 seconds.
-27. Native 0.5.0 makes native tagged NavigationStacks the five immediate TabView children and nests custom screen content beneath them.
+27. Native 0.5.0 makes native tagged NavigationStacks the five immediate legacy TabView children; Native 0.5.1 physical recurrence disproves that layout as a complete `t.__type__` correction.
+28. Native 0.5.1 binds the title reveal to runtime readiness; physical ordering and user acceptance pass while exact fade/close visuals remain only partially evidenced.
+29. Native 0.5.2 adopts the current official iOS-18+ `TabView` + `Tab` + observable-selection API instead of making another unsupported claim about valid legacy child shapes.
 
 ## Replacement artifact
 
@@ -202,4 +219,4 @@ Native 0.4.9 removed the permanent native game title as intended and logged `tra
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's diagnostic passed as Run 006. Runs 007–016 prove canonical play, Retina geometry and near-60 Hz motion while narrowing title/component-builder defects. Native 0.5.0 is the post-ready chrome/native-TabView-tree candidate. `t.__type__` non-recurrence, visible fade/reveal/close, warm cache, phone recovery, cache-ready UI, saves, multitouch, components/mods and wider devices remain untested.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–017 prove canonical play, Retina geometry, near-60 Hz windows and readiness-bound title timing. Native 0.5.1 disproves the flattened legacy TabView tree as the complete `t.__type__` fix. Native 0.5.2 is the documented modern-Tab descriptor candidate. `t.__type__` non-recurrence, exact fade/reveal/close visuals, warm cache, phone recovery, save operations, multitouch, components/mods and wider devices remain untested.

@@ -3,7 +3,7 @@
   "catalogId": "org.gen1recomp.system",
   "channel": "stable",
   "domain": "system",
-  "generatedAt": "2026-08-17T01:27:00.000Z",
+  "generatedAt": "2026-08-17T01:51:38.000Z",
   "releases": [
     {
       "manifest": {
@@ -11,10 +11,10 @@
         "artifact": {
           "integrity": {
             "algorithm": "sha256",
-            "digest": "b14ecae14c27590545e0590bf785a0da20149b9ab1e021aecd5701578060c2d7"
+            "digest": "de344584b32407876eb1c6acf8c207c4684fa97c5fbc45ecf6e1ac743ccfe098"
           },
-          "path": "org.gen1recomp.core-0.3.0.zip",
-          "size": 5876420
+          "path": "org.gen1recomp.core-0.4.0.zip",
+          "size": 5878709
         },
         "capabilities": [],
         "compatibility": {
@@ -34,13 +34,13 @@
         "migrations": [],
         "schemaVersion": 1,
         "selfTests": [],
-        "version": "0.3.0"
+        "version": "0.4.0"
       },
       "notes": {
-        "de": "Gen1Recomp-0.1.96-Integrationspaket mit sichtbarkeitsverz\u00f6gertem Viewport-Start und begrenzten Musik-Synthese-Slices ohne Worker.",
-        "en": "Gen1Recomp 0.1.96 integration bundle with visible-viewport startup and bounded no-worker music synthesis slices."
+        "de": "Gen1Recomp-0.1.96-Integrationspaket mit gleichm\u00e4\u00dfigen Musik-Slices ohne Worker, privatem Effektcache und Update-/Draw-Timing.",
+        "en": "Gen1Recomp 0.1.96 integration bundle with even no-worker music slices, private rendered-effect cache, and update/draw timing."
       },
-      "publishedAt": "2026-08-17T01:27:00.000Z"
+      "publishedAt": "2026-08-17T01:51:38.000Z"
     },
     {
       "manifest": {
@@ -74,5 +74,5 @@
     }
   ],
   "schemaVersion": 1,
-  "sequence": 3
+  "sequence": 4
 }

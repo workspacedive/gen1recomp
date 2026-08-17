@@ -4,7 +4,8 @@ This tree is the production-shaped, ROM-free feed for **manual system-component 
 
 - `catalog/stable.json` — strict sequence-numbered system catalog.
 - `artifacts/org.gen1recomp.runtime.lovejs-0.1.0.zip` — pinned love.js LÖVE 11.5/Lua runtime files.
-- `artifacts/org.gen1recomp.core-0.3.0.zip` — current Gen1Recomp 0.1.96 integration bundle with visible-viewport startup and bounded no-worker audio slices.
+- `artifacts/org.gen1recomp.core-0.4.0.zip` — current Gen1Recomp 0.1.96 integration bundle with even music scheduling, private rendered-effect cache and update/draw timing.
+- `artifacts/org.gen1recomp.core-0.3.0.zip` — retained visible-viewport and bounded-audio integration bundle.
 - `artifacts/org.gen1recomp.core-0.2.0.zip` — retained adaptive-viewport integration bundle.
 - `artifacts/org.gen1recomp.core-0.1.96.zip` — retained historical bundle; no bytes were overwritten under an immutable version identity.
 

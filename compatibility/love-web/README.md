@@ -29,4 +29,14 @@ That normalization causes existing upstream checks to select their intended soft
 - ROM extraction selects its coroutine path;
 - chip music selects synchronous amortized queue fill.
 
-The overlay changes no Gen1Recomp or LÖVE source file and can be removed when a replacement runtime passes a real worker roundtrip probe.
+The bootstrap changes no LÖVE source. Packaging applies one separately recorded, fail-closed two-line Gen1Recomp seam so `ChipAudio` can read optional host fill constants while retaining upstream defaults. It can be removed with the audio adapter when a replacement runtime passes a real worker roundtrip probe.
+
+## `audio.lua`
+
+Native 0.4.5/0.4.6 physical timing proved that synchronous synthesis shares the game thread even when playback itself sounds correct. The adapter keeps ChipSynth's 44.1 kHz per-sample behavior and changes queue scheduling only. Native 0.4.7 uses 512-sample blocks, 256 buffers and at most two blocks per update. First-use effects are persisted beneath the private removable game prefix as PCM WAV plus a complete canonical synthesis-signature sidecar; the full signature and successful decode are required for a hit.
+
+Rendered effects are ROM-derived private cache. They must never be committed, packaged, logged as bytes or uploaded. Game-cache deletion removes them; saves remain separate.
+
+## `frame.lua`
+
+Installed after upstream `main.lua` defines callbacks. It reports aggregate/average/maximum CPU for `love.update` and `love.draw` plus Lua heap size every five seconds. It does not alter timing or catch/suppress callback errors.

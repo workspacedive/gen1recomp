@@ -117,6 +117,20 @@ The steady 4–5 gaps over 50 ms per second closely match the no-worker music pa
 
 The independent `t.__type__` event again occurred five seconds before successful runtime startup and remains open.
 
+## Run 013 — Native 0.4.6 fixes viewport and removes severe periodic cadence
+
+Native 0.4.6 correctly waited for `440×956` presented CSS geometry, planned a `640×1391` portrait backing surface, and uniformly presented it as `439.84375×956`. LÖVE reported the same `640×1391` units/pixels at fit scale 4. This closes the pre-presentation `1×1` geometry defect and proves full-height aspect preservation on the primary device.
+
+The game became materially smoother. Three late steady windows rendered 582, 567 and 586 frames per roughly ten seconds, with p95 23–25 ms, maxima 31–37 ms, and no intervals over 50 ms. By contrast, Native 0.4.5's representative steady p95 was 67–105 ms with up to 52 intervals over 50 ms. The 1024-sample scheduling therefore removed the severe repeating cadence.
+
+The user correctly clarified that audible sound was not defective: music remained continuous. The relevant coupling is CPU scheduling, not audio output. Direct telemetry showed synchronous music generation consuming 632–2918 ms of CPU per five-second interval, with individual 1024-sample calls up to 23 ms. Because this work executes inside the single game/update thread, it can delay rendering even when playback sounds perfect.
+
+Residual intermittent hitches were separately attributable to first-use static effects: measured synthesis calls took 106, 412, 223, 267, 174 and 250 ms among others. The 223/267/250 ms calls align with nearby RAF maxima of 236/278/262 ms. One complex ten-second section still fell to 336 frames, p95 64 ms and maximum 194 ms while music and several effects were synthesized.
+
+Native 0.4.7 therefore uses 512-sample music blocks with up to two per update: the same maximum 1024 samples of work per frame, but approximately 86 smaller calls per second distribute the average synthesis load more evenly across a 60 Hz loop. It also stores first-use rendered effect SoundData as private validated PCM WAV cache entries under the game's removable cache prefix. A sidecar holds the complete canonical synthesis signature, preventing hash collisions or stale definitions from being accepted. The first encounter remains measured and synchronous; subsequent sessions decode the cached PCM instead of rerunning ChipSynth. Update and draw callback CPU are now measured separately.
+
+`t.__type__` occurred twice before successful Native 0.4.6 startup and remains a separate Scripting component-builder defect.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -136,6 +150,9 @@ The independent `t.__type__` event again occurred five seconds before successful
 15. Native 0.4.5 records WebView/CSS/backing/DPR geometry plus raw ten-second animation-frame gap distributions and Long Tasks data when the browser exposes it.
 16. Native 0.4.6 defers bundle/LÖVE startup until Scripting's presented WebView reports stable visible geometry, instead of consuming the pre-presentation `1×1` placeholder.
 17. Native 0.4.6 slices unchanged synchronous 44.1 kHz music synthesis from 8192 to 1024 samples per hand-off, fills one per update, and logs direct music/effect synthesis CPU cost.
+18. Native 0.4.7 uses 512-sample slices and up to two fills per update to spread the same aggregate music work more evenly around a 60 Hz loop.
+19. Native 0.4.7 persists rendered first-use effects as private signature-verified WAV cache entries under the removable game cache prefix; no generated audio enters the artifact or repository.
+20. Native 0.4.7 measures `love.update` and `love.draw` CPU separately so residual game/render cost is distinguishable from synthesis.
 
 ## Replacement artifact
 
@@ -150,4 +167,4 @@ The independent `t.__type__` event again occurred five seconds before successful
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's diagnostic passed as Run 006. Runs 007–012 proved canonical Yellow identity/retention/extraction, game/audio startup, ordinary touch play, the pre-presentation `1×1` viewport cause, and severe periodic main-thread stalls. Native 0.4.6 is the visible-viewport and bounded-audio-slice correction candidate. Cache-ready card state, App Group relaunch durability, direct boot, exact multi-touch/release behavior, saves, residual one-shot synthesis stalls, broader fidelity, manual system packages, updated generations, component/mod/GitHub operations, and the wider iPhone/iPad matrix remain untested.
+Native 0.2.0's diagnostic passed as Run 006. Runs 007–013 proved canonical Yellow import/play, full presented portrait geometry, and major removal of the severe periodic stalls. Native 0.4.6 direct CPU logs isolated smaller music-pacing and first-use effect costs; Native 0.4.7 is the even-scheduling/private-effect-cache candidate. Cache-ready card state, App Group relaunch durability, direct boot, exact multi-touch/release behavior, saves, warm-cache residual performance, broader fidelity, manual system packages, component/mod/GitHub operations, and the wider iPhone/iPad matrix remain untested.

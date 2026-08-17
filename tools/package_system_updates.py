@@ -22,8 +22,8 @@ RUNTIME_COMPONENT_VERSION = "0.1.0"
 CORE_COMPONENT_ID = "org.gen1recomp.core"
 # Integration-bundle version. The independently recorded upstream source
 # revision remains Gen1Recomp 0.1.96; this version also covers host overlays.
-CORE_COMPONENT_VERSION = "0.3.0"
-CORE_PAYLOAD_SHA256 = "0e120c4f45bd4ed6134318b55b6cf7e23987bee5977c8f32edd381100ba55050"
+CORE_COMPONENT_VERSION = "0.4.0"
+CORE_PAYLOAD_SHA256 = "f6a11c06cc68485481764942070c468c7597e2f6bddb649489cbddc9c59c64dd"
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 RUNTIME_FILES = (
     "player.js",
@@ -171,16 +171,16 @@ def build(launcher: Path, lock_path: Path, output: Path) -> dict[str, object]:
         "catalogId": "org.gen1recomp.system",
         "domain": "system",
         "channel": "stable",
-        "sequence": 3,
-        "generatedAt": "2026-08-17T01:27:00.000Z",
+        "sequence": 4,
+        "generatedAt": "2026-08-17T01:51:38.000Z",
         "artifactBaseURL": ARTIFACT_BASE_URL,
         "releases": [
             {
                 "manifest": core_manifest,
-                "publishedAt": "2026-08-17T01:27:00.000Z",
+                "publishedAt": "2026-08-17T01:51:38.000Z",
                 "notes": {
-                    "en": "Gen1Recomp 0.1.96 integration bundle with visible-viewport startup and bounded no-worker music synthesis slices.",
-                    "de": "Gen1Recomp-0.1.96-Integrationspaket mit sichtbarkeitsverzögertem Viewport-Start und begrenzten Musik-Synthese-Slices ohne Worker.",
+                    "en": "Gen1Recomp 0.1.96 integration bundle with even no-worker music slices, private rendered-effect cache, and update/draw timing.",
+                    "de": "Gen1Recomp-0.1.96-Integrationspaket mit gleichmäßigen Musik-Slices ohne Worker, privatem Effektcache und Update-/Draw-Timing.",
                 },
             },
             {
@@ -204,7 +204,7 @@ def build(launcher: Path, lock_path: Path, output: Path) -> dict[str, object]:
     return {
         "catalog": catalog_report_path,
         "catalogSha256": sha256(catalog_bytes),
-        "catalogSequence": 3,
+        "catalogSequence": 4,
         "artifacts": [runtime_artifact, core_artifact],
         "romFree": True,
     }

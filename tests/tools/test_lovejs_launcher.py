@@ -50,11 +50,15 @@ class LauncherPreparationTests(unittest.TestCase):
                     archive.read("love-web-audio.lua"),
                     (ROOT / "compatibility" / "love-web" / "audio.lua").read_bytes(),
                 )
+                self.assertEqual(
+                    archive.read("love-web-frame.lua"),
+                    (ROOT / "compatibility" / "love-web" / "frame.lua").read_bytes(),
+                )
                 self.assertIn(
                     b"ChipSynth.MUSIC_FILL_PER_CALL or 3",
                     archive.read("src/core/ChipAudio.lua"),
                 )
-            self.assertEqual(report["entries"], 9)
+            self.assertEqual(report["entries"], 10)
 
     def test_overlay_rejects_traversal_and_existing_bit_module(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

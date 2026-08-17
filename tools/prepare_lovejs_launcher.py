@@ -34,13 +34,14 @@ COMPATIBILITY_ROOT = REPO_ROOT / "compatibility" / "love-web"
 BIT_SHIM = COMPATIBILITY_ROOT / "bit.lua"
 BOOTSTRAP = COMPATIBILITY_ROOT / "bootstrap.lua"
 AUDIO_SHIM = COMPATIBILITY_ROOT / "audio.lua"
+FRAME_SHIM = COMPATIBILITY_ROOT / "frame.lua"
 PROBE_FILES = ("index.html", "launcher-probe.js", "launcher-probe.css")
 ORIGINAL_MAIN = "gen1recomp-main.lua"
 ORIGINAL_CONF = "gen1recomp-conf.lua"
 CHIP_AUDIO_PATH = "src/core/ChipAudio.lua"
 CHIP_AUDIO_FILL_ORIGINAL = b'''local MUSIC_FILL_INITIAL = 4\nlocal MUSIC_FILL_PER_CALL = 3\n'''
 CHIP_AUDIO_FILL_ADAPTER = b'''local MUSIC_FILL_INITIAL = ChipSynth.MUSIC_FILL_INITIAL or 4\nlocal MUSIC_FILL_PER_CALL = ChipSynth.MUSIC_FILL_PER_CALL or 3\n'''
-MAIN_WRAPPER = b'''-- Generated host wrapper; original upstream main.lua is gen1recomp-main.lua.\nlocal Bootstrap = require("love-web-bootstrap")\nBootstrap.install(love, {\n  disableThreadWorkers = true,\n  threadReason = "love.js 11.5 worker construction probe failed",\n})\nif os.getenv("POKEPORT_AUDIO_SLICE") == "1" then\n  require("love-web-audio").install(love)\nend\nlocal main, loadError = love.filesystem.load("gen1recomp-main.lua")\nassert(main, loadError)\nreturn main()\n'''
+MAIN_WRAPPER = b'''-- Generated host wrapper; original upstream main.lua is gen1recomp-main.lua.\nlocal Bootstrap = require("love-web-bootstrap")\nBootstrap.install(love, {\n  disableThreadWorkers = true,\n  threadReason = "love.js 11.5 worker construction probe failed",\n})\nif os.getenv("POKEPORT_AUDIO_SLICE") == "1" then\n  require("love-web-audio").install(love)\nend\nlocal main, loadError = love.filesystem.load("gen1recomp-main.lua")\nassert(main, loadError)\nlocal result = main()\nif os.getenv("POKEPORT_FRAME_TIMING") == "1" then\n  require("love-web-frame").install(love)\nend\nreturn result\n'''
 CONF_WRAPPER = b'''-- Generated host display wrapper; upstream conf.lua is gen1recomp-conf.lua.\nlocal conf, loadError = love.filesystem.load("gen1recomp-conf.lua")\nassert(conf, loadError)\nconf()\nlocal upstreamConf = assert(love.conf, "upstream love.conf missing")\nfunction love.conf(t)\n  upstreamConf(t)\n  local width = tonumber(os.getenv("POKEPORT_VIEW_WIDTH"))\n  local height = tonumber(os.getenv("POKEPORT_VIEW_HEIGHT"))\n  if width and height and width >= 320 and height >= 288\n      and width <= 2048 and height <= 2048 then\n    t.window.width = math.floor(width)\n    t.window.height = math.floor(height)\n    t.window.fullscreen = false\n    t.window.resizable = true\n    t.window.highdpi = false\n  end\nend\n'''
 
 
@@ -74,6 +75,7 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             "bit.lua",
             "love-web-bootstrap.lua",
             "love-web-audio.lua",
+            "love-web-frame.lua",
             ORIGINAL_MAIN,
             ORIGINAL_CONF,
         }
@@ -117,6 +119,7 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
             overlay("bit.lua", BIT_SHIM.read_bytes())
             overlay("love-web-bootstrap.lua", BOOTSTRAP.read_bytes())
             overlay("love-web-audio.lua", AUDIO_SHIM.read_bytes())
+            overlay("love-web-frame.lua", FRAME_SHIM.read_bytes())
 
     with zipfile.ZipFile(destination) as result:
         if result.testzip() is not None:
@@ -140,6 +143,11 @@ def add_compatibility_overlay(source: Path, destination: Path) -> dict[str, obje
                     "path": "love-web-audio.lua",
                     "source": AUDIO_SHIM.relative_to(REPO_ROOT).as_posix(),
                     "sha256": sha256(AUDIO_SHIM),
+                },
+                {
+                    "path": "love-web-frame.lua",
+                    "source": FRAME_SHIM.relative_to(REPO_ROOT).as_posix(),
+                    "sha256": sha256(FRAME_SHIM),
                 },
                 {
                     "path": CHIP_AUDIO_PATH,

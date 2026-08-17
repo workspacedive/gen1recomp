@@ -85,7 +85,7 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - [`docs/gen1recomp/scripting-device-run-001.md`](docs/gen1recomp/scripting-device-run-001.md) — kumulative physische Läufe einschließlich bestandenem Preview-0.1.4-Start
 - [`docs/gen1recomp/scripting-native-020-report.json`](docs/gen1recomp/scripting-native-020-report.json) — physisch korrelierter nativer 0.2.0-Runtime-Bericht
 - [`docs/gen1recomp/scripting-native-030-report.json`](docs/gen1recomp/scripting-native-030-report.json) — Paket-, Sicherheits- und Runtime-Bericht der 0.3.0-Komponenten-/Modverwaltung
-- [`docs/gen1recomp/scripting-native-040-report.json`](docs/gen1recomp/scripting-native-040-report.json) / [`scripting-native-041-report.json`](docs/gen1recomp/scripting-native-041-report.json) / [`scripting-native-041-device-plan.md`](docs/gen1recomp/scripting-native-041-device-plan.md) — physischer Yellow-Importbefund, BitOp-Korrekturbericht und verbleibender Geräteplan
+- [`docs/gen1recomp/scripting-native-040-report.json`](docs/gen1recomp/scripting-native-040-report.json) / [`scripting-native-041-report.json`](docs/gen1recomp/scripting-native-041-report.json) / [`scripting-native-042-report.json`](docs/gen1recomp/scripting-native-042-report.json) / [`scripting-native-042-device-plan.md`](docs/gen1recomp/scripting-native-042-device-plan.md) — physischer Yellow-Importbefund, BitOp-Korrekturbericht und verbleibender Geräteplan
 - [`docs/gen1recomp/scripting-capability-probes.md`](docs/gen1recomp/scripting-capability-probes.md) — physischer Geräteprüfplan
 - [`docs/gen1recomp/device-connection.md`](docs/gen1recomp/device-connection.md) — sicherer lokaler `scripting-cli`-/Deklarations-Handoff
 - [`docs/gen1recomp/architecture-audit.md`](docs/gen1recomp/architecture-audit.md) — dokumentübergreifender Konsistenz- und Evidenzaudit
@@ -97,7 +97,7 @@ Der zentrale Runtime-Startgate ist bestanden: Preview 0.1.4 hat auf einem physis
 - `components/updates/src/`: geschlossener Katalogparser/Trust-Policy, Update-Inventar und -Planung, SemVer-/Dependency-/API-Kompatibilität, Archivrichtlinie, manueller Transaktionsorchestrator, Aktivierungsjournal und Recovery;
 - `updates/`: deterministische ROM-freie aktuelle LÖVE/Lua- und Gen1Recomp-Komponentenpakete plus sequenzierter Stable-Systemkatalog;
 - `scripting/Gen1RecompPreview/`: physisch validierter Preview-0.1.4-Runtime-Fallback;
-- `scripting/Gen1RecompApp/`: nativer 0.4.1-Produktshell mit persistentem verifiziertem Spieleimport, privater Registry/Recovery, dynamischen Karten, ROM-zu-Extractor-Handoff, korrigierter globaler BitOp-Kompatibilität, direktem Game-Start, Save-Metadaten und Cachelöschung sowie den getrennten Komponenten-/Modpfaden aus 0.3.0;
+- `scripting/Gen1RecompApp/`: nativer 0.4.2-Produktshell mit persistentem verifiziertem Spieleimport, privater Registry/Recovery, dynamischen Karten, ROM-zu-Extractor-Handoff, korrigierter globaler BitOp-Kompatibilität, direktem Game-Start, Save-Metadaten und Cachelöschung sowie den getrennten Komponenten-/Modpfaden aus 0.3.0;
 - `runtime/adapters/lovejs/` und `runtime/manager/`: serialisierte Persistenz, funktionale Capability-Evidenz und geordnete Lifecycle-/Concurrency-Grenzen;
 - `compatibility/love-web/`: vollständiger BitOp-Hostshim plus No-Worker-Normalisierung;
 - `schemas/`: geschlossene JSON-Schemas einschließlich Updatekatalog;
@@ -126,4 +126,4 @@ python3 tools/audit_references.py --report docs/reference-audit.json
 
 Weitere Produktpfade werden nur nach ihrem jeweiligen Declaration-/Gerätegate aktiviert. Unbekannte Fähigkeiten werden als inkompatibel behandelt, nicht erfunden.
 
-Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 und Native 0.2.0 belegen den physischen Runtimepfad; Native 0.4.1 ist der aktuelle BitOp-korrigierte Extraktions-Regressionskandidat; Native 0.4.0 ist der physisch bis zum Upstream-Extractor belegte Vorgänger. Native 0.3.0 bleibt der noch physisch zu prüfende Komponenten-/Modverwaltungsvorgänger.
+Direkt importierbare, ROM-freie Pakete liegen unter [`artifacts/`](artifacts/). Preview 0.1.4 und Native 0.2.0 belegen den physischen Runtimepfad; Native 0.4.2 ist der aktuelle Diagnosekandidat für den nach der BitOp-Korrektur verbliebenen, bislang im WebView-Consolekanal verborgenen Fehler; Native 0.4.1 entfernte den expliziten BitOp-Fehler physisch. Native 0.3.0 bleibt der noch physisch zu prüfende Komponenten-/Modverwaltungsvorgänger.

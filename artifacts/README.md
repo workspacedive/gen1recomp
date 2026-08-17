@@ -1,24 +1,25 @@
 # Importable Scripting packages
 
-## Current: Gen1Recomp Native 041
+## Current: Gen1Recomp Native 042
 
-- [`Gen1Recomp-Native-041.scripting`](Gen1Recomp-Native-041.scripting)
-- Project: `Gen1Recomp Native 041`
-- Version: 0.4.1
-- Build: 041
-- Size: 8,320,895 bytes
-- SHA-256: `15cd150c81479071cf9a2b9453c38531f13c6e8708cebec43434b62a7176d1d0`
+- [`Gen1Recomp-Native-042.scripting`](Gen1Recomp-Native-042.scripting)
+- Project: `Gen1Recomp Native 042`
+- Version: 0.4.2
+- Build: 042
+- Size: 8,321,442 bytes
+- SHA-256: `b111e878c8dfd93065ceeb6f3dcee1e467e7b398ce598d607b0d1763a8d293f5`
 - Entries: 32
 
-Native 0.4.1 is the immediate extraction regression build. Native 0.4.0 physically accepted canonical Yellow on Scripting 3.2.0/iOS 26.6, persisted its pending card across retries, handed it to love.js, and reached upstream extraction. Extraction then failed at `src/import/Rom.lua:198` because LuaJIT's global `bit` semantic was missing in PUC Lua. Native 0.4.1 installs the existing 9,492-comparison BitOp shim as `_G.bit` before upstream main loads. No Gen1Recomp core or LÖVE source is modified.
+Native 0.4.0 physically reached canonical Yellow extraction and exposed the missing LuaJIT global BitOp semantic. Native 0.4.1 installed the tested shim globally and removed that explicit error, but love.js then showed a generic pre-window alert while its underlying browser-console error remained invisible to Scripting. Native 0.4.2 preserves the BitOp fix and forwards bounded WebView console warnings/errors, Error stacks, and alerts through the native message bridge for exact attribution. It does not guess at the hidden failure.
 
-The exact Native 0.4.1 ROM-free runtime reached ready frame 97 in Chromium 149 without page/request/HTTP errors. This verifies corrected bootstrap startup, not canonical-ROM extraction; the physical **Finish Import** regression remains required. The card status now uses a separate row to improve the narrow physical layout.
+The exact Native 0.4.2 ROM-free runtime reached ready event frame 18 in Chromium 149 with no page/request/HTTP errors. Chromium also proved forwarding for a console warning, console-error fixture, and alert fixture. This verifies diagnostic transport, not canonical extraction completion.
 
 ## Previous evidence packages
 
-- [`Gen1Recomp-Native-040.scripting`](Gen1Recomp-Native-040.scripting) — 0.4.0 physically proved canonical Yellow identification, pending registration/retry and upstream extractor entry, then failed on the now-corrected missing global BitOp.
-- [`Gen1Recomp-Native-030.scripting`](Gen1Recomp-Native-030.scripting) — 0.3.0 manual component and inactive mod package management; physical validation pending.
-- [`Gen1Recomp-Native-020.scripting`](Gen1Recomp-Native-020.scripting) — 0.2.0 native shell; Settings → runtime reached frame 21 on physical iPhone/iOS 18.7.
+- [`Gen1Recomp-Native-041.scripting`](Gen1Recomp-Native-041.scripting) — removed the explicit global-BitOp error physically; generic hidden pre-window failure remained.
+- [`Gen1Recomp-Native-040.scripting`](Gen1Recomp-Native-040.scripting) — physically proved canonical Yellow identification, pending registration/retry and upstream extractor entry.
+- [`Gen1Recomp-Native-030.scripting`](Gen1Recomp-Native-030.scripting) — manual component and inactive mod package management; physical validation pending.
+- [`Gen1Recomp-Native-020.scripting`](Gen1Recomp-Native-020.scripting) — Settings → runtime reached frame 21 on physical iPhone/iOS 18.7.
 - [`Gen1Recomp-Preview-014.scripting`](Gen1Recomp-Preview-014.scripting) — physically validated ROM-free runtime preview.
 
 All packages are ROM-free and contain no extracted game cache or saves. Verify `SHA256SUMS` before importing.

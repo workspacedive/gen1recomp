@@ -1,4 +1,4 @@
-# Scripting physical-device runs 001–007
+# Scripting physical-device runs 001–008
 
 - **Evidence level:** user-reported installed Scripting host on a physical iOS device
 - **Scripting app version/build:** not yet supplied
@@ -57,6 +57,22 @@ One Scripting console event at 01:43:55 also reported `Failed to build component
 
 This run proves DocumentPicker access, native canonical Yellow identity, private pending registration, retry without reselection, in-memory WebView handoff, and upstream importer entry on the specified device. It does **not** prove completed extraction, cache persistence, direct game boot, saves, audio, input, or fidelity.
 
+## Run 008 — Native 0.4.1 removes BitOp failure; hidden pre-window error remains
+
+On the same Scripting 3.2.0 / iOS 26.6 / iPhone 16 Pro Max environment, Native 0.4.1 reused the pending canonical Yellow source and reached the corrected payload `a8a370be…` at ready frame 1. The prior `global 'bit'` exception did not recur, confirming that the targeted adapter correction changed the failing path.
+
+The WebView then presented love.js' generic alert:
+
+```text
+An error occurred before the game window could be initialised. Please check the console!
+```
+
+No underlying Lua/WASM detail appeared in Scripting's native log because pinned love.js replaces `Module.warn` with `console.warn`; the Native 0.4.1 bridge forwarded explicit host messages but not the WebView console. The card correctly remained **Import abschließen**, so no cache-ready claim or ROM-source deletion occurred.
+
+The intermittent native `Failed to build component … t.__type__` event recurred at 02:00:17. The screen again rendered afterwards, and the dedicated status row materially improved the card layout. It remains an independent Scripting component-build defect/usage interaction requiring exact isolation.
+
+Native 0.4.2 preserves the BitOp fix and adds bounded forwarding for WebView `console.log`, `console.warn`, `console.error`, Error stacks, and `window.alert` text. Chromium tests proved both console-error and alert forwarding into the native handler. The next physical run is diagnostic: its newly visible error detail determines the next technical correction; a generic alert alone is no longer sufficient evidence.
+
 ## Attributed corrections
 
 1. `Script` is imported from the documented `scripting` module instead of being treated as an unqualified global.
@@ -69,6 +85,7 @@ This run proves DocumentPicker access, native canonical Yellow identity, private
 8. Both Preview and automatic Phase-0 package paths use the same embedded-package and diagnostic-loader correction.
 9. Deterministic packaging tests assert that emitted browser bundles contain no `import`, `export`, private-field, or optional-chaining syntax and that all four embedded package keys are present.
 10. Native 0.4.1 installs the parity-tested `bit` compatibility module into `_G.bit` before upstream main loads, matching the LuaJIT global used by ROM picture extraction and several Gen 2 paths.
+11. Native 0.4.2 captures the WebView console and alert channel into bounded native logs, because love.js overwrites `Module.warn` and otherwise hides the actionable pre-window exception from Scripting.
 
 ## Replacement artifact
 
@@ -83,4 +100,4 @@ This run proves DocumentPicker access, native canonical Yellow identity, private
 
 The replacement passed physical startup as Run 005. The next device report should identify the Scripting app version/build and exact iPhone model.
 
-Native 0.2.0's Settings-to-runtime diagnostic passed as Run 006. Native 0.4.0 Run 007 reached canonical Yellow extraction and exposed the corrected global-BitOp adapter defect. Native 0.4.1 is the immediate regression candidate. Completed extraction, App Group relaunch durability, direct boot, saves, input/audio/fidelity, manual system catalog/package installation, and updated-generation materialization remain untested. Native 0.3.0's component/mod/GitHub operations also still require physical validation.
+Native 0.2.0's Settings-to-runtime diagnostic passed as Run 006. Native 0.4.0 Run 007 reached canonical Yellow extraction and exposed the corrected global-BitOp adapter defect. Native 0.4.1 Run 008 removed that explicit failure but exposed a generic love.js pre-window alert whose console cause was not bridged. Native 0.4.2 is the immediate diagnostic candidate. Completed extraction, App Group relaunch durability, direct boot, saves, input/audio/fidelity, manual system catalog/package installation, and updated-generation materialization remain untested. Native 0.3.0's component/mod/GitHub operations also still require physical validation.
